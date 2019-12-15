@@ -2,11 +2,11 @@
 
 from __future__ import print_function
 import numpy as np
-import spiegel.synth.synthbase
+from spiegel.synth.synth_base import SynthBase
 import librenderman as rm
 
 
-class SynthVST(spiegel.synth.synthbase.SynthBase):
+class SynthVST(SynthBase):
     """ Class for interacting with a VST synthesizer """
 
     def __init__(self, **kwargs):

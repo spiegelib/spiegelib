@@ -10,10 +10,10 @@ Welcome to SPIEGEL's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-.. autoclass:: spiegel.SynthVST
+.. autoclass:: spiegel.synth.synth_vst.SynthVST
    :members:
 
-.. autoclass:: spiegel.SynthBase
+.. autoclass:: spiegel.synth.synth_base.SynthBase
    :members:
 
 
