@@ -19,6 +19,7 @@ Reference
    :maxdepth: 2
 
    Synth <synth>
+   Audio Features <features>
 
 
 

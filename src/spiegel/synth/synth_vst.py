@@ -16,29 +16,21 @@ import librenderman as rm
 
 class SynthVST(SynthBase):
     """
-    :param sampleRate: sampling rate for rendering audio, defaults to 44100
-    :type sampleRate: int, optional
-    :param bufferSize: buffer size for rendering audio, defaults to 512
-    :type bufferSize: int, optional
-    :param midiNote: midi note number used for rendering, 0-127, defaults to 40
-    :type midiNote: int, optional
-    :param midiVelocity: midi velocity used for rendering. 0-127, defaults to 127
-    :type midiVelocity: int, optional
-    :param noteLengthSecs: length of midi note in seconds, defaults to 1.0
-    :type noteLengthSecs: float, optional
-    :param renderLengthSecs: length that audio is rendered for in total, defaults to 2.5
-    :type renderLengthSecs: float, optional
-    :param overriddenParameters: a list of tuples containing the parameter index to override and the value to lock that parameter to, defaults to []
-    :type overriddenParameters: list, optional
-    :param normaliseAudio: whether or not to normalize rendered audio, default to False
-    :type normaliseAudio: boolean, optional
+    :param pluginPath: path to vst plugin binary, defaults to None
+    :type pluginPath: str, optional
+    :param keyword arguments: see :class:`spiegel.synth.synth_base.SynthBase` for details
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, pluginPath=None, **kwargs):
         super().__init__(**kwargs)
 
-        self.engine = None
-        self.loadedPlugin = False
+        if pluginPath:
+            self.loadPlugin(pluginPath)
+
+        else:
+            self.engine = None
+            self.loadedPlugin = False
+
 
     def loadPlugin(self, pluginPath):
         """
@@ -76,7 +68,31 @@ class SynthVST(SynthBase):
             :func:`getParameters` to get parameter indices for the loaded synth.
         :type parameters: list
         """
-        self.patch = {}
+
+        # Check for parameters to include in patch update
+        parametersToPatch = []
+        for param in parameters:
+            if self.isValidParameterSetting(param):
+                parametersToPatch.append(param)
+
+        # Patch VST with parameters
+        self.patch = parametersToPatch
+        self.engine.set_patch(parametersToPatch)
+
+
+    def isValidParameterSetting(self, parameter):
+        """
+        Checks to see if a parameter is valid for the currently loaded synth.
+
+        :param parameter: A parameter tuple with form `(parameter_index, parameter_value)`
+        :type parameter: tuple
+        """
+        return (
+            parameter[0] in self.parameters
+            and parameter[1] >= 0.0
+            and parameter[1] <= 1.0
+        )
+
 
 
     def renderPatch(self):
@@ -91,6 +107,7 @@ class SynthVST(SynthBase):
                 self.noteLengthSecs,
                 self.renderLengthSecs
             )
+            self.renderedPatch = True
 
         else:
             print("Please load plugin first.")
@@ -109,7 +126,7 @@ class SynthVST(SynthBase):
 
         else:
             print("Please render patch first.")
-            return np.array()
+            return np.array([])
 
 
     def randomizePatch(self):
@@ -119,12 +136,10 @@ class SynthVST(SynthBase):
 
         if self.loadedPlugin:
             randomPatchTuples = self.generator.get_random_patch()
-            self.engine.set_patch(randomPatchTuples)
+            self.setPatch(randomPatchTuples)
 
         else:
             print("Please load plugin first.")
-
-        return
 
 
 
