@@ -96,6 +96,19 @@ class SynthBase(ABC):
         pass
 
 
+    def getRandomExample(self):
+        """
+        Returns audio from a new random patch
+
+        :return: An audio buffer
+        :rtype: np.array
+        """
+
+        self.randomizePatch()
+        self.renderPatch()
+        return self.getAudio()
+
+
     def getParameters(self):
         """
         Returns parameters for the synth
@@ -104,4 +117,26 @@ class SynthBase(ABC):
             and the parameter name short description as the value
         :rtype: Dictionary
         """
+
         return self.parameters
+
+
+    def getPatch(self, skipOverridden=True):
+        """
+        Get current patch
+
+        :param skipOverridden: Indicates whether to remove overridden parameters from results,
+            defaults to True
+        :type skipOverridden: bool, optional
+        """
+
+        if not skipOverridden:
+            return self.patch
+
+        patch = []
+        overriddenParams = [p[0] for p in self.overriddenParameters]
+        for item in self.patch:
+            if not (item[0] in overriddenParams):
+                patch.append(item)
+
+        return patch
