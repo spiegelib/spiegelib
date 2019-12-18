@@ -45,7 +45,9 @@ class SynthVST(SynthBase):
             if self.engine.load_plugin(pluginPath):
                 self.loadedPlugin = True
                 self.generator = rm.PatchGenerator(self.engine)
+                self.patch = self.engine.get_patch()
                 self.parameters = parseParameters(self.engine.get_plugin_parameters_description())
+
                 for i in range(len(self.overriddenParameters)):
                     index, value = self.overriddenParameters[i]
                     self.engine.override_plugin_parameter(int(index), value)
@@ -71,8 +73,9 @@ class SynthVST(SynthBase):
 
         # Check for parameters to include in patch update
         parametersToPatch = []
+        overriddenIndices = [p[0] for p in self.overriddenParameters]
         for param in parameters:
-            if self.isValidParameterSetting(param):
+            if self.isValidParameterSetting(param) and not param[0] in overriddenIndices:
                 parametersToPatch.append(param)
 
         # Patch VST with parameters

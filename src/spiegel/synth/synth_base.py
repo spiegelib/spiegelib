@@ -55,7 +55,7 @@ class SynthBase(ABC):
     @abstractmethod
     def setPatch(self, parameters):
         """
-        Must be overridden. Should update parameters to values indicated.
+        Must be overridden. Should update synth parameters to values indicated.
         Should not effect the overridden parameters.
 
         :param parameters: A list of tuples. Tuples within the list must have the form
@@ -140,3 +140,21 @@ class SynthBase(ABC):
                 patch.append(item)
 
         return patch
+
+
+    def setOverriddenParameters(self, parameters):
+        """
+        Override parameters with specific values
+
+        :param parameters: List of parameter tuples with parameter index and parameter
+            value that will be patched and then the parameter frozen.
+        :type parameter: list
+        """
+
+        overriddenParams = []
+        for param in parameters:
+            overriddenParams.append((param[0], param[1]))
+
+        self.overriddenParameters = []
+        self.setPatch(overriddenParams)
+        self.overriddenParameters = overriddenParams
