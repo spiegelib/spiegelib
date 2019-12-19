@@ -72,15 +72,13 @@ class SynthVST(SynthBase):
         """
 
         # Check for parameters to include in patch update
-        parametersToPatch = []
         overriddenIndices = [p[0] for p in self.overriddenParameters]
         for param in parameters:
             if self.isValidParameterSetting(param) and not param[0] in overriddenIndices:
-                parametersToPatch.append(param)
+                self.patch[param[0]] = (param[0], param[1])
 
         # Patch VST with parameters
-        self.patch = parametersToPatch
-        self.engine.set_patch(parametersToPatch)
+        self.engine.set_patch(self.patch)
 
 
     def isValidParameterSetting(self, parameter):
