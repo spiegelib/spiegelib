@@ -6,6 +6,7 @@ Dataset Generator Class
 import os
 import numpy as np
 from tqdm import trange
+import scipy.io.wavfile
 
 from spiegel.synth.synth_base import SynthBase
 from spiegel.features.features_base import FeaturesBase
@@ -22,14 +23,19 @@ class DatasetGenerator():
     :type features: Object
     :param outputFolder: Output folder for dataset, defaults to currect folder
     :type outputFolder: str, optional
+    :param saveAudio: whether or not to save rendered audio files, defaults to False
+    :type saveAudio: bool, optional
 
     :cvar featuresFileName: filename for features output file, defaults to features.npy
     :vartype featuresFileName: str
     :cvar patchesFileName: filename for patches output file, defaults to patches.npy
-    :vartype patachesFileName: str
+    :vartype patchesFileName: str
+    :cvar audioFolderName: folder name for the audio output if used. Will be automatically
+        created within the output folder if saving audio. Defaults to audio
+    :vartype audioFolderName: str
     """
 
-    def __init__(self, synth, features=MFCC(), outputFolder='./'):
+    def __init__(self, synth, features=MFCC(), outputFolder='./', saveAudio=False):
         """
         Contructor
         """
@@ -51,6 +57,11 @@ class DatasetGenerator():
         if not (os.path.exists(self.outputFolder) and os.path.isdir(self.outputFolder)):
             raise TypeError('Output folder must be a valid directory')
 
+        self.saveAudio = saveAudio
+
+        # Default folder for audio output
+        self.audioFolderName = "audio"
+
         # Default filenames for output files
         self.featuresFileName = "features.npy"
         self.patchesFileName = "patches.npy"
@@ -63,6 +74,10 @@ class DatasetGenerator():
         :param size: Number of patches to include in dataset
         :type size: int
         """
+
+        # Make sure audio output folder is available if we are saving audio
+        if self.saveAudio:
+            self.createAudioFolder()
 
         # Get a single example to determine required array size required
         audio = self.synth.getRandomExample()
@@ -79,6 +94,23 @@ class DatasetGenerator():
             featureSet[i] = self.features.getFeatures(audio)
             patchSet[i] = [p[0] for p in self.synth.getPatch()]
 
+            # Save rendered audio if required
+            if self.saveAudio:
+                scipy.io.wavfile.write(
+                    "%s/%soutput_%s.wav" % (self.audioFolderPath, filePrefix, i),
+                    self.synth.sampleRate,
+                    audio
+                )
+
         # Save dataset
         np.save("%s/%s%s" % (self.outputFolder, filePrefix, self.featuresFileName), featureSet)
         np.save("%s/%s%s" % (self.outputFolder, filePrefix, self.patchesFileName), patchSet)
+
+
+    def createAudioFolder(self):
+        """
+        Check for and create the audio output folder if necassary
+        """
+        self.audioFolderPath = os.path.abspath(self.outputFolder + "/" + self.audioFolderName)
+        if not (os.path.exists(self.audioFolderPath) and os.path.isdir(self.audioFolderPath)):
+            os.mkdir(self.audioFolderPath)
