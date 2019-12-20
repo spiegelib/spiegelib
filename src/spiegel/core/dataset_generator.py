@@ -25,6 +25,10 @@ class DatasetGenerator():
     :type outputFolder: str, optional
     :param saveAudio: whether or not to save rendered audio files, defaults to False
     :type saveAudio: bool, optional
+    :param normalize: whether or not to normalize features. Requires the normalizers in the
+        feature object to be pre-trained. :method:`generate` can be used to train the normalizers.
+        Defaults to True.
+    :type normalize: bool, optional
 
     :cvar featuresFileName: filename for features output file, defaults to features.npy
     :vartype featuresFileName: str
@@ -35,7 +39,7 @@ class DatasetGenerator():
     :vartype audioFolderName: str
     """
 
-    def __init__(self, synth, features=MFCC(), outputFolder='./', saveAudio=False):
+    def __init__(self, synth, features=MFCC(), outputFolder='./', saveAudio=False, normalize=True):
         """
         Contructor
         """
@@ -66,13 +70,21 @@ class DatasetGenerator():
         self.featuresFileName = "features.npy"
         self.patchesFileName = "patches.npy"
 
+        # Should the feature set data be normalized?
+        self.normalize = normalize
 
-    def generate(self, size, filePrefix=""):
+
+    def generate(self, size, filePrefix="", fitNormalizer=False):
         """
         Generate dataset with a set of random patches
 
         :param size: Number of patches to include in dataset
         :type size: int
+        :param filePrefix: filename prefix for output dataset, defaults to ""
+        :type filePrefix: str, optional
+        :param fitNormalizer: Use this dataset to train/fit the normalizers in the
+            feature object. Defaults to False.
+        :type fitNormalizer: bool, optional
         """
 
         # Make sure audio output folder is available if we are saving audio
@@ -88,10 +100,13 @@ class DatasetGenerator():
         featureSet = np.zeros((size, features.shape[0], features.shape[1]), dtype=np.float32)
         patchSet = np.zeros((size, len(patch)), dtype=np.float32)
 
+        # Should the features be normalized with the feature normalizers?
+        normalize = self.normalize and not fitNormalizer
+
         # Generate data
         for i in trange(size, desc="Generating Dataset"):
             audio = self.synth.getRandomExample()
-            featureSet[i] = self.features.getFeatures(audio)
+            featureSet[i] = self.features.getFeatures(audio, normalize=normalize)
             patchSet[i] = [p[0] for p in self.synth.getPatch()]
 
             # Save rendered audio if required
@@ -101,6 +116,12 @@ class DatasetGenerator():
                     self.synth.sampleRate,
                     audio
                 )
+
+        # Fit feature normalizers and normalize features if required
+        if fitNormalizer:
+            results = self.features.fitNormalizers(featureSet, transform=self.normalize)
+            if self.normalize:
+                featureSet = results
 
         # Save dataset
         np.save("%s/%s%s" % (self.outputFolder, filePrefix, self.featuresFileName), featureSet)

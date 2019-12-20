@@ -20,27 +20,39 @@ class MFCC(FeaturesBase):
         """
         Contructor
         """
-        super().__init__(sampleRate,frameSizeSamples, hopSizeSamples)
+
+        self.numMFCCs = 20
+        super().__init__(
+            self.numMFCCs,
+            sampleRate=sampleRate,
+            frameSizeSamples=frameSizeSamples,
+            hopSizeSamples=hopSizeSamples
+        )
 
 
 
-    def getFeatures(self, audio, normalize=True):
+    def getFeatures(self, audio, normalize=False):
         """
         Run audio feature extraction on audio provided as parameter.
         Normalization should be applied based on the normalize parameter.
 
         :param audio: Audio to process features on
         :type audio: np.array
-        :param normalize: Whether or not the features are normalized, defaults to True
+        :param normalize: Whether or not the features are normalized, defaults to False
         :type normalize: bool, optional
         :returns: results from audio feature extraction
         :rtype: np.array
         """
-        audio = librosa.feature.mfcc(
+
+        features = librosa.feature.mfcc(
             y=audio,
             sr=self.sampleRate,
             n_fft=self.frameSizeSamples,
-            hop_length=self.hopSizeSamples
+            hop_length=self.hopSizeSamples,
+            n_mfcc=self.numMFCCs
         )
 
-        return audio
+        if normalize:
+            features = self.normalize(features)
+
+        return features
