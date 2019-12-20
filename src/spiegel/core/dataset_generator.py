@@ -39,7 +39,7 @@ class DatasetGenerator():
     :vartype audioFolderName: str
     """
 
-    def __init__(self, synth, features=MFCC(), outputFolder='./', saveAudio=False, normalize=True):
+    def __init__(self, synth, features=MFCC(), outputFolder=os.getcwd(), saveAudio=False, normalize=True):
         """
         Contructor
         """
@@ -112,7 +112,7 @@ class DatasetGenerator():
             # Save rendered audio if required
             if self.saveAudio:
                 scipy.io.wavfile.write(
-                    "%s/%soutput_%s.wav" % (self.audioFolderPath, filePrefix, i),
+                    os.path.join(self.audioFolderPath, "%soutput_%s.wav" % (filePrefix, i)),
                     self.synth.sampleRate,
                     audio
                 )
@@ -124,14 +124,24 @@ class DatasetGenerator():
                 featureSet = results
 
         # Save dataset
-        np.save("%s/%s%s" % (self.outputFolder, filePrefix, self.featuresFileName), featureSet)
-        np.save("%s/%s%s" % (self.outputFolder, filePrefix, self.patchesFileName), patchSet)
+        np.save(os.path.join(self.outputFolder, "%s%s" % (filePrefix, self.featuresFileName)), featureSet)
+        np.save(os.path.join(self.outputFolder, "%s%s" % (filePrefix, self.patchesFileName)), patchSet)
 
 
     def createAudioFolder(self):
         """
         Check for and create the audio output folder if necassary
         """
-        self.audioFolderPath = os.path.abspath(self.outputFolder + "/" + self.audioFolderName)
+        self.audioFolderPath = os.path.abspath(os.path.join(self.outputFolder, self.audioFolderName))
         if not (os.path.exists(self.audioFolderPath) and os.path.isdir(self.audioFolderPath)):
             os.mkdir(self.audioFolderPath)
+
+
+    def saveNormalizers(self, fileName):
+        """
+        Save feature normalizers
+
+        :param fileName: file name for normalizer pickle
+        :type fileName: str
+        """
+        self.features.saveNormalizers(os.path.join(self.outputFolder, fileName))

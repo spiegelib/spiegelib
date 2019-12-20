@@ -8,6 +8,8 @@ from spiegel.features.features_base import FeaturesBase
 
 class MFCC(FeaturesBase):
     """
+    :param numMFCCs: number of mffcs to return per frame, defaults to 20
+    :type numMFCCs: int, optional
     :param sampleRate: Audio sample rate, defaults to 44100
     :type sampleRate: int, optional
     :param frameSizeSamples: frame size in audio samples, defaults to 2048
@@ -16,12 +18,12 @@ class MFCC(FeaturesBase):
     :type hopSizeSamples: int, optional
     """
 
-    def __init__(self, sampleRate=44100, frameSizeSamples=2048, hopSizeSamples=512):
+    def __init__(self, numMFCCs=20, sampleRate=44100, frameSizeSamples=2048, hopSizeSamples=512):
         """
         Contructor
         """
 
-        self.numMFCCs = 20
+        self.numMFCCs = numMFCCs
         super().__init__(
             self.numMFCCs,
             sampleRate=sampleRate,

@@ -4,8 +4,10 @@ Abstract Base Class for Audio Features
 """
 
 from abc import ABC, abstractmethod
+import os.path
 import numpy as np
 from sklearn.preprocessing import StandardScaler
+import joblib
 
 
 class FeaturesBase(ABC):
@@ -114,6 +116,29 @@ class FeaturesBase(ABC):
 
         normalizedData = np.zeros(data.shape, dtype=np.float32)
         for i in range(self.dimensions):
+            if not self.normalizers[i]:
+                raise Exception("Normalizers not set for features. Please set normalizers first.")
+
             normalizedData[i,:] = self.normalizers[i].transform([data[i,:]])[0]
 
         return normalizedData
+
+
+    def saveNormalizers(self, location):
+        """
+        Save the trained normalizers for these features for later use
+
+        :param location: Location to save pickled normalizers
+        :type location: str
+        """
+        joblib.dump(self.normalizers, location)
+
+
+    def loadNormalizers(self, location):
+        """
+        Load trained normalizers from disk
+
+        :param location: Pickled file of trained normalizers
+        :type location: str
+        """
+        self.normalizers = joblib.load(location)
