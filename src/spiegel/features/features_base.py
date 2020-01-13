@@ -113,7 +113,6 @@ class FeaturesBase(ABC):
         :returns: normalized data
         :rtype: np.array
         """
-
         normalizedData = np.zeros(data.shape, dtype=np.float32)
         for i in range(self.dimensions):
             if not self.normalizers[i]:

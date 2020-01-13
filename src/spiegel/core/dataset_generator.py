@@ -74,7 +74,7 @@ class DatasetGenerator():
         self.normalize = normalize
 
 
-    def generate(self, size, filePrefix="", fitNormalizer=False):
+    def generate(self, size, filePrefix="", fitNormalizers=False):
         """
         Generate dataset with a set of random patches
 
@@ -82,9 +82,9 @@ class DatasetGenerator():
         :type size: int
         :param filePrefix: filename prefix for output dataset, defaults to ""
         :type filePrefix: str, optional
-        :param fitNormalizer: Use this dataset to train/fit the normalizers in the
+        :param fitNormalizers: Use this dataset to train/fit the normalizers in the
             feature object. Defaults to False.
-        :type fitNormalizer: bool, optional
+        :type fitNormalizers: bool, optional
         """
 
         # Make sure audio output folder is available if we are saving audio
@@ -101,7 +101,7 @@ class DatasetGenerator():
         patchSet = np.zeros((size, len(patch)), dtype=np.float32)
 
         # Should the features be normalized with the feature normalizers?
-        normalize = self.normalize and not fitNormalizer
+        normalize = self.normalize and not fitNormalizers
 
         # Generate data
         for i in trange(size, desc="Generating Dataset"):
@@ -118,7 +118,7 @@ class DatasetGenerator():
                 )
 
         # Fit feature normalizers and normalize features if required
-        if fitNormalizer:
+        if fitNormalizers:
             results = self.features.fitNormalizers(featureSet, transform=self.normalize)
             if self.normalize:
                 featureSet = results
