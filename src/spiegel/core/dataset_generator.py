@@ -21,7 +21,7 @@ class DatasetGenerator():
     :param features: Features to use for dataset generation, defaults to :class:`spiegel.features.mfcc.MFCC`
         Must inherit from :class:`spiegel.features.features_base.FeaturesBase`
     :type features: Object
-    :param outputFolder: Output folder for dataset, defaults to currect folder
+    :param outputFolder: Output folder for dataset, defaults to currect working directory
     :type outputFolder: str, optional
     :param saveAudio: whether or not to save rendered audio files, defaults to False
     :type saveAudio: bool, optional

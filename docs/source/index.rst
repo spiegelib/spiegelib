@@ -18,6 +18,7 @@ Reference
 .. toctree::
    :maxdepth: 2
 
+   Core <core>
    Synth <synth>
    Audio Features <features>
 
