@@ -1,6 +1,7 @@
 name: spiegel-env
 channels:
   - defaults
+  - conda-forge
 dependencies:
   - scikit-learn
   - scipy
