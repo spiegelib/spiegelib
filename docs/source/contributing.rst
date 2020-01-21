@@ -12,7 +12,8 @@ Installation
 
 It is recommended to develop inside of an `anaconda <https://www.continuum.io/>`_
 virtual environment. These instructions are for setting up for development within a
-``conda`` env, see `installation instructions <https://www.anaconda.com/distribution/#download-section>`_.
+``conda`` env, see `installation instructions <https://www.anaconda.com/distribution/#download-section>`_ for anaconda,
+download and install the python 3 version.
 
 1) Clone the repo::
 
@@ -47,7 +48,7 @@ virtual environment. These instructions are for setting up for development withi
 	`librenderman <https://github.com/fedden/RenderMan>`_ is a python library for programmatically interacting with VST synthesizers.
 	It uses `boost-python <https://www.boost.org/doc/libs/1_66_0/libs/python/doc/html/index.html>`_ to wrap
 	a `JUCE <https://juce.com/>`_ application. Getting it running inside of a ``conda`` env is not the most
-	straightforward thing and hopefully we can work to get it packaged in anaconda at some point.
+	straightforward thing and hopefully we can work to get it packaged in anaconda at some point. But, for now:
 
 	a) `Download and install JUCE <https://shop.juce.com/get-juce>`_
 
@@ -64,7 +65,7 @@ virtual environment. These instructions are for setting up for development withi
 
 	f) Update Xcode exporter
 
-		For the Xcode (MacOSX) exporter modify the *Extra Linker Flags*: remove ``-lpython2.7``
+		For the Xcode (MacOSX) exporter modify the *Extra Linker Flags*: remove ``-lpython3.6m``
 		Change ``-lboost-python`` to ``-lboost-python37`` and add ``-undefined dynamic_lookup``
 
 		.. image:: images/linker_flags.png
