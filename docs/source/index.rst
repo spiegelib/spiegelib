@@ -7,14 +7,12 @@ SPIEGEL
 =======
 Synthesizer Programming with Intelligent Exploration, Generation, and Evaluation Library
 
-
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
 Reference
 ---------
-
 .. toctree::
    :maxdepth: 2
 
@@ -22,6 +20,12 @@ Reference
    Synth <synth>
    Audio Features <features>
 
+Contributing
+------------
+.. toctree::
+   :maxdepth: 2
+
+   Contribution Guide <contributing>
 
 
 Indices and tables
