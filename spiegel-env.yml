@@ -1,0 +1,12 @@
+name: spiegel-env
+channels:
+  - defaults
+dependencies:
+  - python=3.7.5
+  - numpy
+  - tqdm
+  - scipy
+  - scikit-learn
+  - librosa
+prefix: /Users/jshier/opt/anaconda3/envs/spiegel-env
+
