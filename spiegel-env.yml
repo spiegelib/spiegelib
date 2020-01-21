@@ -2,11 +2,14 @@ name: spiegel-env
 channels:
   - defaults
 dependencies:
+  - scikit-learn
+  - scipy
+  - librosa
   - python=3.7.5
   - numpy
   - tqdm
-  - scipy
-  - scikit-learn
-  - librosa
+  - py-boost
+  - tensorflow
+  - deap
 prefix: /Users/jshier/opt/anaconda3/envs/spiegel-env
 
