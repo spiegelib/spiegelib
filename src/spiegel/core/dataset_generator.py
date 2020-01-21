@@ -59,7 +59,7 @@ class DatasetGenerator():
         # Check for valid output folder
         self.outputFolder = os.path.abspath(outputFolder)
         if not (os.path.exists(self.outputFolder) and os.path.isdir(self.outputFolder)):
-            raise TypeError('Output folder must be a valid directory')
+            os.mkdir(self.outputFolder)
 
         self.saveAudio = saveAudio
 
