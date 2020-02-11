@@ -10,7 +10,7 @@ import tensorflow as tf
 
 class TFEstimatorBase(EstimatorBase):
 
-    def __init__(self, inputShape, numOutputs, checkpointPath = ""):
+    def __init__(self, inputShape, numOutputs, checkpointPath = "", weightsPath = ""):
         """
         Constructor
         """
@@ -37,6 +37,9 @@ class TFEstimatorBase(EstimatorBase):
             if os.path.exists(self.checkpointDir):
                 self.loadModelFromCheckpoint()
 
+        # Attempt to load model weights if provided
+        if weightsPath:
+            self.loadWeights(weightsPath)
 
 
     def addTrainingData(self, input, output, shuffleSize=100, batchSize=64):
@@ -122,6 +125,20 @@ class TFEstimatorBase(EstimatorBase):
     def loadModelFromCheckpoint(self):
         latest = tf.train.latest_checkpoint(self.checkpointDir)
         self.model.load_weights(latest)
+
+
+    def loadWeights(self, filepath, **kwargs):
+        self.model.load_weights(filepath, **kwargs)
+
+
+    def saveWeights(self, filepath, **kwargs):
+        path = os.path.abspath(filepath)
+        dir = os.path.dirname(path)
+        if not (os.path.exists(dir) and os.path.isdir(dir)):
+            os.mkdir(dir)
+
+        self.model.save_weights(path, **kwargs)
+
 
 
     @staticmethod
