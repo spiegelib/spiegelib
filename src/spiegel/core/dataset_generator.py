@@ -107,7 +107,7 @@ class DatasetGenerator():
         for i in trange(size, desc="Generating Dataset"):
             audio = self.synth.getRandomExample()
             featureSet[i] = self.features.getFeatures(audio, normalize=normalize)
-            patchSet[i] = [p[0] for p in self.synth.getPatch()]
+            patchSet[i] = [p[1] for p in self.synth.getPatch()]
 
             # Save rendered audio if required
             if self.saveAudio:
