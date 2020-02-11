@@ -19,6 +19,7 @@ Reference
    Core <core>
    Synth <synth>
    Audio Features <features>
+   Estimators <estimators>
 
 Contributing
 ------------

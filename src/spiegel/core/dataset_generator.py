@@ -26,7 +26,7 @@ class DatasetGenerator():
     :param saveAudio: whether or not to save rendered audio files, defaults to False
     :type saveAudio: bool, optional
     :param normalize: whether or not to normalize features. Requires the normalizers in the
-        feature object to be pre-trained. :method:`generate` can be used to train the normalizers.
+        feature object to be pre-trained. :py:meth:`generate` can be used to train the normalizers.
         Defaults to True.
     :type normalize: bool, optional
 
