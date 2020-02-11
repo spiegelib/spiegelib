@@ -11,12 +11,12 @@ from tensorflow.keras import layers
 
 class LSTM(TFEstimatorBase):
 
-    def __init__(self, inputShape, outputShape):
+    def __init__(self, inputShape, outputShape, **kwargs):
         """
         Constructor
         """
 
-        super().__init__(inputShape, outputShape)
+        super().__init__(inputShape, outputShape, **kwargs)
 
 
     def buildModel(self, hiddenSize=100):

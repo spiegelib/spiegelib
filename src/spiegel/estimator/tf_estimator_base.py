@@ -3,13 +3,14 @@
 Abstract Base Class for Estimating Synthesizer Parameters using TensorFlow
 """
 
+import os
 from abc import abstractmethod
 from spiegel.estimator.estimator_base import EstimatorBase
 import tensorflow as tf
 
 class TFEstimatorBase(EstimatorBase):
 
-    def __init__(self, inputShape, numOutputs):
+    def __init__(self, inputShape, numOutputs, checkpointPath = ""):
         """
         Constructor
         """
@@ -26,6 +27,16 @@ class TFEstimatorBase(EstimatorBase):
         # Datasets
         self.trainData = None
         self.testData = None
+
+        # Checkpoints
+        self.checkpointPath = None
+        self.checkpointDir = None
+        if checkpointPath:
+            self.checkpointPath = os.path.abspath(checkpointPath)
+            self.checkpointDir = os.path.dirname(self.checkpointPath)
+            if os.path.exists(self.checkpointDir):
+                self.loadModelFromCheckpoint()
+
 
 
     def addTrainingData(self, input, output, shuffleSize=100, batchSize=64):
@@ -87,12 +98,30 @@ class TFEstimatorBase(EstimatorBase):
         data if it has been added to this estimator
         """
 
+        # Add checkpoint callback to save weights if checkpoint path has been set
+        callbacks = []
+        if self.checkpointPath:
+            callbacks.append(
+                tf.keras.callbacks.ModelCheckpoint(
+                    filepath=self.checkpointPath,
+                    save_weights_only=True,
+                    verbose=1
+                )
+            )
+
+        # Train model
         self.model.fit(
             self.trainData,
             epochs = epochs,
             validation_data = self.testData,
+            callbacks=callbacks,
             **kwargs
         )
+
+
+    def loadModelFromCheckpoint(self):
+        latest = tf.train.latest_checkpoint(self.checkpointDir)
+        self.model.load_weights(latest)
 
 
     @staticmethod
