@@ -22,7 +22,7 @@ class LSTM(TFEstimatorBase):
     :param kwargs: optional keyword arguments to pass to :class:`spiegel.estimator.TFEstimatorBase`
     """
 
-    def __init__(self, inputShape, numOuputs, **kwargs):
+    def __init__(self, inputShape, numOutputs, **kwargs):
         """
         Constructor
         """

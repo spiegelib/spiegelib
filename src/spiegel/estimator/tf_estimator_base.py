@@ -5,7 +5,9 @@ Abstract Base Class for Estimating Synthesizer Parameters using TensorFlow
 
 import os
 from abc import abstractmethod
+import datetime
 from spiegel.estimator.estimator_base import EstimatorBase
+from spiegel.estimator.tf_epoch_logger import TFEpochLogger
 import numpy as np
 import tensorflow as tf
 
@@ -23,7 +25,7 @@ class TFEstimatorBase(EstimatorBase):
     :type weightsPath: string, optional
     """
 
-    def __init__(self, inputShape, numOutputs, checkpointPath = "", weightsPath = ""):
+    def __init__(self, inputShape, numOutputs, checkpointPath = "", weightsPath = "", loggers=[]):
         """
         Constructor
         """
@@ -40,6 +42,12 @@ class TFEstimatorBase(EstimatorBase):
         # Datasets
         self.trainData = None
         self.testData = None
+
+        # Loggers
+        if isinstance(loggers, list):
+            self.loggers = loggers
+        else:
+            raise Exception('loggers argument must be of type list, received %s' % type(loggers))
 
         # Checkpoints
         self.checkpointPath = None
@@ -137,18 +145,23 @@ class TFEstimatorBase(EstimatorBase):
         return self.model.predict(input)
 
 
-    def fit(self, epochs=1, **kwargs):
+    def fit(self, epochs=1, callbacks=[], **kwargs):
         """
         Train model on for a fixed number of epochs on training data and validation
         data if it has been added to this estimator
 
         :param epochs: Number of epochs to train model on, defaults to 1
         :type epochs: int, optional
+        :param callbacks: List of callback functions for training, defaults to []
+        :type callbacks: list, optional
         :param kwargs: Keyword args passed to model fit method. See `Tensflow Docs <https://www.tensorflow.org/api_docs/python/tf/keras/Model#fit>`_.
         """
 
-        # Add checkpoint callback to save weights if checkpoint path has been set
-        callbacks = []
+        # Check for callbacks in k
+        if not isinstance(callbacks, list):
+            raise Exception('Callbacks must be a list of callbacks, received %s' % type(callbacks))
+
+        # Add a checkpoint callback if the checkpoint path has been set
         if self.checkpointPath:
             callbacks.append(
                 tf.keras.callbacks.ModelCheckpoint(
@@ -158,6 +171,11 @@ class TFEstimatorBase(EstimatorBase):
                 )
             )
 
+        # Add logger Callbacks
+        if self.loggers:
+            for logger in self.loggers:
+                callbacks.append(logger)
+
         # Train model
         self.model.fit(
             self.trainData,
@@ -166,7 +184,6 @@ class TFEstimatorBase(EstimatorBase):
             callbacks=callbacks,
             **kwargs
         )
-
 
     def loadModelFromCheckpoint(self):
         """
