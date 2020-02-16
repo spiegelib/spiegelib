@@ -20,9 +20,19 @@ class FeaturesBase(ABC):
     :type frameSizeSamples: int, optional
     :param hopSizeSamples: hop size in audio samples, defaults to 512
     :type hopSizeSamples: int, optional
+    :param timeMajor: indicates orientation of matrix that features are returned in,
+        timeMajor is (time_slices, features). Defaults to (features, time_slices).
+    :type timeMajor: boolean, optional
     """
 
-    def __init__(self, dimensions, sampleRate=44100, frameSizeSamples=2048, hopSizeSamples=512):
+    def __init__(
+        self,
+        dimensions,
+        sampleRate=44100,
+        frameSizeSamples=2048,
+        hopSizeSamples=512,
+        timeMajor=False,
+    ):
         """
         Constructor
         """
@@ -36,6 +46,8 @@ class FeaturesBase(ABC):
 
         self.normalizers = [None]*self.dimensions
         self.Scaler = StandardScaler
+
+        self.timeMajor=timeMajor
 
 
     @abstractmethod
@@ -116,7 +128,7 @@ class FeaturesBase(ABC):
         normalizedData = np.zeros(data.shape, dtype=np.float32)
         for i in range(self.dimensions):
             if not self.normalizers[i]:
-                raise Exception("Normalizers not set for features. Please set normalizers first.")
+                raise NormalizerError("Normalizers not set for features. Please set normalizers first.")
 
             normalizedData[i,:] = self.normalizers[i].transform([data[i,:]])[0]
 
@@ -141,3 +153,16 @@ class FeaturesBase(ABC):
         :type location: str
         """
         self.normalizers = joblib.load(location)
+
+
+
+class NormalizerError(Exception):
+    """
+    Exception class for normalizers
+    """
+
+    def __init__(self, value):
+        self.value = value
+
+    def __str__(self):
+        return repr(self.value)

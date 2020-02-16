@@ -3,6 +3,7 @@
 MFCC Audio Feature Extractor
 """
 
+import numpy as np
 import librosa
 from spiegel.features.features_base import FeaturesBase
 
@@ -18,19 +19,13 @@ class MFCC(FeaturesBase):
     :type hopSizeSamples: int, optional
     """
 
-    def __init__(self, numMFCCs=20, sampleRate=44100, frameSizeSamples=2048, hopSizeSamples=512):
+    def __init__(self, numMFCCs=20, **kwargs):
         """
         Contructor
         """
 
         self.numMFCCs = numMFCCs
-        super().__init__(
-            self.numMFCCs,
-            sampleRate=sampleRate,
-            frameSizeSamples=frameSizeSamples,
-            hopSizeSamples=hopSizeSamples
-        )
-
+        super().__init__(numMFCCs, **kwargs)
 
 
     def getFeatures(self, audio, normalize=False):
@@ -56,5 +51,8 @@ class MFCC(FeaturesBase):
 
         if normalize:
             features = self.normalize(features)
+
+        if self.timeMajor:
+            features = np.transpose(features)
 
         return features
