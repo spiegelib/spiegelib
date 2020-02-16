@@ -42,6 +42,18 @@ class SoundMatch():
         else:
             raise TypeError('estimator must inherit from EstimatorBase, received type %s' % type(estimator))
 
+        self.patch = None
+
+
+    def getPatch(self):
+        """
+        Return the estimated sound matched patch
+        """
+        if not self.patch:
+            raise Exception('Please run match first')
+
+        return self.patch
+
 
     def match(self, target):
         """
@@ -68,6 +80,7 @@ class SoundMatch():
         # Load patch into synth and return audio
         self.synth.setPatch(params)
         self.synth.renderPatch()
+        self.patch = self.synth.getPatch()
         return self.synth.getAudio()
 
 
