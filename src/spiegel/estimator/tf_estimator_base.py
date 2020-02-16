@@ -70,9 +70,9 @@ class TFEstimatorBase(EstimatorBase):
         Create a tf Dataset from input and output, and shuffles / batches data for training
 
         :param input: matrix of training data
-        :type input: np.array
+        :type input: np.ndarray
         :param output: matrix of training data ground truth
-        :type output: np.array
+        :type output: np.ndarray
         :param batchSize: If provided, will batch data into batches of this size,
             set to None or 0 to prevent batching. defaults to 64
         :type batchSize: int, optional
@@ -139,12 +139,15 @@ class TFEstimatorBase(EstimatorBase):
         """
 
         # If this is a single instance we need to wrap in an np.array
+        isSingleInput = False
         if input.shape == self.inputShape:
+            isSingleInput = True
             input = np.array([input])
         else:
             raise Exception('Input data has incorrect shape, expected %s, got %s' % (self.inputShape, input.shape))
 
-        return self.model.predict(input)
+        prediction = self.model.predict(input)
+        return prediction[0] if isSingleInput else prediction
 
 
     def fit(self, epochs=1, callbacks=[], **kwargs):
