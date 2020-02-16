@@ -59,23 +59,18 @@ class SynthVST(SynthBase):
             print(error)
 
 
-    def setPatch(self, parameters):
+    def loadPatch(self):
         """
         Update patch parameter. Overridden parameters will not be effected.
-
-        :param parameters: A list of tuples. Tuples within the list must have the form
-            `(parameter_index, parameter_value)` where parameter_index is an int with
-            the parameter to modify and the parameter value is a float between 0-1.
-            Can be a partial list of parameters for the synthesizer. See
-            :func:`getParameters` to get parameter indices for the loaded synth.
-        :type parameters: list
         """
 
         # Check for parameters to include in patch update
-        overriddenIndices = [p[0] for p in self.overriddenParameters]
-        for param in parameters:
-            if self.isValidParameterSetting(param) and not param[0] in overriddenIndices:
-                self.patch[param[0]] = (param[0], param[1])
+        for param in self.patch:
+            if not self.isValidParameterSetting(param):
+                raise Excpetion(
+                    'Parameter %s is invalid. Must be a valid'
+                    'parameter number and be in range 0-1' % param[0]
+                )
 
         # Patch VST with parameters
         self.engine.set_patch(self.patch)

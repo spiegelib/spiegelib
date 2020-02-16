@@ -3,6 +3,7 @@
 Synth Abstract Base Class
 """
 from __future__ import print_function
+import numbers
 from abc import ABC, abstractmethod
 
 
@@ -52,17 +53,72 @@ class SynthBase(ABC):
         self.patch = None
 
 
-    @abstractmethod
     def setPatch(self, parameters):
         """
-        Must be overridden. Should update synth parameters to values indicated.
-        Should not effect the overridden parameters.
+        Set a new patch with updated parameter values with a list of flaots or a
+        list of tuples referring to parameter indices and values.
 
-        :param parameters: A list of tuples. Tuples within the list must have the form
-            `(parameter_index, parameter_value)` where parameter_index is an int with
-            the parameter to modify and the parameter value is a float between 0-1.
-            Can be a partial list of parameters for the synthesizer.
+        :param parameters: A list of floats or tuples. If passing in a list of numbers,
+            the length must be either the number of non-overridden parameters of the
+            number of total parameters for this synth. Parameter values will then be
+            mapped to corresponding parameter in order. If a list of tuples is provided,
+            the tuples must have the shape (int, float) where the int is the parameter
+            number and the float is the parameter value.
         :type parameters: list
+        """
+
+        if not len(parameters):
+            return
+
+        parameterIndices = [p for p in self.getParameters()]
+        overriddenIndices = [p[0] for p in self.overriddenParameters]
+        nonOverriddenIndices = list(set(parameterIndices) - set(overriddenIndices))
+        newPatch = []
+
+        # If this is just a list of numbers, then try to associate with parameter settings
+        if isinstance(parameters[0], numbers.Number):
+
+            # Received same number of parameters as non-overridden parameters,
+            # map directly to non-overridden parameters
+            if len(parameters) == len(nonOverriddenIndices):
+                newPatch = [
+                    (nonOverriddenIndices[i], float(parameters[i])) for i in range(len(parameters))
+                ]
+
+            # Received same number of parameters as total parameter count,
+            # map the non-overridden parameters from that list
+            elif len(parameters) == len(parameterIndices):
+                    newPatch = [
+                        (i, float(parameters[i])) for i in nonOverriddenIndices
+                    ]
+
+            else:
+                raise Exception((
+                    'Unclear on how to map parameters, received %s parameters '
+                    'and there are %s non-overridden parameters and %s total parameters.'
+                ) % (len(parameters), len(nonOverriddenIndices), len(overriddenIndices)))
+
+        # If this is a list of tuples then add those directly
+        elif len(parameters[0]) == 2:
+            newPatch = parameters
+
+        else:
+            raise Exception('Invalid parameter list provided. Must be a list of numbers or a list of tuples.')
+
+        # Update patch member variable with new patch, skipping any overridden params
+        for param in newPatch:
+            if not param[0] in overriddenIndices:
+                self.patch[param[0]] = (param[0], param[1])
+
+        # Load new patch into synth engine
+        self.renderedPatch = False
+        self.loadPatch()
+
+
+    @abstractmethod
+    def loadPatch(self):
+        """
+        Must be overridden. Load current patch into synth engine
         """
         pass
 

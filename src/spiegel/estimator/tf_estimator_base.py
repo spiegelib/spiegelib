@@ -23,9 +23,11 @@ class TFEstimatorBase(EstimatorBase):
     :param weightsPath: If given, model weights will be loaded from this file,
         defaults to ""
     :type weightsPath: string, optional
+    :param callbacks: A list of callbacks to be passed into model fit method, defaults to []
+    :type callbacks: list
     """
 
-    def __init__(self, inputShape, numOutputs, checkpointPath = "", weightsPath = "", loggers=[]):
+    def __init__(self, inputShape, numOutputs, checkpointPath = "", weightsPath = "", callbacks=[]):
         """
         Constructor
         """
@@ -44,8 +46,8 @@ class TFEstimatorBase(EstimatorBase):
         self.testData = None
 
         # Loggers
-        if isinstance(loggers, list):
-            self.loggers = loggers
+        if isinstance(callbacks, list):
+            self.callbacks = callbacks
         else:
             raise Exception('loggers argument must be of type list, received %s' % type(loggers))
 
@@ -159,7 +161,7 @@ class TFEstimatorBase(EstimatorBase):
 
         # Check for callbacks in k
         if not isinstance(callbacks, list):
-            raise Exception('Callbacks must be a list of callbacks, received %s' % type(callbacks))
+            raise Exception('Callbacks must be a list, received %s' % type(callbacks))
 
         # Add a checkpoint callback if the checkpoint path has been set
         if self.checkpointPath:
@@ -171,10 +173,10 @@ class TFEstimatorBase(EstimatorBase):
                 )
             )
 
-        # Add logger Callbacks
-        if self.loggers:
-            for logger in self.loggers:
-                callbacks.append(logger)
+        # Add callbacks
+        if self.callbacks:
+            for callback in self.callbacks:
+                callbacks.append(callback)
 
         # Train model
         self.model.fit(

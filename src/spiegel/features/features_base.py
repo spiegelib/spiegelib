@@ -74,7 +74,7 @@ class FeaturesBase(ABC):
 
         :param data: data to train normalizer on
         :type data: np.array
-        :param transform: should the incoming data also be normalized? Defuaults to False
+        :param transform: should the incoming data also be normalized? Defaults to False
         :type transform: bool, optional
         :returns: None if no transform applied, np.array with normalized data if transform applied
         :rtype: None or np.array
