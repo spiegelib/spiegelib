@@ -74,7 +74,7 @@ class DatasetGenerator():
         self.normalize = normalize
 
 
-    def generate(self, size, filePrefix="", fitNormalizers=False):
+    def generate(self, size, filePrefix=""):
         """
         Generate dataset with a set of random patches
 
@@ -82,9 +82,6 @@ class DatasetGenerator():
         :type size: int
         :param filePrefix: filename prefix for output dataset, defaults to ""
         :type filePrefix: str, optional
-        :param fitNormalizers: Use this dataset to train/fit the normalizers in the
-            feature object. Defaults to False.
-        :type fitNormalizers: bool, optional
         """
 
         # Make sure audio output folder is available if we are saving audio
@@ -96,12 +93,15 @@ class DatasetGenerator():
         features = self.features.getFeatures(audio)
         patch = self.synth.getPatch()
 
+
         # Arrays to hold dataset
-        featureSet = np.zeros((size, features.shape[0], features.shape[1]), dtype=np.float32)
+        shape = list(features.shape)
+        shape.insert(0, size)
+        featureSet = np.zeros(shape, dtype=np.float32)
         patchSet = np.zeros((size, len(patch)), dtype=np.float32)
 
         # Should the features be normalized with the feature normalizers?
-        normalize = self.normalize and not fitNormalizers
+        normalize = self.normalize and self.features.hasNormalizers()
 
         # Generate data
         for i in trange(size, desc="Generating Dataset"):
@@ -117,11 +117,9 @@ class DatasetGenerator():
                     audio
                 )
 
-        # Fit feature normalizers and normalize features if required
-        if fitNormalizers:
-            results = self.features.fitNormalizers(featureSet, transform=self.normalize)
-            if self.normalize:
-                featureSet = results
+        if self.normalize and not self.features.hasNormalizers():
+            print("Fitting normalizers and normalizing data")
+            featureSet = self.features.fitNormalizers(featureSet)
 
         # Save dataset
         np.save(os.path.join(self.outputFolder, "%s%s" % (filePrefix, self.featuresFileName)), featureSet)

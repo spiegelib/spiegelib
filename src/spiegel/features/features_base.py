@@ -29,8 +29,8 @@ class FeaturesBase(ABC):
         self,
         dimensions,
         sampleRate=44100,
-        frameSizeSamples=2048,
-        hopSizeSamples=512,
+        frameSize=2048,
+        hopSize=512,
         timeMajor=False,
     ):
         """
@@ -41,8 +41,8 @@ class FeaturesBase(ABC):
 
         self.dimensions = dimensions
         self.sampleRate = sampleRate
-        self.frameSizeSamples = frameSizeSamples
-        self.hopSizeSamples = hopSizeSamples
+        self.frameSize = frameSize
+        self.hopSize = hopSize
 
         self.normalizers = [None]*self.dimensions
         self.Scaler = StandardScaler
@@ -92,12 +92,69 @@ class FeaturesBase(ABC):
         :rtype: None or np.array
         """
 
+        if len(data.shape) == 2:
+            self.fitNormalizers2D(data, transform)
+
+        elif len(data.shape) == 3:
+            self.fitNormalizers3D(data, transform)
+
+        else:
+            raise Exception("Dimensionality of dataset not supported, only 2D or 3D matrices.")
+
+
+    def fitNormalizers2D(self, data, transform=False):
+        """
+        Fit normalizers for 2-dimensional datasets
+
+        :param data: data to train normalizer on
+        :type data: np.array
+        :param transform: should the incoming data also be normalized? Defaults to False
+        :type transform: bool, optional
+        :returns: None if no transform applied, np.array with normalized data if transform applied
+        :rtype: None or np.array
+        """
+
+        # Verify data input
+        if len(data.shape) != 2:
+            raise Exception("Expected 2D array for normalized data, got %s" % data.shape)
+
+        if data.shape[1] != self.dimensions:
+            raise Exception("Expected data to have %s feature dimensions, got %s" % (
+                self.dimensions, data.shape[1]
+            ))
+
+        scaler = self.Scaler()
+        scaler.fit(data)
+        if transform:
+            scaledData = scaler.transform(data)
+
+        for i in range(self.dimensions):
+            self.setNormalizer(i, scaler)
+
+        return scaledData if transform else None
+
+
+    def fitNormalizers3D(self, data, transform=False):
+        """
+        Fit normalizers for 3-dimensional datasets
+
+        :param data: data to train normalizer on
+        :type data: np.array
+        :param transform: should the incoming data also be normalized? Defaults to False
+        :type transform: bool, optional
+        :returns: None if no transform applied, np.array with normalized data if transform applied
+        :rtype: None or np.array
+        """
+
         # Verify data input
         if len(data.shape) != 3:
             raise Exception("Expected 3D array for normalized data, got %s" % data.shape)
 
-        if data.shape[1] != self.dimensions:
-            raise Exception("Expected data to have %s feature dimensions, got %s" % (self.dimensions, data.shape[1]))
+        featureDimension = 2 if self.timeMajor else 1
+        if data.shape[featureDimension] != self.dimensions:
+            raise Exception("Expected data to have %s feature dimensions, got %s" % (
+                self.dimensions, data.shape[featureDimension]
+            ))
 
         if transform:
             scaledData = np.zeros_like(data)
@@ -107,9 +164,17 @@ class FeaturesBase(ABC):
         # Train normalizers
         for i in range(self.dimensions):
             scaler = self.Scaler()
-            scaler.fit(data[:,i,:])
+
+            if self.timeMajor:
+                scaler.fit(data[:,:,i])
+            else:
+                scaler.fit(data[:,i,:])
+
             if transform:
-                scaledData[:,i,:] = scaler.transform(data[:,i,:])
+                if self.timeMajor:
+                    scaledData[:,:,i] = scaler.transform(data[:,:,i])
+                else:
+                    scaledData[:,i,:] = scaler.transform(data[:,i,:])
 
             self.setNormalizer(i, scaler)
 
@@ -125,14 +190,36 @@ class FeaturesBase(ABC):
         :returns: normalized data
         :rtype: np.array
         """
-        normalizedData = np.zeros(data.shape, dtype=np.float32)
-        for i in range(self.dimensions):
-            if not self.normalizers[i]:
-                raise NormalizerError("Normalizers not set for features. Please set normalizers first.")
 
-            normalizedData[i,:] = self.normalizers[i].transform([data[i,:]])[0]
+        normalizedData = np.zeros(data.shape, dtype=np.float32)
+
+        if len(data.shape) == 2:
+            for i in range(self.dimensions):
+                if not self.normalizers[i]:
+                    raise NormalizerError("Normalizers not set for features. Please set normalizers first.")
+                normalizedData[i,:] = self.normalizers[i].transform([data[i,:]])[0]
+
+        elif len(data.shape) == 1:
+            normalizedData = self.normalizers[0].transform([data])[0]
+
+        else:
+            raise ValueError('Expected 1D or 2D data, got %s' % data.shape)
 
         return normalizedData
+
+
+    def hasNormalizers(self):
+        """
+        :returns: a boolean indicating whether or not normalizers have been set
+        :rtype: boolean
+        """
+
+        for normalizer in self.normalizers:
+            if normalizer == None:
+                return False
+
+        return True
+
 
 
     def saveNormalizers(self, location):

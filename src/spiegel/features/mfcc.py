@@ -44,8 +44,8 @@ class MFCC(FeaturesBase):
         features = librosa.feature.mfcc(
             y=audio,
             sr=self.sampleRate,
-            n_fft=self.frameSizeSamples,
-            hop_length=self.hopSizeSamples,
+            n_fft=self.frameSize,
+            hop_length=self.hopSize,
             n_mfcc=self.numMFCCs
         )
 
