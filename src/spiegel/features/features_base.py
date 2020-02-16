@@ -79,39 +79,34 @@ class FeaturesBase(ABC):
         self.normalizers[dimension] = normalizer
 
 
-    def fitNormalizers(self, data, transform=False):
+    def fitNormalizers(self, data):
         """
-        Fit normalizers to dataset for future transforms. Can also transform
-        the data and return a normalized version of that data.
+        Fit normalizers to dataset for future transforms.
 
         :param data: data to train normalizer on
-        :type data: np.array
-        :param transform: should the incoming data also be normalized? Defaults to False
-        :type transform: bool, optional
-        :returns: None if no transform applied, np.array with normalized data if transform applied
-        :rtype: None or np.array
+        :type data: np.ndarray
+        :returns: np.ndarray with normalized data
+        :rtype: np.ndarray
         """
 
         if len(data.shape) == 2:
-            self.fitNormalizers2D(data, transform)
+            return self.fitNormalizers2D(data)
 
         elif len(data.shape) == 3:
-            self.fitNormalizers3D(data, transform)
+            return self.fitNormalizers3D(data)
 
         else:
             raise Exception("Dimensionality of dataset not supported, only 2D or 3D matrices.")
 
 
-    def fitNormalizers2D(self, data, transform=False):
+    def fitNormalizers2D(self, data):
         """
         Fit normalizers for 2-dimensional datasets
 
         :param data: data to train normalizer on
-        :type data: np.array
-        :param transform: should the incoming data also be normalized? Defaults to False
-        :type transform: bool, optional
-        :returns: None if no transform applied, np.array with normalized data if transform applied
-        :rtype: None or np.array
+        :type data: np.ndarray
+        :returns: np.ndarray with normalized data
+        :rtype: np.ndarray
         """
 
         # Verify data input
@@ -125,25 +120,22 @@ class FeaturesBase(ABC):
 
         scaler = self.Scaler()
         scaler.fit(data)
-        if transform:
-            scaledData = scaler.transform(data)
+        scaledData = scaler.transform(data)
 
         for i in range(self.dimensions):
             self.setNormalizer(i, scaler)
 
-        return scaledData if transform else None
+        return scaledData
 
 
-    def fitNormalizers3D(self, data, transform=False):
+    def fitNormalizers3D(self, data):
         """
         Fit normalizers for 3-dimensional datasets
 
         :param data: data to train normalizer on
-        :type data: np.array
-        :param transform: should the incoming data also be normalized? Defaults to False
-        :type transform: bool, optional
-        :returns: None if no transform applied, np.array with normalized data if transform applied
-        :rtype: None or np.array
+        :type data: np.ndarray
+        :returns: np.ndarray with normalized data
+        :rtype: np.ndarray
         """
 
         # Verify data input
@@ -156,10 +148,7 @@ class FeaturesBase(ABC):
                 self.dimensions, data.shape[featureDimension]
             ))
 
-        if transform:
-            scaledData = np.zeros_like(data)
-        else:
-            scaledData = None
+        scaledData = np.zeros_like(data)
 
         # Train normalizers
         for i in range(self.dimensions):
@@ -167,14 +156,10 @@ class FeaturesBase(ABC):
 
             if self.timeMajor:
                 scaler.fit(data[:,:,i])
+                scaledData[:,:,i] = scaler.transform(data[:,:,i])
             else:
                 scaler.fit(data[:,i,:])
-
-            if transform:
-                if self.timeMajor:
-                    scaledData[:,:,i] = scaler.transform(data[:,:,i])
-                else:
-                    scaledData[:,i,:] = scaler.transform(data[:,i,:])
+                scaledData[:,i,:] = scaler.transform(data[:,i,:])
 
             self.setNormalizer(i, scaler)
 

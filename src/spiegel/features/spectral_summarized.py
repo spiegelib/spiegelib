@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Spectral Features Summarized over Time
+Spectral features summarized over time using mean and variance
 """
 
 import numpy as np
