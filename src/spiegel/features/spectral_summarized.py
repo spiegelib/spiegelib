@@ -5,6 +5,7 @@ Spectral features summarized over time using mean and variance
 
 import numpy as np
 import librosa
+from spiegel import AudioBuffer
 from spiegel.features.features_base import FeaturesBase
 
 class SpectralSummarized(FeaturesBase):
@@ -33,35 +34,44 @@ class SpectralSummarized(FeaturesBase):
         :rtype: np.array
         """
 
+        if not isinstance(audio, AudioBuffer):
+            raise TypeError('audio must be AudioBuffer, recieved %s' % type(audio))
+
+        if audio.getSampleRate() != self.sampleRate:
+            raise ValueError(
+                'audio buffer samplerate does not equal feature '
+                'extraction rate, %s != %s' % (audio.getSampleRate(), self.sampleRate)
+            )
+
         spectralCentroid = librosa.feature.spectral_centroid(
-            y=audio,
+            y=audio.getAudio(),
             sr=self.sampleRate,
             n_fft=self.frameSize,
             hop_length=self.hopSize,
         )
 
         spectralBandwidth = librosa.feature.spectral_bandwidth(
-            y=audio,
+            y=audio.getAudio(),
             sr=self.sampleRate,
             n_fft=self.frameSize,
             hop_length=self.hopSize,
         )
 
         spectralContrast = librosa.feature.spectral_contrast(
-            y=audio,
+            y=audio.getAudio(),
             sr=self.sampleRate,
             n_fft=self.frameSize,
             hop_length=self.hopSize,
         )
 
         spectralFlatness = librosa.feature.spectral_flatness(
-            y=audio,
+            y=audio.getAudio(),
             n_fft=self.frameSize,
             hop_length=self.hopSize,
         )
 
         spectralRolloff = librosa.feature.spectral_rolloff(
-            y=audio,
+            y=audio.getAudio(),
             sr=self.sampleRate,
             n_fft=self.frameSize,
             hop_length=self.hopSize,

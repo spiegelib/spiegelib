@@ -5,6 +5,7 @@ Class for Automatic Sound Matching
 
 import os
 import librosa
+from spiegel import AudioBuffer
 from spiegel.synth.synth_base import SynthBase
 from spiegel.features.features_base import FeaturesBase, NormalizerError
 from spiegel.estimator.estimator_base import EstimatorBase
@@ -60,7 +61,7 @@ class SoundMatch():
         Attempt to estimate parameters for target audio
 
         :param target: input audio to use as target
-        :type target: np.ndarray
+        :type target: :class:`spiegel.core.audio_buffer.AudioBuffer`
         """
 
         # Attempt to run feature extraction with normalization first
@@ -94,5 +95,5 @@ class SoundMatch():
         :rtype: np.ndarray
         """
 
-        target, _ = librosa.core.load(audioPath, sr=self.features.sampleRate)
+        target = AudioBuffer(audioPath, self.features.sampleRate)
         return self.match(target)

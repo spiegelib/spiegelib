@@ -11,6 +11,12 @@ import scipy.io.wavfile
 
 class AudioBuffer():
     """
+    :param input: Can be an array of audio samples (np.ndarray or list), or a path
+        to a location of an audio file on disk. Defaults to None.
+    :type input: optional, np.ndarray, list, str, file-like object
+    :param sampleRate: rate of sampled audio if audio data was passed in, or rate
+        to resample audio data loaded from disk at, defaults to None.
+    :type sampleRate: optional, int
     """
 
     def __init__(self, input=None, sampleRate=None):
@@ -29,7 +35,7 @@ class AudioBuffer():
         # a path to an audio file
         if isinstance(input, np.ndarray):
             audio = input
-        elif isinstance(input, list) and ininstance(input[0], numbers.Number):
+        elif isinstance(input, list) and isinstance(input[0], numbers.Number):
             audio = np.array(input)
         elif input:
             path = input
@@ -48,6 +54,25 @@ class AudioBuffer():
         elif audioSet and not sampleRate:
             raise Exception('Sample rate is required when initializing with audio data')
 
+
+    def getAudio(self):
+        """
+        Getter for audio data
+
+        :returns: Array of audio samples
+        :rtype: np.ndarray
+        """
+        return self.audioData
+
+
+    def getSampleRate(self):
+        """
+        Getter for sample rate
+
+        :returns: Sample rate of audio buffer
+        :rtype: int
+        """
+        return self.sampleRate
 
 
     def replaceAudioData(self, audio, sampleRate):
@@ -96,7 +121,7 @@ class AudioBuffer():
 
         audio = self.audioData
         if normalize:
-            audio = peakNormalize(audio)
+            audio = AudioBuffer.peakNormalize(audio)
 
         scipy.io.wavfile.write(
             path,

@@ -5,6 +5,7 @@ MFCC Audio Feature Extractor
 
 import numpy as np
 import librosa
+from spiegel import AudioBuffer
 from spiegel.features.features_base import FeaturesBase
 
 class MFCC(FeaturesBase):
@@ -34,15 +35,24 @@ class MFCC(FeaturesBase):
         Normalization should be applied based on the normalize parameter.
 
         :param audio: Audio to process features on
-        :type audio: np.array
+        :type audio: :class:`spiegel.core.audio_buffer.AudioBuffer`
         :param normalize: Whether or not the features are normalized, defaults to False
         :type normalize: bool, optional
         :returns: results from audio feature extraction
         :rtype: np.array
         """
 
+        if not isinstance(audio, AudioBuffer):
+            raise TypeError('audio must be AudioBuffer, recieved %s' % type(audio))
+
+        if audio.getSampleRate() != self.sampleRate:
+            raise ValueError(
+                'audio buffer samplerate does not equal feature '
+                'extraction rate, %s != %s' % (audio.getSampleRate(), self.sampleRate)
+            )
+
         features = librosa.feature.mfcc(
-            y=audio,
+            y=audio.getAudio(),
             sr=self.sampleRate,
             n_fft=self.frameSize,
             hop_length=self.hopSize,

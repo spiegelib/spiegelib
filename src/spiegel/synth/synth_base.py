@@ -135,10 +135,10 @@ class SynthBase(ABC):
     def getAudio(self):
         """
         This method must be overridden and should return an audio buffer rendered
-        durinf the last call to renderPatch.
+        during the last call to renderPatch.
 
         :return: An audio buffer of float audio samples with a value between -1 & 1
-        :rtype: np.array
+        :rtype: :class:`spiegel.core.audio_buffer.AudioBuffer`
         """
         pass
 

@@ -111,11 +111,7 @@ class DatasetGenerator():
 
             # Save rendered audio if required
             if self.saveAudio:
-                scipy.io.wavfile.write(
-                    os.path.join(self.audioFolderPath, "%soutput_%s.wav" % (filePrefix, i)),
-                    self.synth.sampleRate,
-                    audio
-                )
+                audio.save(os.path.join(self.audioFolderPath, "%soutput_%s.wav" % (filePrefix, i)))
 
         if self.normalize and not self.features.hasNormalizers():
             print("Fitting normalizers and normalizing data")

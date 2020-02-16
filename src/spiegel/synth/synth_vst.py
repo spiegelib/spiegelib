@@ -10,6 +10,7 @@ and audio rendered for further processing.
 
 from __future__ import print_function
 import numpy as np
+from spiegel import AudioBuffer
 from spiegel.synth.synth_base import SynthBase
 import librenderman as rm
 
@@ -113,16 +114,16 @@ class SynthVST(SynthBase):
         """
         Return monophonic audio from rendered patch
 
-        :return: An audio signal of the rendered patch
-        :rtype: 1D np.array
+        :return: An audio buffer of the rendered patch
+        :rtype: :class:`spiegel.core.audio_buffer.AudioBuffer`
         """
+
         if self.renderedPatch:
-            audio = np.array(self.engine.get_audio_frames())
+            audio = AudioBuffer(self.engine.get_audio_frames(), self.sampleRate)
             return audio
 
         else:
-            print("Please render patch first.")
-            return np.array([])
+            raise Exception('Patch must be rendered before audio can be retrieved')
 
 
     def randomizePatch(self):
