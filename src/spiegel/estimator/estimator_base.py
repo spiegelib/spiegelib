@@ -11,8 +11,7 @@ class EstimatorBase(ABC):
         """
         Constructor
         """
-
-        super().__init__()
+        pass
 
 
     @abstractmethod
