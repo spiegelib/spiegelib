@@ -121,7 +121,7 @@ class AudioBuffer():
 
         audio = self.audioData
         if normalize:
-            audio = AudioBuffer.peakNormalize(audio)
+            audio = AudioBuffer.peakNormalize(np.copy(audio))
 
         scipy.io.wavfile.write(
             path,
