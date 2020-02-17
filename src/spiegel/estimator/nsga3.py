@@ -5,6 +5,7 @@ Non-dominated Sorting Genetic Algorithm with multiple objectives
 
 import numpy as np
 import random
+from tqdm import tqdm
 
 from deap import algorithms
 from deap import base
@@ -73,8 +74,8 @@ class NSGA3(EstimatorBase):
         ref_points = tools.uniform_reference_points(self.numObjectives, 12)
 
         self.toolbox.register("evaluate", self.fitness)
-        self.toolbox.register("mate", tools.cxTwoPoint)
-        self.toolbox.register("mutate", tools.mutFlipBit, indpb=0.05)
+        self.toolbox.register("mate", tools.cxSimulatedBinaryBounded, low=0.0, up=1.0, eta=30.0)
+        self.toolbox.register("mutate", tools.mutPolynomialBounded, low=0.0, up=1.0, eta=20.0, indpb=1.0/self.numParams)
         self.toolbox.register("select", tools.selNSGA3, ref_points=ref_points)
 
 
@@ -123,10 +124,11 @@ class NSGA3(EstimatorBase):
 
         record = stats.compile(pop)
         logbook.record(gen=0, evals=len(invalid_ind), **record)
-        print(logbook.stream)
+        #print(logbook.stream)
 
                 # Begin the generational process
-        for gen in range(1, 25):
+        pbar = tqdm(range(1, 25), desc="Generation 1")
+        for gen in pbar:
             offspring = algorithms.varAnd(pop, self.toolbox, 0.5, 0.5)
 
             # Evaluate the individuals with an invalid fitness
@@ -141,6 +143,6 @@ class NSGA3(EstimatorBase):
             # Compile statistics about the new population
             record = stats.compile(pop)
             logbook.record(gen=gen, evals=len(invalid_ind), **record)
-            print(logbook.stream)
+            pbar.set_description("Generation %s" % gen)
 
         return tools.selBest(pop, 1)[0]
