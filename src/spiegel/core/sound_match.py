@@ -70,11 +70,6 @@ class SoundMatch():
         except NormalizerError:
             features = self.features.getFeatures(target)
 
-        if features.shape != self.estimator.inputShape:
-            raise Exception('Features shape does not match estimator input shape. %s != %s' % (
-                features.shape, self.estimator.inputShape
-            ))
-
         # Estimate parameters
         params = self.estimator.predict(features)
 
