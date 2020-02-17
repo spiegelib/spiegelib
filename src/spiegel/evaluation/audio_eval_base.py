@@ -4,9 +4,10 @@ Abstract Base Class for evaluating audio files
 """
 
 from abc import ABC, abstractmethod
+import numpy as np
 from spiegel import AudioBuffer
 
-class AudioEvalBase(ABS):
+class AudioEvalBase(ABC):
     """
     Pass in a list of target AudioBuffers and lists of estimated AudioBuffers for
     each target AudioBuffer.
@@ -20,12 +21,19 @@ class AudioEvalBase(ABS):
     :param estimatedList: List of lists of :class:`spiegel.core.audio_buffer.AudioBuffer` objects.
         There must be as many lists as there are targets, and each of those lists contain
         AudioBuffers that are estimations for the associated target AudioBuffer.
+    :type estimatedList: list
+    :param sampleRate: If set, will resample all input audio to that rate, otherwise will
+        try to determine sample rate based on input AudioBuffers. Defaults to None
+    :type sampleRate: optional, int, None
     """
 
-    def __init__(self, targetList, estimatedList):
+    def __init__(self, targetList, estimatedList, sampleRate=None):
         """
         Constructor
         """
+
+        if not isinstance(targetList, list):
+            raise TypeError("Expected targetList to be a list")
 
         if not AudioEvalBase.verifyInputList(targetList):
             raise TypeError("All target list items must be of type AudioBuffer")
@@ -45,9 +53,10 @@ class AudioEvalBase(ABS):
 
         self.estimatedList = estimatedList
         self.scores = {}
+        self.sampleRate = sampleRate if sampleRate else self.targetList[0].getSampleRate()
 
 
-    def getScores():
+    def getScores(self):
         """
         :returns: Return scores calculated during evaluation
         :rtype: dict
@@ -63,12 +72,42 @@ class AudioEvalBase(ABS):
 
 
     @abstractmethod
-    def evaluate():
+    def evaluate(self):
         """
         Abstract method. Must be implemented and run evaluation. Results should be
         stored in scores member variable.
         """
         pass
+
+
+    @staticmethod
+    def absoluteMeanError(A, B):
+        """
+        Calculates absolute mean error between two arrays. Mean(ABS(A-B)).
+
+        :param A: First array (Ground Truth)
+        :type A: np.ndarray
+        :param B: Second array (Prediction)
+        :type B: np.ndarray
+        :returns: absolue mean error value
+        :rtype: float
+        """
+        return np.mean(np.abs(A-B).flatten())
+
+
+    @staticmethod
+    def meanSquaredError(A, B):
+        """
+        Calculates mean squared error between two arrays. Mean(Square(A-B)).
+
+        :param A: First array (Ground Truth)
+        :type A: np.ndarray
+        :param B: Second array (Prediction)
+        :type B: np.ndarray
+        :returns: absolue mean error value
+        :rtype: float
+        """
+        return np.mean(np.square(A-B).flatten())
 
 
     @staticmethod

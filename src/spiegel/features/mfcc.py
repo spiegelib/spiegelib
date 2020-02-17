@@ -12,12 +12,7 @@ class MFCC(FeaturesBase):
     """
     :param numMFCCs: number of mffcs to return per frame, defaults to 20
     :type numMFCCs: int, optional
-    :param sampleRate: Audio sample rate, defaults to 44100
-    :type sampleRate: int, optional
-    :param frameSizeSamples: frame size in audio samples, defaults to 2048
-    :type frameSizeSamples: int, optional
-    :param hopSizeSamples: hop size in audio samples, defaults to 512
-    :type hopSizeSamples: int, optional
+    :param kwargs: keyword arguments for base class, see :class:`spiegel.features.features_base.FeaturesBase`.
     """
 
     def __init__(self, numMFCCs=20, **kwargs):
