@@ -1,0 +1,344 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Contribution Guide &mdash; SPIEGEL 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="LSTM Class" href="lstm.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> SPIEGEL
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="core.html">Core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="synth.html">Synth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="features.html">Audio Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="estimators.html">Estimators</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Contribution Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#general">General</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SPIEGEL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Contribution Guide</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/contributing.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="contribution-guide">
+<h1>Contribution Guide<a class="headerlink" href="#contribution-guide" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="general">
+<h2>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h2>
+<p>Contributions to <em>spiegel</em> are welcome and encouraged. See the following
+instructions to get setup for development.</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>It is recommended to develop inside of an <a class="reference external" href="https://www.continuum.io/">anaconda</a>
+virtual environment. These instructions are for setting up for development within a
+<code class="docutils literal notranslate"><span class="pre">conda</span></code> env, see <a class="reference external" href="https://www.anaconda.com/distribution/#download-section">installation instructions</a> for anaconda,
+download and install the python 3 version.</p>
+<ol class="arabic">
+<li><p>Clone the repo:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/jorshi/spiegel
+</pre></div>
+</div>
+</li>
+<li><p>Create a new <code class="docutils literal notranslate"><span class="pre">conda</span></code> from environment file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd spiegel
+$ conda env create -f spiegel-env.yml
+
+. . .
+
+#
+# To activate this environment, use
+#
+#     $ conda activate spiegel-env
+#
+# To deactivate an active environment, use
+#
+#     $ conda deactivate
+</pre></div>
+</div>
+</li>
+<li><p>Activate the <code class="docutils literal notranslate"><span class="pre">conda</span></code> env:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda activate spiegel-env
+</pre></div>
+</div>
+</li>
+<li><p>Add <em>spiegel</em> in development mode to <code class="docutils literal notranslate"><span class="pre">conda</span></code> environment:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install -e .
+</pre></div>
+</div>
+</li>
+<li><p>Install librenderman (Mac OSX only currently)</p>
+<blockquote>
+<div><p><a class="reference external" href="https://github.com/fedden/RenderMan">librenderman</a> is a python library for programmatically interacting with VST synthesizers.
+It uses <a class="reference external" href="https://www.boost.org/doc/libs/1_66_0/libs/python/doc/html/index.html">boost-python</a> to wrap
+a <a class="reference external" href="https://juce.com/">JUCE</a> application. Getting it running inside of a <code class="docutils literal notranslate"><span class="pre">conda</span></code> env is not the most
+straightforward thing and hopefully we can work to get it packaged in anaconda at some point. But, for now:</p>
+<ol class="loweralpha">
+<li><p><a class="reference external" href="https://shop.juce.com/get-juce">Download and install JUCE</a></p></li>
+<li><p>If you haven’t already, move out of the <em>spiegel</em> project directory to somewhere you would like to download librenderman</p></li>
+<li><p>Clone the librenderman repo:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/fedden/RenderMan.git
+</pre></div>
+</div>
+</li>
+</ol>
+<ol class="loweralpha" start="5">
+<li><p>Open the RenderMan python3 jucer file in ProJucer:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd RenderMan
+$ open RenderMan-py36.jucer
+</pre></div>
+</div>
+</li>
+<li><p>Update Xcode exporter</p>
+<blockquote>
+<div><p>For the Xcode (MacOSX) exporter modify the <em>Extra Linker Flags</em>: remove <code class="docutils literal notranslate"><span class="pre">-lpython3.6m</span></code>
+Change <code class="docutils literal notranslate"><span class="pre">-lboost-python</span></code> to <code class="docutils literal notranslate"><span class="pre">-lboost-python37</span></code> and add <code class="docutils literal notranslate"><span class="pre">-undefined</span> <span class="pre">dynamic_lookup</span></code></p>
+<img alt="_images/linker_flags.png" src="_images/linker_flags.png" />
+</div></blockquote>
+</li>
+<li><p>Update Xcode Debug export</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">A sub category of the Xcode (MacOSX) exporter is the Debug specific options. Here we want
+to change the header and library search paths to look for headers and libs in our <code class="docutils literal notranslate"><span class="pre">conda</span></code> env.
+The exact location will depend on where your <code class="docutils literal notranslate"><span class="pre">conda</span></code> environments are on your system, which was
+determined when you installed anaconda. The default location on MacOSX is <code class="docutils literal notranslate"><span class="pre">/Users/&lt;your-username&gt;/anaconda3</span></code>.</div>
+<div class="line"><br /></div>
+<div class="line">The following instructions will refer to that location, whatever it is on your system, as <code class="docutils literal notranslate"><span class="pre">&lt;path-to-anaconda3&gt;</span></code>.</div>
+<div class="line"><br /></div>
+<div class="line">For the <em>Header Search Paths</em>, remove the existing paths and add <code class="docutils literal notranslate"><span class="pre">&lt;path-to-anaconda3&gt;/envs/spiegel-env/include</span></code> and
+<code class="docutils literal notranslate"><span class="pre">&lt;path-to-anaconda3&gt;/envs/spiegel-env/include/python3.7m</span></code>.</div>
+<div class="line"><br /></div>
+<div class="line">Using the default anaconda path:</div>
+</div>
+<img alt="_images/header_search_paths.png" src="_images/header_search_paths.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line">For the <em>Extra Library Search Paths</em>, remove the existing paths and add <code class="docutils literal notranslate"><span class="pre">&lt;path-to-anaconda3&gt;/envs/spiegel-env/lib</span></code></div>
+<div class="line"><br /></div>
+<div class="line">Using the default anaconda path:</div>
+</div>
+<img alt="_images/extra_lib_path.png" src="_images/extra_lib_path.png" />
+</div></blockquote>
+</li>
+<li><p>Open Xcode and build</p>
+<blockquote>
+<div><p>Open Xcode from the Projucer by clicking on the Xcode icon</p>
+<img alt="_images/Xcode_projucer.png" src="_images/Xcode_projucer.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Build the library in Xcode</p>
+<img alt="_images/build_xcode.png" src="_images/build_xcode.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Celebrate successful build!</p>
+</div></blockquote>
+</li>
+<li><p>Rename the built library and move to conda env:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd &lt;path-to-RenderMan&gt;/Builds/MacOSX/build/Debug
+$ mv librenderman.so.dylib librenderman.so
+$ mv librenderman.so &lt;path-to-anaconda3&gt;/envs/spiegel-env/lib/python3.7/site-packages/
+</pre></div>
+</div>
+</li>
+<li><p>Test librenderman. Make sure the <code class="docutils literal notranslate"><span class="pre">conda</span></code> <em>spiegel-env</em> is activated before running python:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python
+&gt;&gt;&gt; import librenderman as rm
+JUCE v&lt;Juce version&gt;
+&gt;&gt;&gt; engine = rm.RenderEngine(44100, 512, 512)
+&gt;&gt;&gt;
+</pre></div>
+</div>
+</li>
+</ol>
+</div></blockquote>
+</li>
+</ol>
+<p>If you made it this far without errors, then you should be good to go!</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="lstm.html" class="btn btn-neutral float-left" title="LSTM Class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, University of Victoria
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

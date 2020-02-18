@@ -1,0 +1,375 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>SynthVST Class &mdash; SPIEGEL 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="SynthBase Class" href="synth_base.html" />
+    <link rel="prev" title="Synth Classes" href="synth.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> SPIEGEL
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="core.html">Core</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="synth.html">Synth</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">     SynthVST</a></li>
+<li class="toctree-l2"><a class="reference internal" href="synth_base.html">     SynthBase</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="features.html">Audio Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="estimators.html">Estimators</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contribution Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SPIEGEL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="synth.html">Synth Classes</a> &raquo;</li>
+        
+      <li>SynthVST Class</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/synth_vst.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-spiegel.synth.synth_vst">
+<span id="synthvst-class"></span><span id="synth-vst"></span><h1>SynthVST Class<a class="headerlink" href="#module-spiegel.synth.synth_vst" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference internal" href="#spiegel.synth.synth_vst.SynthVST" title="spiegel.synth.synth_vst.SynthVST"><code class="xref py py-class docutils literal notranslate"><span class="pre">SynthVST</span></code></a> is a class for interacting with VST synthesizer plugins.</p>
+<p>This class relies on the librenderman package developed by Leon Feddon for interacting
+with VSTs. A VST can be loaded, parameters displayed and modified, random patches generated,
+and audio rendered for further processing.</p>
+<dl class="class">
+<dt id="spiegel.synth.synth_vst.SynthVST">
+<em class="property">class </em><code class="sig-prename descclassname">spiegel.synth.synth_vst.</code><code class="sig-name descname">SynthVST</code><span class="sig-paren">(</span><em class="sig-param">pluginPath=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_vst.SynthVST" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="synth_base.html#spiegel.synth.synth_base.SynthBase" title="spiegel.synth.synth_base.SynthBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegel.synth.synth_base.SynthBase</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pluginPath</strong> (<em>str</em><em>, </em><em>optional</em>) – path to vst plugin binary, defaults to None</p></li>
+<li><p><strong>arguments</strong> (<em>keyword</em>) – see <a class="reference internal" href="synth_base.html#spiegel.synth.synth_base.SynthBase" title="spiegel.synth.synth_base.SynthBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegel.synth.synth_base.SynthBase</span></code></a> for details</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="spiegel.synth.synth_vst.SynthVST.getAudio">
+<code class="sig-name descname">getAudio</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_vst.SynthVST.getAudio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return monophonic audio from rendered patch</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>An audio signal of the rendered patch</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>1D np.array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.synth.synth_vst.SynthVST.getParameters">
+<code class="sig-name descname">getParameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_vst.SynthVST.getParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns parameters for the synth</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A dictionary of parameters with the parameter index (int) as the key
+and the parameter name short description as the value</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Dictionary</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.synth.synth_vst.SynthVST.getPatch">
+<code class="sig-name descname">getPatch</code><span class="sig-paren">(</span><em class="sig-param">skipOverridden=True</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_vst.SynthVST.getPatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get current patch</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>skipOverridden</strong> (<em>bool</em><em>, </em><em>optional</em>) – Indicates whether to remove overridden parameters from results,
+defaults to True</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.synth.synth_vst.SynthVST.getRandomExample">
+<code class="sig-name descname">getRandomExample</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_vst.SynthVST.getRandomExample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns audio from a new random patch</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>An audio buffer</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>np.array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.synth.synth_vst.SynthVST.isValidParameterSetting">
+<code class="sig-name descname">isValidParameterSetting</code><span class="sig-paren">(</span><em class="sig-param">parameter</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_vst.SynthVST.isValidParameterSetting" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks to see if a parameter is valid for the currently loaded synth.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>parameter</strong> (<em>tuple</em>) – A parameter tuple with form <cite>(parameter_index, parameter_value)</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.synth.synth_vst.SynthVST.loadPatch">
+<code class="sig-name descname">loadPatch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_vst.SynthVST.loadPatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update patch parameter. Overridden parameters will not be effected.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.synth.synth_vst.SynthVST.loadPlugin">
+<code class="sig-name descname">loadPlugin</code><span class="sig-paren">(</span><em class="sig-param">pluginPath</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_vst.SynthVST.loadPlugin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a synth VST plugin</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pluginPath</strong> (<em>str</em>) – path to vst plugin binary</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.synth.synth_vst.SynthVST.randomizePatch">
+<code class="sig-name descname">randomizePatch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_vst.SynthVST.randomizePatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Randomize the current patch. Overridden parameteres will be unaffected.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.synth.synth_vst.SynthVST.renderPatch">
+<code class="sig-name descname">renderPatch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_vst.SynthVST.renderPatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Render the current patch. Uses the values of midiNote, midiVelocity, noteLengthSecs,
+and renderLengthSecs to render audio. Plugin must be loaded first.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.synth.synth_vst.SynthVST.setOverriddenParameters">
+<code class="sig-name descname">setOverriddenParameters</code><span class="sig-paren">(</span><em class="sig-param">parameters</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_vst.SynthVST.setOverriddenParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override parameters with specific values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>parameters</strong> – List of parameter tuples with parameter index and parameter
+value that will be patched and then the parameter frozen.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.synth.synth_vst.SynthVST.setPatch">
+<code class="sig-name descname">setPatch</code><span class="sig-paren">(</span><em class="sig-param">parameters</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_vst.SynthVST.setPatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a new patch with updated parameter values with a list of flaots or a
+list of tuples referring to parameter indices and values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>parameters</strong> (<em>list</em>) – A list of floats or tuples. If passing in a list of numbers,
+the length must be either the number of non-overridden parameters of the
+number of total parameters for this synth. Parameter values will then be
+mapped to corresponding parameter in order. If a list of tuples is provided,
+the tuples must have the shape (int, float) where the int is the parameter
+number and the float is the parameter value.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="spiegel.synth.synth_vst.parseParameters">
+<code class="sig-prename descclassname">spiegel.synth.synth_vst.</code><code class="sig-name descname">parseParameters</code><span class="sig-paren">(</span><em class="sig-param">paramStr</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_vst.parseParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse parameter string return by librenderman into a dictionary keyed on parameter
+index with values being the name / short descriptions for the parameter at that index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>paramStr</strong> (<em>str</em>) – A parameter decription string returned by librenderman</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary with parameter index as keys and parameter name / description for values</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="synth_base.html" class="btn btn-neutral float-right" title="SynthBase Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="synth.html" class="btn btn-neutral float-left" title="Synth Classes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, University of Victoria
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

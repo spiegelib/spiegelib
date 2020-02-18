@@ -1,0 +1,357 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>LSTM Class &mdash; SPIEGEL 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contribution Guide" href="contributing.html" />
+    <link rel="prev" title="TFEstimatorBase" href="tf_estimator_base.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> SPIEGEL
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="core.html">Core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="synth.html">Synth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="features.html">Audio Features</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="estimators.html">Estimators</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="estimator_base.html">     EstimatorBase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tf_estimator_base.html">TFEstimatorBase</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">LSTM</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contribution Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SPIEGEL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="estimators.html">Estimator Classes</a> &raquo;</li>
+        
+      <li>LSTM Class</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/lstm.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-spiegel.estimator.lstm">
+<span id="lstm-class"></span><span id="lstm"></span><h1>LSTM Class<a class="headerlink" href="#module-spiegel.estimator.lstm" title="Permalink to this headline">¶</a></h1>
+<p>LSTM Deep Learning Model</p>
+<p>Based on model proposed by Yee-King et al.</p>
+<p>“Automatic programming of VST sound synthesizers using deep networks and other techniques.”
+Yee-King, Matthew John, Leon Fedden, and Mark d’Inverno.
+IEEE Transactions on Emerging Topics in Computational Intelligence 2.2 (2018): 150-159.</p>
+<dl class="class">
+<dt id="spiegel.estimator.lstm.LSTM">
+<em class="property">class </em><code class="sig-prename descclassname">spiegel.estimator.lstm.</code><code class="sig-name descname">LSTM</code><span class="sig-paren">(</span><em class="sig-param">inputShape</em>, <em class="sig-param">numOutputs</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.lstm.LSTM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="tf_estimator_base.html#spiegel.estimator.tf_estimator_base.TFEstimatorBase" title="spiegel.estimator.tf_estimator_base.TFEstimatorBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegel.estimator.tf_estimator_base.TFEstimatorBase</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputShape</strong> (<em>tuple</em>) – Shape of matrix that will be passed to model input</p></li>
+<li><p><strong>numOutputs</strong> – Number of outputs the model has</p></li>
+<li><p><strong>kwargs</strong> – optional keyword arguments to pass to <code class="xref py py-class docutils literal notranslate"><span class="pre">spiegel.estimator.TFEstimatorBase</span></code></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="spiegel.estimator.lstm.LSTM.addTestingData">
+<code class="sig-name descname">addTestingData</code><span class="sig-paren">(</span><em class="sig-param">input</em>, <em class="sig-param">output</em>, <em class="sig-param">batchSize=64</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.lstm.LSTM.addTestingData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a tf Dataset from input and output for model testing, batches data if desired</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input</strong> (<em>np.array</em>) – matrix of data to use as testing data</p></li>
+<li><p><strong>output</strong> (<em>np.array</em>) – matrix of data to use as ground truth for testing data</p></li>
+<li><p><strong>batchSize</strong> (<em>int</em><em>, </em><em>optional</em>) – If provided, will batch data into batches of this size,
+set to None or 0 to prevent batching. defaults to 64</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.estimator.lstm.LSTM.addTrainingData">
+<code class="sig-name descname">addTrainingData</code><span class="sig-paren">(</span><em class="sig-param">input</em>, <em class="sig-param">output</em>, <em class="sig-param">batchSize=64</em>, <em class="sig-param">shuffleSize=None</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.lstm.LSTM.addTrainingData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a tf Dataset from input and output, and shuffles / batches data for training</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input</strong> (<em>np.ndarray</em>) – matrix of training data</p></li>
+<li><p><strong>output</strong> (<em>np.ndarray</em>) – matrix of training data ground truth</p></li>
+<li><p><strong>batchSize</strong> (<em>int</em><em>, </em><em>optional</em>) – If provided, will batch data into batches of this size,
+set to None or 0 to prevent batching. defaults to 64</p></li>
+<li><p><strong>shuffleSize</strong> – If provided, will shuffle data with a buffer size of
+shuffleSize, defaults to None, so shuffling does not occur</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.estimator.lstm.LSTM.buildModel">
+<code class="sig-name descname">buildModel</code><span class="sig-paren">(</span><em class="sig-param">hiddenSize=100</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.lstm.LSTM.buildModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct LSTM Model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>hiddenSize</strong> (<em>int</em><em>, </em><em>optional</em>) – dimensionality of outer space of hidden layers, defaults to 100</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.estimator.lstm.LSTM.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">epochs=1</em>, <em class="sig-param">callbacks=[]</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.lstm.LSTM.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train model on for a fixed number of epochs on training data and validation
+data if it has been added to this estimator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>epochs</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of epochs to train model on, defaults to 1</p></li>
+<li><p><strong>callbacks</strong> (<em>list</em><em>, </em><em>optional</em>) – List of callback functions for training, defaults to []</p></li>
+<li><p><strong>kwargs</strong> – Keyword args passed to model fit method. See <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/Model#fit">Tensflow Docs</a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.estimator.lstm.LSTM.loadModelFromCheckpoint">
+<code class="sig-name descname">loadModelFromCheckpoint</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.lstm.LSTM.loadModelFromCheckpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load model weights from checkpoint</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.estimator.lstm.LSTM.loadWeights">
+<code class="sig-name descname">loadWeights</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.lstm.LSTM.loadWeights" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load model weights from H5 or TensorFlow file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> (<em>string</em>) – filepath to saved model weights</p></li>
+<li><p><strong>kwargs</strong> – optional keyword arguments passed to tf load_weights methods, see  <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/Model#load_weights">TensorFlow Docs</a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.estimator.lstm.LSTM.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">input</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.lstm.LSTM.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run prediction on input</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>input</strong> (<em>np.array</em>) – matrix of input data to run predictions on. Can be a single
+instance of data or a batch.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.estimator.lstm.LSTM.rootMeanSquaredError">
+<em class="property">static </em><code class="sig-name descname">rootMeanSquaredError</code><span class="sig-paren">(</span><em class="sig-param">labels</em>, <em class="sig-param">prediction</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.lstm.LSTM.rootMeanSquaredError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Static method for calculating root mean squared error between predictions and targets</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>labels</strong> (<em>Tensor</em>) – Matrix of ground truth labels</p></li>
+<li><p><strong>prediction</strong> (<em>Tensor</em>) – Matrix of predictions</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.estimator.lstm.LSTM.saveWeights">
+<code class="sig-name descname">saveWeights</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.lstm.LSTM.saveWeights" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save model weights to a HDF5 or TensorFlow file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> (<em>string</em>) – filepath to save model weights.  Using a file suffix of
+‘.h5’ or ‘.keras’ will save in HDF5 format. Otherwise will save as TensorFlow.</p></li>
+<li><p><strong>kwargs</strong> – optional keyword arguments passed to tf save_weights method,  see <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/Model#save_weights">Tensflow Docs</a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="contributing.html" class="btn btn-neutral float-right" title="Contribution Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="tf_estimator_base.html" class="btn btn-neutral float-left" title="TFEstimatorBase" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, University of Victoria
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
