@@ -182,7 +182,11 @@ class FeaturesBase(ABC):
             for i in range(self.dimensions):
                 if not self.normalizers[i]:
                     raise NormalizerError("Normalizers not set for features. Please set normalizers first.")
-                normalizedData[i,:] = self.normalizers[i].transform([data[i,:]])[0]
+                
+                if self.timeMajor:
+                    normalizedData[:,i] = self.normalizers[i].transform([data[:,i]])[0]
+                else:
+                    normalizedData[i,:] = self.normalizers[i].transform([data[i,:]])[0]
 
         elif len(data.shape) == 1:
             normalizedData = self.normalizers[0].transform([data])[0]

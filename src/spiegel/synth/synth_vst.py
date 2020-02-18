@@ -68,9 +68,10 @@ class SynthVST(SynthBase):
         # Check for parameters to include in patch update
         for param in self.patch:
             if not self.isValidParameterSetting(param):
-                raise Excpetion(
-                    'Parameter %s is invalid. Must be a valid'
-                    'parameter number and be in range 0-1' % param[0]
+                raise Exception(
+                    'Parameter %s is invalid. Must be a valid '
+                    'parameter number and be in range 0-1. '
+                    'Received %s' % param
                 )
 
         # Patch VST with parameters
