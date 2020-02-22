@@ -47,10 +47,14 @@ class SynthBase(ABC):
         if len(self.overriddenParameters) > 0:
             self.overriddenParameters.sort(key=lambda tup: tup[0])
         self.normaliseAudio = kwargs.get('normaliseAudio', False)
+        self.clampParams = kwargs.get('clampParams', True)
 
         self.renderedPatch = False
         self.parameters = None
         self.patch = None
+
+        # Parameter range defaults to [0.0, 1.0]
+        self.paramRange = (0.0, 1.0)
 
 
     def setPatch(self, parameters):
@@ -108,7 +112,11 @@ class SynthBase(ABC):
         # Update patch member variable with new patch, skipping any overridden params
         for param in newPatch:
             if not param[0] in overriddenIndices:
-                self.patch[param[0]] = (param[0], param[1])
+                value = param[1]
+                if self.clampParams:
+                    value = max(min(value, self.paramRange[1]), self.paramRange[0])
+
+                self.patch[param[0]] = (param[0], value)
 
         # Load new patch into synth engine
         self.renderedPatch = False
