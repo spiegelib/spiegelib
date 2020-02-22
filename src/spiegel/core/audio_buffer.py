@@ -3,6 +3,7 @@
 Class for handling audio signals
 """
 
+import os
 import numbers
 import numpy as np
 import librosa
@@ -143,3 +144,29 @@ class AudioBuffer():
             audio /= maxSample
 
         return audio
+
+
+    @staticmethod
+    def loadFolder(path):
+        """
+        Try to load a folder of audio samples
+
+        :param path: Path to directory of audio files
+        :type path: str
+        :returns: list of :class:`spiegel.core.audio_buffer.AudioBuffer`
+        :rtype: list
+        """
+
+        absPath = os.path.abspath(path)
+        if not (os.path.exists(absPath) and os.path.isdir(absPath)):
+            raise ValueError('%s is not a directory' % path)
+
+        audioFiles = []
+        for file in os.scandir(absPath):
+            try:
+                audioFile = AudioBuffer(os.path.join(absPath, file.name))
+                audioFiles.append(audioFile)
+            except:
+                pass
+
+        return audioFiles
