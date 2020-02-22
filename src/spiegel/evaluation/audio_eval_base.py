@@ -35,8 +35,7 @@ class AudioEvalBase(ABC):
         if not isinstance(targetList, list):
             raise TypeError("Expected targetList to be a list")
 
-        if not AudioEvalBase.verifyInputList(targetList):
-            raise TypeError("All target list items must be of type AudioBuffer")
+        AudioEvalBase.verifyInputList(targetList)
 
         self.numTargets = len(targetList)
         self.targetList = targetList
@@ -48,8 +47,7 @@ class AudioEvalBase(ABC):
             if not isinstance(item, list):
                 raise TypeError("Expected list of lists of AudioBuffers for estimatedList")
 
-            if not AudioEvalBase.verifyInputList(item):
-                raise TypeError("All estimated list items must be of type AudioBuffer")
+            AudioEvalBase.verifyInputList(item)
 
         self.estimatedList = estimatedList
         self.scores = {}
@@ -118,6 +116,6 @@ class AudioEvalBase(ABC):
 
         for item in inputList:
             if not isinstance(item, AudioBuffer):
-                return False
+                raise TypeError('Must be an AudioBuffer, received %s' % type(item))
 
         return True

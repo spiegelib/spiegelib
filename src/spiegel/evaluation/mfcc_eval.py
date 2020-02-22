@@ -49,7 +49,7 @@ class MFCCEval(AudioEvalBase):
 
             for j in range(len(self.estimatedList[i])):
                 estimatedMFCCs = mfcc.getFeatures(self.estimatedList[i][j])
-                targetResults['estimation_%s' % i] = {
+                targetResults['estimation_%s' % j] = {
                     'absoluteMeanError': AudioEvalBase.absoluteMeanError(targetMFCCs, estimatedMFCCs),
                     'meanSquaredError': AudioEvalBase.meanSquaredError(targetMFCCs, estimatedMFCCs),
                 }

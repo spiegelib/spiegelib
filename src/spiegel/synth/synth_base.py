@@ -39,7 +39,7 @@ class SynthBase(ABC):
 
         self.sampleRate = kwargs.get('sampleRate', 44100)
         self.bufferSize = kwargs.get('bufferSize', 512)
-        self.midiNote = kwargs.get('midiNote', 40)
+        self.midiNote = kwargs.get('midiNote', 48)
         self.midiVelocity = kwargs.get('midiVelocity', 127)
         self.noteLengthSecs = kwargs.get('noteLengthSecs', 1.0)
         self.renderLengthSecs = kwargs.get('renderLengthSecs', 2.5)
