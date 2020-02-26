@@ -12,7 +12,7 @@ IEEE Transactions on Emerging Topics in Computational Intelligence 2.2 (2018): 1
 from spiegel.estimator.tf_estimator_base import TFEstimatorBase
 import tensorflow as tf
 from tensorflow.keras import layers
-from spiegel.estimator.highway_layer import Highway
+from spiegel.estimator.highway_layer import HighwayLayer
 
 class HighwayBiLSTM(TFEstimatorBase):
     """
@@ -60,7 +60,7 @@ class HighwayBiLSTM(TFEstimatorBase):
 
         # Add highway layers
         for i in range(self.highwayLayers):
-            self.hwy = Highway(
+            self.hwy = HighwayLayer(
                 activation='elu',
                 transform_dropout=0.2,
                 activity_regularizer=tf.keras.regularizers.l2()

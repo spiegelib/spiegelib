@@ -8,7 +8,7 @@ from tensorflow.keras import layers
 from tensorflow.keras.initializers import Constant
 
 
-class Highway(layers.Layer):
+class HighwayLayer(layers.Layer):
     """
     """
 
