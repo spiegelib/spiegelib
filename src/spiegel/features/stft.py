@@ -21,8 +21,9 @@ class STFT(FeaturesBase):
         """
 
         dims = int(1 + (fftSize / 2))
-        super().__init__(dims, **kwargs)
+        super().__init__(dims, perFeatureNormalize=False, **kwargs)
         self.frameSize = fftSize
+        self.dtype = np.complex64
 
 
     def getFeatures(self, audio, normalize=False):

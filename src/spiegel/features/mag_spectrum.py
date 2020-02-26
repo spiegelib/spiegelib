@@ -21,6 +21,7 @@ class MagSpectrum(STFT):
         """
 
         super().__init__(fftSize, **kwargs)
-        self.outputModifiers.append(
-            lambda data : librosa.magphase(data)[0]
+        self.addModifier(
+            lambda data : librosa.magphase(data)[0],
+            'prenormalize'
         )

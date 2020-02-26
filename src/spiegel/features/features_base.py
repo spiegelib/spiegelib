@@ -9,6 +9,7 @@ import os.path
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 import joblib
+from tqdm import trange
 
 
 class FeaturesBase(ABC):
@@ -33,6 +34,7 @@ class FeaturesBase(ABC):
         frameSize=2048,
         hopSize=512,
         timeMajor=False,
+        perFeatureNormalize=True,
     ):
         """
         Constructor
@@ -45,13 +47,22 @@ class FeaturesBase(ABC):
         self.frameSize = frameSize
         self.hopSize = hopSize
 
-        self.normalizers = [None]*self.dimensions
-        self.Scaler = StandardScaler
+        self.perFeatureNormalize = perFeatureNormalize
+        if self.perFeatureNormalize:
+            self.normalizers = [None]*self.dimensions
+            self.Scaler = StandardScaler
+        else:
+            self.normalizers = [None]
+            self.Scaler = FullDataStandardScaler
 
         self.timeMajor=timeMajor
 
         self.inputModifiers = []
+        self.prenormModifiers = []
         self.outputModifiers = []
+
+        # Update this in inheriting classes if you need
+        self.dtype = np.float32
 
 
     def __call__(self, audio, normalize=False):
@@ -74,6 +85,10 @@ class FeaturesBase(ABC):
         # Run feature extraction
         features = self.getFeatures(audio)
 
+        # Apply any prenormalization data modification
+        for modifier in self.prenormModifiers:
+            features = modifier(features)
+
         # Normalize features
         if normalize:
             features = self.normalize(features)
@@ -83,6 +98,30 @@ class FeaturesBase(ABC):
             features = modifier(features)
 
         return features
+
+
+    def addModifier(self, modifier, type):
+        """
+        Add a data modifier to the feature extraction pipeline
+
+        :param modifier: data modifier function. Should accept an np.array,
+            apply some modification to that, and return a np.array
+        :type modifier: lambda
+        :param type: Where to add this into the pipeline. ('input', 'prenormalize', or 'output')
+        :type type: str
+        """
+
+        if type == 'input':
+            self.inputModifiers.append(modifier)
+        elif type == 'prenormalize':
+            self.prenormModifiers.append(modifier)
+        elif type == 'outout':
+            self.outputModifiers.append(modifier)
+        else:
+            raise ValueError(
+                'Type must be one of ("input", "prenormalize", or '
+                '"output"), received %s' % type
+            )
 
 
     @abstractmethod
@@ -112,7 +151,7 @@ class FeaturesBase(ABC):
         self.normalizers[dimension] = normalizer
 
 
-    def fitNormalizers(self, data):
+    def fitNormalizers(self, data, transform=True):
         """
         Fit normalizers to dataset for future transforms.
 
@@ -122,17 +161,35 @@ class FeaturesBase(ABC):
         :rtype: np.ndarray
         """
 
-        if len(data.shape) == 2:
-            return self.fitNormalizers2D(data)
+        if not self.perFeatureNormalize:
+            return self.fitNormalizersFullData(data, transform)
+
+        elif len(data.shape) == 2:
+            return self.fitNormalizers2D(data, transform)
 
         elif len(data.shape) == 3:
-            return self.fitNormalizers3D(data)
+            return self.fitNormalizers3D(data, transform)
 
         else:
             raise Exception("Dimensionality of dataset not supported, only 2D or 3D matrices.")
 
 
-    def fitNormalizers2D(self, data):
+    def fitNormalizersFullData(self, data, transform):
+        """
+        Fit one normalizer on the entire dataset
+        """
+
+        scaler = self.Scaler()
+        print("Fiting Normalizer")
+        scaler.fit(data)
+        print("Transforming data")
+        scaledData = scaler.transform(data) if transform else None
+        self.setNormalizer(0, scaler)
+
+        return scaledData
+
+
+    def fitNormalizers2D(self, data, transform):
         """
         Fit normalizers for 2-dimensional datasets
 
@@ -153,7 +210,7 @@ class FeaturesBase(ABC):
 
         scaler = self.Scaler()
         scaler.fit(data)
-        scaledData = scaler.transform(data)
+        scaledData = scaler.transform(data) if transform else None
 
         for i in range(self.dimensions):
             self.setNormalizer(i, scaler)
@@ -161,7 +218,7 @@ class FeaturesBase(ABC):
         return scaledData
 
 
-    def fitNormalizers3D(self, data):
+    def fitNormalizers3D(self, data, transform):
         """
         Fit normalizers for 3-dimensional datasets
 
@@ -181,18 +238,20 @@ class FeaturesBase(ABC):
                 self.dimensions, data.shape[featureDimension]
             ))
 
-        scaledData = np.zeros_like(data)
+        scaledData = np.zeros_like(data) if transform else None
 
         # Train normalizers
-        for i in range(self.dimensions):
+        for i in trange(self.dimensions, desc="Fitting Normalizers"):
             scaler = self.Scaler()
 
             if self.timeMajor:
                 scaler.fit(data[:,:,i])
-                scaledData[:,:,i] = scaler.transform(data[:,:,i])
+                if transform:
+                    scaledData[:,:,i] = scaler.transform(data[:,:,i])
             else:
                 scaler.fit(data[:,i,:])
-                scaledData[:,i,:] = scaler.transform(data[:,i,:])
+                if transform:
+                    scaledData[:,i,:] = scaler.transform(data[:,i,:])
 
             self.setNormalizer(i, scaler)
 
@@ -209,9 +268,12 @@ class FeaturesBase(ABC):
         :rtype: np.array
         """
 
-        normalizedData = np.zeros(data.shape, dtype=np.float32)
+        normalizedData = np.zeros(data.shape, dtype=data.dtype)
 
-        if len(data.shape) == 2:
+        if not self.perFeatureNormalize:
+            normalizedData = self.normalizers[0].transform(data)
+
+        elif len(data.shape) == 2:
             for i in range(self.dimensions):
                 if not self.normalizers[i]:
                     raise NormalizerError("Normalizers not set for features. Please set normalizers first.")
@@ -242,8 +304,6 @@ class FeaturesBase(ABC):
 
         return True
 
-
-
     def saveNormalizers(self, location):
         """
         Save the trained normalizers for these features for later use
@@ -263,6 +323,64 @@ class FeaturesBase(ABC):
         """
         self.normalizers = joblib.load(location)
 
+
+class FullDataStandardScaler():
+    """
+    Custom data scaler for working with larger dimensionality datasets that
+    don't need to be scaled on a per-dimension basis such as STFT
+    """
+
+    def _reset(self):
+        """
+        Reset attributes
+        """
+
+        if hasattr(self, 'mean'):
+            del self.mean
+            del self.std
+
+
+    def fit(self, data):
+        """
+        Compute mean and std for later scaling
+
+        :param data: data to use to calculate mean and std on
+        :type data: np.ndarray
+        """
+
+        self._reset()
+        self.mean = data.mean()
+        self.std = data.std()
+
+
+    def transform(self, data):
+        """
+        Perform normalization on data
+
+        :param data: data to normalize
+        :type data: np.array
+        :returns: Normalized data
+        :rtype: np.ndarray
+        """
+
+        if not hasattr(self, 'mean'):
+            raise Exception("You must fit this scaler first")
+
+        return (data - self.mean) / self.std
+
+
+    def fit_transform(self, data):
+        """
+        Compute mean and std on data and then normalize it
+
+        :param data: data to computer mean and std on and normalize
+        :type data: np.array
+        :returns: Normalized data
+        :rtype: np.ndarray
+        """
+
+        self.fit(data)
+        return self.transform(data)
 
 
 class NormalizerError(Exception):
