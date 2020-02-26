@@ -120,12 +120,18 @@ class AudioBuffer():
         :type normalize: boolean
         """
 
+        # Make directory if it doesn't exist
+        fullpath = os.path.abspath(path)
+        dir = os.path.dirname(fullpath)
+        if not os.path.exists(dir):
+            os.mkdir(dir)
+
         audio = self.audioData
         if normalize:
             audio = AudioBuffer.peakNormalize(np.copy(audio))
 
         scipy.io.wavfile.write(
-            path,
+            fullpath,
             self.sampleRate,
             audio
         )
