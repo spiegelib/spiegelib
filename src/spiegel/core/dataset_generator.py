@@ -18,8 +18,8 @@ class DatasetGenerator():
     :param synth: Synthesizer to generate test data from. Must inherit from
         :class:`spiegel.synth.synth_base.SynthBase`.
     :type synth: Object
-    :param features: Features to use for dataset generation, defaults to :class:`spiegel.features.mfcc.MFCC`
-        Must inherit from :class:`spiegel.features.features_base.FeaturesBase`
+    :param features: Features to use for dataset generation. Must inherit from
+        :class:`spiegel.features.features_base.FeaturesBase`
     :type features: Object
     :param outputFolder: Output folder for dataset, defaults to currect working directory
     :type outputFolder: str, optional
@@ -39,7 +39,7 @@ class DatasetGenerator():
     :vartype audioFolderName: str
     """
 
-    def __init__(self, synth, features=MFCC(), outputFolder=os.getcwd(), saveAudio=False, normalize=True):
+    def __init__(self, synth, features, outputFolder=os.getcwd(), saveAudio=False, normalize=True):
         """
         Contructor
         """
@@ -74,7 +74,7 @@ class DatasetGenerator():
         self.normalize = normalize
 
 
-    def generate(self, size, filePrefix=""):
+    def generate(self, size, filePrefix="", fitNormalizersOnly=False):
         """
         Generate dataset with a set of random patches
 
@@ -93,11 +93,10 @@ class DatasetGenerator():
         features = self.features(audio)
         patch = self.synth.getPatch()
 
-
         # Arrays to hold dataset
         shape = list(features.shape)
         shape.insert(0, size)
-        featureSet = np.zeros(shape, dtype=np.float32)
+        featureSet = np.empty(shape, dtype=features.dtype)
         patchSet = np.zeros((size, len(patch)), dtype=np.float32)
 
         # Should the features be normalized with the feature normalizers?
@@ -112,6 +111,12 @@ class DatasetGenerator():
             # Save rendered audio if required
             if self.saveAudio:
                 audio.save(os.path.join(self.audioFolderPath, "%soutput_%s.wav" % (filePrefix, i)))
+
+        # If only fitting normalizers, do that and return. Don't save any data
+        if fitNormalizersOnly:
+            print("Fitting normalizers only")
+            self.features.fitNormalizers(featureSet, transform=False)
+            return
 
         if self.normalize and not self.features.hasNormalizers():
             print("Fitting normalizers and normalizing data")
