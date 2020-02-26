@@ -12,7 +12,7 @@ from deap import base
 from deap import creator
 from deap import tools
 
-from spiegel.evaluation.audio_eval_base import AudioEvalBase
+from spiegel.evaluation.evaluation_base import EvaluationBase
 from spiegel.estimator.estimator_base import EstimatorBase
 from spiegel.synth.synth_base import SynthBase
 from spiegel.features.features_base import FeaturesBase
@@ -91,7 +91,7 @@ class NSGA3(EstimatorBase):
         errors = []
         index = 0
         for extractor in self.featuresList:
-            outFeatures = extractor.getFeatures(out)
+            outFeatures = extractor(out)
             errors.append(AudioEvalBase.absoluteMeanError(self.target[index], outFeatures))
             index += 1
 
@@ -105,7 +105,7 @@ class NSGA3(EstimatorBase):
 
         self.target = []
         for extractor in self.featuresList:
-            self.target.append(extractor.getFeatures(input))
+            self.target.append(extractor(input))
 
         pop = self.toolbox.population(n=300)
         invalid_ind = [ind for ind in pop if not ind.fitness.valid]

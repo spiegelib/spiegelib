@@ -4,6 +4,7 @@ Abstract Base Class for Audio Features
 """
 
 from abc import ABC, abstractmethod
+import functools
 import os.path
 import numpy as np
 from sklearn.preprocessing import StandardScaler
@@ -49,17 +50,49 @@ class FeaturesBase(ABC):
 
         self.timeMajor=timeMajor
 
+        self.inputModifiers = []
+        self.outputModifiers = []
+
+
+    def __call__(self, audio, normalize=False):
+        """
+        Calls the getFeatures method. Applies data modifiers prior to and after
+        feature extraction
+
+        :param audio: Audio to process features on
+        :type audio: :class:`spiegel.core.audio_buffer.AudioBuffer`
+        :param normalize: Whether or not the features are normalized, defaults to False
+        :type normalize: bool, optional
+        :returns: results from audio feature extraction
+        :rtype: np.array
+        """
+
+        # Input data modification
+        for modifer in self.inputModifiers:
+            audio = modifer(audio)
+
+        # Run feature extraction
+        features = self.getFeatures(audio)
+
+        # Normalize features
+        if normalize:
+            features = self.normalize(features)
+
+        # Apply any output data modification
+        for modifier in self.outputModifiers:
+            features = modifier(features)
+
+        return features
+
 
     @abstractmethod
-    def getFeatures(self, audio, normalize=False):
+    def getFeatures(self, audio):
         """
         Must be implemented. Run audio feature extraction on audio provided as parameter.
         Normalization should be applied based on the normalize parameter.
 
         :param audio: Audio to process features on
         :type audio: :class:`spiegel.core.audio_buffer.AudioBuffer`
-        :param normalize: Whether or not the features are normalized, defaults to False
-        :type normalize: bool, optional
         :returns: results from audio feature extraction
         :rtype: np.array
         """
@@ -182,7 +215,7 @@ class FeaturesBase(ABC):
             for i in range(self.dimensions):
                 if not self.normalizers[i]:
                     raise NormalizerError("Normalizers not set for features. Please set normalizers first.")
-                
+
                 if self.timeMajor:
                     normalizedData[:,i] = self.normalizers[i].transform([data[:,i]])[0]
                 else:

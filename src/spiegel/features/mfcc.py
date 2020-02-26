@@ -57,7 +57,4 @@ class MFCC(FeaturesBase):
         if self.timeMajor:
             features = np.transpose(features)
 
-        if normalize:
-            features = self.normalize(features)
-
         return features

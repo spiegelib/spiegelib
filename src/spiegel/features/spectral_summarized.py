@@ -90,10 +90,4 @@ class SpectralSummarized(FeaturesBase):
             spectralRolloff.var()
         ])
 
-        if normalize:
-            features = self.normalize(features)
-
-        if self.timeMajor:
-            features = np.transpose(features)
-
         return features

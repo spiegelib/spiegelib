@@ -11,7 +11,7 @@ from deap import base
 from deap import creator
 from deap import tools
 
-from spiegel.evaluation.audio_eval_base import AudioEvalBase
+from spiegel.evaluation.evaluation_base import EvaluationBase
 from spiegel.estimator.estimator_base import EstimatorBase
 from spiegel.synth.synth_base import SynthBase
 from spiegel.features.features_base import FeaturesBase
@@ -82,7 +82,7 @@ class BasicGA(EstimatorBase):
         self.synth.setPatch(individual)
         self.synth.renderPatch()
         out = self.synth.getAudio()
-        outFeatures = self.features.getFeatures(out)
+        outFeatures = self.features(out)
         error = AudioEvalBase.absoluteMeanError(self.target, outFeatures)
         return error,
 

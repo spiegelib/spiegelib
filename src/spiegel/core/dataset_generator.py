@@ -90,7 +90,7 @@ class DatasetGenerator():
 
         # Get a single example to determine required array size required
         audio = self.synth.getRandomExample()
-        features = self.features.getFeatures(audio)
+        features = self.features(audio)
         patch = self.synth.getPatch()
 
 
@@ -106,7 +106,7 @@ class DatasetGenerator():
         # Generate data
         for i in trange(size, desc="Generating Dataset"):
             audio = self.synth.getRandomExample()
-            featureSet[i] = self.features.getFeatures(audio, normalize=normalize)
+            featureSet[i] = self.features(audio, normalize=normalize)
             patchSet[i] = [p[1] for p in self.synth.getPatch()]
 
             # Save rendered audio if required

@@ -66,9 +66,9 @@ class SoundMatch():
 
         # Attempt to run feature extraction with normalization first
         try:
-            features = self.features.getFeatures(target, normalize=True)
+            features = self.features(target, normalize=True)
         except NormalizerError:
-            features = self.features.getFeatures(target)
+            features = self.features(target)
 
         # Estimate parameters
         params = self.estimator.predict(features)
