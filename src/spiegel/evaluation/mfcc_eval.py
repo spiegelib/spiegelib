@@ -3,11 +3,11 @@
 Audio evaluation using MFCC error between targets and estimations
 """
 
-from spiegel.evaluation.audio_eval_base import AudioEvalBase
+from spiegel.evaluation.evaluation_base import EvaluationBase
 from spiegel.features.mfcc import MFCC
 
 
-class MFCCEval(AudioEvalBase):
+class MFCCEval(EvaluationBase):
     """
     Pass in a list of target AudioBuffers and lists of estimated AudioBuffers for
     each target AudioBuffer.
@@ -25,35 +25,40 @@ class MFCCEval(AudioEvalBase):
     :param kwargs: keyword arguments to pass to base class. See :class:`spiegel.evaluation.audio_eval_base.AudioEvalBase`
     """
 
-    def __init__(self, targetList, estimatedList, **kwargs):
+    def __init__(self, targetList, estimatedList, sampleRate=None, **kwargs):
         """
         Constructor
         """
+        self.sampleRate = sampleRate if sampleRate else targetList[0].getSampleRate()
         super().__init__(targetList, estimatedList, **kwargs)
 
 
-    def evaluate(self):
+    def evaluateTarget(self, target, predictions):
         """
         Evaluate absolute mean error and mean squared error between MFCCs of all
-        target AudioBuffers and estimated AudioBuffers. Stores results as a dictionary
-        in a member function that can be accessed through getScores() member function.
+        target AudioBuffers and estimated AudioBuffers.
+        :returns: A list of metric dictionaries for each prediction
+        :rtype: list
         """
 
-        results = {}
+        results = []
         mfcc = MFCC(sampleRate=self.sampleRate)
+        targetMFCCs = mfcc(target)
 
-        for i in range(len(self.targetList)):
+        for pred in predictions:
+            estimatedMFCCs = mfcc(pred)
+            results.append({
+                'absoluteMeanError': EvaluationBase.absoluteMeanError(targetMFCCs, estimatedMFCCs),
+                'meanSquaredError': EvaluationBase.meanSquaredError(targetMFCCs, estimatedMFCCs),
+                'euclidianDistance': EvaluationBase.euclidianDistance(targetMFCCs, estimatedMFCCs),
+                'manhattanDistance': EvaluationBase.manhattanDistance(targetMFCCs, estimatedMFCCs),
+            })
 
-            targetMFCCs = mfcc.getFeatures(self.targetList[i])
-            targetResults = {}
+        return results
 
-            for j in range(len(self.estimatedList[i])):
-                estimatedMFCCs = mfcc.getFeatures(self.estimatedList[i][j])
-                targetResults['estimation_%s' % j] = {
-                    'absoluteMeanError': AudioEvalBase.absoluteMeanError(targetMFCCs, estimatedMFCCs),
-                    'meanSquaredError': AudioEvalBase.meanSquaredError(targetMFCCs, estimatedMFCCs),
-                }
 
-            results['target_%s' % i] = targetResults
-
-        self.scores = results
+    def verifyInputList(self, inputList):
+        """
+        Overriding verification method to check for AudioBuffers
+        """
+        EvaluationBase.verifyAudioInputList(inputList)
