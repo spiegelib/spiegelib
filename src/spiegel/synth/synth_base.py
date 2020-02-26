@@ -3,7 +3,9 @@
 Synth Abstract Base Class
 """
 from __future__ import print_function
+import os
 import numbers
+import json
 from abc import ABC, abstractmethod
 
 
@@ -222,3 +224,73 @@ class SynthBase(ABC):
         self.overriddenParameters = []
         self.setPatch(overriddenParams)
         self.overriddenParameters = overriddenParams
+
+
+
+    def saveParameterState(self, path):
+        """
+        Save parameters and current state to a JSON file. Includes whether or not
+        a parameter has been overridden so this can be used to save synth configuration
+
+        :param path: Location to save JSON file to
+        :type path: str
+        """
+
+        assert self.parameters, "Parameters must be set before saving parameter state"
+        assert self.patch,      "Patch must be set before saving parameter state"
+
+        # Make sure directory exists and create if it doesn't
+        fullPath = os.path.abspath(path)
+        directory = os.path.dirname(fullPath)
+
+        if not os.path.exists(directory):
+            os.mkdir(directory)
+
+        # Create a dictionary of parameters and settings for saving
+        parameterDict = {}
+        overriddenParams = [p[0] for p in self.overriddenParameters]
+
+        for parameter in self.patch:
+            parameterDict[parameter[0]] = {
+                "id": parameter[0],
+                "desc": self.parameters[parameter[0]],
+                "value": float(parameter[1]),
+                "overridden": parameter[0] in overriddenParams
+            }
+
+        with open(fullPath, 'w') as fp:
+            json.dump(parameterDict, fp, indent=True, sort_keys=True)
+
+
+    def loadParameterState(self, path):
+        """
+        Load parameter state from JSON file. Will set a new patch and overridden
+        parameters.
+
+        :param path: Location to load JSON file from
+        :type path: str
+        """
+
+        fullPath = os.path.abspath(path)
+        assert os.path.exists(fullPath), "Path does not exists: %s" % fullPath
+
+        parameterDict = {}
+        with open(fullPath, 'r') as fp:
+            parameterDict = json.load(fp)
+
+        patch = []
+        overridden = []
+        for key in parameterDict:
+            if parameterDict[key]['overridden']:
+                overridden.append((
+                    parameterDict[key]['id'],
+                    parameterDict[key]['value']
+                ))
+            else:
+                patch.append((
+                    parameterDict[key]['id'],
+                    parameterDict[key]['value']
+                ))
+
+        self.setOverriddenParameters(overridden)
+        self.setPatch(patch)
