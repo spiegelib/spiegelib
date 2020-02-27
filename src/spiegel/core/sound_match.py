@@ -12,11 +12,14 @@ from spiegel.estimator.estimator_base import EstimatorBase
 
 class SoundMatch():
     """
-    :param synth: synthesizer, must inherit from :class:`spiegel.synth.synth_base.SynthBase`.
+    :param synth: synthesizer, must inherit from
+        :class:`spiegel.synth.synth_base.SynthBase`.
     :type synth: Object
-    :param features: feature extraction, must inherit from :class:`spiegel.features.feature_base.FeatureBase`.
+    :param features: feature extraction, must inherit from
+        :class:`spiegel.features.feature_base.FeatureBase`.
     :type features: Object
-    :param estimator: paramter estimator, must inherit from :class:`spiegel.estimator.estimator_base.EstimatorBase`.
+    :param estimator: paramter estimator, must inherit from
+        :class:`spiegel.estimator.estimator_base.EstimatorBase`.
     :type estimator: Object
     """
 
@@ -46,7 +49,7 @@ class SoundMatch():
         self.patch = None
 
 
-    def getPatch(self):
+    def get_patch(self):
         """
         Return the estimated sound matched patch
         """
@@ -74,21 +77,21 @@ class SoundMatch():
         params = self.estimator.predict(features)
 
         # Load patch into synth and return audio
-        self.synth.setPatch(params)
-        self.synth.renderPatch()
-        self.patch = self.synth.getPatch()
-        return self.synth.getAudio()
+        self.synth.set_patch(params)
+        self.synth.render_patch()
+        self.patch = self.synth.get_patch()
+        return self.synth.get_audio()
 
 
-    def matchFromFile(self, audioPath):
+    def match_from_file(self, path):
         """
         Load audio file from disk and perform sound matching on it
 
-        :param audioPath: filepath
-        :type audioPath: str
+        :param path: filepath
+        :type path: str
         :returns: resulting audio from sound matching
         :rtype: np.ndarray
         """
 
-        target = AudioBuffer(audioPath, self.features.sampleRate)
+        target = AudioBuffer(path, self.features.sampleRate)
         return self.match(target)

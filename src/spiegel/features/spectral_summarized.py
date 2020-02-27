@@ -37,41 +37,41 @@ class SpectralSummarized(FeaturesBase):
         if not isinstance(audio, AudioBuffer):
             raise TypeError('audio must be AudioBuffer, recieved %s' % type(audio))
 
-        if audio.getSampleRate() != self.sampleRate:
+        if audio.get_sample_rate() != self.sampleRate:
             raise ValueError(
                 'audio buffer samplerate does not equal feature '
-                'extraction rate, %s != %s' % (audio.getSampleRate(), self.sampleRate)
+                'extraction rate, %s != %s' % (audio.get_sample_rate(), self.sampleRate)
             )
 
         spectralCentroid = librosa.feature.spectral_centroid(
-            y=audio.getAudio(),
+            y=audio.get_audio(),
             sr=self.sampleRate,
             n_fft=self.frameSize,
             hop_length=self.hopSize,
         )
 
         spectralBandwidth = librosa.feature.spectral_bandwidth(
-            y=audio.getAudio(),
+            y=audio.get_audio(),
             sr=self.sampleRate,
             n_fft=self.frameSize,
             hop_length=self.hopSize,
         )
 
         spectralContrast = librosa.feature.spectral_contrast(
-            y=audio.getAudio(),
+            y=audio.get_audio(),
             sr=self.sampleRate,
             n_fft=self.frameSize,
             hop_length=self.hopSize,
         )
 
         spectralFlatness = librosa.feature.spectral_flatness(
-            y=audio.getAudio(),
+            y=audio.get_audio(),
             n_fft=self.frameSize,
             hop_length=self.hopSize,
         )
 
         spectralRolloff = librosa.feature.spectral_rolloff(
-            y=audio.getAudio(),
+            y=audio.get_audio(),
             sr=self.sampleRate,
             n_fft=self.frameSize,
             hop_length=self.hopSize,

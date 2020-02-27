@@ -31,13 +31,13 @@ class BasicGA(EstimatorBase):
             raise TypeError("synth must be of type SynthBase")
 
         self.synth = synth
-        self.numParams = len(synth.getPatch())
+        self.num_params = len(synth.get_patch())
 
         if not isinstance(features, FeaturesBase):
             raise TypeError("features must be of type FeaturesBase")
 
         self.features = features
-        self.targe = None
+        self.target = None
 
         random.seed(seed)
         self.setup()
@@ -59,14 +59,11 @@ class BasicGA(EstimatorBase):
         self.toolbox.register("attr_float", random.random)
 
         # Structure initializers
-        self.toolbox.register(
-            "individual",
-            tools.initRepeat,
-            creator.Individual,
-            self.toolbox.attr_float,
-            self.numParams
-        )
-        self.toolbox.register("population", tools.initRepeat, list, self.toolbox.individual)
+        self.toolbox.register("individual", tools.initRepeat, creator.Individual,
+                              self.toolbox.attr_float, self.num_params)
+
+        self.toolbox.register("population", tools.initRepeat, list,
+                              self.toolbox.individual)
 
         self.toolbox.register("evaluate", self.fitness)
         self.toolbox.register("mate", tools.cxTwoPoint)
@@ -79,11 +76,11 @@ class BasicGA(EstimatorBase):
         Evaluate fitness
         """
 
-        self.synth.setPatch(individual)
-        self.synth.renderPatch()
-        out = self.synth.getAudio()
-        outFeatures = self.features(out)
-        error = AudioEvalBase.absoluteMeanError(self.target, outFeatures)
+        self.synth.set_patch(individual)
+        self.synth.render_patch()
+        out = self.synth.get_audio()
+        out_features = self.features(out)
+        error = AudioEvalBase.absoluteMeanError(self.target, out_features)
         return error,
 
 

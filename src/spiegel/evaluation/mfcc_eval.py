@@ -29,7 +29,7 @@ class MFCCEval(EvaluationBase):
         """
         Constructor
         """
-        self.sampleRate = sampleRate if sampleRate else targetList[0].getSampleRate()
+        self.sampleRate = sampleRate if sampleRate else targetList[0].get_sample_rate()
         super().__init__(targetList, estimatedList, **kwargs)
 
 

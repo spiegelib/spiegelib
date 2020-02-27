@@ -93,7 +93,7 @@ class SynthVST(SynthBase):
 
 
 
-    def renderPatch(self):
+    def render_patch(self):
         """
         Render the current patch. Uses the values of midiNote, midiVelocity, noteLengthSecs,
         and renderLengthSecs to render audio. Plugin must be loaded first.
@@ -111,7 +111,7 @@ class SynthVST(SynthBase):
             print("Please load plugin first.")
 
 
-    def getAudio(self):
+    def get_audio(self):
         """
         Return monophonic audio from rendered patch
 
@@ -134,7 +134,7 @@ class SynthVST(SynthBase):
 
         if self.loadedPlugin:
             randomPatchTuples = self.generator.get_random_patch()
-            self.setPatch(randomPatchTuples)
+            self.set_patch(randomPatchTuples)
 
         else:
             print("Please load plugin first.")

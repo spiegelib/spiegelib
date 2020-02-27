@@ -59,7 +59,7 @@ class SynthBase(ABC):
         self.paramRange = (0.0, 1.0)
 
 
-    def setPatch(self, parameters):
+    def set_patch(self, parameters):
         """
         Set a new patch with updated parameter values with a list of flaots or a
         list of tuples referring to parameter indices and values.
@@ -134,7 +134,7 @@ class SynthBase(ABC):
 
 
     @abstractmethod
-    def renderPatch(self):
+    def render_patch(self):
         """
         Must be overridden. Should render audio for the currently loaded patch
         """
@@ -142,10 +142,10 @@ class SynthBase(ABC):
 
 
     @abstractmethod
-    def getAudio(self):
+    def get_audio(self):
         """
         This method must be overridden and should return an audio buffer rendered
-        during the last call to renderPatch.
+        during the last call to render_patch.
 
         :return: An audio buffer of float audio samples with a value between -1 & 1
         :rtype: :class:`spiegel.core.audio_buffer.AudioBuffer`
@@ -171,8 +171,8 @@ class SynthBase(ABC):
         """
 
         self.randomizePatch()
-        self.renderPatch()
-        return self.getAudio()
+        self.render_patch()
+        return self.get_audio()
 
 
     def getParameters(self):
@@ -187,7 +187,7 @@ class SynthBase(ABC):
         return self.parameters
 
 
-    def getPatch(self, skipOverridden=True):
+    def get_patch(self, skipOverridden=True):
         """
         Get current patch
 
@@ -222,7 +222,7 @@ class SynthBase(ABC):
             overriddenParams.append((param[0], param[1]))
 
         self.overriddenParameters = []
-        self.setPatch(overriddenParams)
+        self.set_patch(overriddenParams)
         self.overriddenParameters = overriddenParams
 
 
@@ -293,4 +293,4 @@ class SynthBase(ABC):
                 ))
 
         self.setOverriddenParameters(overridden)
-        self.setPatch(patch)
+        self.set_patch(patch)

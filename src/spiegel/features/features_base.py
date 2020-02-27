@@ -304,7 +304,7 @@ class FeaturesBase(ABC):
 
         return True
 
-    def saveNormalizers(self, location):
+    def save_normalizers(self, location):
         """
         Save the trained normalizers for these features for later use
 

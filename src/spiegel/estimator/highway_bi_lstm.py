@@ -16,36 +16,35 @@ from spiegel.estimator.highway_layer import HighwayLayer
 
 class HighwayBiLSTM(TFEstimatorBase):
     """
-    :param inputShape: Shape of matrix that will be passed to model input
-    :type inputShape: tuple
-    :param numOutputs: Number of outputs the model has
-    :type numOuputs: int
-    :param kwargs: optional keyword arguments to pass to :class:`spiegel.estimator.TFEstimatorBase`
+    :param input_shape: Shape of matrix that will be passed to model input
+    :type input_shape: tuple
+    :param num_outputs: Number of outputs the model has
+    :type num_outputs: int
+    :param kwargs: optional keyword arguments to pass to
+        :class:`spiegel.estimator.TFEstimatorBase`
     """
 
-    def __init__(self, inputShape, numOutputs, lstmSize=128, highwayLayers=6, **kwargs):
+    def __init__(self, input_shape, num_outputs, lstm_size=128,
+                 highway_layers=6, **kwargs):
         """
         Constructor
         """
 
-        self.lstmSize = lstmSize
-        self.highwayLayers = highwayLayers
-        super().__init__(inputShape, numOutputs, **kwargs)
+        self.lstm_size = lstm_size
+        self.highway_layers = highway_layers
+        super().__init__(input_shape, num_outputs, **kwargs)
 
 
-    def buildModel(self):
+    def build_model(self):
         """
         Construct LSTM Model
-
-        :param hiddenSize: dimensionality of outer space of hidden layers, defaults to 128
-        :type hiddenSize: int, optional
         """
 
         self.model = tf.keras.Sequential()
         self.model.add(
             layers.Bidirectional(
-                layers.LSTM(self.lstmSize),
-                input_shape=self.inputShape,
+                layers.LSTM(self.lstm_size),
+                input_shape=self.input_shape,
                 merge_mode='concat'
             )
         )
@@ -59,7 +58,7 @@ class HighwayBiLSTM(TFEstimatorBase):
         self.hwy = None
 
         # Add highway layers
-        for i in range(self.highwayLayers):
+        for i in range(self.highway_layers):
             self.hwy = HighwayLayer(
                 activation='elu',
                 transform_dropout=0.2,
@@ -68,7 +67,7 @@ class HighwayBiLSTM(TFEstimatorBase):
             self.model.add(self.hwy)
 
         self.model.add(layers.Dense(
-            self.numOutputs,
+            self.num_outputs,
             activation='elu',
             use_bias=True,
             kernel_initializer=tf.random_normal_initializer(stddev=0.01),
@@ -77,6 +76,6 @@ class HighwayBiLSTM(TFEstimatorBase):
 
         self.model.compile(
             optimizer=tf.optimizers.Adam(),
-            loss=TFEstimatorBase.rootMeanSquaredError,
+            loss=TFEstimatorBase.rms_error,
             metrics=['accuracy']
         )

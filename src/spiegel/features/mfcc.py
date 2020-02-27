@@ -40,14 +40,14 @@ class MFCC(FeaturesBase):
         if not isinstance(audio, AudioBuffer):
             raise TypeError('audio must be AudioBuffer, recieved %s' % type(audio))
 
-        if audio.getSampleRate() != self.sampleRate:
+        if audio.get_sample_rate() != self.sampleRate:
             raise ValueError(
                 'audio buffer samplerate does not equal feature '
-                'extraction rate, %s != %s' % (audio.getSampleRate(), self.sampleRate)
+                'extraction rate, %s != %s' % (audio.get_sample_rate(), self.sampleRate)
             )
 
         features = librosa.feature.mfcc(
-            y=audio.getAudio(),
+            y=audio.get_audio(),
             sr=self.sampleRate,
             n_fft=self.frameSize,
             hop_length=self.hopSize,

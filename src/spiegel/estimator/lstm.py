@@ -15,36 +15,39 @@ from tensorflow.keras import layers
 
 class LSTM(TFEstimatorBase):
     """
-    :param inputShape: Shape of matrix that will be passed to model input
-    :type inputShape: tuple
-    :param numOutputs: Number of outputs the model has
+    :param input_shape: Shape of matrix that will be passed to model input
+    :type input_shape: tuple
+    :param num_outputs: Number of outputs the model has
     :type numOuputs: int
-    :param kwargs: optional keyword arguments to pass to :class:`spiegel.estimator.TFEstimatorBase`
+    :param kwargs: optional keyword arguments to pass to
+        :class:`spiegel.estimator.TFEstimatorBase`
     """
 
-    def __init__(self, inputShape, numOutputs, **kwargs):
+    def __init__(self, input_shape, num_outputs, **kwargs):
         """
         Constructor
         """
 
-        super().__init__(inputShape, numOutputs, **kwargs)
+        super().__init__(input_shape, num_outputs, **kwargs)
 
 
-    def buildModel(self, hiddenSize=100):
+    def build_model(self, highway_layers=100):
         """
         Construct LSTM Model
 
-        :param hiddenSize: dimensionality of outer space of hidden layers, defaults to 100
-        :type hiddenSize: int, optional
+        :param highway_layers: dimensionality of outer space of hidden layers,
+            defaults to 100
+        :type highway_layers: int, optional
         """
 
         self.model = tf.keras.Sequential()
-        self.model.add(layers.LSTM(hiddenSize, input_shape=self.inputShape, return_sequences=True))
-        self.model.add(layers.LSTM(hiddenSize, return_sequences=True))
-        self.model.add(layers.LSTM(hiddenSize))
+        self.model.add(layers.LSTM(highway_layers, input_shape=self.input_shape,
+                       return_sequences=True))
+        self.model.add(layers.LSTM(highway_layers, return_sequences=True))
+        self.model.add(layers.LSTM(highway_layers))
         self.model.add(layers.Dropout(0.2))
         self.model.add(layers.Dense(
-            self.numOutputs,
+            self.num_outputs,
             use_bias=True,
             kernel_initializer=tf.random_normal_initializer(stddev=0.01),
             bias_initializer=tf.random_normal_initializer(stddev=0.01),
@@ -52,6 +55,6 @@ class LSTM(TFEstimatorBase):
 
         self.model.compile(
             optimizer=tf.optimizers.Adam(),
-            loss=TFEstimatorBase.rootMeanSquaredError,
+            loss=TFEstimatorBase.rms_error,
             metrics=['accuracy']
         )

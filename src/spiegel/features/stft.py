@@ -43,7 +43,7 @@ class STFT(FeaturesBase):
             raise TypeError('audio must be AudioBuffer, recieved %s' % type(audio))
 
         features = librosa.stft(
-            y=audio.getAudio(),
+            y=audio.get_audio(),
             n_fft=self.frameSize,
             hop_length=self.hopSize,
         )
