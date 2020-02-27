@@ -39,9 +39,12 @@ class Conv1(TFEstimatorBase):
         """
 
         self.model = tf.keras.Sequential()
-        self.model.add(layers.Conv2D(64, (3, 3), strides=2, dilation_rate=(1,1), input_shape=self.inputShape, activation='relu'))
+        self.model.add(layers.Conv2D(32, (3, 3), strides=2, dilation_rate=(1,1), input_shape=self.inputShape, activation='relu'))
         self.model.add(layers.Conv2D(64, (3, 3), strides=2, dilation_rate=(1,1), activation='relu'))
-        #self.model.add(layers.Conv2D(128, (3, 3), strides=2, dilation_rate=(1,1), activation='relu'))
+        self.model.add(layers.Conv2D(128, (3, 3), strides=2, dilation_rate=(1,1), activation='relu'))
+        self.model.add(layers.Conv2D(256, (3, 3), strides=2, dilation_rate=(1,1), activation='relu'))
+        self.model.add(layers.Conv2D(256, (2, 2), strides=2, dilation_rate=(1,1), activation='relu'))
+        self.model.add(layers.Conv2D(512, (2, 2), strides=2, dilation_rate=(1,1), activation='relu'))
         self.model.add(layers.Dropout(0.25))
         self.model.add(layers.Flatten())
         self.model.add(layers.Dense(self.numOutputs))
