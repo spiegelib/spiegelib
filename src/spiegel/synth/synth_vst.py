@@ -41,7 +41,7 @@ class SynthVST(SynthBase):
         :type pluginPath: str
         """
         try:
-            self.engine = rm.RenderEngine(self.sampleRate, self.bufferSize, self.bufferSize)
+            self.engine = rm.RenderEngine(self.sample_rate, self.bufferSize, self.bufferSize)
 
             if self.engine.load_plugin(pluginPath):
                 self.loadedPlugin = True
@@ -120,7 +120,7 @@ class SynthVST(SynthBase):
         """
 
         if self.renderedPatch:
-            audio = AudioBuffer(self.engine.get_audio_frames(), self.sampleRate)
+            audio = AudioBuffer(self.engine.get_audio_frames(), self.sample_rate)
             return audio
 
         else:

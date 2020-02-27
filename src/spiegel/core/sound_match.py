@@ -93,5 +93,5 @@ class SoundMatch():
         :rtype: np.ndarray
         """
 
-        target = AudioBuffer(path, self.features.sampleRate)
+        target = AudioBuffer(path, self.features.sample_rate)
         return self.match(target)

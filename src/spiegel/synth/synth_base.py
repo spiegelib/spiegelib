@@ -11,8 +11,8 @@ from abc import ABC, abstractmethod
 
 class SynthBase(ABC):
     """
-    :param sampleRate: sampling rate for rendering audio, defaults to 44100
-    :type sampleRate: int, optional
+    :param sample_rate: sampling rate for rendering audio, defaults to 44100
+    :type sample_rate: int, optional
     :param bufferSize: buffer size for rendering audio, defaults to 512
     :type bufferSize: int, optional
     :param midiNote: midi note number used for rendering, 0-127, defaults to 40
@@ -39,7 +39,7 @@ class SynthBase(ABC):
     def __init__(self, **kwargs):
         super().__init__()
 
-        self.sampleRate = kwargs.get('sampleRate', 44100)
+        self.sample_rate = kwargs.get('sample_rate', 44100)
         self.bufferSize = kwargs.get('bufferSize', 512)
         self.midiNote = kwargs.get('midiNote', 48)
         self.midiVelocity = kwargs.get('midiVelocity', 127)

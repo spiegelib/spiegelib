@@ -96,7 +96,7 @@ class NSGA3(EstimatorBase):
         index = 0
         for extractor in self.features_list:
             out_features = extractor(out)
-            errors.append(AudioEvalBase.absoluteMeanError(self.target[index],
+            errors.append(AudioEvalBase.abs_mean_error(self.target[index],
                                                           out_features))
             index += 1
 

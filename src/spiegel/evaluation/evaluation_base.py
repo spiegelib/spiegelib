@@ -13,44 +13,46 @@ class EvaluationBase(ABC):
     """
     Pass in a list of targets and lists of predictions for each target.
 
-    Ex) targetList = [y1, y2]
-        estimatedList = [[y1_estimation1, y1_estimation2], [y2_estimation1, y2_estimation2]]
+    Ex) targets = [y1, y2]
+        estimations = [[y1_estimation1, y1_estimation2], [y2_estimation1, y2_estimation2]]
 
-    :param targetList: list of objects to use as the ground truth for evaluation.
-    :type targetList: list
-    :param estimatedList: List of lists of objects. There must be as many lists
+    :param targets: list of objects to use as the ground truth for evaluation.
+    :type targets: list
+    :param estimations: List of lists of objects. There must be as many lists
         as there are targets, and each of those lists contain objects that are
         estimations for the associated target objects.
-    :type estimatedList: list
+    :type estimations: list
     """
 
-    def __init__(self, targetList, estimatedList):
+    def __init__(self, targets, estimations):
         """
         Constructor
         """
 
-        if not isinstance(targetList, list):
-            raise TypeError("Expected targetList to be a list")
+        if not isinstance(targets, list):
+            raise TypeError("Expected targets to be a list")
 
-        self.verifyInputList(targetList)
+        self.verify_input_list(targets)
 
-        self.numTargets = len(targetList)
-        self.targetList = targetList
+        self.num_targets = len(targets)
+        self.targets = targets
 
-        if self.numTargets != len(estimatedList):
-            raise ValueError("Estimated list must contain same number of lists as targets")
+        if self.num_targets != len(estimations):
+            raise ValueError("Estimated list must contain same number of "
+                             "lists as targets")
 
-        for item in estimatedList:
+        for item in estimations:
             if not isinstance(item, list):
-                raise TypeError("Expected list of lists of AudioBuffers for estimatedList")
+                raise TypeError("Expected list of lists of AudioBuffers for "
+                                "estimations")
 
-            self.verifyInputList(item)
+            self.verify_input_list(item)
 
-        self.estimatedList = estimatedList
+        self.estimations = estimations
         self.scores = {}
 
 
-    def getScores(self):
+    def get_scores(self):
         """
         :returns: Return scores calculated during evaluation
         :rtype: dict
@@ -64,7 +66,7 @@ class EvaluationBase(ABC):
         return self.scores
 
 
-    def getSummarizedScores(self):
+    def get_summarized_scores(self):
         """
         :returns: A dictionary of scores summarized using mean, median, and stddev
             for each estimation
@@ -76,22 +78,22 @@ class EvaluationBase(ABC):
 
     def evaluate(self):
         """
-        Run evaluation. Calls evaluateTarget on all targets and creates a dictionary
+        Run evaluation. Calls evaluate_target on all targets and creates a dictionary
         of metrics stored in self.scores
         """
 
         self.scores = {}
-        for i in range(len(self.targetList)):
-             results = self.evaluateTarget(self.targetList[i], self.estimatedList[i])
-             resultsDict = {}
+        for i in range(len(self.targets)):
+             results = self.evaluate_target(self.targets[i], self.estimations[i])
+             results_dict = {}
              for j in range(len(results)):
-                 resultsDict['estimation_%s' % j] = results[j]
+                 results_dict['estimation_%s' % j] = results[j]
 
-             self.scores['target_%i' % i] = resultsDict
+             self.scores['target_%i' % i] = results_dict
 
 
     @abstractmethod
-    def evaluateTarget(self, target, predictions):
+    def evaluate_target(self, target, predictions):
         """
         Abstract method. Must be implemented and run evaluation. Results should be
         stored in scores member variable.
@@ -100,7 +102,7 @@ class EvaluationBase(ABC):
 
 
     @staticmethod
-    def absoluteMeanError(A, B):
+    def abs_mean_error(A, B):
         """
         Calculates absolute mean error between two arrays. Mean(ABS(A-B)).
 
@@ -115,7 +117,7 @@ class EvaluationBase(ABC):
 
 
     @staticmethod
-    def euclidianDistance(A, B):
+    def euclidian_distance(A, B):
         """
         Calculates the euclidian distance between two arrays.
 
@@ -130,7 +132,7 @@ class EvaluationBase(ABC):
 
 
     @staticmethod
-    def manhattanDistance(A, B):
+    def manhattan_distance(A, B):
         """
         Calculates the manhattan distance between two arrays.
 
@@ -146,7 +148,7 @@ class EvaluationBase(ABC):
 
 
     @staticmethod
-    def meanSquaredError(A, B):
+    def mean_squared_error(A, B):
         """
         Calculates mean squared error between two arrays. Mean(Square(A-B)).
 
@@ -160,20 +162,22 @@ class EvaluationBase(ABC):
         return np.mean(np.square(A-B).flatten())
 
 
-    def plotHist(self, estimations, metric, bins=None, **kwargs):
+    def plot_hist(self, estimations, metric, bins=None, **kwargs):
         """
         """
 
         values = []
         for estimation in estimations:
-            values.extend([self.scores[key][estimation][metric] for key in self.scores])
+            values.extend([self.scores[key][estimation][metric]
+                           for key in self.scores])
 
-        plt.hist(np.array(values), bins, facecolor='blue', alpha=0.75, edgecolor='black')
+        plt.hist(np.array(values), bins, facecolor='blue',
+                 alpha=0.75, edgecolor='black')
         plt.title(metric)
         plt.show()
 
 
-    def saveScoresJSON(self, path):
+    def save_scores_json(self, path):
         """
         """
 
@@ -182,7 +186,7 @@ class EvaluationBase(ABC):
 
 
 
-    def verifyInputList(self, inputList):
+    def verify_input_list(self, input_list):
         """
         Base method for verifying input list. Override to implement verification.
         """
@@ -190,14 +194,15 @@ class EvaluationBase(ABC):
 
 
     @staticmethod
-    def verifyAudioInputList(inputList):
+    def verify_audio_input_list(input_list):
         """
         Static method for verifying input lists with audio buffers
         """
 
-        for item in inputList:
+        for item in input_list:
             if not isinstance(item, AudioBuffer):
-                raise TypeError('Must be an AudioBuffer, received %s' % type(item))
+                raise TypeError('Must be an AudioBuffer, received %s' \
+                                % type(item))
 
 
 

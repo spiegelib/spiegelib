@@ -16,8 +16,8 @@ class FeaturesBase(ABC):
     """
     :param dimensions: Number of dimensions associated with these features
     :type dimensions: int
-    :param sampleRate: Audio sample rate, defaults to 44100
-    :type sampleRate: int, optional
+    :param sample_rate: Audio sample rate, defaults to 44100
+    :type sample_rate: int, optional
     :param frameSizeSamples: frame size in audio samples, defaults to 2048
     :type frameSizeSamples: int, optional
     :param hopSizeSamples: hop size in audio samples, defaults to 512
@@ -30,7 +30,7 @@ class FeaturesBase(ABC):
     def __init__(
         self,
         dimensions,
-        sampleRate=44100,
+        sample_rate=44100,
         frameSize=2048,
         hopSize=512,
         timeMajor=False,
@@ -43,7 +43,7 @@ class FeaturesBase(ABC):
         super().__init__()
 
         self.dimensions = dimensions
-        self.sampleRate = sampleRate
+        self.sample_rate = sample_rate
         self.frameSize = frameSize
         self.hopSize = hopSize
 

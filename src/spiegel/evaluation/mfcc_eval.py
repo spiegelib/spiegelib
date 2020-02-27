@@ -12,28 +12,29 @@ class MFCCEval(EvaluationBase):
     Pass in a list of target AudioBuffers and lists of estimated AudioBuffers for
     each target AudioBuffer.
 
-    Ex) targetList = [y1, y2]
-        estimatedList = [[y1_estimation1, y1_estimation2], [y2_estimation1, y2_estimation2]]
+    Ex) targets = [y1, y2]
+        estimations = [[y1_estimation1, y1_estimation2], [y2_estimation1, y2_estimation2]]
 
-    :param targetList: list of :class:`spiegel.core.audio_buffer.AudioBuffer` objects
+    :param targets: list of :class:`spiegel.core.audio_buffer.AudioBuffer` objects
         to use as the ground truth for evaluation.
-    :type targetList: list
-    :param estimatedList: List of lists of :class:`spiegel.core.audio_buffer.AudioBuffer` objects.
+    :type targets: list
+    :param estimations: List of lists of :class:`spiegel.core.audio_buffer.AudioBuffer` objects.
         There must be as many lists as there are targets, and each of those lists contain
         AudioBuffers that are estimations for the associated target AudioBuffer.
-    :type estimatedList: list
-    :param kwargs: keyword arguments to pass to base class. See :class:`spiegel.evaluation.audio_eval_base.AudioEvalBase`
+    :type estimations: list
+    :param kwargs: keyword arguments to pass to base class. See
+        :class:`spiegel.evaluation.audio_eval_base.AudioEvalBase`
     """
 
-    def __init__(self, targetList, estimatedList, sampleRate=None, **kwargs):
+    def __init__(self, targets, estimations, sample_rate=None, **kwargs):
         """
         Constructor
         """
-        self.sampleRate = sampleRate if sampleRate else targetList[0].get_sample_rate()
-        super().__init__(targetList, estimatedList, **kwargs)
+        self.sample_rate = sample_rate if sample_rate else targets[0].get_sample_rate()
+        super().__init__(targets, estimations, **kwargs)
 
 
-    def evaluateTarget(self, target, predictions):
+    def evaluate_target(self, target, predictions):
         """
         Evaluate absolute mean error and mean squared error between MFCCs of all
         target AudioBuffers and estimated AudioBuffers.
@@ -42,23 +43,23 @@ class MFCCEval(EvaluationBase):
         """
 
         results = []
-        mfcc = MFCC(sampleRate=self.sampleRate)
-        targetMFCCs = mfcc(target)
+        mfcc = MFCC(sample_rate=self.sample_rate)
+        target_mfccs = mfcc(target)
 
         for pred in predictions:
-            estimatedMFCCs = mfcc(pred)
+            estimated_mfccs = mfcc(pred)
             results.append({
-                'absoluteMeanError': EvaluationBase.absoluteMeanError(targetMFCCs, estimatedMFCCs),
-                'meanSquaredError': EvaluationBase.meanSquaredError(targetMFCCs, estimatedMFCCs),
-                'euclidianDistance': EvaluationBase.euclidianDistance(targetMFCCs, estimatedMFCCs),
-                'manhattanDistance': EvaluationBase.manhattanDistance(targetMFCCs, estimatedMFCCs),
+                'abs_mean_error': EvaluationBase.abs_mean_error(target_mfccs, estimated_mfccs),
+                'mean_squared_error': EvaluationBase.mean_squared_error(target_mfccs, estimated_mfccs),
+                'euclidian_distance': EvaluationBase.euclidian_distance(target_mfccs, estimated_mfccs),
+                'manhattan_distance': EvaluationBase.manhattan_distance(target_mfccs, estimated_mfccs),
             })
 
         return results
 
 
-    def verifyInputList(self, inputList):
+    def verify_input_list(self, input_list):
         """
         Overriding verification method to check for AudioBuffers
         """
-        EvaluationBase.verifyAudioInputList(inputList)
+        EvaluationBase.verify_audio_input_list(input_list)
