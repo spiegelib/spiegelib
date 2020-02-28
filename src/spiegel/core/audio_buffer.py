@@ -25,7 +25,7 @@ class AudioBuffer():
         Constructor
         """
 
-        self.audio_data = None
+        self.audio = None
         self.sample_rate = None
 
         path = None
@@ -63,7 +63,7 @@ class AudioBuffer():
         :returns: Array of audio samples
         :rtype: np.ndarray
         """
-        return self.audio_data
+        return self.audio
 
 
     def get_sample_rate(self):
