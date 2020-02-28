@@ -23,7 +23,7 @@ class SoundMatch():
     :type estimator: Object
     """
 
-    def __init__(self, synth, features, estimator):
+    def __init__(self, synth, estimator, features=None):
         """
         Constructor
         """
@@ -34,17 +34,19 @@ class SoundMatch():
         else:
             raise TypeError('synth must inherit from SynthBase, received %s' % type(synth))
 
-        # Check for valid feature extraction object
-        if isinstance(features, FeaturesBase):
-            self.features = features
-        else:
-            raise TypeError('features must inherit from Featurebase, received %s' % type(features))
-
         # Check for valid estimator
         if isinstance(estimator, EstimatorBase):
             self.estimator = estimator
         else:
             raise TypeError('estimator must inherit from EstimatorBase, received type %s' % type(estimator))
+
+        # Check for valid feature extraction object
+        self.features = None
+        if features:
+            if isinstance(features, FeaturesBase):
+                self.features = features
+            else:
+                raise TypeError('features must inherit from Featurebase, received %s' % type(features))
 
         self.patch = None
 
@@ -67,14 +69,19 @@ class SoundMatch():
         :type target: :class:`spiegel.core.audio_buffer.AudioBuffer`
         """
 
-        # Attempt to run feature extraction with normalization first
-        try:
-            features = self.features(target, normalize=True)
-        except NormalizerError:
-            features = self.features(target)
+        # Attempt to run feature extraction if features have been provided
+        if self.features:
+            # Try normalization first
+            try:
+                print('here normalizing')
+                input = self.features(target, normalize=True)
+            except NormalizerError:
+                input = self.features(target)
+        else:
+            input = target
 
         # Estimate parameters
-        params = self.estimator.predict(features)
+        params = self.estimator.predict(input)
 
         # Load patch into synth and return audio
         self.synth.set_patch(params)
