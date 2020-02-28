@@ -18,23 +18,27 @@ class FeaturesBase(ABC):
     :type dimensions: int
     :param sample_rate: Audio sample rate, defaults to 44100
     :type sample_rate: int, optional
-    :param frameSizeSamples: frame size in audio samples, defaults to 2048
-    :type frameSizeSamples: int, optional
-    :param hopSizeSamples: hop size in audio samples, defaults to 512
-    :type hopSizeSamples: int, optional
-    :param timeMajor: indicates orientation of matrix that features are returned in,
-        timeMajor is (time_slices, features). Defaults to (features, time_slices).
-    :type timeMajor: boolean, optional
+    :param frame_size: frame size in audio samples, defaults to 2048
+    :type frame_size: int, optional
+    :param hop_size: hop size in audio samples, defaults to 512
+    :type hop_size: int, optional
+    :param time_major: indicates orientation of matrix that features are returned in,
+        time_major is (time_slices, features). Defaults to (features, time_slices).
+    :type time_major: boolean, optional
+    :param per_feature_normalize: Whether normalization should be applied to each
+        dimension independently, or on entire feature space. Defaults to True, which
+        applies normalization for each dimension independently.
+    :type per_feature_normalize: bool, optional
     """
 
     def __init__(
         self,
         dimensions,
         sample_rate=44100,
-        frameSize=2048,
-        hopSize=512,
-        timeMajor=False,
-        perFeatureNormalize=True,
+        frame_size=2048,
+        hop_size=512,
+        time_major=False,
+        per_feature_normalize=True,
     ):
         """
         Constructor
@@ -44,22 +48,22 @@ class FeaturesBase(ABC):
 
         self.dimensions = dimensions
         self.sample_rate = sample_rate
-        self.frameSize = frameSize
-        self.hopSize = hopSize
+        self.frame_size = frame_size
+        self.hop_size = hop_size
 
-        self.perFeatureNormalize = perFeatureNormalize
-        if self.perFeatureNormalize:
+        self.per_feature_normalize = per_feature_normalize
+        if self.per_feature_normalize:
             self.normalizers = [None]*self.dimensions
             self.Scaler = StandardScaler
         else:
             self.normalizers = [None]
             self.Scaler = FullDataStandardScaler
 
-        self.timeMajor=timeMajor
+        self.time_major=time_major
 
-        self.inputModifiers = []
-        self.prenormModifiers = []
-        self.outputModifiers = []
+        self.input_modifiers = []
+        self.prenorm_modifiers = []
+        self.output_modifiers = []
 
         # Update this in inheriting classes if you need
         self.dtype = np.float32
@@ -67,7 +71,7 @@ class FeaturesBase(ABC):
 
     def __call__(self, audio, normalize=False):
         """
-        Calls the getFeatures method. Applies data modifiers prior to and after
+        Calls the get_features method. Applies data modifiers prior to and after
         feature extraction
 
         :param audio: Audio to process features on
@@ -79,14 +83,14 @@ class FeaturesBase(ABC):
         """
 
         # Input data modification
-        for modifer in self.inputModifiers:
+        for modifer in self.input_modifiers:
             audio = modifer(audio)
 
         # Run feature extraction
-        features = self.getFeatures(audio)
+        features = self.get_features(audio)
 
         # Apply any prenormalization data modification
-        for modifier in self.prenormModifiers:
+        for modifier in self.prenorm_modifiers:
             features = modifier(features)
 
         # Normalize features
@@ -94,13 +98,13 @@ class FeaturesBase(ABC):
             features = self.normalize(features)
 
         # Apply any output data modification
-        for modifier in self.outputModifiers:
+        for modifier in self.output_modifiers:
             features = modifier(features)
 
         return features
 
 
-    def addModifier(self, modifier, type):
+    def add_modifier(self, modifier, type):
         """
         Add a data modifier to the feature extraction pipeline
 
@@ -112,11 +116,11 @@ class FeaturesBase(ABC):
         """
 
         if type == 'input':
-            self.inputModifiers.append(modifier)
+            self.input_modifiers.append(modifier)
         elif type == 'prenormalize':
-            self.prenormModifiers.append(modifier)
+            self.prenorm_modifiers.append(modifier)
         elif type == 'outout':
-            self.outputModifiers.append(modifier)
+            self.output_modifiers.append(modifier)
         else:
             raise ValueError(
                 'Type must be one of ("input", "prenormalize", or '
@@ -125,7 +129,7 @@ class FeaturesBase(ABC):
 
 
     @abstractmethod
-    def getFeatures(self, audio):
+    def get_features(self, audio):
         """
         Must be implemented. Run audio feature extraction on audio provided as parameter.
         Normalization should be applied based on the normalize parameter.
@@ -138,7 +142,7 @@ class FeaturesBase(ABC):
         pass
 
 
-    def setNormalizer(self, dimension, normalizer):
+    def set_normalizer(self, dimension, normalizer):
         """
         Set a normalizer for a dimension, this will be used to normalize that dimension
 
@@ -151,7 +155,7 @@ class FeaturesBase(ABC):
         self.normalizers[dimension] = normalizer
 
 
-    def fitNormalizers(self, data, transform=True):
+    def fit_normalizers(self, data, transform=True):
         """
         Fit normalizers to dataset for future transforms.
 
@@ -161,35 +165,33 @@ class FeaturesBase(ABC):
         :rtype: np.ndarray
         """
 
-        if not self.perFeatureNormalize:
-            return self.fitNormalizersFullData(data, transform)
+        if not self.per_feature_normalize:
+            return self.fit_normalizers_full_data(data, transform)
 
         elif len(data.shape) == 2:
-            return self.fitNormalizers2D(data, transform)
+            return self.fit_normalizers_2d(data, transform)
 
         elif len(data.shape) == 3:
-            return self.fitNormalizers3D(data, transform)
+            return self.fit_normalizers_3d(data, transform)
 
         else:
             raise Exception("Dimensionality of dataset not supported, only 2D or 3D matrices.")
 
 
-    def fitNormalizersFullData(self, data, transform):
+    def fit_normalizers_full_data(self, data, transform):
         """
         Fit one normalizer on the entire dataset
         """
 
         scaler = self.Scaler()
-        print("Fiting Normalizer")
         scaler.fit(data)
-        print("Transforming data")
-        scaledData = scaler.transform(data) if transform else None
-        self.setNormalizer(0, scaler)
+        scaled_data = scaler.transform(data) if transform else None
+        self.set_normalizer(0, scaler)
 
-        return scaledData
+        return scaled_data
 
 
-    def fitNormalizers2D(self, data, transform):
+    def fit_normalizers_2d(self, data, transform):
         """
         Fit normalizers for 2-dimensional datasets
 
@@ -210,15 +212,15 @@ class FeaturesBase(ABC):
 
         scaler = self.Scaler()
         scaler.fit(data)
-        scaledData = scaler.transform(data) if transform else None
+        scaled_data = scaler.transform(data) if transform else None
 
         for i in range(self.dimensions):
-            self.setNormalizer(i, scaler)
+            self.set_normalizer(i, scaler)
 
-        return scaledData
+        return scaled_data
 
 
-    def fitNormalizers3D(self, data, transform):
+    def fit_normalizers_3d(self, data, transform):
         """
         Fit normalizers for 3-dimensional datasets
 
@@ -232,30 +234,30 @@ class FeaturesBase(ABC):
         if len(data.shape) != 3:
             raise Exception("Expected 3D array for normalized data, got %s" % data.shape)
 
-        featureDimension = 2 if self.timeMajor else 1
-        if data.shape[featureDimension] != self.dimensions:
+        feature_dims = 2 if self.time_major else 1
+        if data.shape[feature_dims] != self.dimensions:
             raise Exception("Expected data to have %s feature dimensions, got %s" % (
-                self.dimensions, data.shape[featureDimension]
+                self.dimensions, data.shape[feature_dims]
             ))
 
-        scaledData = np.zeros_like(data) if transform else None
+        scaled_data = np.zeros_like(data) if transform else None
 
         # Train normalizers
         for i in trange(self.dimensions, desc="Fitting Normalizers"):
             scaler = self.Scaler()
 
-            if self.timeMajor:
+            if self.time_major:
                 scaler.fit(data[:,:,i])
                 if transform:
-                    scaledData[:,:,i] = scaler.transform(data[:,:,i])
+                    scaled_data[:,:,i] = scaler.transform(data[:,:,i])
             else:
                 scaler.fit(data[:,i,:])
                 if transform:
-                    scaledData[:,i,:] = scaler.transform(data[:,i,:])
+                    scaled_data[:,i,:] = scaler.transform(data[:,i,:])
 
-            self.setNormalizer(i, scaler)
+            self.set_normalizer(i, scaler)
 
-        return scaledData
+        return scaled_data
 
 
     def normalize(self, data):
@@ -268,31 +270,31 @@ class FeaturesBase(ABC):
         :rtype: np.array
         """
 
-        normalizedData = np.zeros(data.shape, dtype=data.dtype)
+        normalized_data = np.zeros(data.shape, dtype=data.dtype)
 
-        if not self.perFeatureNormalize:
-            normalizedData = self.normalizers[0].transform(data)
+        if not self.per_feature_normalize:
+            normalized_data = self.normalizers[0].transform(data)
 
         elif len(data.shape) == 2:
             for i in range(self.dimensions):
                 if not self.normalizers[i]:
                     raise NormalizerError("Normalizers not set for features. Please set normalizers first.")
 
-                if self.timeMajor:
-                    normalizedData[:,i] = self.normalizers[i].transform([data[:,i]])[0]
+                if self.time_major:
+                    normalized_data[:,i] = self.normalizers[i].transform([data[:,i]])[0]
                 else:
-                    normalizedData[i,:] = self.normalizers[i].transform([data[i,:]])[0]
+                    normalized_data[i,:] = self.normalizers[i].transform([data[i,:]])[0]
 
         elif len(data.shape) == 1:
-            normalizedData = self.normalizers[0].transform([data])[0]
+            normalized_data = self.normalizers[0].transform([data])[0]
 
         else:
             raise ValueError('Expected 1D or 2D data, got %s' % data.shape)
 
-        return normalizedData
+        return normalized_data
 
 
-    def hasNormalizers(self):
+    def has_normalizers(self):
         """
         :returns: a boolean indicating whether or not normalizers have been set
         :rtype: boolean
@@ -314,7 +316,7 @@ class FeaturesBase(ABC):
         joblib.dump(self.normalizers, location)
 
 
-    def loadNormalizers(self, location):
+    def load_normalizers(self, location):
         """
         Load trained normalizers from disk
 

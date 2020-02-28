@@ -10,21 +10,21 @@ from spiegel.features.features_base import FeaturesBase
 
 class MFCC(FeaturesBase):
     """
-    :param numMFCCs: number of mffcs to return per frame, defaults to 20
-    :type numMFCCs: int, optional
+    :param num_mfccs: number of mffcs to return per frame, defaults to 20
+    :type num_mfccs: int, optional
     :param kwargs: keyword arguments for base class, see :class:`spiegel.features.features_base.FeaturesBase`.
     """
 
-    def __init__(self, numMFCCs=20, **kwargs):
+    def __init__(self, num_mfccs=20, **kwargs):
         """
         Contructor
         """
 
-        self.numMFCCs = numMFCCs
-        super().__init__(numMFCCs, **kwargs)
+        self.num_mfccs = num_mfccs
+        super().__init__(num_mfccs, **kwargs)
 
 
-    def getFeatures(self, audio, normalize=False):
+    def get_features(self, audio, normalize=False):
         """
         Run audio feature extraction on audio provided as parameter.
         Normalization should be applied based on the normalize parameter.
@@ -49,12 +49,12 @@ class MFCC(FeaturesBase):
         features = librosa.feature.mfcc(
             y=audio.get_audio(),
             sr=self.sample_rate,
-            n_fft=self.frameSize,
-            hop_length=self.hopSize,
-            n_mfcc=self.numMFCCs
+            n_fft=self.frame_size,
+            hop_length=self.hop_size,
+            n_mfcc=self.num_mfccs
         )
 
-        if self.timeMajor:
+        if self.time_major:
             features = np.transpose(features)
 
         return features

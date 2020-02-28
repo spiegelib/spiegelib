@@ -21,7 +21,7 @@ class SpectralSummarized(FeaturesBase):
         super().__init__(dimensions, **kwargs)
 
 
-    def getFeatures(self, audio, normalize=False):
+    def get_features(self, audio, normalize=False):
         """
         Run audio feature extraction on audio provided as parameter.
         Normalization should be applied based on the normalize parameter.
@@ -43,51 +43,51 @@ class SpectralSummarized(FeaturesBase):
                 'extraction rate, %s != %s' % (audio.get_sample_rate(), self.sample_rate)
             )
 
-        spectralCentroid = librosa.feature.spectral_centroid(
+        spectral_centroid = librosa.feature.spectral_centroid(
             y=audio.get_audio(),
             sr=self.sample_rate,
-            n_fft=self.frameSize,
-            hop_length=self.hopSize,
+            n_fft=self.frame_size,
+            hop_length=self.hop_size,
         )
 
-        spectralBandwidth = librosa.feature.spectral_bandwidth(
+        spectral_bandwidth = librosa.feature.spectral_bandwidth(
             y=audio.get_audio(),
             sr=self.sample_rate,
-            n_fft=self.frameSize,
-            hop_length=self.hopSize,
+            n_fft=self.frame_size,
+            hop_length=self.hop_size,
         )
 
-        spectralContrast = librosa.feature.spectral_contrast(
+        spectral_contrast = librosa.feature.spectral_contrast(
             y=audio.get_audio(),
             sr=self.sample_rate,
-            n_fft=self.frameSize,
-            hop_length=self.hopSize,
+            n_fft=self.frame_size,
+            hop_length=self.hop_size,
         )
 
-        spectralFlatness = librosa.feature.spectral_flatness(
+        spectral_flatness = librosa.feature.spectral_flatness(
             y=audio.get_audio(),
-            n_fft=self.frameSize,
-            hop_length=self.hopSize,
+            n_fft=self.frame_size,
+            hop_length=self.hop_size,
         )
 
-        spectralRolloff = librosa.feature.spectral_rolloff(
+        spectral_rolloff = librosa.feature.spectral_rolloff(
             y=audio.get_audio(),
             sr=self.sample_rate,
-            n_fft=self.frameSize,
-            hop_length=self.hopSize,
+            n_fft=self.frame_size,
+            hop_length=self.hop_size,
         )
 
         features = np.array([
-            spectralCentroid.mean(),
-            spectralCentroid.var(),
-            spectralBandwidth.mean(),
-            spectralBandwidth.var(),
-            spectralContrast.mean(),
-            spectralContrast.var(),
-            spectralFlatness.mean(),
-            spectralFlatness.var(),
-            spectralRolloff.mean(),
-            spectralRolloff.var()
+            spectral_centroid.mean(),
+            spectral_centroid.var(),
+            spectral_bandwidth.mean(),
+            spectral_bandwidth.var(),
+            spectral_contrast.mean(),
+            spectral_contrast.var(),
+            spectral_flatness.mean(),
+            spectral_flatness.var(),
+            spectral_rolloff.mean(),
+            spectral_rolloff.var()
         ])
 
         return features

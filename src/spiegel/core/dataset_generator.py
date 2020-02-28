@@ -96,7 +96,7 @@ class DatasetGenerator():
         patch_set = np.zeros((size, len(patch)), dtype=np.float32)
 
         # Should the features be normalized with the feature normalizers?
-        normalize = self.normalize and self.features.hasNormalizers()
+        normalize = self.normalize and self.features.has_normalizers()
 
         # Generate data
         for i in trange(size, desc="Generating Dataset"):
@@ -112,12 +112,12 @@ class DatasetGenerator():
         # If only fitting normalizers, do that and return. Don't save any data
         if fit_normalizers_only:
             print("Fitting normalizers only")
-            self.features.fitNormalizers(feature_set, transform=False)
+            self.features.fit_normalizers(feature_set, transform=False)
             return
 
-        if self.normalize and not self.features.hasNormalizers():
+        if self.normalize and not self.features.has_normalizers():
             print("Fitting normalizers and normalizing data")
-            feature_set = self.features.fitNormalizers(feature_set)
+            feature_set = self.features.fit_normalizers(feature_set)
 
         # Save dataset
         np.save(os.path.join(self.output_folder, "%s%s" % (file_prefix, self.features_filename)), feature_set)

@@ -10,23 +10,23 @@ from spiegel.features.features_base import FeaturesBase
 
 class STFT(FeaturesBase):
     """
-    :param fftSize: number of FFT bins, defaults to 1024 (overrides frameSize)
-    :type fftSize: int, optional
+    :param fft_size: number of FFT bins, defaults to 1024 (overrides frame_size)
+    :type fft_size: int, optional
     :param kwargs: keyword arguments for base class, see :class:`spiegel.features.features_base.FeaturesBase`.
     """
 
-    def __init__(self, fftSize=1024, **kwargs):
+    def __init__(self, fft_size=1024, **kwargs):
         """
         Contructor
         """
 
-        dims = int(1 + (fftSize / 2))
-        super().__init__(dims, perFeatureNormalize=False, **kwargs)
-        self.frameSize = fftSize
+        dims = int(1 + (fft_size / 2))
+        super().__init__(dims, per_feature_normalize=False, **kwargs)
+        self.frame_size = fft_size
         self.dtype = np.complex64
 
 
-    def getFeatures(self, audio, normalize=False):
+    def get_features(self, audio, normalize=False):
         """
         Run audio feature extraction on audio provided as parameter.
         Normalization should be applied based on the normalize parameter.
@@ -44,11 +44,11 @@ class STFT(FeaturesBase):
 
         features = librosa.stft(
             y=audio.get_audio(),
-            n_fft=self.frameSize,
-            hop_length=self.hopSize,
+            n_fft=self.frame_size,
+            hop_length=self.hop_size,
         )
 
-        if self.timeMajor:
+        if self.time_major:
             features = np.transpose(features)
 
         return features
