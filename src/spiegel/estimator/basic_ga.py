@@ -21,7 +21,7 @@ class BasicGA(EstimatorBase):
     """
     """
 
-    def __init__(self, synth, features, seed=None):
+    def __init__(self, synth, features, seed=None, pop_size=300):
         """
         Constructor
         """
@@ -38,6 +38,9 @@ class BasicGA(EstimatorBase):
 
         self.features = features
         self.target = None
+
+        self.pop_size = pop_size
+        self.logbook = None
 
         random.seed(seed)
         self.setup()
@@ -79,8 +82,8 @@ class BasicGA(EstimatorBase):
         self.synth.set_patch(individual)
         self.synth.render_patch()
         out = self.synth.get_audio()
-        out_features = self.features(out)
-        error = AudioEvalBase.abs_mean_error(self.target, out_features)
+        out_features = self.features(out, normalize=True)
+        error = EvaluationBase.abs_mean_error(self.target, out_features)
         return error,
 
 
@@ -91,7 +94,7 @@ class BasicGA(EstimatorBase):
 
         self.target = input
 
-        pop = self.toolbox.population(n=300)
+        pop = self.toolbox.population(n=self.pop_size)
         hof = tools.HallOfFame(1)
         stats = tools.Statistics(lambda ind: ind.fitness.values)
         stats.register("avg", np.mean)
@@ -99,7 +102,7 @@ class BasicGA(EstimatorBase):
         stats.register("min", np.min)
         stats.register("max", np.max)
 
-        pop, log = algorithms.eaSimple(pop, self.toolbox, cxpb=0.5, mutpb=0.2, ngen=25,
+        pop, self.logbook = algorithms.eaSimple(pop, self.toolbox, cxpb=0.5, mutpb=0.3, ngen=100,
                                        stats=stats, halloffame=hof, verbose=True)
 
         return hof[0]

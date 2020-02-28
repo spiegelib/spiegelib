@@ -40,6 +40,8 @@ class NSGA3(EstimatorBase):
         self.features_list = features_list
         self.target = None
 
+        self.logbook = tools.Logbook()
+
         random.seed(seed)
         self.setup()
 
@@ -124,11 +126,10 @@ class NSGA3(EstimatorBase):
         stats.register("min", np.min, axis=0)
         stats.register("max", np.max, axis=0)
 
-        logbook = tools.Logbook()
-        logbook.header = "gen", "evals", "std", "min", "avg", "max"
+        self.logbook.header = "gen", "evals", "std", "min", "avg", "max"
 
         record = stats.compile(pop)
-        logbook.record(gen=0, evals=len(invalid_ind), **record)
+        self.logbook.record(gen=0, evals=len(invalid_ind), **record)
 
         # Begin the generational process
         pbar = tqdm(range(1, 25), desc="Generation 1")
@@ -146,7 +147,7 @@ class NSGA3(EstimatorBase):
 
             # Compile statistics about the new population
             record = stats.compile(pop)
-            logbook.record(gen=gen, evals=len(invalid_ind), **record)
+            self.logbook.record(gen=gen, evals=len(invalid_ind), **record)
             pbar.set_description("Generation %s" % gen)
 
         return tools.selBest(pop, 1)[0]
