@@ -47,6 +47,15 @@ class SynthBase(ABC):
         """
         super().__init__()
 
+        self.sample_rate        = sample_rate
+        self.buffer_size        = buffer_size
+        self.midi_note          = midi_note
+        self.midi_velocity      = midi_velocity
+        self.note_length_secs   = note_length_secs
+        self.render_length_secs = render_length_secs
+        self.overridden_params  = overridden_params
+        self.clamp_params       = clamp_params
+
         # Whether or not patch has been rendered by engine
         self.rendered_patch = False
 
