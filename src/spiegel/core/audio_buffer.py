@@ -27,6 +27,7 @@ class AudioBuffer():
 
         self.audio = None
         self.sample_rate = None
+        self.channels = 0
 
         path = None
         audio = None
@@ -107,6 +108,7 @@ class AudioBuffer():
         """
 
         self.audio, self.sample_rate = librosa.core.load(path, sr=sample_rate, **kwargs)
+        self.channels = len(self.audio.shape)
 
 
     def save(self, path, normalize=False):
@@ -126,15 +128,45 @@ class AudioBuffer():
         if not os.path.exists(dir):
             os.mkdir(dir)
 
-        audio = self.audio
+        audio = np.copy(self.audio)
         if normalize:
-            audio = AudioBuffer.peak_normalize(np.copy(audio))
+            audio = AudioBuffer.peak_normalize(audio)
+
+        if self.channels > 1:
+            audio = np.transpose(audio)
 
         scipy.io.wavfile.write(
             fullpath,
             self.sample_rate,
             audio
         )
+
+
+    def resize(self, num_samples, start=0):
+        """
+        Resize audio to a set number of samples. If new length is less than the
+        current audio buffer size, then the buffer will be trimmed. If the new
+        length is greater than current audio buffer, then the resulting buffer
+        will be zero-padded at the end.
+
+        :param num_samples: New length of audio buffer in samples
+        :type num_samples: int
+        :param start_sample: Start reading from certain number of samples into
+            current buffer, defaults to 0
+        :type start_sample: int, optional
+        """
+
+        new_shape = (self.channels, num_samples) if self.channels > 1 else (num_samples,)
+        new_audio = np.zeros(new_shape)
+        current = self.audio.shape[1] if self.channels > 1 else self.audio.shape[0]
+        smaller = min(current-start, num_samples)
+
+        if self.channels > 1:
+            new_audio[:,0:smaller] = self.audio[:,start:start+smaller]
+        else:
+            new_audio[0:smaller] = self.audio[start:start+smaller]
+
+        self.audio = new_audio
 
 
     @staticmethod
