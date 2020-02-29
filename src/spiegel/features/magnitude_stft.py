@@ -8,7 +8,7 @@ import librosa
 from spiegel import AudioBuffer
 from spiegel.features.stft import STFT
 
-class MagSpectrum(STFT):
+class MagnitudeSTFT(STFT):
     """
     :param fft_size: number of FFT bins, defaults to 1024 (overrides frame_size)
     :type fft_size: int, optional
