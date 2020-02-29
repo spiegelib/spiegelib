@@ -98,8 +98,8 @@ class NSGA3(EstimatorBase):
         index = 0
         for extractor in self.features_list:
             out_features = extractor(out)
-            errors.append(AudioEvalBase.abs_mean_error(self.target[index],
-                                                          out_features))
+            errors.append(EvaluationBase.abs_mean_error(self.target[index],
+                                                        out_features))
             index += 1
 
         return errors
@@ -132,7 +132,7 @@ class NSGA3(EstimatorBase):
         self.logbook.record(gen=0, evals=len(invalid_ind), **record)
 
         # Begin the generational process
-        pbar = tqdm(range(1, 25), desc="Generation 1")
+        pbar = tqdm(range(1, 100), desc="Generation 1")
         for gen in pbar:
             offspring = algorithms.varAnd(pop, self.toolbox, 0.5, 0.5)
 
