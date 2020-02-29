@@ -71,12 +71,7 @@ class SoundMatch():
 
         # Attempt to run feature extraction if features have been provided
         if self.features:
-            # Try normalization first
-            try:
-                print('here normalizing')
-                input = self.features(target, normalize=True)
-            except NormalizerError:
-                input = self.features(target)
+            input = self.features(target)
         else:
             input = target
 

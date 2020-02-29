@@ -37,6 +37,7 @@ class FeaturesBase(ABC):
         sample_rate=44100,
         frame_size=2048,
         hop_size=512,
+        normalize=False,
         time_major=False,
         per_feature_normalize=True,
     ):
@@ -50,6 +51,7 @@ class FeaturesBase(ABC):
         self.sample_rate = sample_rate
         self.frame_size = frame_size
         self.hop_size = hop_size
+        self.normalize = False
 
         self.per_feature_normalize = per_feature_normalize
         if self.per_feature_normalize:
@@ -69,14 +71,15 @@ class FeaturesBase(ABC):
         self.dtype = np.float32
 
 
-    def __call__(self, audio, normalize=False):
+    def __call__(self, audio, normalize=None):
         """
         Calls the get_features method. Applies data modifiers prior to and after
         feature extraction
 
         :param audio: Audio to process features on
         :type audio: :class:`spiegel.core.audio_buffer.AudioBuffer`
-        :param normalize: Whether or not the features are normalized, defaults to False
+        :param normalize: If set, will override the normalize attribute set
+            during construction.
         :type normalize: bool, optional
         :returns: results from audio feature extraction
         :rtype: np.array
@@ -94,7 +97,9 @@ class FeaturesBase(ABC):
             features = modifier(features)
 
         # Normalize features
-        if normalize:
+        shouldNormalize = normalize if normalize != None else self.normalize
+        if shouldNormalize:
+            assert self.has_normalizers(), "Normalizers must be set first."
             features = self.normalize(features)
 
         # Apply any output data modification
@@ -119,7 +124,7 @@ class FeaturesBase(ABC):
             self.input_modifiers.append(modifier)
         elif type == 'prenormalize':
             self.prenorm_modifiers.append(modifier)
-        elif type == 'outout':
+        elif type == 'output':
             self.output_modifiers.append(modifier)
         else:
             raise ValueError(

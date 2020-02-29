@@ -26,7 +26,7 @@ class STFT(FeaturesBase):
         self.dtype = np.complex64
 
 
-    def get_features(self, audio, normalize=False):
+    def get_features(self, audio):
         """
         Run audio feature extraction on audio provided as parameter.
         Normalization should be applied based on the normalize parameter.
