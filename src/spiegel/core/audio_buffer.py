@@ -8,6 +8,7 @@ import numbers
 import numpy as np
 import librosa
 import scipy.io.wavfile
+import spiegel.core.utils as utils
 
 
 class AudioBuffer():
@@ -28,6 +29,9 @@ class AudioBuffer():
         self.audio = None
         self.sample_rate = None
         self.channels = 0
+
+        # Will be set if audio is loaded from a file
+        self.file_name = ''
 
         path = None
         audio = None
@@ -109,6 +113,7 @@ class AudioBuffer():
 
         self.audio, self.sample_rate = librosa.core.load(path, sr=sample_rate, **kwargs)
         self.channels = len(self.audio.shape)
+        self.file_name = path
 
 
     def save(self, path, normalize=False):
@@ -126,7 +131,7 @@ class AudioBuffer():
         fullpath = os.path.abspath(path)
         dir = os.path.dirname(fullpath)
         if not os.path.exists(dir):
-            os.mkdir(dir)
+            os.makedirs(dir)
 
         audio = np.copy(self.audio)
         if normalize:
@@ -185,12 +190,14 @@ class AudioBuffer():
 
 
     @staticmethod
-    def load_folder(path):
+    def load_folder(path, sort=True):
         """
         Try to load a folder of audio samples
 
         :param path: Path to directory of audio files
         :type path: str
+        :param sort: Apply natural sort to file names. Default True
+        :type sort: bool
         :returns: list of :class:`spiegel.core.audio_buffer.AudioBuffer`
         :rtype: list
         """
@@ -199,10 +206,15 @@ class AudioBuffer():
         if not (os.path.exists(abspath) and os.path.isdir(abspath)):
             raise ValueError('%s is not a directory' % path)
 
+        dir = [file for file in os.listdir(abspath) if not file.startswith('.')]
+        if sort:
+            dir.sort(key=utils.natural_keys)
+
         audio_files = []
-        for file in os.scandir(abspath):
+        for file in dir:
             try:
-                audioFile = AudioBuffer(os.path.join(abspath, file.name))
+                audioFile = AudioBuffer(os.path.join(abspath, file))
+                audioFile.file_name = file
                 audio_files.append(audioFile)
             except:
                 pass
