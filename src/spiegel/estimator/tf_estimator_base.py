@@ -8,6 +8,7 @@ from abc import abstractmethod
 import datetime
 from spiegel.estimator.estimator_base import EstimatorBase
 from spiegel.estimator.tf_epoch_logger import TFEpochLogger
+from spiegel.estimator.highway_layer import HighwayLayer
 import numpy as np
 import tensorflow as tf
 
@@ -28,7 +29,7 @@ class TFEstimatorBase(EstimatorBase):
     :type callbacks: list
     """
 
-    def __init__(self, input_shape, num_outputs, checkpoint_path = "",
+    def __init__(self, input_shape=None, num_outputs=None, checkpoint_path = "",
                  weights_path = "", callbacks=[]):
         """
         Constructor
@@ -245,8 +246,53 @@ class TFEstimatorBase(EstimatorBase):
         self.model.save_weights(path, **kwargs)
 
 
+    def save_model(self, filepath, **kwargs):
+        """
+        Save entire model
+
+        :param filepath: path to SavedModel or H5 file to save the model.
+        :type filepath: str
+        :param kwargs: optional keyword arguments pass to tf save method,
+            see `TensorFlow Docs <https://www.tensorflow.org/api_docs/python/tf/keras/Model#save>`__.
+        """
+
+        path = os.path.abspath(filepath)
+        dir = os.path.dirname(path)
+        if not (os.path.exists(dir) and os.path.isdir(dir)):
+            os.mkdir(dir)
+
+        self.model.save(path, **kwargs)
+
+
     @staticmethod
-    def rms_error(labels, prediction):
+    def load(filepath, **kwargs):
+        """
+        Load entire model and return an istantiated TFEstimatorBase class with
+        the saved model loaded into it.
+
+        :param filepath: path to SavedModel or H5 file of saved model.
+        :type filepath: str
+        :param kwargs: Keyword arguments to pass into load_model function. See
+            `TensorFlow Doc <`https://www.tensorflow.org/api_docs/python/tf/keras/models/load_model>`__.
+        """
+
+        # Add spiegel custom objects
+        custom_objects = {'rms_error': TFEstimatorBase.rms_error,
+                          'HighwayLayer': HighwayLayer}
+
+        if 'custom_objects' in kwargs:
+            custom_objects.update(kwargs['custom_objects'])
+            del kwargs['custom_objects']
+
+
+        model = GenericTFModel()
+        model.model = tf.keras.models.load_model(filepath, custom_objects=custom_objects)
+        model.input_shape = model.model.get_layer(index=0).input_shape[1:]
+        return model
+
+
+    @staticmethod
+    def rms_error(y_true, y_pred):
         """
         Static method for calculating root mean squared error between predictions
         and targets
@@ -257,4 +303,16 @@ class TFEstimatorBase(EstimatorBase):
         :type prediction: Tensor
         """
 
-        return tf.sqrt(tf.reduce_mean(tf.square(tf.subtract(labels, prediction))))
+        return tf.sqrt(tf.reduce_mean(tf.square(tf.subtract(y_true, y_pred))))
+
+
+class GenericTFModel(TFEstimatorBase):
+    """
+    A generic and empty implentation TFEstimatorBase for loading models into
+    """
+
+    def build_model(self):
+        """
+        Empty Model
+        """
+        pass
