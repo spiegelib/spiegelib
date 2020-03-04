@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-MFCC Audio Feature Extractor
+STFT Audio Feature Extractor
 """
 
 import numpy as np
@@ -8,23 +8,25 @@ import librosa
 from spiegel import AudioBuffer
 from spiegel.features.features_base import FeaturesBase
 
-class MFCC(FeaturesBase):
+class STFT(FeaturesBase):
     """
-    :param num_mfccs: number of mffcs to return per frame, defaults to 20
-    :type num_mfccs: int, optional
+    :param fft_size: number of FFT bins, defaults to 1024 (overrides frame_size)
+    :type fft_size: int, optional
     :param kwargs: keyword arguments for base class, see :class:`spiegel.features.features_base.FeaturesBase`.
     """
 
-    def __init__(self, num_mfccs=20, **kwargs):
+    def __init__(self, fft_size=1024, **kwargs):
         """
         Contructor
         """
 
-        self.num_mfccs = num_mfccs
-        super().__init__(num_mfccs, **kwargs)
+        dims = int(1 + (fft_size / 2))
+        super().__init__(dims, per_feature_normalize=False, **kwargs)
+        self.frame_size = fft_size
+        self.dtype = np.complex64
 
 
-    def get_features(self, audio, normalize=False):
+    def get_features(self, audio):
         """
         Run audio feature extraction on audio provided as parameter.
         Normalization should be applied based on the normalize parameter.
@@ -40,18 +42,10 @@ class MFCC(FeaturesBase):
         if not isinstance(audio, AudioBuffer):
             raise TypeError('audio must be AudioBuffer, recieved %s' % type(audio))
 
-        if audio.get_sample_rate() != self.sample_rate:
-            raise ValueError(
-                'audio buffer samplerate does not equal feature '
-                'extraction rate, %s != %s' % (audio.get_sample_rate(), self.sample_rate)
-            )
-
-        features = librosa.feature.mfcc(
+        features = librosa.stft(
             y=audio.get_audio(),
-            sr=self.sample_rate,
             n_fft=self.frame_size,
             hop_length=self.hop_size,
-            n_mfcc=self.num_mfccs
         )
 
         if self.time_major:

@@ -18,28 +18,28 @@ class DatasetGenerator():
     :param synth: Synthesizer to generate test data from. Must inherit from
         :class:`spiegel.synth.synth_base.SynthBase`.
     :type synth: Object
-    :param features: Features to use for dataset generation, defaults to :class:`spiegel.features.mfcc.MFCC`
-        Must inherit from :class:`spiegel.features.features_base.FeaturesBase`
+    :param features: Features to use for dataset generation. Must inherit from
+        :class:`spiegel.features.features_base.FeaturesBase`
     :type features: Object
-    :param outputFolder: Output folder for dataset, defaults to currect working directory
-    :type outputFolder: str, optional
-    :param saveAudio: whether or not to save rendered audio files, defaults to False
-    :type saveAudio: bool, optional
+    :param output_folder: Output folder for dataset, defaults to currect working directory
+    :type output_folder: str, optional
+    :param save_audio: whether or not to save rendered audio files, defaults to False
+    :type save_audio: bool, optional
     :param normalize: whether or not to normalize features. Requires the normalizers in the
         feature object to be pre-trained. :py:meth:`generate` can be used to train the normalizers.
         Defaults to True.
     :type normalize: bool, optional
 
-    :cvar featuresFileName: filename for features output file, defaults to features.npy
-    :vartype featuresFileName: str
-    :cvar patchesFileName: filename for patches output file, defaults to patches.npy
-    :vartype patchesFileName: str
-    :cvar audioFolderName: folder name for the audio output if used. Will be automatically
+    :cvar features_filename: filename for features output file, defaults to features.npy
+    :vartype features_filename: str
+    :cvar patches_filename: filename for patches output file, defaults to patches.npy
+    :vartype patches_filename: str
+    :cvar audio_folder_name: folder name for the audio output if used. Will be automatically
         created within the output folder if saving audio. Defaults to audio
-    :vartype audioFolderName: str
+    :vartype audio_folder_name: str
     """
 
-    def __init__(self, synth, features=MFCC(), outputFolder=os.getcwd(), saveAudio=False, normalize=True):
+    def __init__(self, synth, features, output_folder=os.getcwd(), save_audio=False, normalize=False):
         """
         Contructor
         """
@@ -57,85 +57,87 @@ class DatasetGenerator():
             raise TypeError('features must inherit from FeaturesBase')
 
         # Check for valid output folder
-        self.outputFolder = os.path.abspath(outputFolder)
-        if not (os.path.exists(self.outputFolder) and os.path.isdir(self.outputFolder)):
-            os.mkdir(self.outputFolder)
+        self.output_folder = os.path.abspath(output_folder)
+        if not (os.path.exists(self.output_folder) and os.path.isdir(self.output_folder)):
+            os.mkdir(self.output_folder)
 
-        self.saveAudio = saveAudio
+        self.save_audio = save_audio
 
         # Default folder for audio output
-        self.audioFolderName = "audio"
+        self.audio_folder_name = "audio"
 
         # Default filenames for output files
-        self.featuresFileName = "features.npy"
-        self.patchesFileName = "patches.npy"
+        self.features_filename = "features.npy"
+        self.patches_filename = "patches.npy"
 
         # Should the feature set data be normalized?
         self.normalize = normalize
 
 
-    def generate(self, size, filePrefix=""):
+    def generate(self, size, file_prefix="", fit_normalizers_only=False):
         """
         Generate dataset with a set of random patches
 
         :param size: Number of patches to include in dataset
         :type size: int
-        :param filePrefix: filename prefix for output dataset, defaults to ""
-        :type filePrefix: str, optional
+        :param file_prefix: filename prefix for output dataset, defaults to ""
+        :type file_prefix: str, optional
         """
 
-        # Make sure audio output folder is available if we are saving audio
-        if self.saveAudio:
-            self.createAudioFolder()
-
         # Get a single example to determine required array size required
-        audio = self.synth.getRandomExample()
-        features = self.features.getFeatures(audio)
-        patch = self.synth.getPatch()
-
+        audio = self.synth.get_random_example()
+        features = self.features(audio)
+        patch = self.synth.get_patch()
 
         # Arrays to hold dataset
         shape = list(features.shape)
         shape.insert(0, size)
-        featureSet = np.zeros(shape, dtype=np.float32)
-        patchSet = np.zeros((size, len(patch)), dtype=np.float32)
+        feature_set = np.empty(shape, dtype=features.dtype)
+        patch_set = np.zeros((size, len(patch)), dtype=np.float32)
 
         # Should the features be normalized with the feature normalizers?
-        normalize = self.normalize and self.features.hasNormalizers()
+        normalize = self.normalize and self.features.has_normalizers()
 
         # Generate data
         for i in trange(size, desc="Generating Dataset"):
-            audio = self.synth.getRandomExample()
-            featureSet[i] = self.features.getFeatures(audio, normalize=normalize)
-            patchSet[i] = [p[1] for p in self.synth.getPatch()]
+            audio = self.synth.get_random_example()
+            feature_set[i] = self.features(audio, normalize=normalize)
+            patch_set[i] = [p[1] for p in self.synth.get_patch()]
 
             # Save rendered audio if required
-            if self.saveAudio:
-                audio.save(os.path.join(self.audioFolderPath, "%soutput_%s.wav" % (filePrefix, i)))
+            if self.save_audio:
+                self.create_audio_folder()
+                audio.save(os.path.join(self.audio_folder_path, "%soutput_%s.wav" % (file_prefix, i)))
 
-        if self.normalize and not self.features.hasNormalizers():
+        # If only fitting normalizers, do that and return. Don't save any data
+        if fit_normalizers_only:
+            print("Fitting normalizers only")
+            self.features.fit_normalizers(feature_set, transform=False)
+            return
+
+        if self.normalize and not self.features.has_normalizers():
             print("Fitting normalizers and normalizing data")
-            featureSet = self.features.fitNormalizers(featureSet)
+            feature_set = self.features.fit_normalizers(feature_set)
 
         # Save dataset
-        np.save(os.path.join(self.outputFolder, "%s%s" % (filePrefix, self.featuresFileName)), featureSet)
-        np.save(os.path.join(self.outputFolder, "%s%s" % (filePrefix, self.patchesFileName)), patchSet)
+        np.save(os.path.join(self.output_folder, "%s%s" % (file_prefix, self.features_filename)), feature_set)
+        np.save(os.path.join(self.output_folder, "%s%s" % (file_prefix, self.patches_filename)), patch_set)
 
 
-    def createAudioFolder(self):
+    def create_audio_folder(self):
         """
         Check for and create the audio output folder if necassary
         """
-        self.audioFolderPath = os.path.abspath(os.path.join(self.outputFolder, self.audioFolderName))
-        if not (os.path.exists(self.audioFolderPath) and os.path.isdir(self.audioFolderPath)):
-            os.mkdir(self.audioFolderPath)
+        self.audio_folder_path = os.path.abspath(os.path.join(self.output_folder, self.audio_folder_name))
+        if not (os.path.exists(self.audio_folder_path) and os.path.isdir(self.audio_folder_path)):
+            os.mkdir(self.audio_folder_path)
 
 
-    def saveNormalizers(self, fileName):
+    def save_normalizers(self, file_name):
         """
         Save feature normalizers
 
-        :param fileName: file name for normalizer pickle
-        :type fileName: str
+        :param file_name: file name for normalizer pickle
+        :type file_name: str
         """
-        self.features.saveNormalizers(os.path.join(self.outputFolder, fileName))
+        self.features.save_normalizers(os.path.join(self.output_folder, file_name))

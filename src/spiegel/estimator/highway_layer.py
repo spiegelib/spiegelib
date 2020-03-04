@@ -8,7 +8,7 @@ from tensorflow.keras import layers
 from tensorflow.keras.initializers import Constant
 
 
-class Highway(layers.Layer):
+class HighwayLayer(layers.Layer):
     """
     """
 
@@ -27,7 +27,7 @@ class Highway(layers.Layer):
         self.transform_gate_bias = transform_gate_bias
         self.transform_dropout = transform_dropout
         self.activity_regularizer = activity_regularizer
-        super(Highway, self).__init__(**kwargs)
+        super(HighwayLayer, self).__init__(**kwargs)
 
     def build(self, input_shape):
         # Create a trainable weight variable for this layer.
@@ -48,7 +48,7 @@ class Highway(layers.Layer):
             units=dim,
             activity_regularizer=self.activity_regularizer
         )
-        super(Highway, self).build(input_shape)  # Be sure to call this at the end
+        super(HighwayLayer, self).build(input_shape)  # Be sure to call this at the end
 
     def call(self, x):
 

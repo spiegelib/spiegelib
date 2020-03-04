@@ -12,7 +12,7 @@ from deap import base
 from deap import creator
 from deap import tools
 
-from spiegel.evaluation.audio_eval_base import AudioEvalBase
+from spiegel.evaluation.evaluation_base import EvaluationBase
 from spiegel.estimator.estimator_base import EstimatorBase
 from spiegel.synth.synth_base import SynthBase
 from spiegel.features.features_base import FeaturesBase
@@ -22,7 +22,7 @@ class NSGA3(EstimatorBase):
     """
     """
 
-    def __init__(self, synth, featuresList, seed=None):
+    def __init__(self, synth, features_list, seed=None):
         """
         Constructor
         """
@@ -32,13 +32,15 @@ class NSGA3(EstimatorBase):
             raise TypeError("synth must be of type SynthBase")
 
         self.synth = synth
-        self.numParams = len(synth.getPatch())
+        self.num_params = len(synth.get_patch())
 
-        if not isinstance(featuresList, list):
-            raise TypeError("featuresList must be a list")
+        if not isinstance(features_list, list):
+            raise TypeError("features_list must be a list")
 
-        self.featuresList = featuresList
+        self.features_list = features_list
         self.target = None
+
+        self.logbook = tools.Logbook()
 
         random.seed(seed)
         self.setup()
@@ -49,10 +51,11 @@ class NSGA3(EstimatorBase):
         Setup genetic algorithm
         """
 
-        self.numObjectives = len(self.featuresList)
+        self.num_objectives = len(self.features_list)
 
         # Create individual types
-        creator.create("FitnessMin", base.Fitness, weights=(-1.0,) * self.numObjectives)
+        creator.create("FitnessMin", base.Fitness,
+                       weights=(-1.0,) * self.num_objectives)
         creator.create("Individual", list, fitness=creator.FitnessMin)
 
         # Setup toolbox
@@ -67,15 +70,18 @@ class NSGA3(EstimatorBase):
             tools.initRepeat,
             creator.Individual,
             self.toolbox.attr_float,
-            self.numParams
+            self.num_params
         )
-        self.toolbox.register("population", tools.initRepeat, list, self.toolbox.individual)
+        self.toolbox.register("population", tools.initRepeat,
+                              list, self.toolbox.individual)
 
-        ref_points = tools.uniform_reference_points(self.numObjectives, 12)
+        ref_points = tools.uniform_reference_points(self.num_objectives, 12)
 
         self.toolbox.register("evaluate", self.fitness)
-        self.toolbox.register("mate", tools.cxSimulatedBinaryBounded, low=0.0, up=1.0, eta=30.0)
-        self.toolbox.register("mutate", tools.mutPolynomialBounded, low=0.0, up=1.0, eta=20.0, indpb=1.0/self.numParams)
+        self.toolbox.register("mate", tools.cxSimulatedBinaryBounded, low=0.0,
+                              up=1.0, eta=30.0)
+        self.toolbox.register("mutate", tools.mutPolynomialBounded, low=0.0,
+                              up=1.0, eta=20.0, indpb=1.0/self.num_params)
         self.toolbox.register("select", tools.selNSGA3, ref_points=ref_points)
 
 
@@ -84,15 +90,16 @@ class NSGA3(EstimatorBase):
         Evaluate fitness
         """
 
-        self.synth.setPatch(individual)
-        self.synth.renderPatch()
-        out = self.synth.getAudio()
+        self.synth.set_patch(individual)
+        self.synth.render_patch()
+        out = self.synth.get_audio()
 
         errors = []
         index = 0
-        for extractor in self.featuresList:
-            outFeatures = extractor.getFeatures(out)
-            errors.append(AudioEvalBase.absoluteMeanError(self.target[index], outFeatures))
+        for extractor in self.features_list:
+            out_features = extractor(out)
+            errors.append(EvaluationBase.abs_mean_error(self.target[index],
+                                                        out_features))
             index += 1
 
         return errors
@@ -104,8 +111,8 @@ class NSGA3(EstimatorBase):
         """
 
         self.target = []
-        for extractor in self.featuresList:
-            self.target.append(extractor.getFeatures(input))
+        for extractor in self.features_list:
+            self.target.append(extractor(input))
 
         pop = self.toolbox.population(n=300)
         invalid_ind = [ind for ind in pop if not ind.fitness.valid]
@@ -119,15 +126,13 @@ class NSGA3(EstimatorBase):
         stats.register("min", np.min, axis=0)
         stats.register("max", np.max, axis=0)
 
-        logbook = tools.Logbook()
-        logbook.header = "gen", "evals", "std", "min", "avg", "max"
+        self.logbook.header = "gen", "evals", "std", "min", "avg", "max"
 
         record = stats.compile(pop)
-        logbook.record(gen=0, evals=len(invalid_ind), **record)
-        #print(logbook.stream)
+        self.logbook.record(gen=0, evals=len(invalid_ind), **record)
 
-                # Begin the generational process
-        pbar = tqdm(range(1, 25), desc="Generation 1")
+        # Begin the generational process
+        pbar = tqdm(range(1, 100), desc="Generation 1")
         for gen in pbar:
             offspring = algorithms.varAnd(pop, self.toolbox, 0.5, 0.5)
 
@@ -142,7 +147,7 @@ class NSGA3(EstimatorBase):
 
             # Compile statistics about the new population
             record = stats.compile(pop)
-            logbook.record(gen=gen, evals=len(invalid_ind), **record)
+            self.logbook.record(gen=gen, evals=len(invalid_ind), **record)
             pbar.set_description("Generation %s" % gen)
 
         return tools.selBest(pop, 1)[0]

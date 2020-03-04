@@ -11,7 +11,7 @@ from deap import base
 from deap import creator
 from deap import tools
 
-from spiegel.evaluation.audio_eval_base import AudioEvalBase
+from spiegel.evaluation.evaluation_base import EvaluationBase
 from spiegel.estimator.estimator_base import EstimatorBase
 from spiegel.synth.synth_base import SynthBase
 from spiegel.features.features_base import FeaturesBase
@@ -21,7 +21,7 @@ class BasicGA(EstimatorBase):
     """
     """
 
-    def __init__(self, synth, features, seed=None):
+    def __init__(self, synth, features, seed=None, pop_size=300):
         """
         Constructor
         """
@@ -31,13 +31,16 @@ class BasicGA(EstimatorBase):
             raise TypeError("synth must be of type SynthBase")
 
         self.synth = synth
-        self.numParams = len(synth.getPatch())
+        self.num_params = len(synth.get_patch())
 
         if not isinstance(features, FeaturesBase):
             raise TypeError("features must be of type FeaturesBase")
 
         self.features = features
-        self.targe = None
+        self.target = None
+
+        self.pop_size = pop_size
+        self.logbook = None
 
         random.seed(seed)
         self.setup()
@@ -59,14 +62,11 @@ class BasicGA(EstimatorBase):
         self.toolbox.register("attr_float", random.random)
 
         # Structure initializers
-        self.toolbox.register(
-            "individual",
-            tools.initRepeat,
-            creator.Individual,
-            self.toolbox.attr_float,
-            self.numParams
-        )
-        self.toolbox.register("population", tools.initRepeat, list, self.toolbox.individual)
+        self.toolbox.register("individual", tools.initRepeat, creator.Individual,
+                              self.toolbox.attr_float, self.num_params)
+
+        self.toolbox.register("population", tools.initRepeat, list,
+                              self.toolbox.individual)
 
         self.toolbox.register("evaluate", self.fitness)
         self.toolbox.register("mate", tools.cxTwoPoint)
@@ -79,11 +79,11 @@ class BasicGA(EstimatorBase):
         Evaluate fitness
         """
 
-        self.synth.setPatch(individual)
-        self.synth.renderPatch()
-        out = self.synth.getAudio()
-        outFeatures = self.features.getFeatures(out)
-        error = AudioEvalBase.absoluteMeanError(self.target, outFeatures)
+        self.synth.set_patch(individual)
+        self.synth.render_patch()
+        out = self.synth.get_audio()
+        out_features = self.features(out)
+        error = EvaluationBase.abs_mean_error(self.target, out_features)
         return error,
 
 
@@ -94,7 +94,7 @@ class BasicGA(EstimatorBase):
 
         self.target = input
 
-        pop = self.toolbox.population(n=300)
+        pop = self.toolbox.population(n=self.pop_size)
         hof = tools.HallOfFame(1)
         stats = tools.Statistics(lambda ind: ind.fitness.values)
         stats.register("avg", np.mean)
@@ -102,7 +102,7 @@ class BasicGA(EstimatorBase):
         stats.register("min", np.min)
         stats.register("max", np.max)
 
-        pop, log = algorithms.eaSimple(pop, self.toolbox, cxpb=0.5, mutpb=0.2, ngen=25,
+        pop, self.logbook = algorithms.eaSimple(pop, self.toolbox, cxpb=0.5, mutpb=0.3, ngen=100,
                                        stats=stats, halloffame=hof, verbose=True)
 
         return hof[0]

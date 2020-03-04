@@ -18,6 +18,6 @@ class EstimatorBase(ABC):
     def predict(self):
         """
         Predict method must be implemented and should estimate parameters
-        given some input parameters
+        given some input
         """
         pass

@@ -18,7 +18,7 @@ def loadPatch():
     audio = synth.getAudio()
 
     mfcc = MFCC()
-    mfccs = mfcc.getFeatures(audio)
+    mfccs = mfcc(audio)
 
     scipy.io.wavfile.write('./test.wav', 44100, audio)
 

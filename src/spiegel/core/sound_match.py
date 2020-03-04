@@ -12,15 +12,18 @@ from spiegel.estimator.estimator_base import EstimatorBase
 
 class SoundMatch():
     """
-    :param synth: synthesizer, must inherit from :class:`spiegel.synth.synth_base.SynthBase`.
+    :param synth: synthesizer, must inherit from
+        :class:`spiegel.synth.synth_base.SynthBase`.
     :type synth: Object
-    :param features: feature extraction, must inherit from :class:`spiegel.features.feature_base.FeatureBase`.
+    :param features: feature extraction, must inherit from
+        :class:`spiegel.features.feature_base.FeatureBase`.
     :type features: Object
-    :param estimator: paramter estimator, must inherit from :class:`spiegel.estimator.estimator_base.EstimatorBase`.
+    :param estimator: paramter estimator, must inherit from
+        :class:`spiegel.estimator.estimator_base.EstimatorBase`.
     :type estimator: Object
     """
 
-    def __init__(self, synth, features, estimator):
+    def __init__(self, synth, estimator, features=None):
         """
         Constructor
         """
@@ -31,22 +34,24 @@ class SoundMatch():
         else:
             raise TypeError('synth must inherit from SynthBase, received %s' % type(synth))
 
-        # Check for valid feature extraction object
-        if isinstance(features, FeaturesBase):
-            self.features = features
-        else:
-            raise TypeError('features must inherit from Featurebase, received %s' % type(features))
-
         # Check for valid estimator
         if isinstance(estimator, EstimatorBase):
             self.estimator = estimator
         else:
             raise TypeError('estimator must inherit from EstimatorBase, received type %s' % type(estimator))
 
+        # Check for valid feature extraction object
+        self.features = None
+        if features:
+            if isinstance(features, FeaturesBase):
+                self.features = features
+            else:
+                raise TypeError('features must inherit from Featurebase, received %s' % type(features))
+
         self.patch = None
 
 
-    def getPatch(self):
+    def get_patch(self):
         """
         Return the estimated sound matched patch
         """
@@ -64,31 +69,31 @@ class SoundMatch():
         :type target: :class:`spiegel.core.audio_buffer.AudioBuffer`
         """
 
-        # Attempt to run feature extraction with normalization first
-        try:
-            features = self.features.getFeatures(target, normalize=True)
-        except NormalizerError:
-            features = self.features.getFeatures(target)
+        # Attempt to run feature extraction if features have been provided
+        if self.features:
+            input = self.features(target)
+        else:
+            input = target
 
         # Estimate parameters
-        params = self.estimator.predict(features)
+        params = self.estimator.predict(input)
 
         # Load patch into synth and return audio
-        self.synth.setPatch(params)
-        self.synth.renderPatch()
-        self.patch = self.synth.getPatch()
-        return self.synth.getAudio()
+        self.synth.set_patch(params)
+        self.synth.render_patch()
+        self.patch = self.synth.get_patch()
+        return self.synth.get_audio()
 
 
-    def matchFromFile(self, audioPath):
+    def match_from_file(self, path):
         """
         Load audio file from disk and perform sound matching on it
 
-        :param audioPath: filepath
-        :type audioPath: str
+        :param path: filepath
+        :type path: str
         :returns: resulting audio from sound matching
         :rtype: np.ndarray
         """
 
-        target = AudioBuffer(audioPath, self.features.sampleRate)
+        target = AudioBuffer(path, self.features.sample_rate)
         return self.match(target)
