@@ -51,7 +51,7 @@ class FeaturesBase(ABC):
         self.sample_rate = sample_rate
         self.frame_size = frame_size
         self.hop_size = hop_size
-        self.normalize = False
+        self.should_normalize = normalize
 
         self.per_feature_normalize = per_feature_normalize
         if self.per_feature_normalize:
@@ -97,7 +97,7 @@ class FeaturesBase(ABC):
             features = modifier(features)
 
         # Normalize features
-        shouldNormalize = normalize if normalize != None else self.normalize
+        shouldNormalize = normalize if normalize != None else self.should_normalize
         if shouldNormalize:
             assert self.has_normalizers(), "Normalizers must be set first."
             features = self.normalize(features)

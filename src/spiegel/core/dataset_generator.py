@@ -39,7 +39,7 @@ class DatasetGenerator():
     :vartype audio_folder_name: str
     """
 
-    def __init__(self, synth, features, output_folder=os.getcwd(), save_audio=False, normalize=True):
+    def __init__(self, synth, features, output_folder=os.getcwd(), save_audio=False, normalize=False):
         """
         Contructor
         """
