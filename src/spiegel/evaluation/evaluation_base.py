@@ -13,9 +13,6 @@ class EvaluationBase(ABC):
     """
     Pass in a list of targets and lists of predictions for each target.
 
-    Ex) targets = [y1, y2]
-        estimations = [[y1_estimation1, y1_estimation2], [y2_estimation1, y2_estimation2]]
-
     :param targets: list of objects to use as the ground truth for evaluation.
     :type targets: list
     :param estimations: List of lists of objects. There must be as many lists
@@ -37,10 +34,6 @@ class EvaluationBase(ABC):
         self.num_targets = len(targets)
         self.targets = targets
 
-        if self.num_targets != len(estimations):
-            raise ValueError("Estimated list must contain same number of "
-                             "lists as targets")
-
         for item in estimations:
             if not isinstance(item, list):
                 raise TypeError("Expected list of lists of AudioBuffers for "
@@ -48,8 +41,10 @@ class EvaluationBase(ABC):
 
             self.verify_input_list(item)
 
+        self.num_sources = len(estimations)
         self.estimations = estimations
         self.scores = {}
+        self.stats = {}
 
 
     def get_scores(self):
@@ -66,14 +61,41 @@ class EvaluationBase(ABC):
         return self.scores
 
 
-    def get_summarized_scores(self):
+    def get_stats(self):
+        """
+        Return dictionary of stats that summarize the scores for each source
+        """
+
+        if not len(self.stats):
+            self.compute_stats()
+
+        return self.stats
+
+
+    def compute_stats(self):
         """
         :returns: A dictionary of scores summarized using mean, median, and stddev
-            for each estimation
+            for each source
         :rtype: dict
         """
-        pass
 
+        summaries = self.scores_to_nparray()
+
+        # Now compute stats on those lists
+        self.stats = {}
+        for source in summaries:
+            if not source in self.stats:
+                self.stats[source] = {}
+
+            for metric in summaries[source]:
+                if not metric in self.stats[source]:
+                    self.stats[source][metric] = {}
+
+                self.stats[source][metric]['mean'] = np.median(summaries[source][metric])
+                self.stats[source][metric]['median'] = np.mean(summaries[source][metric])
+                self.stats[source][metric]['std'] = np.std(summaries[source][metric])
+                self.stats[source][metric]['min'] = np.min(summaries[source][metric])
+                self.stats[source][metric]['max'] = np.max(summaries[source][metric])
 
 
     def evaluate(self):
@@ -82,14 +104,16 @@ class EvaluationBase(ABC):
         of metrics stored in self.scores
         """
 
+        self.stats = {}
         self.scores = {}
         for i in range(len(self.targets)):
-             results = self.evaluate_target(self.targets[i], self.estimations[i])
-             results_dict = {}
-             for j in range(len(results)):
-                 results_dict['estimation_%s' % j] = results[j]
+            target_estmations = [est[i] for est in self.estimations]
+            results = self.evaluate_target(self.targets[i], target_estmations)
+            results_dict = {}
+            for j in range(len(results)):
+                results_dict['source_%s' % j] = results[j]
 
-             self.scores['target_%i' % i] = results_dict
+            self.scores['target_%i' % i] = results_dict
 
 
     @abstractmethod
@@ -161,20 +185,48 @@ class EvaluationBase(ABC):
         """
         return np.mean(np.square(A-B).flatten())
 
+    def scores_to_nparray(self):
+        """
+        Reorganize scores into a set of np.ndarrays, one for each metric for each
+        source. Returned as a dictionary: dict[source][metric]
+        """
 
-    def plot_hist(self, estimations, metric, bins=None, **kwargs):
+        summaries = {}
+        scores = self.get_scores()
+        i = 0
+
+        # Organize scores into arrays organized by the source and the metric
+        for target in scores:
+            for source in scores[target]:
+                if not source in summaries:
+                    summaries[source] = {}
+
+                for metric in scores[target][source]:
+                    if not metric in summaries[source]:
+                        summaries[source][metric] = np.zeros(self.num_targets)
+
+                    summaries[source][metric][i] = scores[target][source][metric]
+
+            i = i + 1
+
+        return summaries
+
+
+    def plot_hist(self, sources, metric, bins=None, clip_upper=None, **kwargs):
         """
         """
-
         values = []
-        for estimation in estimations:
-            values.extend([self.scores[key][estimation][metric]
+        for source in sources:
+            values.extend([self.scores[key]['source_%s' % source][metric]
                            for key in self.scores])
 
-        plt.hist(np.array(values), bins, facecolor='blue',
-                 alpha=0.75, edgecolor='black')
-        plt.title(metric)
-        plt.show()
+        values = np.array(values)
+
+        if clip_upper:
+            values = np.clip(values, np.min(values), clip_upper)
+
+        plt.hist(np.array(values), bins,
+                 alpha=0.9, edgecolor='black')
 
 
     def save_scores_json(self, path):
@@ -184,6 +236,26 @@ class EvaluationBase(ABC):
         with open(path, 'w') as fp:
             json.dump(self.scores, fp, indent=True, cls=NumpyNumberEncoder)
 
+
+    def save_stats_json(self, path):
+        """
+        Save score statistics as a JSON file
+
+        :param path: Location of file to save json
+        :type path: str
+        """
+
+        # Try to compute stats if it looks like they haven't been
+        if not len(self.stats):
+            self.compute_stats()
+
+        # If there are now stats, save those
+        if len(self.stats):
+            with open(path, 'w') as fp:
+                json.dump(self.stats, fp, indent=True, cls=NumpyNumberEncoder)
+
+        else:
+            print('No stats to save! Did you run evaluation?')
 
 
     def verify_input_list(self, input_list):
