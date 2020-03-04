@@ -163,21 +163,34 @@
 <p>MFCC Audio Feature Extractor</p>
 <dl class="class">
 <dt id="spiegel.features.mfcc.MFCC">
-<em class="property">class </em><code class="sig-prename descclassname">spiegel.features.mfcc.</code><code class="sig-name descname">MFCC</code><span class="sig-paren">(</span><em class="sig-param">numMFCCs=20</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">spiegel.features.mfcc.</code><code class="sig-name descname">MFCC</code><span class="sig-paren">(</span><em class="sig-param">num_mfccs=20</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="features_base.html#spiegel.features.features_base.FeaturesBase" title="spiegel.features.features_base.FeaturesBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegel.features.features_base.FeaturesBase</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>numMFCCs</strong> (<em>int</em><em>, </em><em>optional</em>) – number of mffcs to return per frame, defaults to 20</p></li>
-<li><p><strong>sampleRate</strong> (<em>int</em><em>, </em><em>optional</em>) – Audio sample rate, defaults to 44100</p></li>
-<li><p><strong>frameSizeSamples</strong> (<em>int</em><em>, </em><em>optional</em>) – frame size in audio samples, defaults to 2048</p></li>
-<li><p><strong>hopSizeSamples</strong> (<em>int</em><em>, </em><em>optional</em>) – hop size in audio samples, defaults to 512</p></li>
+<li><p><strong>num_mfccs</strong> (<em>int</em><em>, </em><em>optional</em>) – number of mffcs to return per frame, defaults to 20</p></li>
+<li><p><strong>kwargs</strong> – keyword arguments for base class, see <a class="reference internal" href="features_base.html#spiegel.features.features_base.FeaturesBase" title="spiegel.features.features_base.FeaturesBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegel.features.features_base.FeaturesBase</span></code></a>.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="method">
-<dt id="spiegel.features.mfcc.MFCC.fitNormalizers">
-<code class="sig-name descname">fitNormalizers</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC.fitNormalizers" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegel.features.mfcc.MFCC.add_modifier">
+<code class="sig-name descname">add_modifier</code><span class="sig-paren">(</span><em class="sig-param">modifier</em>, <em class="sig-param">type</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC.add_modifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a data modifier to the feature extraction pipeline</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>modifier</strong> (<em>lambda</em>) – data modifier function. Should accept an np.array,
+apply some modification to that, and return a np.array</p></li>
+<li><p><strong>type</strong> (<em>str</em>) – Where to add this into the pipeline. (‘input’, ‘prenormalize’, or ‘output’)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.features.mfcc.MFCC.fit_normalizers">
+<code class="sig-name descname">fit_normalizers</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">transform=True</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC.fit_normalizers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit normalizers to dataset for future transforms.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -193,8 +206,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.mfcc.MFCC.fitNormalizers2D">
-<code class="sig-name descname">fitNormalizers2D</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC.fitNormalizers2D" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegel.features.mfcc.MFCC.fit_normalizers_2d">
+<code class="sig-name descname">fit_normalizers_2d</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">transform</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC.fit_normalizers_2d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit normalizers for 2-dimensional datasets</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -210,8 +223,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.mfcc.MFCC.fitNormalizers3D">
-<code class="sig-name descname">fitNormalizers3D</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC.fitNormalizers3D" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegel.features.mfcc.MFCC.fit_normalizers_3d">
+<code class="sig-name descname">fit_normalizers_3d</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">transform</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC.fit_normalizers_3d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit normalizers for 3-dimensional datasets</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -227,14 +240,20 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.mfcc.MFCC.getFeatures">
-<code class="sig-name descname">getFeatures</code><span class="sig-paren">(</span><em class="sig-param">audio</em>, <em class="sig-param">normalize=False</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC.getFeatures" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegel.features.mfcc.MFCC.fit_normalizers_full_data">
+<code class="sig-name descname">fit_normalizers_full_data</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">transform</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC.fit_normalizers_full_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit one normalizer on the entire dataset</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.features.mfcc.MFCC.get_features">
+<code class="sig-name descname">get_features</code><span class="sig-paren">(</span><em class="sig-param">audio</em>, <em class="sig-param">normalize=False</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC.get_features" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run audio feature extraction on audio provided as parameter.
 Normalization should be applied based on the normalize parameter.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>audio</strong> (<em>np.array</em>) – Audio to process features on</p></li>
+<li><p><strong>audio</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">spiegel.core.audio_buffer.AudioBuffer</span></code>) – Audio to process features on</p></li>
 <li><p><strong>normalize</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether or not the features are normalized, defaults to False</p></li>
 </ul>
 </dd>
@@ -248,8 +267,8 @@ Normalization should be applied based on the normalize parameter.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.mfcc.MFCC.hasNormalizers">
-<code class="sig-name descname">hasNormalizers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC.hasNormalizers" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegel.features.mfcc.MFCC.has_normalizers">
+<code class="sig-name descname">has_normalizers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC.has_normalizers" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>a boolean indicating whether or not normalizers have been set</p>
@@ -261,8 +280,8 @@ Normalization should be applied based on the normalize parameter.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.mfcc.MFCC.loadNormalizers">
-<code class="sig-name descname">loadNormalizers</code><span class="sig-paren">(</span><em class="sig-param">location</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC.loadNormalizers" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegel.features.mfcc.MFCC.load_normalizers">
+<code class="sig-name descname">load_normalizers</code><span class="sig-paren">(</span><em class="sig-param">location</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC.load_normalizers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load trained normalizers from disk</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -289,8 +308,8 @@ Normalization should be applied based on the normalize parameter.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.mfcc.MFCC.saveNormalizers">
-<code class="sig-name descname">saveNormalizers</code><span class="sig-paren">(</span><em class="sig-param">location</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC.saveNormalizers" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegel.features.mfcc.MFCC.save_normalizers">
+<code class="sig-name descname">save_normalizers</code><span class="sig-paren">(</span><em class="sig-param">location</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC.save_normalizers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save the trained normalizers for these features for later use</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -300,8 +319,8 @@ Normalization should be applied based on the normalize parameter.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.mfcc.MFCC.setNormalizer">
-<code class="sig-name descname">setNormalizer</code><span class="sig-paren">(</span><em class="sig-param">dimension</em>, <em class="sig-param">normalizer</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC.setNormalizer" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegel.features.mfcc.MFCC.set_normalizer">
+<code class="sig-name descname">set_normalizer</code><span class="sig-paren">(</span><em class="sig-param">dimension</em>, <em class="sig-param">normalizer</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC.set_normalizer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set a normalizer for a dimension, this will be used to normalize that dimension</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

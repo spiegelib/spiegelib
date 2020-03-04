@@ -163,23 +163,41 @@
 <p>Abstract Base Class for Audio Features</p>
 <dl class="class">
 <dt id="spiegel.features.features_base.FeaturesBase">
-<em class="property">class </em><code class="sig-prename descclassname">spiegel.features.features_base.</code><code class="sig-name descname">FeaturesBase</code><span class="sig-paren">(</span><em class="sig-param">dimensions</em>, <em class="sig-param">sampleRate=44100</em>, <em class="sig-param">frameSize=2048</em>, <em class="sig-param">hopSize=512</em>, <em class="sig-param">timeMajor=False</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">spiegel.features.features_base.</code><code class="sig-name descname">FeaturesBase</code><span class="sig-paren">(</span><em class="sig-param">dimensions</em>, <em class="sig-param">sample_rate=44100</em>, <em class="sig-param">frame_size=2048</em>, <em class="sig-param">hop_size=512</em>, <em class="sig-param">normalize=False</em>, <em class="sig-param">time_major=False</em>, <em class="sig-param">per_feature_normalize=True</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>dimensions</strong> (<em>int</em>) – Number of dimensions associated with these features</p></li>
-<li><p><strong>sampleRate</strong> (<em>int</em><em>, </em><em>optional</em>) – Audio sample rate, defaults to 44100</p></li>
-<li><p><strong>frameSizeSamples</strong> (<em>int</em><em>, </em><em>optional</em>) – frame size in audio samples, defaults to 2048</p></li>
-<li><p><strong>hopSizeSamples</strong> (<em>int</em><em>, </em><em>optional</em>) – hop size in audio samples, defaults to 512</p></li>
-<li><p><strong>timeMajor</strong> (<em>boolean</em><em>, </em><em>optional</em>) – indicates orientation of matrix that features are returned in,
-timeMajor is (time_slices, features). Defaults to (features, time_slices).</p></li>
+<li><p><strong>sample_rate</strong> (<em>int</em><em>, </em><em>optional</em>) – Audio sample rate, defaults to 44100</p></li>
+<li><p><strong>frame_size</strong> (<em>int</em><em>, </em><em>optional</em>) – frame size in audio samples, defaults to 2048</p></li>
+<li><p><strong>hop_size</strong> (<em>int</em><em>, </em><em>optional</em>) – hop size in audio samples, defaults to 512</p></li>
+<li><p><strong>time_major</strong> (<em>boolean</em><em>, </em><em>optional</em>) – indicates orientation of matrix that features are returned in,
+time_major is (time_slices, features). Defaults to (features, time_slices).</p></li>
+<li><p><strong>per_feature_normalize</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether normalization should be applied to each
+dimension independently, or on entire feature space. Defaults to True, which
+applies normalization for each dimension independently.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="method">
-<dt id="spiegel.features.features_base.FeaturesBase.fitNormalizers">
-<code class="sig-name descname">fitNormalizers</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase.fitNormalizers" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegel.features.features_base.FeaturesBase.add_modifier">
+<code class="sig-name descname">add_modifier</code><span class="sig-paren">(</span><em class="sig-param">modifier</em>, <em class="sig-param">type</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase.add_modifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a data modifier to the feature extraction pipeline</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>modifier</strong> (<em>lambda</em>) – data modifier function. Should accept an np.array,
+apply some modification to that, and return a np.array</p></li>
+<li><p><strong>type</strong> (<em>str</em>) – Where to add this into the pipeline. (‘input’, ‘prenormalize’, or ‘output’)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.features.features_base.FeaturesBase.fit_normalizers">
+<code class="sig-name descname">fit_normalizers</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">transform=True</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase.fit_normalizers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit normalizers to dataset for future transforms.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -195,8 +213,8 @@ timeMajor is (time_slices, features). Defaults to (features, time_slices).</p></
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.features_base.FeaturesBase.fitNormalizers2D">
-<code class="sig-name descname">fitNormalizers2D</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase.fitNormalizers2D" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegel.features.features_base.FeaturesBase.fit_normalizers_2d">
+<code class="sig-name descname">fit_normalizers_2d</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">transform</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase.fit_normalizers_2d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit normalizers for 2-dimensional datasets</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -212,8 +230,8 @@ timeMajor is (time_slices, features). Defaults to (features, time_slices).</p></
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.features_base.FeaturesBase.fitNormalizers3D">
-<code class="sig-name descname">fitNormalizers3D</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase.fitNormalizers3D" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegel.features.features_base.FeaturesBase.fit_normalizers_3d">
+<code class="sig-name descname">fit_normalizers_3d</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">transform</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase.fit_normalizers_3d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit normalizers for 3-dimensional datasets</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -229,16 +247,19 @@ timeMajor is (time_slices, features). Defaults to (features, time_slices).</p></
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.features_base.FeaturesBase.getFeatures">
-<em class="property">abstract </em><code class="sig-name descname">getFeatures</code><span class="sig-paren">(</span><em class="sig-param">audio</em>, <em class="sig-param">normalize=False</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase.getFeatures" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegel.features.features_base.FeaturesBase.fit_normalizers_full_data">
+<code class="sig-name descname">fit_normalizers_full_data</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">transform</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase.fit_normalizers_full_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit one normalizer on the entire dataset</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.features.features_base.FeaturesBase.get_features">
+<em class="property">abstract </em><code class="sig-name descname">get_features</code><span class="sig-paren">(</span><em class="sig-param">audio</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase.get_features" title="Permalink to this definition">¶</a></dt>
 <dd><p>Must be implemented. Run audio feature extraction on audio provided as parameter.
 Normalization should be applied based on the normalize parameter.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>audio</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">spiegel.core.audio_buffer.AudioBuffer</span></code>) – Audio to process features on</p></li>
-<li><p><strong>normalize</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether or not the features are normalized, defaults to False</p></li>
-</ul>
+<dd class="field-odd"><p><strong>audio</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">spiegel.core.audio_buffer.AudioBuffer</span></code>) – Audio to process features on</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>results from audio feature extraction</p>
@@ -250,8 +271,8 @@ Normalization should be applied based on the normalize parameter.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.features_base.FeaturesBase.hasNormalizers">
-<code class="sig-name descname">hasNormalizers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase.hasNormalizers" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegel.features.features_base.FeaturesBase.has_normalizers">
+<code class="sig-name descname">has_normalizers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase.has_normalizers" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>a boolean indicating whether or not normalizers have been set</p>
@@ -263,8 +284,8 @@ Normalization should be applied based on the normalize parameter.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.features_base.FeaturesBase.loadNormalizers">
-<code class="sig-name descname">loadNormalizers</code><span class="sig-paren">(</span><em class="sig-param">location</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase.loadNormalizers" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegel.features.features_base.FeaturesBase.load_normalizers">
+<code class="sig-name descname">load_normalizers</code><span class="sig-paren">(</span><em class="sig-param">location</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase.load_normalizers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load trained normalizers from disk</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -291,8 +312,8 @@ Normalization should be applied based on the normalize parameter.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.features_base.FeaturesBase.saveNormalizers">
-<code class="sig-name descname">saveNormalizers</code><span class="sig-paren">(</span><em class="sig-param">location</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase.saveNormalizers" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegel.features.features_base.FeaturesBase.save_normalizers">
+<code class="sig-name descname">save_normalizers</code><span class="sig-paren">(</span><em class="sig-param">location</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase.save_normalizers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save the trained normalizers for these features for later use</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -302,8 +323,8 @@ Normalization should be applied based on the normalize parameter.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.features_base.FeaturesBase.setNormalizer">
-<code class="sig-name descname">setNormalizer</code><span class="sig-paren">(</span><em class="sig-param">dimension</em>, <em class="sig-param">normalizer</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase.setNormalizer" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegel.features.features_base.FeaturesBase.set_normalizer">
+<code class="sig-name descname">set_normalizer</code><span class="sig-paren">(</span><em class="sig-param">dimension</em>, <em class="sig-param">normalizer</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase.set_normalizer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set a normalizer for a dimension, this will be used to normalize that dimension</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -311,6 +332,59 @@ Normalization should be applied based on the normalize parameter.</p>
 <li><p><strong>dimension</strong> (<em>int</em>) – Which feature dimension to save this normalizer for</p></li>
 <li><p><strong>normalizer</strong> (<em>Sklean Scaler</em>) – A trained normalizer object</p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="spiegel.features.features_base.FullDataStandardScaler">
+<em class="property">class </em><code class="sig-prename descclassname">spiegel.features.features_base.</code><code class="sig-name descname">FullDataStandardScaler</code><a class="headerlink" href="#spiegel.features.features_base.FullDataStandardScaler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Custom data scaler for working with larger dimensionality datasets that
+don’t need to be scaled on a per-dimension basis such as STFT</p>
+<dl class="method">
+<dt id="spiegel.features.features_base.FullDataStandardScaler.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FullDataStandardScaler.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute mean and std for later scaling</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>np.ndarray</em>) – data to use to calculate mean and std on</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.features.features_base.FullDataStandardScaler.fit_transform">
+<code class="sig-name descname">fit_transform</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FullDataStandardScaler.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute mean and std on data and then normalize it</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>np.array</em>) – data to computer mean and std on and normalize</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Normalized data</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.features.features_base.FullDataStandardScaler.transform">
+<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FullDataStandardScaler.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform normalization on data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>np.array</em>) – data to normalize</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Normalized data</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray</p>
 </dd>
 </dl>
 </dd></dl>

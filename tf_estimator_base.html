@@ -163,32 +163,21 @@
 <span id="tfestimatorbase"></span><span id="tf-estimator-base"></span><h1>TFEstimatorBase<a class="headerlink" href="#module-spiegel.estimator.tf_estimator_base" title="Permalink to this headline">¶</a></h1>
 <p>Abstract Base Class for Estimating Synthesizer Parameters using TensorFlow</p>
 <dl class="class">
-<dt id="spiegel.estimator.tf_estimator_base.TFEstimatorBase">
-<em class="property">class </em><code class="sig-prename descclassname">spiegel.estimator.tf_estimator_base.</code><code class="sig-name descname">TFEstimatorBase</code><span class="sig-paren">(</span><em class="sig-param">inputShape</em>, <em class="sig-param">numOutputs</em>, <em class="sig-param">checkpointPath=''</em>, <em class="sig-param">weightsPath=''</em>, <em class="sig-param">callbacks=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.TFEstimatorBase" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="estimator_base.html#spiegel.estimator.estimator_base.EstimatorBase" title="spiegel.estimator.estimator_base.EstimatorBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegel.estimator.estimator_base.EstimatorBase</span></code></a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>inputShape</strong> (<em>tuple</em>) – Shape of matrix that will be passed to model input</p></li>
-<li><p><strong>numOutputs</strong> – Number of outputs the model has</p></li>
-<li><p><strong>checkpointPath</strong> (<em>string</em><em>, </em><em>optional</em>) – If given, checkpoints will be saved to this location
-during training, defaults to “”</p></li>
-<li><p><strong>weightsPath</strong> (<em>string</em><em>, </em><em>optional</em>) – If given, model weights will be loaded from this file,
-defaults to “”</p></li>
-<li><p><strong>callbacks</strong> (<em>list</em>) – A list of callbacks to be passed into model fit method, defaults to []</p></li>
-</ul>
-</dd>
-</dl>
+<dt id="spiegel.estimator.tf_estimator_base.GenericTFModel">
+<em class="property">class </em><code class="sig-prename descclassname">spiegel.estimator.tf_estimator_base.</code><code class="sig-name descname">GenericTFModel</code><span class="sig-paren">(</span><em class="sig-param">input_shape=None</em>, <em class="sig-param">num_outputs=None</em>, <em class="sig-param">checkpoint_path=''</em>, <em class="sig-param">weights_path=''</em>, <em class="sig-param">callbacks=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.GenericTFModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#spiegel.estimator.tf_estimator_base.TFEstimatorBase" title="spiegel.estimator.tf_estimator_base.TFEstimatorBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegel.estimator.tf_estimator_base.TFEstimatorBase</span></code></a></p>
+<p>A generic and empty implentation TFEstimatorBase for loading models into</p>
 <dl class="method">
-<dt id="spiegel.estimator.tf_estimator_base.TFEstimatorBase.addTestingData">
-<code class="sig-name descname">addTestingData</code><span class="sig-paren">(</span><em class="sig-param">input</em>, <em class="sig-param">output</em>, <em class="sig-param">batchSize=64</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.TFEstimatorBase.addTestingData" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a tf Dataset from input and output for model testing, batches data if desired</p>
+<dt id="spiegel.estimator.tf_estimator_base.GenericTFModel.add_testing_data">
+<code class="sig-name descname">add_testing_data</code><span class="sig-paren">(</span><em class="sig-param">input</em>, <em class="sig-param">output</em>, <em class="sig-param">batch_size=64</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.GenericTFModel.add_testing_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a tf Dataset from input and output for model testing, batches
+data if desired</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>input</strong> (<em>np.array</em>) – matrix of data to use as testing data</p></li>
 <li><p><strong>output</strong> (<em>np.array</em>) – matrix of data to use as ground truth for testing data</p></li>
-<li><p><strong>batchSize</strong> (<em>int</em><em>, </em><em>optional</em>) – If provided, will batch data into batches of this size,
+<li><p><strong>batch_size</strong> (<em>int</em><em>, </em><em>optional</em>) – If provided, will batch data into batches of this size,
 set to None or 0 to prevent batching. defaults to 64</p></li>
 </ul>
 </dd>
@@ -196,26 +185,202 @@ set to None or 0 to prevent batching. defaults to 64</p></li>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.estimator.tf_estimator_base.TFEstimatorBase.addTrainingData">
-<code class="sig-name descname">addTrainingData</code><span class="sig-paren">(</span><em class="sig-param">input</em>, <em class="sig-param">output</em>, <em class="sig-param">batchSize=64</em>, <em class="sig-param">shuffleSize=None</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.TFEstimatorBase.addTrainingData" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a tf Dataset from input and output, and shuffles / batches data for training</p>
+<dt id="spiegel.estimator.tf_estimator_base.GenericTFModel.add_training_data">
+<code class="sig-name descname">add_training_data</code><span class="sig-paren">(</span><em class="sig-param">input</em>, <em class="sig-param">output</em>, <em class="sig-param">batch_size=64</em>, <em class="sig-param">shuffle_size=None</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.GenericTFModel.add_training_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a tf Dataset from input and output, and shuffles / batches
+data for training</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>input</strong> (<em>np.ndarray</em>) – matrix of training data</p></li>
 <li><p><strong>output</strong> (<em>np.ndarray</em>) – matrix of training data ground truth</p></li>
-<li><p><strong>batchSize</strong> (<em>int</em><em>, </em><em>optional</em>) – If provided, will batch data into batches of this size,
+<li><p><strong>batch_size</strong> (<em>int</em><em>, </em><em>optional</em>) – If provided, will batch data into batches of this size,
 set to None or 0 to prevent batching. defaults to 64</p></li>
-<li><p><strong>shuffleSize</strong> – If provided, will shuffle data with a buffer size of
-shuffleSize, defaults to None, so shuffling does not occur</p></li>
+<li><p><strong>shuffle_size</strong> – If provided, will shuffle data with a buffer size of
+shuffle_size, defaults to None, so shuffling does not occur</p></li>
 </ul>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.estimator.tf_estimator_base.TFEstimatorBase.buildModel">
-<em class="property">abstract </em><code class="sig-name descname">buildModel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.TFEstimatorBase.buildModel" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegel.estimator.tf_estimator_base.GenericTFModel.build_model">
+<code class="sig-name descname">build_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.GenericTFModel.build_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Empty Model</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.estimator.tf_estimator_base.GenericTFModel.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">epochs=1</em>, <em class="sig-param">callbacks=[]</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.GenericTFModel.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train model on for a fixed number of epochs on training data and validation
+data if it has been added to this estimator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>epochs</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of epochs to train model on, defaults to 1</p></li>
+<li><p><strong>callbacks</strong> (<em>list</em><em>, </em><em>optional</em>) – List of callback functions for training, defaults to []</p></li>
+<li><p><strong>kwargs</strong> – Keyword args passed to model fit method. See
+<a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/Model#fit">Tensflow Docs</a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.estimator.tf_estimator_base.GenericTFModel.load">
+<em class="property">static </em><code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.GenericTFModel.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load entire model and return an istantiated TFEstimatorBase class with
+the saved model loaded into it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> (<em>str</em>) – path to SavedModel or H5 file of saved model.</p></li>
+<li><p><strong>kwargs</strong> – Keyword arguments to pass into load_model function. See
+<a class="reference external" href="`https://www.tensorflow.org/api_docs/python/tf/keras/models/load_model">TensorFlow Doc</a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.estimator.tf_estimator_base.GenericTFModel.load_model_from_checkpoint">
+<code class="sig-name descname">load_model_from_checkpoint</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.GenericTFModel.load_model_from_checkpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load model weights from checkpoint</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.estimator.tf_estimator_base.GenericTFModel.load_weights">
+<code class="sig-name descname">load_weights</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.GenericTFModel.load_weights" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load model weights from H5 or TensorFlow file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> (<em>string</em>) – filepath to saved model weights</p></li>
+<li><p><strong>kwargs</strong> – optional keyword arguments passed to tf load_weights
+methods, see  <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/Model#load_weights">TensorFlow Docs</a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.estimator.tf_estimator_base.GenericTFModel.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">input</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.GenericTFModel.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run prediction on input</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>input</strong> (<em>np.array</em>) – matrix of input data to run predictions on. Can be a single
+instance of data or a batch.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.estimator.tf_estimator_base.GenericTFModel.rms_error">
+<em class="property">static </em><code class="sig-name descname">rms_error</code><span class="sig-paren">(</span><em class="sig-param">y_true</em>, <em class="sig-param">y_pred</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.GenericTFModel.rms_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Static method for calculating root mean squared error between predictions
+and targets</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>labels</strong> (<em>Tensor</em>) – Matrix of ground truth labels</p></li>
+<li><p><strong>prediction</strong> (<em>Tensor</em>) – Matrix of predictions</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.estimator.tf_estimator_base.GenericTFModel.save_model">
+<code class="sig-name descname">save_model</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.GenericTFModel.save_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save entire model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> (<em>str</em>) – path to SavedModel or H5 file to save the model.</p></li>
+<li><p><strong>kwargs</strong> – optional keyword arguments pass to tf save method,
+see <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/Model#save">TensorFlow Docs</a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.estimator.tf_estimator_base.GenericTFModel.save_weights">
+<code class="sig-name descname">save_weights</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.GenericTFModel.save_weights" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save model weights to a HDF5 or TensorFlow file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> (<em>string</em>) – filepath to save model weights.  Using a file suffix of
+‘.h5’ or ‘.keras’ will save in HDF5 format. Otherwise will save as
+TensorFlow.</p></li>
+<li><p><strong>kwargs</strong> – optional keyword arguments passed to tf save_weights
+method,  see <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/Model#save_weights">Tensflow Docs</a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="spiegel.estimator.tf_estimator_base.TFEstimatorBase">
+<em class="property">class </em><code class="sig-prename descclassname">spiegel.estimator.tf_estimator_base.</code><code class="sig-name descname">TFEstimatorBase</code><span class="sig-paren">(</span><em class="sig-param">input_shape=None</em>, <em class="sig-param">num_outputs=None</em>, <em class="sig-param">checkpoint_path=''</em>, <em class="sig-param">weights_path=''</em>, <em class="sig-param">callbacks=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.TFEstimatorBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="estimator_base.html#spiegel.estimator.estimator_base.EstimatorBase" title="spiegel.estimator.estimator_base.EstimatorBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegel.estimator.estimator_base.EstimatorBase</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_shape</strong> (<em>tuple</em>) – Shape of matrix that will be passed to model input</p></li>
+<li><p><strong>num_outputs</strong> (<em>int</em>) – Number of outputs the model has</p></li>
+<li><p><strong>checkpoint_path</strong> (<em>string</em><em>, </em><em>optional</em>) – If given, checkpoints will be saved to this location
+during training, defaults to “”</p></li>
+<li><p><strong>weights_path</strong> (<em>string</em><em>, </em><em>optional</em>) – If given, model weights will be loaded from this file,
+defaults to “”</p></li>
+<li><p><strong>callbacks</strong> (<em>list</em>) – A list of callbacks to be passed into model fit method,
+defaults to []</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="spiegel.estimator.tf_estimator_base.TFEstimatorBase.add_testing_data">
+<code class="sig-name descname">add_testing_data</code><span class="sig-paren">(</span><em class="sig-param">input</em>, <em class="sig-param">output</em>, <em class="sig-param">batch_size=64</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.TFEstimatorBase.add_testing_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a tf Dataset from input and output for model testing, batches
+data if desired</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input</strong> (<em>np.array</em>) – matrix of data to use as testing data</p></li>
+<li><p><strong>output</strong> (<em>np.array</em>) – matrix of data to use as ground truth for testing data</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em><em>, </em><em>optional</em>) – If provided, will batch data into batches of this size,
+set to None or 0 to prevent batching. defaults to 64</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.estimator.tf_estimator_base.TFEstimatorBase.add_training_data">
+<code class="sig-name descname">add_training_data</code><span class="sig-paren">(</span><em class="sig-param">input</em>, <em class="sig-param">output</em>, <em class="sig-param">batch_size=64</em>, <em class="sig-param">shuffle_size=None</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.TFEstimatorBase.add_training_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a tf Dataset from input and output, and shuffles / batches
+data for training</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input</strong> (<em>np.ndarray</em>) – matrix of training data</p></li>
+<li><p><strong>output</strong> (<em>np.ndarray</em>) – matrix of training data ground truth</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em><em>, </em><em>optional</em>) – If provided, will batch data into batches of this size,
+set to None or 0 to prevent batching. defaults to 64</p></li>
+<li><p><strong>shuffle_size</strong> – If provided, will shuffle data with a buffer size of
+shuffle_size, defaults to None, so shuffling does not occur</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.estimator.tf_estimator_base.TFEstimatorBase.build_model">
+<em class="property">abstract </em><code class="sig-name descname">build_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.TFEstimatorBase.build_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Abstract method that should contain the model definition when implemented</p>
 </dd></dl>
 
@@ -229,27 +394,46 @@ data if it has been added to this estimator</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>epochs</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of epochs to train model on, defaults to 1</p></li>
 <li><p><strong>callbacks</strong> (<em>list</em><em>, </em><em>optional</em>) – List of callback functions for training, defaults to []</p></li>
-<li><p><strong>kwargs</strong> – Keyword args passed to model fit method. See <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/Model#fit">Tensflow Docs</a>.</p></li>
+<li><p><strong>kwargs</strong> – <p>Keyword args passed to model fit method. See
+<a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/Model#fit">Tensflow Docs</a>.</p>
+</p></li>
 </ul>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.estimator.tf_estimator_base.TFEstimatorBase.loadModelFromCheckpoint">
-<code class="sig-name descname">loadModelFromCheckpoint</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.TFEstimatorBase.loadModelFromCheckpoint" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegel.estimator.tf_estimator_base.TFEstimatorBase.load">
+<em class="property">static </em><code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.TFEstimatorBase.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load entire model and return an istantiated TFEstimatorBase class with
+the saved model loaded into it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> (<em>str</em>) – path to SavedModel or H5 file of saved model.</p></li>
+<li><p><strong>kwargs</strong> – Keyword arguments to pass into load_model function. See
+<a class="reference external" href="`https://www.tensorflow.org/api_docs/python/tf/keras/models/load_model">TensorFlow Doc</a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.estimator.tf_estimator_base.TFEstimatorBase.load_model_from_checkpoint">
+<code class="sig-name descname">load_model_from_checkpoint</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.TFEstimatorBase.load_model_from_checkpoint" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load model weights from checkpoint</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.estimator.tf_estimator_base.TFEstimatorBase.loadWeights">
-<code class="sig-name descname">loadWeights</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.TFEstimatorBase.loadWeights" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegel.estimator.tf_estimator_base.TFEstimatorBase.load_weights">
+<code class="sig-name descname">load_weights</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.TFEstimatorBase.load_weights" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load model weights from H5 or TensorFlow file</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>filepath</strong> (<em>string</em>) – filepath to saved model weights</p></li>
-<li><p><strong>kwargs</strong> – optional keyword arguments passed to tf load_weights methods, see  <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/Model#load_weights">TensorFlow Docs</a>.</p></li>
+<li><p><strong>kwargs</strong> – optional keyword arguments passed to tf load_weights
+methods, see  <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/Model#load_weights">TensorFlow Docs</a>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -268,9 +452,10 @@ instance of data or a batch.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.estimator.tf_estimator_base.TFEstimatorBase.rootMeanSquaredError">
-<em class="property">static </em><code class="sig-name descname">rootMeanSquaredError</code><span class="sig-paren">(</span><em class="sig-param">labels</em>, <em class="sig-param">prediction</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.TFEstimatorBase.rootMeanSquaredError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Static method for calculating root mean squared error between predictions and targets</p>
+<dt id="spiegel.estimator.tf_estimator_base.TFEstimatorBase.rms_error">
+<em class="property">static </em><code class="sig-name descname">rms_error</code><span class="sig-paren">(</span><em class="sig-param">y_true</em>, <em class="sig-param">y_pred</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.TFEstimatorBase.rms_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Static method for calculating root mean squared error between predictions
+and targets</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -282,15 +467,32 @@ instance of data or a batch.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.estimator.tf_estimator_base.TFEstimatorBase.saveWeights">
-<code class="sig-name descname">saveWeights</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.TFEstimatorBase.saveWeights" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegel.estimator.tf_estimator_base.TFEstimatorBase.save_model">
+<code class="sig-name descname">save_model</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.TFEstimatorBase.save_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save entire model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> (<em>str</em>) – path to SavedModel or H5 file to save the model.</p></li>
+<li><p><strong>kwargs</strong> – optional keyword arguments pass to tf save method,
+see <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/Model#save">TensorFlow Docs</a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.estimator.tf_estimator_base.TFEstimatorBase.save_weights">
+<code class="sig-name descname">save_weights</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.tf_estimator_base.TFEstimatorBase.save_weights" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save model weights to a HDF5 or TensorFlow file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>filepath</strong> (<em>string</em>) – filepath to save model weights.  Using a file suffix of
-‘.h5’ or ‘.keras’ will save in HDF5 format. Otherwise will save as TensorFlow.</p></li>
-<li><p><strong>kwargs</strong> – optional keyword arguments passed to tf save_weights method,  see <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/Model#save_weights">Tensflow Docs</a>.</p></li>
+‘.h5’ or ‘.keras’ will save in HDF5 format. Otherwise will save as
+TensorFlow.</p></li>
+<li><p><strong>kwargs</strong> – optional keyword arguments passed to tf save_weights
+method,  see <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/Model#save_weights">Tensflow Docs</a>.</p></li>
 </ul>
 </dd>
 </dl>

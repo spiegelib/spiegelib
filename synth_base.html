@@ -163,46 +163,48 @@
 <p>Synth Abstract Base Class</p>
 <dl class="class">
 <dt id="spiegel.synth.synth_base.SynthBase">
-<em class="property">class </em><code class="sig-prename descclassname">spiegel.synth.synth_base.</code><code class="sig-name descname">SynthBase</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_base.SynthBase" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">spiegel.synth.synth_base.</code><code class="sig-name descname">SynthBase</code><span class="sig-paren">(</span><em class="sig-param">sample_rate=44100</em>, <em class="sig-param">buffer_size=512</em>, <em class="sig-param">midi_note=48</em>, <em class="sig-param">midi_velocity=127</em>, <em class="sig-param">note_length_secs=1.0</em>, <em class="sig-param">render_length_secs=2.0</em>, <em class="sig-param">overridden_params=[]</em>, <em class="sig-param">clamp_params=True</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_base.SynthBase" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>sampleRate</strong> (<em>int</em><em>, </em><em>optional</em>) – sampling rate for rendering audio, defaults to 44100</p></li>
-<li><p><strong>bufferSize</strong> (<em>int</em><em>, </em><em>optional</em>) – buffer size for rendering audio, defaults to 512</p></li>
-<li><p><strong>midiNote</strong> (<em>int</em><em>, </em><em>optional</em>) – midi note number used for rendering, 0-127, defaults to 40</p></li>
-<li><p><strong>midiVelocity</strong> (<em>int</em><em>, </em><em>optional</em>) – midi velocity used for rendering. 0-127, defaults to 127</p></li>
-<li><p><strong>noteLengthSecs</strong> (<em>float</em><em>, </em><em>optional</em>) – length of midi note in seconds, defaults to 1.0</p></li>
-<li><p><strong>renderLengthSecs</strong> (<em>float</em><em>, </em><em>optional</em>) – length that audio is rendered for in total, defaults to 2.5</p></li>
-<li><p><strong>overriddenParameters</strong> (<em>list</em><em>, </em><em>optional</em>) – a list of tuples containing the parameter index to override and the value to lock that parameter to, defaults to []</p></li>
-<li><p><strong>normaliseAudio</strong> (<em>boolean</em><em>, </em><em>optional</em>) – whether or not to normalize rendered audio, defaults to False</p></li>
+<li><p><strong>sample_rate</strong> (<em>int</em><em>, </em><em>optional</em>) – sampling rate for rendering audio, defaults to 44100</p></li>
+<li><p><strong>buffer_size</strong> (<em>int</em><em>, </em><em>optional</em>) – buffer size for rendering audio, defaults to 512</p></li>
+<li><p><strong>midi_note</strong> (<em>int</em><em>, </em><em>optional</em>) – midi note number used for rendering, 0-127, defaults to 40</p></li>
+<li><p><strong>midi_velocity</strong> (<em>int</em><em>, </em><em>optional</em>) – midi velocity used for rendering. 0-127, defaults to 127</p></li>
+<li><p><strong>note_length_secs</strong> (<em>float</em><em>, </em><em>optional</em>) – length of midi note in seconds, defaults to 1.0</p></li>
+<li><p><strong>render_length_secs</strong> (<em>float</em><em>, </em><em>optional</em>) – length that audio is rendered for in total, defaults to 2.5</p></li>
+<li><p><strong>overridden_params</strong> (<em>list</em><em>, </em><em>optional</em>) – a list of tuples containing the parameter index to override and the value to lock that parameter to, defaults to []</p></li>
+<li><p><strong>clamp_params</strong> (<em>bool</em><em>, </em><em>optional</em>) – If true, parameter values will be forced to the acceptable
+range of values. Defaults to True.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>renderedPatch</strong> (<em>boolean</em>) – indicates whether a patch has been rendered yet, defaults to False</p></li>
+<li><p><strong>rendered_patch</strong> (<em>boolean</em>) – indicates whether a patch has been rendered yet, defaults to False</p></li>
 <li><p><strong>parameters</strong> (<em>dict</em>) – parameter indices and names</p></li>
 <li><p><strong>patch</strong> (<em>list</em>) – current patch values</p></li>
+<li><p><strong>param_range</strong> (<em>tuple</em>) – Range of acceptable parameter values, defaults to (0.0, 1.0)</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="method">
-<dt id="spiegel.synth.synth_base.SynthBase.getAudio">
-<em class="property">abstract </em><code class="sig-name descname">getAudio</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_base.SynthBase.getAudio" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegel.synth.synth_base.SynthBase.get_audio">
+<em class="property">abstract </em><code class="sig-name descname">get_audio</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_base.SynthBase.get_audio" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method must be overridden and should return an audio buffer rendered
-durinf the last call to renderPatch.</p>
+during the last call to render_patch.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>An audio buffer of float audio samples with a value between -1 &amp; 1</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>np.array</p>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegel.core.audio_buffer.AudioBuffer</span></code></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.synth.synth_base.SynthBase.getParameters">
-<code class="sig-name descname">getParameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_base.SynthBase.getParameters" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegel.synth.synth_base.SynthBase.get_parameters">
+<code class="sig-name descname">get_parameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_base.SynthBase.get_parameters" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns parameters for the synth</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -216,20 +218,20 @@ and the parameter name short description as the value</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.synth.synth_base.SynthBase.getPatch">
-<code class="sig-name descname">getPatch</code><span class="sig-paren">(</span><em class="sig-param">skipOverridden=True</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_base.SynthBase.getPatch" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegel.synth.synth_base.SynthBase.get_patch">
+<code class="sig-name descname">get_patch</code><span class="sig-paren">(</span><em class="sig-param">skip_overridden=True</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_base.SynthBase.get_patch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get current patch</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>skipOverridden</strong> (<em>bool</em><em>, </em><em>optional</em>) – Indicates whether to remove overridden parameters from results,
-defaults to True</p>
+<dd class="field-odd"><p><strong>skip_overridden</strong> (<em>bool</em><em>, </em><em>optional</em>) – Indicates whether to remove overridden parameters
+from results, defaults to True</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.synth.synth_base.SynthBase.getRandomExample">
-<code class="sig-name descname">getRandomExample</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_base.SynthBase.getRandomExample" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegel.synth.synth_base.SynthBase.get_random_example">
+<code class="sig-name descname">get_random_example</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_base.SynthBase.get_random_example" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns audio from a new random patch</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -242,28 +244,52 @@ defaults to True</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.synth.synth_base.SynthBase.loadPatch">
-<em class="property">abstract </em><code class="sig-name descname">loadPatch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_base.SynthBase.loadPatch" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegel.synth.synth_base.SynthBase.load_patch">
+<em class="property">abstract </em><code class="sig-name descname">load_patch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_base.SynthBase.load_patch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Must be overridden. Load current patch into synth engine</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.synth.synth_base.SynthBase.randomizePatch">
-<em class="property">abstract </em><code class="sig-name descname">randomizePatch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_base.SynthBase.randomizePatch" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegel.synth.synth_base.SynthBase.load_state">
+<code class="sig-name descname">load_state</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_base.SynthBase.load_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load parameter state from JSON file. Will set a new patch and overridden
+parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Location to load JSON file from</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.synth.synth_base.SynthBase.randomize_patch">
+<em class="property">abstract </em><code class="sig-name descname">randomize_patch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_base.SynthBase.randomize_patch" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method must be overridden and should have the effect
 of randomizing parameters of the synthesizer. Overridden methods should be
 uneffected by this randomization</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.synth.synth_base.SynthBase.renderPatch">
-<em class="property">abstract </em><code class="sig-name descname">renderPatch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_base.SynthBase.renderPatch" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegel.synth.synth_base.SynthBase.render_patch">
+<em class="property">abstract </em><code class="sig-name descname">render_patch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_base.SynthBase.render_patch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Must be overridden. Should render audio for the currently loaded patch</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.synth.synth_base.SynthBase.setOverriddenParameters">
-<code class="sig-name descname">setOverriddenParameters</code><span class="sig-paren">(</span><em class="sig-param">parameters</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_base.SynthBase.setOverriddenParameters" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegel.synth.synth_base.SynthBase.save_state">
+<code class="sig-name descname">save_state</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_base.SynthBase.save_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save parameters and current state to a JSON file. Includes whether or not
+a parameter has been overridden so this can be used to save synth configuration</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Location to save JSON file to</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegel.synth.synth_base.SynthBase.set_overridden_parameters">
+<code class="sig-name descname">set_overridden_parameters</code><span class="sig-paren">(</span><em class="sig-param">parameters</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_base.SynthBase.set_overridden_parameters" title="Permalink to this definition">¶</a></dt>
 <dd><p>Override parameters with specific values</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -274,8 +300,8 @@ value that will be patched and then the parameter frozen.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.synth.synth_base.SynthBase.setPatch">
-<code class="sig-name descname">setPatch</code><span class="sig-paren">(</span><em class="sig-param">parameters</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_base.SynthBase.setPatch" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegel.synth.synth_base.SynthBase.set_patch">
+<code class="sig-name descname">set_patch</code><span class="sig-paren">(</span><em class="sig-param">parameters</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.synth.synth_base.SynthBase.set_patch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set a new patch with updated parameter values with a list of flaots or a
 list of tuples referring to parameter indices and values.</p>
 <dl class="field-list simple">
