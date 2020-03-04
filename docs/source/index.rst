@@ -21,6 +21,13 @@ Reference
    Audio Features <features>
    Estimators <estimators>
 
+Examples
+--------
+.. toctree::
+   :maxdepth: 2
+
+   Examples <examples/examples_index>
+
 Contributing
 ------------
 .. toctree::
