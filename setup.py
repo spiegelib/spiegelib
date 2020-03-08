@@ -3,10 +3,34 @@
 from setuptools import setup
 from setuptools import find_packages
 
+__version__ = '0.0.4'
+__author__ = "Jordie Shier"
+__contact__ = "jordieshier@gmail.com"
+__url__ = "https://github.com/jorshi/spiegel"
+__license__ = "MIT"
+
+
+with open("README.md", "r", encoding='utf-8') as f:
+    readme = f.read()
+
 setup(
     name='spiegel',
-    version='1.0.0',
-    licence='LICENSE.txt',
+    version=__version__,
+    author=__author__,
+    author_email=__contact__,
+    description='Automatic Synthesizer Programming Library',
+    long_description=readme,
+    url=__url__,
+    licence=__license__,
     packages=find_packages('src'),
     package_dir={'': 'src'},
+    python_requires='>=3.6',
+    install_requires=[
+        'numpy',
+        'librosa',
+        'tqdm',
+        'matplotlib',
+        'tensorflow',
+        'deap',
+    ],
 )
