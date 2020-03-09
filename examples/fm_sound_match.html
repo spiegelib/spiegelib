@@ -87,7 +87,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../estimators.html">Estimators</a></li>
 </ul>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="examples_index.html">Examples Index</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="examples_index.html">Examples</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">     FM Sound Match Experiment</a></li>
 </ul>
 </li>
@@ -162,8 +162,22 @@
             
   <div class="section" id="fm-sound-match-experiment">
 <h1>FM Sound Match Experiment<a class="headerlink" href="#fm-sound-match-experiment" title="Permalink to this headline">¶</a></h1>
-<p>This is where a jupyter notebook of the experiment, as well as links to
-download the code and data for this experiment will go.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spiegel</span>
+</pre></div>
+</div>
+<p>Load Dexed VST, set the note length and render length to be one second.
+For this experiment we aren’t worried about the release of the sound,
+but you can set the render length longer than the note length to capture
+the release portion of a signal. Synthesizer parameters are loaded from
+a JSON file that describes all the overrriden parameters and their
+values.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">synth</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">synth</span><span class="o">.</span><span class="n">SynthVST</span><span class="p">(</span><span class="s2">&quot;/Library/Audio/Plug-Ins/VST/Dexed.vst&quot;</span><span class="p">,</span> <span class="n">note_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">render_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">synth</span><span class="o">.</span><span class="n">load_state</span><span class="p">(</span><span class="s2">&quot;./synth_params/dexed_simple_fm.json&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">features</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MFCC</span><span class="p">(</span><span class="n">num_mfccs</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">time_major</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 
 
