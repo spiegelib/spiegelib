@@ -3,7 +3,7 @@
 from setuptools import setup
 from setuptools import find_packages
 
-__version__ = '0.0.4'
+__version__ = '0.0.1'
 __author__ = "Jordie Shier"
 __contact__ = "jordieshier@gmail.com"
 __url__ = "https://github.com/jorshi/spiegel"
@@ -20,6 +20,7 @@ setup(
     author_email=__contact__,
     description='Automatic Synthesizer Programming Library',
     long_description=readme,
+    long_description_content_type='text/markdown',
     url=__url__,
     licence=__license__,
     packages=find_packages('src'),
