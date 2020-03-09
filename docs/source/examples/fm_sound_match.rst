@@ -1,6 +1,11 @@
 FM Sound Match Experiment
 =========================
 
+In progress.
+
+This is where a jupyter notebook of the experiment, as well as links to
+download the code and data for this experiment will go.
+
 .. code:: ipython3
 
     import spiegel
@@ -14,7 +19,9 @@ values.
 
 .. code:: ipython3
 
-    synth = spiegel.synth.SynthVST("/Library/Audio/Plug-Ins/VST/Dexed.vst", note_length_secs=1.0, render_length_secs=1.0)
+    synth = spiegel.synth.SynthVST("/Library/Audio/Plug-Ins/VST/Dexed.vst",
+	                                note_length_secs=1.0,
+											  render_length_secs=1.0)
     synth.load_state("./synth_params/dexed_simple_fm.json")
 
 .. code:: ipython3
