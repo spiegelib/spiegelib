@@ -19,11 +19,24 @@ values.
 
 .. code:: ipython3
 
-    synth = spiegel.synth.SynthVST("/Library/Audio/Plug-Ins/VST/Dexed.vst",
-	                                note_length_secs=1.0,
-											  render_length_secs=1.0)
+    synth = spiegel.synth.SynthVST("/Library/Audio/Plug-Ins/VST/Dexed.vst", note_length_secs=1.0, render_length_secs=1.0)
     synth.load_state("./synth_params/dexed_simple_fm.json")
 
 .. code:: ipython3
 
     features = spiegel.features.MFCC(num_mfccs=13, time_major=True, hop_size=1024)
+
+.. code:: ipython3
+
+    generator = spiegel.DatasetGenerator(synth, features,
+                                         output_folder="./data_simple_FM_mfcc",
+                                         save_audio=False)
+    generator.generate(50000, file_prefix="train_")
+    generator.generate(10000, file_prefix="test_")
+    generator.save_normalizers('normalizers.pkl')
+
+
+.. parsed-literal::
+
+    Generating Dataset: 100%|██████████| 50000/50000 [15:27<00:00, 53.90it/s]
+    Generating Dataset: 100%|██████████| 10000/10000 [03:09<00:00, 52.67it/s]
