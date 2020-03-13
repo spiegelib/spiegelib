@@ -30,20 +30,20 @@ class CNN(TFEstimatorBase):
         """
 
         self.model = tf.keras.Sequential()
-        self.model.add(layers.Conv2D(32, (3, 3), strides=2, dilation_rate=(1,1),
+        self.model.add(layers.Conv2D(32, (3, 3), strides=(2,2), dilation_rate=(1,1),
                                      input_shape=self.input_shape,
                                      activation='relu'))
-        self.model.add(layers.Conv2D(64, (3, 3), strides=2, dilation_rate=(1,1),
+        self.model.add(layers.Conv2D(71, (3, 3), strides=(2,2), dilation_rate=(1,1),
                                      activation='relu'))
-        self.model.add(layers.Conv2D(128, (3, 3), strides=2, dilation_rate=(1,1),
+        self.model.add(layers.Conv2D(128, (3, 4), strides=(2,3), dilation_rate=(1,1),
                                      activation='relu'))
-        self.model.add(layers.Conv2D(256, (3, 3), strides=2, dilation_rate=(1,1),
+        self.model.add(layers.Conv2D(128, (3, 3), strides=(2,2), dilation_rate=(1,1),
                                      activation='relu'))
-        self.model.add(layers.Conv2D(256, (2, 2), strides=2, dilation_rate=(1,1),
+        self.model.add(layers.Conv2D(128, (3, 3), strides=(2,2), dilation_rate=(1,1),
                                      activation='relu'))
-        self.model.add(layers.Conv2D(512, (2, 2), strides=2, dilation_rate=(1,1),
+        self.model.add(layers.Conv2D(128, (3, 3), strides=(1,2), dilation_rate=(1,1),
                                      activation='relu'))
-        self.model.add(layers.Dropout(0.25))
+        self.model.add(layers.Dropout(0.20))
         self.model.add(layers.Flatten())
         self.model.add(layers.Dense(self.num_outputs))
 
