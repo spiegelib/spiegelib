@@ -16,10 +16,10 @@ Reference
 .. toctree::
    :maxdepth: 2
 
-   Core <core>
-   Synth <synth>
-   Audio Features <features>
-   Estimators <estimators>
+   Core <reference/core>
+   Synth <reference/synth>
+   Audio Features <reference/features>
+   Estimators <reference/estimators>
 
 Examples
 --------

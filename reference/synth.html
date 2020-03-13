@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Audio Feature Extraction Classes &mdash; SPIEGEL 1.0.0 documentation</title>
+  <title>Synth Classes &mdash; SPIEGEL 1.0.0 documentation</title>
   
 
   
@@ -17,26 +17,26 @@
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
     
-    <script type="text/javascript" src="_static/js/theme.js"></script>
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
 
   
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="FeaturesBase Class" href="features_base.html" />
-    <link rel="prev" title="SynthBase Class" href="synth_base.html" /> 
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="SynthVST Class" href="synth/synth_vst.html" />
+    <link rel="prev" title="DatasetGenerator Class" href="core/dataset_generator.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -50,7 +50,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> SPIEGEL
+            <a href="../index.html" class="icon icon-home"> SPIEGEL
           
 
           
@@ -63,7 +63,7 @@
 
           
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -82,19 +82,19 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="core.html">Core</a></li>
-<li class="toctree-l1"><a class="reference internal" href="synth.html">Synth</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Audio Features</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="features_base.html">     FeaturesBase</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mfcc.html">     MFCC</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Synth</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="synth/synth_vst.html">     SynthVST</a></li>
+<li class="toctree-l2"><a class="reference internal" href="synth/synth_base.html">     SynthBase</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="features.html">Audio Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="estimators.html">Estimators</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="examples/examples_index.html">Examples Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/examples_index.html">Examples</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contribution Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contribution Guide</a></li>
 </ul>
 
             
@@ -109,7 +109,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">SPIEGEL</a>
+          <a href="../index.html">SPIEGEL</a>
         
       </nav>
 
@@ -138,15 +138,15 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Audio Feature Extraction Classes</li>
+      <li>Synth Classes</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/features.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/reference/synth.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -159,12 +159,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="audio-feature-extraction-classes">
-<h1>Audio Feature Extraction Classes<a class="headerlink" href="#audio-feature-extraction-classes" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="synth-classes">
+<h1>Synth Classes<a class="headerlink" href="#synth-classes" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="features_base.html">     FeaturesBase</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mfcc.html">     MFCC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="synth/synth_vst.html">     SynthVST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="synth/synth_base.html">     SynthBase</a></li>
 </ul>
 </div>
 </div>
@@ -177,10 +177,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="features_base.html" class="btn btn-neutral float-right" title="FeaturesBase Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="synth/synth_vst.html" class="btn btn-neutral float-right" title="SynthVST Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="synth_base.html" class="btn btn-neutral float-left" title="SynthBase Class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="core/dataset_generator.html" class="btn btn-neutral float-left" title="DatasetGenerator Class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

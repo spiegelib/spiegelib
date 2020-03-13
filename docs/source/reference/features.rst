@@ -4,5 +4,5 @@ Audio Feature Extraction Classes
 .. toctree::
    :maxdepth: 2
 
-	FeaturesBase <features_base>
-	MFCC <mfcc>
+	FeaturesBase <features/features_base>
+	MFCC <features/mfcc>
