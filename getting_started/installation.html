@@ -1,0 +1,415 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installation &mdash; SPIEGEL 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="SPIEGEL Core Classes" href="../reference/core.html" />
+    <link rel="prev" title="Getting Started" href="getting_started.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> SPIEGEL
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="getting_started.html">Getting Started</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">     Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#anaconda-environment">Anaconda Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pip-installation">pip installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installing-renderman-in-an-anaconda-environment">Installing RenderMan in an Anaconda Environment</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/core.html">Core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/synth.html">Synth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/features.html">Audio Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/estimators.html">Estimators</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/examples_index.html">Examples</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contribution Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">SPIEGEL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="getting_started.html">Getting Started</a> &raquo;</li>
+        
+      <li>Installation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/getting_started/installation.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p>The easiest way to install <em>spiegel</em> is to use the Python Package Index (PyPI),
+which is used through the command line with <a class="reference external" href="https://docs.python.org/3/installing/index.html">pip</a>,
+pip comes pre-installed with most python distributions and will automatically
+install the required dependencies for <em>spiegel</em>.</p>
+<p>Currently, the only dependency
+that cannot be installed using pip is the
+<a class="reference external" href="https://github.com/fedden/RenderMan">RenderMan</a> library, which must be installed
+manually in order to enable programmatic interaction with VST synthesizers.
+Instructions for installing RenderMan are included <a class="reference internal" href="#librenderman-conda-install"><span class="std std-ref">here</span></a>.
+At this time, RenderMan is only available on Mac OSX and Linux operating systems.</p>
+<p>We recommend installing <em>spiegel</em> inside a virtual environment as the library
+is still under active development. We recommend <a class="reference external" href="https://www.anaconda.com/">Anaconda</a>.
+Instructions for creating a new Anconda environment and installing <em>spiegel</em> inside
+of that are provided.</p>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p><em>spiegel</em> requires the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">&gt;=</span> <span class="mf">3.6</span>
+<span class="n">numpy</span> <span class="o">&gt;=</span> <span class="mf">1.18</span><span class="o">.</span><span class="mi">0</span>
+<span class="n">matplotlib</span> <span class="o">&gt;=</span> <span class="mf">3.2</span><span class="o">.</span><span class="mi">0</span>
+<span class="n">librosa</span> <span class="o">&gt;=</span> <span class="mf">0.7</span><span class="o">.</span><span class="mi">2</span>
+<span class="n">tensorflow</span> <span class="o">&gt;=</span> <span class="mf">2.1</span><span class="o">.</span><span class="mi">0</span>
+<span class="n">deap</span> <span class="o">&gt;=</span> <span class="mf">1.3</span><span class="o">.</span><span class="mi">1</span>
+<span class="n">tqdm</span> <span class="o">&gt;=</span> <span class="mf">4.43</span><span class="o">.</span><span class="mi">0</span>
+<span class="n">librenderman</span>
+</pre></div>
+</div>
+<p>All of these dependencies, except for librenderman (RenderMan), will be installed automatically.
+Instructions on installing RenderMan in a virtual environment are provided.</p>
+</div>
+<div class="section" id="anaconda-environment">
+<span id="anaconda-env"></span><h2>Anaconda Environment<a class="headerlink" href="#anaconda-environment" title="Permalink to this headline">¶</a></h2>
+<p>These instructions show how to install <em>spiegel</em> in an anaconda environment for sandboxed
+development.</p>
+<p>Install <a class="reference external" href="https://www.anaconda.com/">anaconda</a> if you don’t have it already. Make sure
+to install the Python 3 version as <em>speigel</em> only runs on Python 3.6 and higher.</p>
+<ol class="arabic">
+<li><p>First, create a new conda environment for <em>spiegel</em>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda create --name new_spiegel_env python=3.7 numpy matplotlib
+
+...
+
+Proceed ([y]/n)? y
+
+...
+
+#
+# To activate this environment, use
+#
+#     $ conda activate new_spiegel_env
+#
+# To deactivate an active environment, use
+#
+#     $ conda deactivate
+</pre></div>
+</div>
+</li>
+</ol>
+<blockquote>
+<div><div class="line-block">
+<div class="line">At the time of writing, TensorFlow was only supported in python versions 3.5-3.7,
+so we’ll specify python 3.7 for this conda environment. Numpy and matplotlib
+dependencies were also installed here. The other dependencies will be installed
+by pip.</div>
+</div>
+</div></blockquote>
+<ol class="arabic" start="2">
+<li><p>Activate the environment:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda activate new_spiegel_env
+(new_spiegel_env)$
+</pre></div>
+</div>
+</li>
+<li><p>Now we are working within the conda environment, to leave the environment:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda deactivate
+</pre></div>
+</div>
+</li>
+<li><p>Install <em>spiegel</em> and RenderMan:</p></li>
+</ol>
+<blockquote>
+<div><p>The following sections provide information on installing <em>spiegel</em> using
+pip (<a class="reference internal" href="#pip-installation"><span class="std std-ref">pip installation</span></a>) and installing RenderMan in a
+conda environment (<a class="reference internal" href="#librenderman-conda-install"><span class="std std-ref">RenderMan installation</span></a>)</p>
+</div></blockquote>
+</div>
+<div class="section" id="pip-installation">
+<span id="id2"></span><h2>pip installation<a class="headerlink" href="#pip-installation" title="Permalink to this headline">¶</a></h2>
+<p>Use the following command to install <em>spiegel</em> using pip from the Python Packaging
+Index (PyPI). This will also install all dependencies, except for RenderMan.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python3 -m pip install spiegel
+</pre></div>
+</div>
+<p>If you want to install in a anaconda environment. Make sure you have created a python3
+anaconda environment and have activated that environment (See <a class="reference internal" href="#anaconda-env"><span class="std std-ref">Anaconda Environment</span></a>)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(new_siegel_env)$ python -m pip install spiegel
+</pre></div>
+</div>
+</div>
+<div class="section" id="installing-renderman-in-an-anaconda-environment">
+<span id="librenderman-conda-install"></span><h2>Installing RenderMan in an Anaconda Environment<a class="headerlink" href="#installing-renderman-in-an-anaconda-environment" title="Permalink to this headline">¶</a></h2>
+<p>These instructions are only for Mac OSX currently. They provide information on
+installing RenderMan in a conda environment on Mac OSX. Please see <a class="reference external" href="https://github.com/fedden/RenderMan">RenderMan</a>
+for instructions on regular builds and Linux builds.</p>
+<p><a class="reference external" href="https://github.com/fedden/RenderMan">librenderman</a> is a python library for programmatically interacting with VST synthesizers.
+It uses <a class="reference external" href="https://www.boost.org/doc/libs/1_66_0/libs/python/doc/html/index.html">boost-python</a> to wrap
+a <a class="reference external" href="https://juce.com/">JUCE</a> application.</p>
+<ol class="arabic">
+<li><p><a class="reference external" href="https://shop.juce.com/get-juce">Download and install JUCE</a></p></li>
+<li><p>Install boost-python using conda. Make sure you have activated the conda environment that you want to install librendman into:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(new_siegel_env)$ conda install py-boost
+</pre></div>
+</div>
+</li>
+<li><p>Clone the librenderman repo:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/fedden/RenderMan.git
+</pre></div>
+</div>
+</li>
+<li><p>Open the RenderMan python3 jucer file in ProJucer:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd RenderMan
+$ open RenderMan-py36.jucer
+</pre></div>
+</div>
+</li>
+<li><p>Update Xcode exporter</p>
+<blockquote>
+<div><p>For the Xcode (MacOSX) exporter modify the <em>Extra Linker Flags</em>: remove <code class="docutils literal notranslate"><span class="pre">-lpython3.6m</span></code>
+Change <code class="docutils literal notranslate"><span class="pre">-lboost-python</span></code> to <code class="docutils literal notranslate"><span class="pre">-lboost-python37</span></code> and add <code class="docutils literal notranslate"><span class="pre">-undefined</span> <span class="pre">dynamic_lookup</span></code></p>
+<img alt="../_images/linker_flags1.png" src="../_images/linker_flags1.png" />
+</div></blockquote>
+</li>
+<li><p>Update Xcode Debug export</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">A sub category of the Xcode (MacOSX) exporter is the Debug specific options. Here we want
+to change the header and library search paths to look for headers and libs in our conda env.
+The exact location will depend on where your conda environments are on your system, which was
+determined when you installed anaconda. The default location on MacOSX is <code class="docutils literal notranslate"><span class="pre">/Users/&lt;your-username&gt;/anaconda3</span></code>.</div>
+<div class="line"><br /></div>
+<div class="line">The following instructions will refer to that location, whatever it is on your system, as <code class="docutils literal notranslate"><span class="pre">&lt;path-to-anaconda3&gt;</span></code>.</div>
+<div class="line"><br /></div>
+<div class="line">For the <em>Header Search Paths</em>, remove the existing paths and add <code class="docutils literal notranslate"><span class="pre">&lt;path-to-anaconda3&gt;/envs/new_spiegel_env/include</span></code> and
+<code class="docutils literal notranslate"><span class="pre">&lt;path-to-anaconda3&gt;/envs/new_spiegel_env/include/python3.7m</span></code>.</div>
+<div class="line"><br /></div>
+<div class="line">Using the default anaconda path:</div>
+</div>
+<img alt="../_images/header_search_paths1.png" src="../_images/header_search_paths1.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line">For the <em>Extra Library Search Paths</em>, remove the existing paths and add <code class="docutils literal notranslate"><span class="pre">&lt;path-to-anaconda3&gt;/envs/new_spiegel_env/lib</span></code></div>
+<div class="line"><br /></div>
+<div class="line">Using the default anaconda path:</div>
+</div>
+<img alt="../_images/extra_lib_path1.png" src="../_images/extra_lib_path1.png" />
+</div></blockquote>
+</li>
+<li><p>Open Xcode and build</p>
+<blockquote>
+<div><p>Open Xcode from the Projucer by clicking on the Xcode icon</p>
+<img alt="../_images/Xcode_projucer1.png" src="../_images/Xcode_projucer1.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Build the library in Xcode</p>
+<img alt="../_images/build_xcode1.png" src="../_images/build_xcode1.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Celebrate successful build!</p>
+</div></blockquote>
+</li>
+<li><p>Rename the built library and move to conda env:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd &lt;path-to-RenderMan&gt;/Builds/MacOSX/build/Debug
+$ mv librenderman.so.dylib librenderman.so
+$ mv librenderman.so &lt;path-to-anaconda3&gt;/envs/new_spiegel_env/lib/python3.7/site-packages/
+</pre></div>
+</div>
+</li>
+<li><p>Test librenderman. Make sure the correct conda environment is activated:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(new_spiegel_env)$ python
+&gt;&gt;&gt; import librenderman as rm
+JUCE v&lt;Juce version&gt;
+&gt;&gt;&gt; engine = rm.RenderEngine(44100, 512, 512)
+&gt;&gt;&gt;
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../reference/core.html" class="btn btn-neutral float-right" title="SPIEGEL Core Classes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="getting_started.html" class="btn btn-neutral float-left" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, University of Victoria
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

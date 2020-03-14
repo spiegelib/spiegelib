@@ -11,8 +11,15 @@ Synthesizer Programming with Intelligent Exploration, Generation, and Evaluation
    :maxdepth: 2
    :caption: Contents:
 
-Reference
----------
+First Steps
+-----------
+.. toctree::
+   :maxdepth: 2
+
+   Getting Started <getting_started/getting_started>
+
+spiegel Reference
+-----------------
 .. toctree::
    :maxdepth: 2
 
