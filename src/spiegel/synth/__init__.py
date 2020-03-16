@@ -12,3 +12,4 @@ try:
     from .synth_vst import SynthVST
 except:
     print("librenderman package not installed, SynthVST class is unavailable. To use VSTs please install librenderman.")
+    print("https://spiegel-lib.github.io/spiegel/getting_started/installation.html")
