@@ -14,7 +14,7 @@ import tensorflow as tf
 from tensorflow.keras import layers
 from spiegel.estimator.highway_layer import HighwayLayer
 
-class HighwayBiLSTM(TFEstimatorBase):
+class HwyBLSTM(TFEstimatorBase):
     """
     :param input_shape: Shape of matrix that will be passed to model input
     :type input_shape: tuple
