@@ -1,12 +1,19 @@
 #!/usr/bin/env python
 """
+Convolutional Neural Network based on the 6-layer deep model proposed by
+Barkan et al.
+
+"InverSynth: Deep Estimation of Synthesizer Parameter Configurations From Audio Signals."
+Barkan, Oren, et al.
+IEEE/ACM Transactions on Audio, Speech, and Language Processing 27.12
+(2019): 2385-2396.
 """
 
 from spiegel.estimator.tf_estimator_base import TFEstimatorBase
 import tensorflow as tf
 from tensorflow.keras import layers
 
-class CNN(TFEstimatorBase):
+class Conv6(TFEstimatorBase):
     """
     :param input_shape: Shape of matrix that will be passed to model input
     :type input_shape: tuple
@@ -26,7 +33,7 @@ class CNN(TFEstimatorBase):
 
     def build_model(self):
         """
-        Construct CNN Model
+        Construct 6-layer CNN Model
         """
 
         self.model = tf.keras.Sequential()
