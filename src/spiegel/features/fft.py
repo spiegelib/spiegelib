@@ -16,7 +16,7 @@ class FFT(FeaturesBase):
     :param kwargs: keyword arguments for base class, see :class:`spiegel.features.features_base.FeaturesBase`.
     """
 
-    def __init__(self, fft_size=None, output='magnitude', **kwargs):
+    def __init__(self, fft_size=None, output='complex', **kwargs):
         """
         Contructor
         """

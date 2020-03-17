@@ -7,6 +7,7 @@ import numpy as np
 import librosa
 from spiegel import AudioBuffer
 from spiegel.features.features_base import FeaturesBase
+import spiegel.features.utils as utils
 
 class STFT(FeaturesBase):
     """
@@ -15,15 +16,21 @@ class STFT(FeaturesBase):
     :param kwargs: keyword arguments for base class, see :class:`spiegel.features.features_base.FeaturesBase`.
     """
 
-    def __init__(self, fft_size=1024, **kwargs):
+    def __init__(self, fft_size=1024, output='complex', **kwargs):
         """
         Contructor
         """
 
         dims = int(1 + (fft_size / 2))
         super().__init__(dims, per_feature_normalize=False, **kwargs)
+
+        if output not in utils.spectrum_types:
+            raise TypeError('output must be one of %s' % utils.spectrum_types)
+
+        self.output = output
         self.frame_size = fft_size
-        self.dtype = np.complex64
+        self.dtype = np.float32
+        self.complex_dtype = np.complex64
 
 
     def get_features(self, audio):
@@ -48,7 +55,10 @@ class STFT(FeaturesBase):
             hop_length=self.hop_size,
         )
 
+        features = utils.convert_spectrum(features, self.output, dtype=self.dtype,
+                                          complex_dtype=self.complex_dtype)
+
         if self.time_major:
-            features = np.transpose(features)
+            features = np.swapaxes(features, 0, 1)
 
         return features
