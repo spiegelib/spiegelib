@@ -58,7 +58,7 @@ class FFT(FeaturesBase):
 
         # Run Fast Fourier Transform
         spectrum = np.fft.fft(audio.get_audio(), n=self.frame_size)[0:n_output]
-        featues = utils.convert_spectrum(spectrum, self.output, dtype=self.dtype,
+        features = utils.convert_spectrum(spectrum, self.output, dtype=self.dtype,
                                          complex_dtype=self.complex_dtype)
 
         return features

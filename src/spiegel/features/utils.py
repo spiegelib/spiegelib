@@ -36,17 +36,17 @@ def convert_spectrum(spectrum, type, dtype=np.float32, complex_dtype=np.complex6
         return np.array(np.abs(spectrum)**2, dtype=dtype)
 
     elif type == 'magnitude_phase':
-        output = np.empty((n_output, 2), dtype=dtype)
+        output = np.empty((spectrum.shape[0], 2), dtype=dtype)
         output[:,0] = np.abs(spectrum)
         output[:,1] = np.angle(spectrum)
         return output
 
     elif type == 'power_phase':
-        output = np.empty((n_output, 2), dtype=dtype)
+        output = np.empty((spectrum.shape[0], 2), dtype=dtype)
         output[:,0] = np.abs(spectrum)**2
         output[:,1] = np.angle(spectrum)
         return output
 
     # If we get here, then the type is complex, so return a complex array
     # with an updated data type
-    return np.array(spectrum, dtype=self.complex64)
+    return np.array(spectrum, dtype=complex_dtype)
