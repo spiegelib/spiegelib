@@ -98,7 +98,7 @@ class NSGA3(EstimatorBase):
         index = 0
         for extractor in self.features_list:
             out_features = extractor(out)
-            errors.append(EvaluationBase.abs_mean_error(self.target[index],
+            errors.append(EvaluationBase.mean_abs_error(self.target[index],
                                                         out_features))
             index += 1
 

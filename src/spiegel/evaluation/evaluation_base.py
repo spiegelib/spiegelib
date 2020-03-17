@@ -126,9 +126,9 @@ class EvaluationBase(ABC):
 
 
     @staticmethod
-    def abs_mean_error(A, B):
+    def mean_abs_error(A, B):
         """
-        Calculates absolute mean error between two arrays. Mean(ABS(A-B)).
+        Calculates mean absolute error between two arrays. Mean(ABS(A-B)).
 
         :param A: First array (Ground Truth)
         :type A: np.ndarray

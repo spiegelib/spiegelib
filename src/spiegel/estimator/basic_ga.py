@@ -88,7 +88,7 @@ class BasicGA(EstimatorBase):
         self.synth.render_patch()
         out = self.synth.get_audio()
         out_features = self.features(out)
-        error = EvaluationBase.abs_mean_error(self.target, out_features)
+        error = EvaluationBase.mean_abs_error(self.target, out_features)
         return error,
 
 
