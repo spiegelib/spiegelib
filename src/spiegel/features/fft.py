@@ -6,6 +6,7 @@ FFT Audio Feature Extractor
 import numpy as np
 from spiegel import AudioBuffer
 from spiegel.features.features_base import FeaturesBase
+import spiegel.features.utils as utils
 
 class FFT(FeaturesBase):
     """
@@ -15,9 +16,7 @@ class FFT(FeaturesBase):
     :param kwargs: keyword arguments for base class, see :class:`spiegel.features.features_base.FeaturesBase`.
     """
 
-    output_types = ['complex', 'magnitude', 'power', 'magnitude_phase', 'power_phase']
-
-    def __init__(self, fft_size=None, output='magnitude', **kwargs):
+    def __init__(self, fft_size=None, output='complex', **kwargs):
         """
         Contructor
         """
@@ -26,15 +25,12 @@ class FFT(FeaturesBase):
 
         self.frame_size = fft_size
 
-        if output not in type(self).output_types:
-            raise TypeError('output must be one of %s' % str(type(self).output_types))
+        if output not in utils.spectrum_types:
+            raise TypeError('output must be one of %s' % utils.spectrum_types)
 
         self.output = output
-
-        if output == 'complex':
-            self.dtype = np.complex128
-        else:
-            self.dtype = np.float64
+        self.dtype = np.float32
+        self.complex_dtype = np.complex64
 
 
     def get_features(self, audio):
@@ -62,25 +58,7 @@ class FFT(FeaturesBase):
 
         # Run Fast Fourier Transform
         spectrum = np.fft.fft(audio.get_audio(), n=self.frame_size)[0:n_output]
-
-        # Convert to desired output format and data type
-        if self.output == 'magnitude':
-            features = np.array(np.abs(spectrum), dtype=self.dtype)
-
-        elif self.output == 'power':
-            features = np.array(np.abs(spectrum)**2, dtype=self.dtype)
-
-        elif self.output == 'magnitude_phase':
-            features = np.empty((n_output, 2), dtype=self.dtype)
-            features[:,0] = np.abs(spectrum)
-            features[:,1] = np.angle(spectrum)
-
-        elif self.output == 'power_phase':
-            features = np.empty((n_output, 2), dtype=self.dtype)
-            features[:,0] = np.abs(spectrum)**2
-            features[:,1] = np.angle(spectrum)
-
-        else:
-            features = np.array(spectrum, dtype=self.dtype)
+        features = utils.convert_spectrum(spectrum, self.output, dtype=self.dtype,
+                                         complex_dtype=self.complex_dtype)
 
         return features

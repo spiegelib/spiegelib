@@ -49,7 +49,7 @@ class MFCCEval(EvaluationBase):
         for pred in predictions:
             estimated_mfccs = mfcc(pred)
             results.append({
-                'abs_mean_error': EvaluationBase.abs_mean_error(target_mfccs, estimated_mfccs),
+                'mean_abs_error': EvaluationBase.mean_abs_error(target_mfccs, estimated_mfccs),
                 'mean_squared_error': EvaluationBase.mean_squared_error(target_mfccs, estimated_mfccs),
                 'euclidian_distance': EvaluationBase.euclidian_distance(target_mfccs, estimated_mfccs),
                 'manhattan_distance': EvaluationBase.manhattan_distance(target_mfccs, estimated_mfccs),

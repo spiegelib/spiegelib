@@ -21,7 +21,8 @@ class BasicGA(EstimatorBase):
     """
     """
 
-    def __init__(self, synth, features, seed=None, pop_size=300):
+    def __init__(self, synth, features, seed=None, pop_size=100, ngen=25,
+                 cxpb=0.5, mutpb=0.3):
         """
         Constructor
         """
@@ -40,6 +41,10 @@ class BasicGA(EstimatorBase):
         self.target = None
 
         self.pop_size = pop_size
+        self.ngen = ngen
+        self.cxpb = cxpb
+        self.mutpb = mutpb
+
         self.logbook = None
 
         random.seed(seed)
@@ -52,8 +57,8 @@ class BasicGA(EstimatorBase):
         """
 
         # Create individual types
-        creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
-        creator.create("Individual", list, fitness=creator.FitnessMin)
+        creator.create("BasicGAFitnessMin", base.Fitness, weights=(-1.0,))
+        creator.create("BasicGAIndividual", list, fitness=creator.BasicGAFitnessMin)
 
         # Setup toolbox
         self.toolbox = base.Toolbox()
@@ -62,7 +67,7 @@ class BasicGA(EstimatorBase):
         self.toolbox.register("attr_float", random.random)
 
         # Structure initializers
-        self.toolbox.register("individual", tools.initRepeat, creator.Individual,
+        self.toolbox.register("individual", tools.initRepeat, creator.BasicGAIndividual,
                               self.toolbox.attr_float, self.num_params)
 
         self.toolbox.register("population", tools.initRepeat, list,
@@ -83,7 +88,7 @@ class BasicGA(EstimatorBase):
         self.synth.render_patch()
         out = self.synth.get_audio()
         out_features = self.features(out)
-        error = EvaluationBase.abs_mean_error(self.target, out_features)
+        error = EvaluationBase.mean_abs_error(self.target, out_features)
         return error,
 
 
@@ -92,7 +97,8 @@ class BasicGA(EstimatorBase):
         Run GA prection on input
         """
 
-        self.target = input
+
+        self.target = self.features(input)
 
         pop = self.toolbox.population(n=self.pop_size)
         hof = tools.HallOfFame(1)
@@ -102,7 +108,9 @@ class BasicGA(EstimatorBase):
         stats.register("min", np.min)
         stats.register("max", np.max)
 
-        pop, self.logbook = algorithms.eaSimple(pop, self.toolbox, cxpb=0.5, mutpb=0.3, ngen=100,
-                                       stats=stats, halloffame=hof, verbose=True)
+        pop, self.logbook = algorithms.eaSimple(pop, self.toolbox, cxpb=self.cxpb,
+                                                mutpb=self.mutpb, ngen=self.ngen,
+                                                stats=stats, halloffame=hof,
+                                                verbose=True)
 
         return hof[0]
