@@ -98,6 +98,29 @@
 <li class="toctree-l4"><a class="reference internal" href="#evaluation-dataset">Evaluation Dataset</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#train-deep-learning-models">Train Deep Learning Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#multi-layer-perceptron">Multi-Layer Perceptron</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#long-short-term-memory-lstm">Long short-term memory (LSTM)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bi-directional-long-short-term-memory-with-highway-layers-lstm">Bi-directional long short-term memory with highway layers (LSTM++)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#convolutional-neural-network-cnn">Convolutional Neural Network (CNN)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#sound-match-deep-learning-models">Sound Match Deep Learning Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sound-match-genetic-algorithm-estimators">Sound Match Genetic Algorithm Estimators</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#basic-genetic-algorithm">Basic Genetic Algorithm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#non-dominated-sorting-genetic-algorithm-iii-nsga-iii">Non-dominated sorting genetic algorithm III (NSGA III)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sound-matching">Sound Matching</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#evaluation">Evaluation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mlp-histogram">MLP Histogram</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lstm-histogram">LSTM Histogram</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">LSTM++ Histogram</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cnn-histogram">CNN Histogram</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ga-histogram">GA Histogram</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nsga-iii-histogram">NSGA III Histogram</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -176,22 +199,22 @@
 <p>In progress.</p>
 <p>This is where a jupyter notebook of the experiment, as well as links to
 download the code and data for this experiment will go.</p>
-<div class="section" id="dataset-generation">
-<span id="id1"></span><h2>Dataset Generation<a class="headerlink" href="#dataset-generation" title="Permalink to this headline">¶</a></h2>
-<p>Here we generate and save datasets for training and validating deep
-learning models. Additionally, we create a small audio dataset for
-evaluating all the different deep learning and evaluation methods
-compared.</p>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spiegel</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Required imports for following code</span>
+<span class="kn">import</span> <span class="nn">spiegel</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 </pre></div>
 </div>
-<p>Load Dexed VST, set the note length and render length to be one second.
+<div class="section" id="dataset-generation">
+<span id="id1"></span><h2>Dataset Generation<a class="headerlink" href="#dataset-generation" title="Permalink to this headline">¶</a></h2>
+<p>First step is to generate and save datasets for training and validating deep
+learning models. Additionally, we create a small audio dataset for
+evaluation.</p>
+<p>Here, we load the Dexed VST, and set the note length and render length to be one second.
 For this experiment we aren’t worried about the release of the sound,
 but you can set the render length longer than the note length to capture
 the release portion of a signal. Synthesizer parameters are loaded from
-a JSON file that describes all the overrriden parameters and their
+a JSON file that describes all the overridden parameters and their
 values.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">synth</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">synth</span><span class="o">.</span><span class="n">SynthVST</span><span class="p">(</span><span class="s2">&quot;/Library/Audio/Plug-Ins/VST/Dexed.vst&quot;</span><span class="p">,</span>
                                <span class="n">note_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">render_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
@@ -204,16 +227,14 @@ values.</p>
 Coefficients feature extraction. The DatasetGenerator class works by
 generating random patches from the synthesizer, then running audio
 feature extraction on the resulting sound, and then saving the audio
-features and parameter values used to generate that sound. Audio
-features and parameter values are saved in seperate .npy files.</p>
-<p>We set the time_major flag to True so that the orientation of the output
+features and parameter values. Audio features and parameter values are saved in
+seperate .npy files.</p>
+<p>We set the <cite>time_major</cite> argument to <cite>True</cite> so that the orientation of the output
 is (time_slices, features), as opposed to (features, time_slices) which
-is default. This is how TensorFlow models expect the date to be
+is default. This is how TensorFlow models expect the data to be
 oriented.</p>
-<p>Normalization of the dataset is run by the first data generation, which
-also saves the settings used to normalize that data. These normalization
-settings are then used to normalize the testing dataset and are saved
-for future use.</p>
+<p>Normalization settings used for the training dataset are saved as a .pkl file.
+These settings are used to ensure future data is normalized in the same way.</p>
 <p>The total size of this dataset is about 140MB.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mel-frequency Cepstral Coefficients audio feature extractor.</span>
 <span class="n">features</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MFCC</span><span class="p">(</span><span class="n">num_mfccs</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">time_major</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">)</span>
@@ -230,9 +251,8 @@ for future use.</p>
 </div>
 <div class="section" id="stft-dataset">
 <h3>STFT Dataset<a class="headerlink" href="#stft-dataset" title="Permalink to this headline">¶</a></h3>
-<p>Generate training and testing dataset using the magnitude of a STFT and
-is run very similarily to the MFCC dataset generation. This dataset will
-be used to train the convolutional neural network.</p>
+<p>Generate training and testing dataset using the magnitude of the STFT.
+This dataset will be used to train the convolutional neural network.</p>
 <p>The total size of the resulting dataset is about 10.8GB.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Magnitude STFT ouptut feature extraction</span>
 <span class="n">features</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">STFT</span><span class="p">(</span><span class="n">fft_size</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s1">&#39;magnitude&#39;</span><span class="p">,</span> <span class="n">time_major</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -256,6 +276,443 @@ saved for this set.</p>
 <span class="n">eval_generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+</div>
+<div class="section" id="train-deep-learning-models">
+<h2>Train Deep Learning Models<a class="headerlink" href="#train-deep-learning-models" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have created our datasets, we can train a set of deep learning models
+using that data. The input training data for each
+model is the audio features extracted for a synth patch, and the ground
+truth data is the parameter values for that synth patch. Each trained
+model is saved in the saved_models folder.</p>
+<p>All deep learning models used here inherit from <a class="reference internal" href="../reference/estimators/tf_estimator_base.html#tf-estimator-base"><span class="std std-ref">TFEstimatorBase</span></a></p>
+<div class="section" id="multi-layer-perceptron">
+<h3>Multi-Layer Perceptron<a class="headerlink" href="#multi-layer-perceptron" title="Permalink to this headline">¶</a></h3>
+<p>Her we train a relatively basic fully connected MLP model. The audio
+features, which are in <em>numpy</em> arrays with time slices, need to be
+flattened prior to being fed into the network.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trainFeatures</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./data_simple_FM_mfcc/train_features.npy&#39;</span><span class="p">)</span>
+<span class="n">trainParams</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./data_simple_FM_mfcc/train_patches.npy&#39;</span><span class="p">)</span>
+<span class="n">testFeatures</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./data_simple_FM_mfcc/test_features.npy&#39;</span><span class="p">)</span>
+<span class="n">testParams</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./data_simple_FM_mfcc/test_patches.npy&#39;</span><span class="p">)</span>
+
+<span class="c1"># Flatten feature time slices</span>
+<span class="n">trainFeatures</span> <span class="o">=</span> <span class="n">trainFeatures</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">trainFeatures</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">testFeatures</span> <span class="o">=</span> <span class="n">testFeatures</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">testFeatures</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Setup callbacks for trainings</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">TFEpochLogger</span><span class="p">()</span>
+<span class="n">earlyStopping</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">EarlyStopping</span><span class="p">(</span><span class="n">monitor</span><span class="o">=</span><span class="s1">&#39;val_loss&#39;</span><span class="p">,</span> <span class="n">patience</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Instantiate MLP Model with the input shape, output shape, and callbacks</span>
+<span class="n">mlp</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">MLP</span><span class="p">((</span><span class="n">trainFeatures</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],),</span>
+                            <span class="n">trainParams</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                            <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">logger</span><span class="p">,</span> <span class="n">earlyStopping</span><span class="p">])</span>
+
+<span class="c1"># Add training and validation data</span>
+<span class="n">mlp</span><span class="o">.</span><span class="n">add_training_data</span><span class="p">(</span><span class="n">trainFeatures</span><span class="p">,</span> <span class="n">trainParams</span><span class="p">)</span>
+<span class="n">mlp</span><span class="o">.</span><span class="n">add_testing_data</span><span class="p">(</span><span class="n">testFeatures</span><span class="p">,</span> <span class="n">testParams</span><span class="p">)</span>
+<span class="n">mlp</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Model</span><span class="p">:</span> <span class="s2">&quot;sequential&quot;</span>
+<span class="n">_________________________________________________________________</span>
+<span class="n">Layer</span> <span class="p">(</span><span class="nb">type</span><span class="p">)</span>                 <span class="n">Output</span> <span class="n">Shape</span>              <span class="n">Param</span> <span class="c1">#</span>
+<span class="o">=================================================================</span>
+<span class="n">dense</span> <span class="p">(</span><span class="n">Dense</span><span class="p">)</span>                <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>                <span class="mi">28650</span>
+<span class="n">_________________________________________________________________</span>
+<span class="n">dense_1</span> <span class="p">(</span><span class="n">Dense</span><span class="p">)</span>              <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>                <span class="mi">2040</span>
+<span class="n">_________________________________________________________________</span>
+<span class="n">dense_2</span> <span class="p">(</span><span class="n">Dense</span><span class="p">)</span>              <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>                <span class="mi">1230</span>
+<span class="n">_________________________________________________________________</span>
+<span class="n">dense_3</span> <span class="p">(</span><span class="n">Dense</span><span class="p">)</span>              <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>                 <span class="mi">279</span>
+<span class="o">=================================================================</span>
+<span class="n">Total</span> <span class="n">params</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span><span class="mi">199</span>
+<span class="n">Trainable</span> <span class="n">params</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span><span class="mi">199</span>
+<span class="n">Non</span><span class="o">-</span><span class="n">trainable</span> <span class="n">params</span><span class="p">:</span> <span class="mi">0</span>
+<span class="n">_________________________________________________________________</span>
+</pre></div>
+</div>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mlp</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">mlp</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="s1">&#39;./saved_models/simple_fm_mlp.h5&#39;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="../_images/mlp_training.png" src="../_images/mlp_training.png" />
+</div>
+<div class="section" id="long-short-term-memory-lstm">
+<h3>Long short-term memory (LSTM)<a class="headerlink" href="#long-short-term-memory-lstm" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trainFeatures</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./data_simple_FM_mfcc/train_features.npy&#39;</span><span class="p">)</span>
+<span class="n">trainParams</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./data_simple_FM_mfcc/train_patches.npy&#39;</span><span class="p">)</span>
+<span class="n">testFeatures</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./data_simple_FM_mfcc/test_features.npy&#39;</span><span class="p">)</span>
+<span class="n">testParams</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./data_simple_FM_mfcc/test_patches.npy&#39;</span><span class="p">)</span>
+
+<span class="c1"># Setup callbacks for trainings</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">TFEpochLogger</span><span class="p">()</span>
+<span class="n">earlyStopping</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">EarlyStopping</span><span class="p">(</span><span class="n">monitor</span><span class="o">=</span><span class="s1">&#39;val_loss&#39;</span><span class="p">,</span> <span class="n">patience</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Instantiate LSTM Model with the input shape, output shape, and callbacks</span>
+<span class="n">lstm</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">LSTM</span><span class="p">(</span><span class="n">trainFeatures</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:],</span>
+                              <span class="n">trainParams</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                              <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">logger</span><span class="p">,</span> <span class="n">earlyStopping</span><span class="p">])</span>
+
+<span class="n">lstm</span><span class="o">.</span><span class="n">add_training_data</span><span class="p">(</span><span class="n">trainFeatures</span><span class="p">,</span> <span class="n">trainParams</span><span class="p">)</span>
+<span class="n">lstm</span><span class="o">.</span><span class="n">add_testing_data</span><span class="p">(</span><span class="n">testFeatures</span><span class="p">,</span> <span class="n">testParams</span><span class="p">)</span>
+<span class="n">lstm</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Model</span><span class="p">:</span> <span class="s2">&quot;sequential_1&quot;</span>
+<span class="n">_________________________________________________________________</span>
+<span class="n">Layer</span> <span class="p">(</span><span class="nb">type</span><span class="p">)</span>                 <span class="n">Output</span> <span class="n">Shape</span>              <span class="n">Param</span> <span class="c1">#</span>
+<span class="o">=================================================================</span>
+<span class="n">lstm</span> <span class="p">(</span><span class="n">LSTM</span><span class="p">)</span>                  <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>           <span class="mi">45600</span>
+<span class="n">_________________________________________________________________</span>
+<span class="n">lstm_1</span> <span class="p">(</span><span class="n">LSTM</span><span class="p">)</span>                <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>           <span class="mi">80400</span>
+<span class="n">_________________________________________________________________</span>
+<span class="n">lstm_2</span> <span class="p">(</span><span class="n">LSTM</span><span class="p">)</span>                <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>               <span class="mi">80400</span>
+<span class="n">_________________________________________________________________</span>
+<span class="n">dropout</span> <span class="p">(</span><span class="n">Dropout</span><span class="p">)</span>            <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>               <span class="mi">0</span>
+<span class="n">_________________________________________________________________</span>
+<span class="n">dense_4</span> <span class="p">(</span><span class="n">Dense</span><span class="p">)</span>              <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>                 <span class="mi">909</span>
+<span class="o">=================================================================</span>
+<span class="n">Total</span> <span class="n">params</span><span class="p">:</span> <span class="mi">207</span><span class="p">,</span><span class="mi">309</span>
+<span class="n">Trainable</span> <span class="n">params</span><span class="p">:</span> <span class="mi">207</span><span class="p">,</span><span class="mi">309</span>
+<span class="n">Non</span><span class="o">-</span><span class="n">trainable</span> <span class="n">params</span><span class="p">:</span> <span class="mi">0</span>
+<span class="n">_________________________________________________________________</span>
+</pre></div>
+</div>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lstm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">lstm</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="s1">&#39;./saved_models/simple_fm_lstm.h5&#39;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="../_images/lstm_training.png" src="../_images/lstm_training.png" />
+</div>
+<div class="section" id="bi-directional-long-short-term-memory-with-highway-layers-lstm">
+<h3>Bi-directional long short-term memory with highway layers (LSTM++)<a class="headerlink" href="#bi-directional-long-short-term-memory-with-highway-layers-lstm" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Setup callbacks for trainings</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">TFEpochLogger</span><span class="p">()</span>
+<span class="n">earlyStopping</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">EarlyStopping</span><span class="p">(</span><span class="n">monitor</span><span class="o">=</span><span class="s1">&#39;val_loss&#39;</span><span class="p">,</span> <span class="n">patience</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Instantiate LSTM++ Model with the input shape, output shape, and callbacks</span>
+<span class="n">bi_lstm</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">HwyBLSTM</span><span class="p">(</span><span class="n">trainFeatures</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:],</span>
+                                     <span class="n">trainParams</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                     <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">logger</span><span class="p">,</span> <span class="n">earlyStopping</span><span class="p">],</span>
+                                     <span class="n">highway_layers</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+
+<span class="n">bi_lstm</span><span class="o">.</span><span class="n">add_training_data</span><span class="p">(</span><span class="n">trainFeatures</span><span class="p">,</span> <span class="n">trainParams</span><span class="p">)</span>
+<span class="n">bi_lstm</span><span class="o">.</span><span class="n">add_testing_data</span><span class="p">(</span><span class="n">testFeatures</span><span class="p">,</span> <span class="n">testParams</span><span class="p">)</span>
+<span class="n">bi_lstm</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Model</span><span class="p">:</span> <span class="s2">&quot;sequential_2&quot;</span>
+<span class="n">_________________________________________________________________</span>
+<span class="n">Layer</span> <span class="p">(</span><span class="nb">type</span><span class="p">)</span>                 <span class="n">Output</span> <span class="n">Shape</span>              <span class="n">Param</span> <span class="c1">#</span>
+<span class="o">=================================================================</span>
+<span class="n">bidirectional</span> <span class="p">(</span><span class="n">Bidirectional</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>               <span class="mi">145408</span>
+<span class="n">_________________________________________________________________</span>
+<span class="n">dropout_1</span> <span class="p">(</span><span class="n">Dropout</span><span class="p">)</span>          <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>               <span class="mi">0</span>
+<span class="n">_________________________________________________________________</span>
+<span class="n">dense_5</span> <span class="p">(</span><span class="n">Dense</span><span class="p">)</span>              <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>                <span class="mi">16448</span>
+<span class="n">_________________________________________________________________</span>
+<span class="n">highway_layer</span> <span class="p">(</span><span class="n">HighwayLayer</span><span class="p">)</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>                <span class="mi">8320</span>
+<span class="n">_________________________________________________________________</span>
+<span class="n">highway_layer_1</span> <span class="p">(</span><span class="n">HighwayLaye</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>                <span class="mi">8320</span>
+<span class="n">_________________________________________________________________</span>
+<span class="n">highway_layer_2</span> <span class="p">(</span><span class="n">HighwayLaye</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>                <span class="mi">8320</span>
+<span class="n">_________________________________________________________________</span>
+<span class="n">highway_layer_3</span> <span class="p">(</span><span class="n">HighwayLaye</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>                <span class="mi">8320</span>
+<span class="n">_________________________________________________________________</span>
+<span class="n">highway_layer_4</span> <span class="p">(</span><span class="n">HighwayLaye</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>                <span class="mi">8320</span>
+<span class="n">_________________________________________________________________</span>
+<span class="n">highway_layer_5</span> <span class="p">(</span><span class="n">HighwayLaye</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>                <span class="mi">8320</span>
+<span class="n">_________________________________________________________________</span>
+<span class="n">dense_6</span> <span class="p">(</span><span class="n">Dense</span><span class="p">)</span>              <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>                 <span class="mi">585</span>
+<span class="o">=================================================================</span>
+<span class="n">Total</span> <span class="n">params</span><span class="p">:</span> <span class="mi">212</span><span class="p">,</span><span class="mi">361</span>
+<span class="n">Trainable</span> <span class="n">params</span><span class="p">:</span> <span class="mi">212</span><span class="p">,</span><span class="mi">361</span>
+<span class="n">Non</span><span class="o">-</span><span class="n">trainable</span> <span class="n">params</span><span class="p">:</span> <span class="mi">0</span>
+<span class="n">_________________________________________________________________</span>
+</pre></div>
+</div>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bi_lstm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">bi_lstm</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="s1">&#39;./saved_models/simple_fm_bi_lstm.h5&#39;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="../_images/blstm_training.png" src="../_images/blstm_training.png" />
+</div>
+<div class="section" id="convolutional-neural-network-cnn">
+<h3>Convolutional Neural Network (CNN)<a class="headerlink" href="#convolutional-neural-network-cnn" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trainFeatures</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./data_simple_FM_stft/train_features.npy&#39;</span><span class="p">)</span>
+<span class="n">trainParams</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./data_simple_FM_stft/train_patches.npy&#39;</span><span class="p">)</span>
+<span class="n">testFeatures</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./data_simple_FM_stft/test_features.npy&#39;</span><span class="p">)</span>
+<span class="n">testParams</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./data_simple_FM_stft/test_patches.npy&#39;</span><span class="p">)</span>
+
+<span class="c1"># Create &quot;STFT Images&quot; with one channel for 2D CNN</span>
+<span class="n">trainFeatures</span> <span class="o">=</span> <span class="n">trainFeatures</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">trainFeatures</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">trainFeatures</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">trainFeatures</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">testFeatures</span> <span class="o">=</span> <span class="n">testFeatures</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">testFeatures</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">testFeatures</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">testFeatures</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Setup callbacks for trainings</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">TFEpochLogger</span><span class="p">()</span>
+<span class="n">earlyStopping</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">EarlyStopping</span><span class="p">(</span><span class="n">monitor</span><span class="o">=</span><span class="s1">&#39;val_loss&#39;</span><span class="p">,</span> <span class="n">patience</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Instantiate Conv6 Model with the input shape, output shape, and callbacks</span>
+<span class="n">cnn</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">Conv6</span><span class="p">(</span><span class="n">trainFeatures</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span>
+                              <span class="n">trainParams</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                              <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">logger</span><span class="p">,</span> <span class="n">earlyStopping</span><span class="p">])</span>
+
+<span class="n">cnn</span><span class="o">.</span><span class="n">add_training_data</span><span class="p">(</span><span class="n">trainFeatures</span><span class="p">,</span> <span class="n">trainParams</span><span class="p">)</span>
+<span class="n">cnn</span><span class="o">.</span><span class="n">add_testing_data</span><span class="p">(</span><span class="n">testFeatures</span><span class="p">,</span> <span class="n">testParams</span><span class="p">)</span>
+<span class="n">cnn</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Model</span><span class="p">:</span> <span class="s2">&quot;sequential_3&quot;</span>
+<span class="n">_________________________________________________________________</span>
+<span class="n">Layer</span> <span class="p">(</span><span class="nb">type</span><span class="p">)</span>                 <span class="n">Output</span> <span class="n">Shape</span>              <span class="n">Param</span> <span class="c1">#</span>
+<span class="o">=================================================================</span>
+<span class="n">conv2d</span> <span class="p">(</span><span class="n">Conv2D</span><span class="p">)</span>              <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">87</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>       <span class="mi">320</span>
+<span class="n">_________________________________________________________________</span>
+<span class="n">conv2d_1</span> <span class="p">(</span><span class="n">Conv2D</span><span class="p">)</span>            <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">63</span><span class="p">,</span> <span class="mi">71</span><span class="p">)</span>        <span class="mi">20519</span>
+<span class="n">_________________________________________________________________</span>
+<span class="n">conv2d_2</span> <span class="p">(</span><span class="n">Conv2D</span><span class="p">)</span>            <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>       <span class="mi">109184</span>
+<span class="n">_________________________________________________________________</span>
+<span class="n">conv2d_3</span> <span class="p">(</span><span class="n">Conv2D</span><span class="p">)</span>            <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>        <span class="mi">147584</span>
+<span class="n">_________________________________________________________________</span>
+<span class="n">conv2d_4</span> <span class="p">(</span><span class="n">Conv2D</span><span class="p">)</span>            <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>         <span class="mi">147584</span>
+<span class="n">_________________________________________________________________</span>
+<span class="n">conv2d_5</span> <span class="p">(</span><span class="n">Conv2D</span><span class="p">)</span>            <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>         <span class="mi">147584</span>
+<span class="n">_________________________________________________________________</span>
+<span class="n">dropout_2</span> <span class="p">(</span><span class="n">Dropout</span><span class="p">)</span>          <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>         <span class="mi">0</span>
+<span class="n">_________________________________________________________________</span>
+<span class="n">flatten</span> <span class="p">(</span><span class="n">Flatten</span><span class="p">)</span>            <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>               <span class="mi">0</span>
+<span class="n">_________________________________________________________________</span>
+<span class="n">dense_7</span> <span class="p">(</span><span class="n">Dense</span><span class="p">)</span>              <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>                 <span class="mi">2313</span>
+<span class="o">=================================================================</span>
+<span class="n">Total</span> <span class="n">params</span><span class="p">:</span> <span class="mi">575</span><span class="p">,</span><span class="mi">088</span>
+<span class="n">Trainable</span> <span class="n">params</span><span class="p">:</span> <span class="mi">575</span><span class="p">,</span><span class="mi">088</span>
+<span class="n">Non</span><span class="o">-</span><span class="n">trainable</span> <span class="n">params</span><span class="p">:</span> <span class="mi">0</span>
+<span class="n">_________________________________________________________________</span>
+</pre></div>
+</div>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cnn</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">cnn</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="s1">&#39;./saved_models/simple_fm_cnn.h5&#39;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="../_images/cnn_training.png" src="../_images/cnn_training.png" />
+</div>
+</div>
+<div class="section" id="sound-match-deep-learning-models">
+<h2>Sound Match Deep Learning Models<a class="headerlink" href="#sound-match-deep-learning-models" title="Permalink to this headline">¶</a></h2>
+<p>Now we can perform sound matching of the evaluation target set using the
+trained deep learning models and save the resulting audio files to disk
+for evaluation</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load all saved models</span>
+<span class="n">mlp</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">TFEstimatorBase</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./saved_models/simple_fm_mlp.h5&#39;</span><span class="p">)</span>
+<span class="n">lstm</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">TFEstimatorBase</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./saved_models/simple_fm_lstm.h5&#39;</span><span class="p">)</span>
+<span class="n">bi_lstm</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">TFEstimatorBase</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./saved_models/simple_fm_bi_lstm.h5&#39;</span><span class="p">)</span>
+<span class="n">cnn</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">TFEstimatorBase</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./saved_models/simple_fm_cnn.h5&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load synth with overriden params</span>
+<span class="n">synth</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">synth</span><span class="o">.</span><span class="n">SynthVST</span><span class="p">(</span><span class="s2">&quot;/Library/Audio/Plug-Ins/VST/Dexed.vst&quot;</span><span class="p">,</span>
+                               <span class="n">note_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">render_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">synth</span><span class="o">.</span><span class="n">load_state</span><span class="p">(</span><span class="s2">&quot;./synth_params/dexed_simple_fm.json&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Setup all the feature extractors to provide the correct input data for
+each model based on how it was trained. Also use the same data
+normalizers that were setup when initially creating each dataset.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># MLP feature extractor with a modifying function that flattens the time slice arrays at the end of the feature</span>
+<span class="c1"># extraction pipeline</span>
+<span class="n">mlp_extractor</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MFCC</span><span class="p">(</span><span class="n">num_mfccs</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">time_major</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">mlp_extractor</span><span class="o">.</span><span class="n">load_normalizers</span><span class="p">(</span><span class="s1">&#39;./data_simple_fm_mfcc/normalizers.pkl&#39;</span><span class="p">)</span>
+<span class="n">mlp_extractor</span><span class="o">.</span><span class="n">add_modifier</span><span class="p">(</span><span class="k">lambda</span> <span class="n">data</span> <span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;output&#39;</span><span class="p">)</span>
+
+<span class="c1"># LSTM &amp; LSTM++ feature extractor -- time series of MFCC frames</span>
+<span class="n">lstm_extractor</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MFCC</span><span class="p">(</span><span class="n">num_mfccs</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">time_major</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">lstm_extractor</span><span class="o">.</span><span class="n">load_normalizers</span><span class="p">(</span><span class="s1">&#39;./data_simple_fm_mfcc/normalizers.pkl&#39;</span><span class="p">)</span>
+
+<span class="c1"># CNN feature extractor uses magnitude output from STFT and then modifies the output array into a 3D array for the</span>
+<span class="c1"># 2D convolutional network becuase it is expecting an image with a single channel (ie grayscale).</span>
+<span class="n">cnn_extractor</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MagnitudeSTFT</span><span class="p">(</span><span class="n">fft_size</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">time_major</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">cnn_extractor</span><span class="o">.</span><span class="n">load_normalizers</span><span class="p">(</span><span class="s1">&#39;./data_simple_fm_stft/normalizers.pkl&#39;</span><span class="p">)</span>
+<span class="n">cnn_extractor</span><span class="o">.</span><span class="n">add_modifier</span><span class="p">(</span><span class="k">lambda</span> <span class="n">data</span> <span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;output&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>SoundMatch is a class designed to help run sound matches for a
+synthesizer and a specific estimator type. Each SoundMatch object
+requires a synthesizer to use to generate sounds, an estimator object,
+and optionally an audio feature extractor object. If an audio feature
+object is provided, that will be used to extract features from incoming
+audio prior to running estimation. This is required for these deep
+learning models, but some estimators can handle raw audio, such as the
+genetic estimators.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mlp_matcher</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">SoundMatch</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">mlp</span><span class="p">,</span> <span class="n">mlp_extractor</span><span class="p">)</span>
+<span class="n">lstm_matcher</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">SoundMatch</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">lstm</span><span class="p">,</span> <span class="n">lstm_extractor</span><span class="p">)</span>
+<span class="n">bi_lstm_matcher</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">SoundMatch</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">bi_lstm</span><span class="p">,</span> <span class="n">lstm_extractor</span><span class="p">)</span>
+<span class="n">cnn_matcher</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">SoundMatch</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">cnn</span><span class="p">,</span> <span class="n">cnn_extractor</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Load in the folder of evaluation audio samples and perform sound
+matching on each one with each estimation model. AudioBuffer.load_folder
+performs a natural sort based on the file names of the audio contained
+in the specified folder, so we can save each prediction with a
+corresponding integer number and be assured that the ordering will match
+up when we get to evaluation.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">targets</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">AudioBuffer</span><span class="o">.</span><span class="n">load_folder</span><span class="p">(</span><span class="s1">&#39;./evaluation/audio&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)):</span>
+    <span class="n">audio</span> <span class="o">=</span> <span class="n">mlp_matcher</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">audio</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;./evaluation/mlp/mlp_prediction_</span><span class="si">%s</span><span class="s1">.wav&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+
+    <span class="n">audio</span> <span class="o">=</span> <span class="n">lstm_matcher</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">audio</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;./evaluation/lstm/lstm_prediction_</span><span class="si">%s</span><span class="s1">.wav&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+
+    <span class="n">audio</span> <span class="o">=</span> <span class="n">bi_lstm_matcher</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">audio</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;./evaluation/bi_lstm/bi_lstm_prediction_</span><span class="si">%s</span><span class="s1">.wav&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+
+    <span class="n">audio</span> <span class="o">=</span> <span class="n">cnn_matcher</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">audio</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;./evaluation/cnn/cnn_prediction_</span><span class="si">%s</span><span class="s1">.wav&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sound-match-genetic-algorithm-estimators">
+<h2>Sound Match Genetic Algorithm Estimators<a class="headerlink" href="#sound-match-genetic-algorithm-estimators" title="Permalink to this headline">¶</a></h2>
+<p>Now we perform sound matching of the evaluation target set using the
+two genetic algorithm based approaches and save the resulting audio
+files to disk for evaluation.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load synth with overridden params</span>
+<span class="n">synth</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">synth</span><span class="o">.</span><span class="n">SynthVST</span><span class="p">(</span><span class="s2">&quot;/Library/Audio/Plug-Ins/VST/Dexed.vst&quot;</span><span class="p">,</span>
+                               <span class="n">note_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">render_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">synth</span><span class="o">.</span><span class="n">load_state</span><span class="p">(</span><span class="s2">&quot;./synth_params/dexed_simple_fm.json&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="basic-genetic-algorithm">
+<h3>Basic Genetic Algorithm<a class="headerlink" href="#basic-genetic-algorithm" title="Permalink to this headline">¶</a></h3>
+<p>Setup the feature extractor for the basic single-objective genetic
+algorithm. It uses a 13-band MFCC, which is calculated on every new
+individual in the population. The error between an inididual and the
+target audio sound is used the evaluate the fitness of each individual.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># MFCC features</span>
+<span class="n">ga_extractor</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MFCC</span><span class="p">(</span><span class="n">num_mfccs</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">)</span>
+
+<span class="c1"># Basic Genetic Algorithm estimator</span>
+<span class="n">ga</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">BasicGA</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">ga_extractor</span><span class="p">,</span> <span class="n">pop_size</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">ngen</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Sound matching helper class</span>
+<span class="n">ga_matcher</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">SoundMatch</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">ga</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="non-dominated-sorting-genetic-algorithm-iii-nsga-iii">
+<h3>Non-dominated sorting genetic algorithm III (NSGA III)<a class="headerlink" href="#non-dominated-sorting-genetic-algorithm-iii-nsga-iii" title="Permalink to this headline">¶</a></h3>
+<p>Setup the feature extractors for the multi-objective genetic algorithm.
+Each extractor is used for one of the GA objectives, so in this instance
+there are 3 objectives: MFCC, Spectral Summarized, and the FFT.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Feature extractors for Multi-Objective GA</span>
+<span class="n">nsga_extractors</span> <span class="o">=</span> <span class="p">[</span><span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MFCC</span><span class="p">(</span><span class="n">num_mfccs</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">),</span>
+                   <span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">SpectralSummarized</span><span class="p">(</span><span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">),</span>
+                   <span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">FFT</span><span class="p">(</span><span class="n">output</span><span class="o">=</span><span class="s1">&#39;magnitude&#39;</span><span class="p">)]</span>
+
+<span class="c1"># NSGA3 Multi-Objective Genetic Algorithm</span>
+<span class="n">nsga</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">NSGA3</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">nsga_extractors</span><span class="p">)</span>
+
+<span class="c1"># Sound matching helper class</span>
+<span class="n">nsga_matcher</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">SoundMatch</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">nsga</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sound-matching">
+<h3>Sound Matching<a class="headerlink" href="#sound-matching" title="Permalink to this headline">¶</a></h3>
+<p>Load in the folder of evaluation audio samples and perform sound
+matching on each one using both genetic algorithms. This may take
+several hours to run on all 25 sounds.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">targets</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">AudioBuffer</span><span class="o">.</span><span class="n">load_folder</span><span class="p">(</span><span class="s1">&#39;./evaluation/audio&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)):</span>
+    <span class="n">audio</span> <span class="o">=</span> <span class="n">ga_matcher</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">audio</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;./evaluation/ga/ga_predicition_</span><span class="si">%s</span><span class="s1">.wav&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+
+    <span class="n">audio</span> <span class="o">=</span> <span class="n">nsga_matcher</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">audio</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;./evaluation/nsga/nsga_prediction_</span><span class="si">%s</span><span class="s1">.wav&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="evaluation">
+<h2>Evaluation<a class="headerlink" href="#evaluation" title="Permalink to this headline">¶</a></h2>
+<p>Finally, we evaluate the results of sound matching from both the deep
+learning and genetic algorithms tested.</p>
+<p>The MFCCEval class is used to perform an objective evaluation of each audio file generated. This is
+carried out by measuring error metrics between the MFCCs from the target
+sounds and the results from sound matching.</p>
+<p>The results of this evaluation are saved in a JSON file which summarizes
+the results for each estimator.</p>
+<p>Histogram plots are also used to show the distribution of results
+produced by each estimator. Histogram plots show the mean absolute error
+of the sound matched results from each estimator.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the sound targets used for sound matching</span>
+<span class="n">targets</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">AudioBuffer</span><span class="o">.</span><span class="n">load_folder</span><span class="p">(</span><span class="s1">&#39;./evaluation/audio&#39;</span><span class="p">)</span>
+
+<span class="c1"># Load all the estimations of the sound targets made by each estimator</span>
+<span class="n">estimations</span> <span class="o">=</span> <span class="p">[</span><span class="n">spiegel</span><span class="o">.</span><span class="n">AudioBuffer</span><span class="o">.</span><span class="n">load_folder</span><span class="p">(</span><span class="s1">&#39;./evaluation/mlp&#39;</span><span class="p">),</span>
+               <span class="n">spiegel</span><span class="o">.</span><span class="n">AudioBuffer</span><span class="o">.</span><span class="n">load_folder</span><span class="p">(</span><span class="s1">&#39;./evaluation/lstm&#39;</span><span class="p">),</span>
+               <span class="n">spiegel</span><span class="o">.</span><span class="n">AudioBuffer</span><span class="o">.</span><span class="n">load_folder</span><span class="p">(</span><span class="s1">&#39;./evaluation/bi_lstm&#39;</span><span class="p">),</span>
+               <span class="n">spiegel</span><span class="o">.</span><span class="n">AudioBuffer</span><span class="o">.</span><span class="n">load_folder</span><span class="p">(</span><span class="s1">&#39;./evaluation/cnn&#39;</span><span class="p">),</span>
+               <span class="n">spiegel</span><span class="o">.</span><span class="n">AudioBuffer</span><span class="o">.</span><span class="n">load_folder</span><span class="p">(</span><span class="s1">&#39;./evaluation/ga&#39;</span><span class="p">),</span>
+               <span class="n">spiegel</span><span class="o">.</span><span class="n">AudioBuffer</span><span class="o">.</span><span class="n">load_folder</span><span class="p">(</span><span class="s1">&#39;./evaluation/nsga&#39;</span><span class="p">)]</span>
+
+<span class="c1"># Evaluate the results and save to JSON file</span>
+<span class="n">evaluation</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">evaluation</span><span class="o">.</span><span class="n">MFCCEval</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="n">estimations</span><span class="p">)</span>
+<span class="n">evaluation</span><span class="o">.</span><span class="n">evaluate</span><span class="p">()</span>
+<span class="n">evaluation</span><span class="o">.</span><span class="n">save_stats_json</span><span class="p">(</span><span class="s1">&#39;./evaluation/evaluation_stats.json&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="mlp-histogram">
+<h3>MLP Histogram<a class="headerlink" href="#mlp-histogram" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">)</span>
+<span class="n">evaluation</span><span class="o">.</span><span class="n">plot_hist</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;mean_abs_error&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/mlp_hist.png" src="../_images/mlp_hist.png" />
+</div>
+<div class="section" id="lstm-histogram">
+<h3>LSTM Histogram<a class="headerlink" href="#lstm-histogram" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">evaluation</span><span class="o">.</span><span class="n">plot_hist</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;mean_abs_error&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/lstm_hist.png" src="../_images/lstm_hist.png" />
+</div>
+<div class="section" id="id2">
+<h3>LSTM++ Histogram<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">evaluation</span><span class="o">.</span><span class="n">plot_hist</span><span class="p">([</span><span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;mean_abs_error&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/blstm_hist.png" src="../_images/blstm_hist.png" />
+</div>
+<div class="section" id="cnn-histogram">
+<h3>CNN Histogram<a class="headerlink" href="#cnn-histogram" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">evaluation</span><span class="o">.</span><span class="n">plot_hist</span><span class="p">([</span><span class="mi">3</span><span class="p">],</span> <span class="s1">&#39;mean_abs_error&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/cnn_hist.png" src="../_images/cnn_hist.png" />
+</div>
+<div class="section" id="ga-histogram">
+<h3>GA Histogram<a class="headerlink" href="#ga-histogram" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">evaluation</span><span class="o">.</span><span class="n">plot_hist</span><span class="p">([</span><span class="mi">4</span><span class="p">],</span> <span class="s1">&#39;mean_abs_error&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/ga_hist.png" src="../_images/ga_hist.png" />
+</div>
+<div class="section" id="nsga-iii-histogram">
+<h3>NSGA III Histogram<a class="headerlink" href="#nsga-iii-histogram" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">evaluation</span><span class="o">.</span><span class="n">plot_hist</span><span class="p">([</span><span class="mi">5</span><span class="p">],</span> <span class="s1">&#39;mean_abs_error&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/nsga_hist.png" src="../_images/nsga_hist.png" />
 </div>
 </div>
 </div>
