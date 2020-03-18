@@ -91,7 +91,15 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="examples_index.html">Examples</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">     FM Sound Match Experiment</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">     FM Sound Match Experiment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#dataset-generation">Dataset Generation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mfcc-dataset">MFCC Dataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stft-dataset">STFT Dataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#evaluation-dataset">Evaluation Dataset</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -168,7 +176,15 @@
 <p>In progress.</p>
 <p>This is where a jupyter notebook of the experiment, as well as links to
 download the code and data for this experiment will go.</p>
+<div class="section" id="dataset-generation">
+<span id="id1"></span><h2>Dataset Generation<a class="headerlink" href="#dataset-generation" title="Permalink to this headline">¶</a></h2>
+<p>Here we generate and save datasets for training and validating deep
+learning models. Additionally, we create a small audio dataset for
+evaluating all the different deep learning and evaluation methods
+compared.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spiegel</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 </pre></div>
 </div>
 <p>Load Dexed VST, set the note length and render length to be one second.
@@ -177,24 +193,70 @@ but you can set the render length longer than the note length to capture
 the release portion of a signal. Synthesizer parameters are loaded from
 a JSON file that describes all the overrriden parameters and their
 values.</p>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">synth</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">synth</span><span class="o">.</span><span class="n">SynthVST</span><span class="p">(</span><span class="s2">&quot;/Library/Audio/Plug-Ins/VST/Dexed.vst&quot;</span><span class="p">,</span> <span class="n">note_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">render_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">synth</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">synth</span><span class="o">.</span><span class="n">SynthVST</span><span class="p">(</span><span class="s2">&quot;/Library/Audio/Plug-Ins/VST/Dexed.vst&quot;</span><span class="p">,</span>
+                               <span class="n">note_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">render_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
 <span class="n">synth</span><span class="o">.</span><span class="n">load_state</span><span class="p">(</span><span class="s2">&quot;./synth_params/dexed_simple_fm.json&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">features</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MFCC</span><span class="p">(</span><span class="n">num_mfccs</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">time_major</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">generator</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">DatasetGenerator</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span>
+<div class="section" id="mfcc-dataset">
+<h3>MFCC Dataset<a class="headerlink" href="#mfcc-dataset" title="Permalink to this headline">¶</a></h3>
+<p>Generate training and testing dataset using Mel-frequency Cepstral
+Coefficients feature extraction. The DatasetGenerator class works by
+generating random patches from the synthesizer, then running audio
+feature extraction on the resulting sound, and then saving the audio
+features and parameter values used to generate that sound. Audio
+features and parameter values are saved in seperate .npy files.</p>
+<p>We set the time_major flag to True so that the orientation of the output
+is (time_slices, features), as opposed to (features, time_slices) which
+is default. This is how TensorFlow models expect the date to be
+oriented.</p>
+<p>Normalization of the dataset is run by the first data generation, which
+also saves the settings used to normalize that data. These normalization
+settings are then used to normalize the testing dataset and are saved
+for future use.</p>
+<p>The total size of this dataset is about 140MB.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mel-frequency Cepstral Coefficients audio feature extractor.</span>
+<span class="n">features</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MFCC</span><span class="p">(</span><span class="n">num_mfccs</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">time_major</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">)</span>
+
+<span class="c1"># Setup generator for MFCC output and generate 50000 training examples and 10000 testing examples</span>
+<span class="n">generator</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">DatasetGenerator</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span>
                                      <span class="n">output_folder</span><span class="o">=</span><span class="s2">&quot;./data_simple_FM_mfcc&quot;</span><span class="p">,</span>
-                                     <span class="n">save_audio</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                                     <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="mi">50000</span><span class="p">,</span> <span class="n">file_prefix</span><span class="o">=</span><span class="s2">&quot;train_&quot;</span><span class="p">)</span>
 <span class="n">generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="n">file_prefix</span><span class="o">=</span><span class="s2">&quot;test_&quot;</span><span class="p">)</span>
 <span class="n">generator</span><span class="o">.</span><span class="n">save_normalizers</span><span class="p">(</span><span class="s1">&#39;normalizers.pkl&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Generating Dataset: 100%|██████████| 50000/50000 [15:27&lt;00:00, 53.90it/s]
-Generating Dataset: 100%|██████████| 10000/10000 [03:09&lt;00:00, 52.67it/s]
+</div>
+<div class="section" id="stft-dataset">
+<h3>STFT Dataset<a class="headerlink" href="#stft-dataset" title="Permalink to this headline">¶</a></h3>
+<p>Generate training and testing dataset using the magnitude of a STFT and
+is run very similarily to the MFCC dataset generation. This dataset will
+be used to train the convolutional neural network.</p>
+<p>The total size of the resulting dataset is about 10.8GB.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Magnitude STFT ouptut feature extraction</span>
+<span class="n">features</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">STFT</span><span class="p">(</span><span class="n">fft_size</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s1">&#39;magnitude&#39;</span><span class="p">,</span> <span class="n">time_major</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Setup generator and create dataset</span>
+<span class="n">generator</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">DatasetGenerator</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">output_folder</span><span class="o">=</span><span class="s2">&quot;./data_simple_FM_stft&quot;</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="mi">50000</span><span class="p">,</span> <span class="n">file_prefix</span><span class="o">=</span><span class="s2">&quot;train_&quot;</span><span class="p">)</span>
+<span class="n">generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="n">file_prefix</span><span class="o">=</span><span class="s2">&quot;test_&quot;</span><span class="p">)</span>
+<span class="n">generator</span><span class="o">.</span><span class="n">save_normalizers</span><span class="p">(</span><span class="s1">&#39;noramlizers.pkl&#39;</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
+<div class="section" id="evaluation-dataset">
+<h3>Evaluation Dataset<a class="headerlink" href="#evaluation-dataset" title="Permalink to this headline">¶</a></h3>
+<p>Create an audio set for evaluation. We set the save_audio argument to
+True in the DatasetGenerator constructor so that audio WAV files are
+saved for this set.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eval_generator</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">DatasetGenerator</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span>
+                                          <span class="n">output_folder</span><span class="o">=</span><span class="s1">&#39;./evaluation&#39;</span><span class="p">,</span>
+                                          <span class="n">save_audio</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">eval_generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 
