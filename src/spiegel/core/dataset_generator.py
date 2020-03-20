@@ -111,12 +111,12 @@ class DatasetGenerator():
 
         # If only fitting normalizers, do that and return. Don't save any data
         if fit_normalizers_only:
-            print("Fitting normalizers only")
+            print("Fitting normalizers only", flush=True)
             self.features.fit_normalizers(feature_set, transform=False)
             return
 
         if self.normalize and not self.features.has_normalizers():
-            print("Fitting normalizers and normalizing data")
+            print("Fitting normalizers and normalizing data", flush=True)
             feature_set = self.features.fit_normalizers(feature_set)
 
         # Save dataset
