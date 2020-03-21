@@ -2,7 +2,7 @@ Synthesizer Configuration
 -------------------------
 
 In this notebook we get the synthesizer that we are performing
-experiments on setup. We’re using the free and open-source Dexed VST,
+experiments on setup. We’re using the free and open-source `Dexed VST <https://asb2m10.github.io/dexed/>`__.,
 which is an emulation of the Yamaha DX7. To simplify the experiment,
 we’ll only use a small subset of all the available parameters.
 

@@ -20,7 +20,7 @@ If you haven't already, make sure you have *spiegel* and *RenderMan* installed.
 See :ref:`installation instructions <installation>`. And download `Dexed <https://asb2m10.github.io/dexed/>`__.
 
 All code is available as Python notebooks on the project `github page <https://github.com/spiegel-lib/vst-fm-sound-match>`__.
-In order to support reproducibility, the trained models from this experiment are
+The trained models from this experiment are also
 available in the git repo. All datasets generated and used in
 this experiment are also available online.
 
