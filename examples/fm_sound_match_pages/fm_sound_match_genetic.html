@@ -1,0 +1,295 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Sound Match Genetic Algorithm Estimators &mdash; SPIEGEL 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Evaluation" href="fm_sound_match_evaluation.html" />
+    <link rel="prev" title="Sound Match Deep Learning Models" href="fm_sound_match_deep_learning.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> SPIEGEL
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/getting_started.html">Getting Started</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/core.html">Core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/synth.html">Synth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/features.html">Audio Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/estimators.html">Estimators</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../examples_index.html">Examples</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../fm_sound_match.html">     FM Sound Match Experiment</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../fm_sound_match.html#experiment-sections">Experiment Sections</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="fm_sound_match_synth_config.html">Synthesizer Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fm_sound_match_dataset_generation.html">Dataset Generation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fm_sound_match_train_models.html">Train Deep Learning Models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fm_sound_match_deep_learning.html">Sound Match Deep Learning Models</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Sound Match Genetic Algorithms</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fm_sound_match_evaluation.html">Evaluation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contribution Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">SPIEGEL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../examples_index.html">Examples</a> &raquo;</li>
+        
+          <li><a href="../fm_sound_match.html">FM Sound Match Experiment</a> &raquo;</li>
+        
+      <li>Sound Match Genetic Algorithm Estimators</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/examples/fm_sound_match_pages/fm_sound_match_genetic.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sound-match-genetic-algorithm-estimators">
+<h1>Sound Match Genetic Algorithm Estimators<a class="headerlink" href="#sound-match-genetic-algorithm-estimators" title="Permalink to this headline">¶</a></h1>
+<p>Now we perform sound matching of the evaluation target set using the
+two genetic algorithm based approaches and save the resulting audio
+files to disk for evaluation.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spiegel</span>
+</pre></div>
+</div>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load synth with overridden params</span>
+<span class="n">synth</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">synth</span><span class="o">.</span><span class="n">SynthVST</span><span class="p">(</span><span class="s2">&quot;/Library/Audio/Plug-Ins/VST/Dexed.vst&quot;</span><span class="p">,</span>
+                               <span class="n">note_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">render_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">synth</span><span class="o">.</span><span class="n">load_state</span><span class="p">(</span><span class="s2">&quot;./synth_params/dexed_simple_fm.json&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="basic-genetic-algorithm">
+<h2>Basic Genetic Algorithm<a class="headerlink" href="#basic-genetic-algorithm" title="Permalink to this headline">¶</a></h2>
+<p>Setup the feature extractor for the basic single-objective genetic
+algorithm. It uses a 13-band MFCC, which is calculated on every new
+individual in the population. The error between an inididual and the
+target audio sound is used the evaluate the fitness of each individual.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># MFCC features</span>
+<span class="n">ga_extractor</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MFCC</span><span class="p">(</span><span class="n">num_mfccs</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">)</span>
+
+<span class="c1"># Basic Genetic Algorithm estimator</span>
+<span class="n">ga</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">BasicGA</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">ga_extractor</span><span class="p">,</span> <span class="n">pop_size</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">ngen</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Sound matching helper class</span>
+<span class="n">ga_matcher</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">SoundMatch</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">ga</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="non-dominated-sorting-genetic-algorithm-iii-nsga-iii">
+<h2>Non-dominated sorting genetic algorithm III (NSGA III)<a class="headerlink" href="#non-dominated-sorting-genetic-algorithm-iii-nsga-iii" title="Permalink to this headline">¶</a></h2>
+<p>Setup the feature extractors for the multi-objective genetic algorithm.
+Each extractor is used for one of the GA objectives, so in this instance
+there are 3 objectives: MFCC, Spectral Summarized, and the FFT.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Feature extractors for Multi-Objective GA</span>
+<span class="n">nsga_extractors</span> <span class="o">=</span> <span class="p">[</span><span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MFCC</span><span class="p">(</span><span class="n">num_mfccs</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">),</span>
+                   <span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">SpectralSummarized</span><span class="p">(</span><span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">),</span>
+                   <span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">FFT</span><span class="p">(</span><span class="n">output</span><span class="o">=</span><span class="s1">&#39;magnitude&#39;</span><span class="p">)]</span>
+
+<span class="c1"># NSGA3 Multi-Objective Genetic Algorithm</span>
+<span class="n">nsga</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">NSGA3</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">nsga_extractors</span><span class="p">)</span>
+
+<span class="c1"># Sound matching helper class</span>
+<span class="n">nsga_matcher</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">SoundMatch</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">nsga</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sound-matching">
+<h2>Sound Matching<a class="headerlink" href="#sound-matching" title="Permalink to this headline">¶</a></h2>
+<p>Load in the folder of evaluation audio samples and perform sound
+matching on each one using both genetic algorithms. This may take
+several hours to run on all 25 sounds.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">targets</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">AudioBuffer</span><span class="o">.</span><span class="n">load_folder</span><span class="p">(</span><span class="s1">&#39;./evaluation/audio&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)):</span>
+    <span class="n">audio</span> <span class="o">=</span> <span class="n">ga_matcher</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">audio</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;./evaluation/ga/ga_predicition_</span><span class="si">%s</span><span class="s1">.wav&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+
+    <span class="n">audio</span> <span class="o">=</span> <span class="n">nsga_matcher</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">audio</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;./evaluation/nsga/nsga_prediction_</span><span class="si">%s</span><span class="s1">.wav&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="fm_sound_match_evaluation.html" class="btn btn-neutral float-right" title="Evaluation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="fm_sound_match_deep_learning.html" class="btn btn-neutral float-left" title="Sound Match Deep Learning Models" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, University of Victoria
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

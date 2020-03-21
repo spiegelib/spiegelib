@@ -1,0 +1,347 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Synthesizer Configuration &mdash; SPIEGEL 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Dataset Generation" href="fm_sound_match_dataset_generation.html" />
+    <link rel="prev" title="FM Sound Match Experiment" href="../fm_sound_match.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> SPIEGEL
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/getting_started.html">Getting Started</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/core.html">Core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/synth.html">Synth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/features.html">Audio Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/estimators.html">Estimators</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../examples_index.html">Examples</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../fm_sound_match.html">     FM Sound Match Experiment</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../fm_sound_match.html#experiment-sections">Experiment Sections</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Synthesizer Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fm_sound_match_dataset_generation.html">Dataset Generation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fm_sound_match_train_models.html">Train Deep Learning Models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fm_sound_match_deep_learning.html">Sound Match Deep Learning Models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fm_sound_match_genetic.html">Sound Match Genetic Algorithms</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fm_sound_match_evaluation.html">Evaluation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contribution Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">SPIEGEL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../examples_index.html">Examples</a> &raquo;</li>
+        
+          <li><a href="../fm_sound_match.html">FM Sound Match Experiment</a> &raquo;</li>
+        
+      <li>Synthesizer Configuration</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/examples/fm_sound_match_pages/fm_sound_match_synth_config.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="synthesizer-configuration">
+<h1>Synthesizer Configuration<a class="headerlink" href="#synthesizer-configuration" title="Permalink to this headline">¶</a></h1>
+<p>In this notebook we get the synthesizer that we are performing
+experiments on setup. We’re using the free and open-source Dexed VST,
+which is an emulation of the Yamaha DX7. To simplify the experiment,
+we’ll only use a small subset of all the available parameters.</p>
+<p>Load Dexed into an instance of SynthVST</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spiegel</span>
+</pre></div>
+</div>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">synth</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">synth</span><span class="o">.</span><span class="n">SynthVST</span><span class="p">(</span><span class="s2">&quot;/Library/Audio/Plug-Ins/VST/Dexed.vst&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Dexed is an emulation of the Yamaha DX7 which contains six different
+operators that can be arranged in various ways to create complex sounds.
+Dexed has 155 parameters for controlling these operators and other
+global options and FX. In order to simplify this experiment we’re going
+to focus on a small subset of these parameters and treat Dexed as a
+simple two-operator FM synthesizer. In order to do that, we will
+override and freeze most of the other parameters.</p>
+<p>To start, we’ll save the parameter values to a JSON file showing the
+parameter ID, values, and a short description of all the available
+parameters. Parameters can also be flagged as overridden in the JSON
+file so when it is loaded the value of that parameter will be locked.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">synth</span><span class="o">.</span><span class="n">save_state</span><span class="p">(</span><span class="s2">&quot;./synth_params/dexed_simple_fm_init.json&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can now manually edit the JSON file and reload it to update
+synthesizer configuration. We can also programmatically set overridden
+parameters and save a new synthesizer configuration file. We’ll do the
+latter.</p>
+<p>All parameters have a range between 0.0 and 1.0</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The algorithm sets the arrangement of the FM operators.</span>
+<span class="c1"># There are 32 differen arrangements available in Dexed.</span>
+<span class="c1"># This selects the first algorithm which causes the 2nd</span>
+<span class="c1"># operator to modulate the first</span>
+<span class="n">algorithm_number</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">alg</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mf">32.0</span><span class="p">)</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">algorithm_number</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.001</span>
+
+<span class="n">overridden_parameters</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="c1"># Filter Cutoff (Fully open)</span>
+    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="c1"># Filter Resonance</span>
+    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="c1"># Output Gain</span>
+    <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="c1"># Master Tuning (Center is 0)</span>
+    <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">alg</span><span class="p">),</span> <span class="c1"># Operator configuration</span>
+    <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="c1"># Feedback</span>
+    <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="c1"># Key Sync Oscillators</span>
+    <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="c1"># LFO Speed</span>
+    <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="c1"># LFO Delay</span>
+    <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="c1"># LFO Pitch Modulation Depth</span>
+    <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span><span class="c1"># LFO Amplitude Modulation Depth</span>
+    <span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span><span class="c1"># LFO Key Sync</span>
+    <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span><span class="c1"># LFO Waveform</span>
+    <span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span><span class="c1"># Middle C Tuning</span>
+<span class="p">]</span>
+
+<span class="c1"># Turn off all pitch modulation parameters</span>
+<span class="n">overridden_parameters</span><span class="o">.</span><span class="n">extend</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">23</span><span class="p">)])</span>
+
+<span class="c1"># Turn Operator 1 into a simple sine wave with no envelope</span>
+<span class="n">overridden_parameters</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span>
+    <span class="p">(</span><span class="mi">23</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">),</span> <span class="c1"># Operator 1 Attack Rate</span>
+    <span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">),</span> <span class="c1"># Operator 1 Decay Rate</span>
+    <span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">),</span> <span class="c1"># Operator 1 Sustain Rate</span>
+    <span class="p">(</span><span class="mi">26</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">),</span> <span class="c1"># Operator 1 Release Rate</span>
+    <span class="p">(</span><span class="mi">27</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="c1"># Operator 1 Attack Level</span>
+    <span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="c1"># Operator 1 Decay Level</span>
+    <span class="p">(</span><span class="mi">29</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="c1"># Operator 1 Sustain Level</span>
+    <span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="c1"># Operator 1 Release Level</span>
+    <span class="p">(</span><span class="mi">31</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="c1"># Operator 1 Gain</span>
+    <span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="c1"># Operator 1 Mode (1.0 is Fixed Frequency)</span>
+    <span class="p">(</span><span class="mi">33</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="c1"># Operator 1 Coarse Tuning</span>
+    <span class="p">(</span><span class="mi">34</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="c1"># Operator 1 Fine Tuning</span>
+    <span class="p">(</span><span class="mi">35</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="c1"># Operator 1 Detune</span>
+    <span class="p">(</span><span class="mi">36</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="c1"># Operator 1 Env Scaling Param</span>
+    <span class="p">(</span><span class="mi">37</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="c1"># Operator 1 Env Scaling Param</span>
+    <span class="p">(</span><span class="mi">38</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="c1"># Operator 1 Env Scaling Param</span>
+    <span class="p">(</span><span class="mi">39</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="c1"># Operator 1 Env Scaling Param</span>
+    <span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="c1"># Operator 1 Env Scaling Param</span>
+    <span class="p">(</span><span class="mi">41</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="c1"># Operator 1 Env Scaling Param</span>
+    <span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="c1"># Operator 1 Mod Sensitivity</span>
+    <span class="p">(</span><span class="mi">43</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="c1"># Operator 1 Key Velocity</span>
+    <span class="p">(</span><span class="mi">44</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="c1"># Operator 1 On/Off switch</span>
+<span class="p">])</span>
+
+<span class="c1"># Override some of Operator 2 parameters</span>
+<span class="n">overridden_parameters</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span>
+    <span class="p">(</span><span class="mi">45</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">),</span> <span class="c1"># Operator 2 Attack Rate (No attack on operator 2)</span>
+    <span class="p">(</span><span class="mi">49</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="c1"># Operator 2 Attack Level</span>
+    <span class="p">(</span><span class="mi">53</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="c1"># Operator 2 Gain (Operator 2 always outputs)</span>
+    <span class="p">(</span><span class="mi">54</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="c1"># Operator 1 Mode (1.0 is Fixed Frequency)</span>
+    <span class="p">(</span><span class="mi">58</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="c1"># Operator 1 Env Scaling Param</span>
+    <span class="p">(</span><span class="mi">59</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="c1"># Operator 1 Env Scaling Param</span>
+    <span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="c1"># Operator 1 Env Scaling Param</span>
+    <span class="p">(</span><span class="mi">61</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="c1"># Operator 1 Env Scaling Param</span>
+    <span class="p">(</span><span class="mi">62</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="c1"># Operator 1 Env Scaling Param</span>
+    <span class="p">(</span><span class="mi">63</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="c1"># Operator 1 Env Scaling Param</span>
+    <span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="c1"># Operator 1 Mod Sensitivity</span>
+    <span class="p">(</span><span class="mi">65</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="c1"># Operator 1 Key Velocity</span>
+    <span class="p">(</span><span class="mi">66</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="c1"># Operator 1 On/Off switch</span>
+<span class="p">])</span>
+
+<span class="c1"># Override operators 3 through 6</span>
+<span class="n">overridden_parameters</span><span class="o">.</span><span class="n">extend</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">67</span><span class="p">,</span> <span class="mi">155</span><span class="p">)])</span>
+
+<span class="c1"># Set overridden parameters in synth</span>
+<span class="n">synth</span><span class="o">.</span><span class="n">set_overridden_parameters</span><span class="p">(</span><span class="n">overridden_parameters</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now we have a synthesizer configuration setup that turns Dexed into a
+simple two-operator FM synthesizer. Only nine parameters have been left
+un-overridden, these are all on operator two and control the envelope
+and tuning of that operator. Let’s save that configuration so we can
+reuse it throughout this experiment.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">synth</span><span class="o">.</span><span class="n">save_state</span><span class="p">(</span><span class="s2">&quot;./synth_params/dexed_simple_fm.json&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="fm_sound_match_dataset_generation.html" class="btn btn-neutral float-right" title="Dataset Generation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../fm_sound_match.html" class="btn btn-neutral float-left" title="FM Sound Match Experiment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, University of Victoria
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

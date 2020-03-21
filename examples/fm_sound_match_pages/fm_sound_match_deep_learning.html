@@ -1,0 +1,307 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Sound Match Deep Learning Models &mdash; SPIEGEL 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Sound Match Genetic Algorithm Estimators" href="fm_sound_match_genetic.html" />
+    <link rel="prev" title="Train Deep Learning Models" href="fm_sound_match_train_models.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> SPIEGEL
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/getting_started.html">Getting Started</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/core.html">Core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/synth.html">Synth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/features.html">Audio Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/estimators.html">Estimators</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../examples_index.html">Examples</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../fm_sound_match.html">     FM Sound Match Experiment</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../fm_sound_match.html#experiment-sections">Experiment Sections</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="fm_sound_match_synth_config.html">Synthesizer Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fm_sound_match_dataset_generation.html">Dataset Generation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fm_sound_match_train_models.html">Train Deep Learning Models</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Sound Match Deep Learning Models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fm_sound_match_genetic.html">Sound Match Genetic Algorithms</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fm_sound_match_evaluation.html">Evaluation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contribution Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">SPIEGEL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../examples_index.html">Examples</a> &raquo;</li>
+        
+          <li><a href="../fm_sound_match.html">FM Sound Match Experiment</a> &raquo;</li>
+        
+      <li>Sound Match Deep Learning Models</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/examples/fm_sound_match_pages/fm_sound_match_deep_learning.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sound-match-deep-learning-models">
+<h1>Sound Match Deep Learning Models<a class="headerlink" href="#sound-match-deep-learning-models" title="Permalink to this headline">¶</a></h1>
+<p>Now we can perform sound matching of the evaluation target set using the
+trained deep learning models and save the resulting audio files to disk
+for evaluation</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spiegel</span>
+</pre></div>
+</div>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load all saved models</span>
+<span class="n">mlp</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">TFEstimatorBase</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./saved_models/simple_fm_mlp.h5&#39;</span><span class="p">)</span>
+<span class="n">lstm</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">TFEstimatorBase</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./saved_models/simple_fm_lstm.h5&#39;</span><span class="p">)</span>
+<span class="n">bi_lstm</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">TFEstimatorBase</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./saved_models/simple_fm_bi_lstm.h5&#39;</span><span class="p">)</span>
+<span class="n">cnn</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">TFEstimatorBase</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./saved_models/simple_fm_cnn.h5&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load synth with overriden params</span>
+<span class="n">synth</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">synth</span><span class="o">.</span><span class="n">SynthVST</span><span class="p">(</span><span class="s2">&quot;/Library/Audio/Plug-Ins/VST/Dexed.vst&quot;</span><span class="p">,</span>
+                               <span class="n">note_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">render_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">synth</span><span class="o">.</span><span class="n">load_state</span><span class="p">(</span><span class="s2">&quot;./synth_params/dexed_simple_fm.json&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Setup all the feature extractors to provide the correct input data for
+each model based on how it was trained. Also use the same data
+normalizers that were setup when initially creating each dataset.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># MLP feature extractor with a modifying function that flattens the time slice arrays at the end of the feature</span>
+<span class="c1"># extraction pipeline</span>
+<span class="n">mlp_extractor</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MFCC</span><span class="p">(</span><span class="n">num_mfccs</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">time_major</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">mlp_extractor</span><span class="o">.</span><span class="n">load_normalizers</span><span class="p">(</span><span class="s1">&#39;./data_simple_fm_mfcc/normalizers.pkl&#39;</span><span class="p">)</span>
+<span class="n">mlp_extractor</span><span class="o">.</span><span class="n">add_modifier</span><span class="p">(</span><span class="k">lambda</span> <span class="n">data</span> <span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;output&#39;</span><span class="p">)</span>
+
+<span class="c1"># LSTM &amp; LSTM++ feature extractor -- time series of MFCC frames</span>
+<span class="n">lstm_extractor</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MFCC</span><span class="p">(</span><span class="n">num_mfccs</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">time_major</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">lstm_extractor</span><span class="o">.</span><span class="n">load_normalizers</span><span class="p">(</span><span class="s1">&#39;./data_simple_fm_mfcc/normalizers.pkl&#39;</span><span class="p">)</span>
+
+<span class="c1"># CNN feature extractor uses magnitude output from STFT and then modifies the output array into a 3D array for the</span>
+<span class="c1"># 2D convolutional network becuase it is expecting an image with a single channel (ie grayscale).</span>
+<span class="n">cnn_extractor</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MagnitudeSTFT</span><span class="p">(</span><span class="n">fft_size</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">time_major</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">cnn_extractor</span><span class="o">.</span><span class="n">load_normalizers</span><span class="p">(</span><span class="s1">&#39;./data_simple_fm_stft/normalizers.pkl&#39;</span><span class="p">)</span>
+<span class="n">cnn_extractor</span><span class="o">.</span><span class="n">add_modifier</span><span class="p">(</span><span class="k">lambda</span> <span class="n">data</span> <span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;output&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>SoundMatch is a class designed to help run sound matches for a
+synthesizer and a specific estimator type. Each SoundMatch object
+requires a synthesizer to use to generate sounds, an estimator object,
+and optionally an audio feature extractor object. If an audio feature
+object is provided, that will be used to extract features from incoming
+audio prior to running estimation. This is required for these deep
+learning models, but some estimators can handle raw audio, such as the
+genetic estimators.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mlp_matcher</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">SoundMatch</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">mlp</span><span class="p">,</span> <span class="n">mlp_extractor</span><span class="p">)</span>
+<span class="n">lstm_matcher</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">SoundMatch</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">lstm</span><span class="p">,</span> <span class="n">lstm_extractor</span><span class="p">)</span>
+<span class="n">bi_lstm_matcher</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">SoundMatch</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">bi_lstm</span><span class="p">,</span> <span class="n">lstm_extractor</span><span class="p">)</span>
+<span class="n">cnn_matcher</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">SoundMatch</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">cnn</span><span class="p">,</span> <span class="n">cnn_extractor</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Load in the folder of evaluation audio samples and perform sound
+matching on each one with each estimation model. AudioBuffer.load_folder
+performs a natural sort based on the file names of the audio contained
+in the specified folder, so we can save each prediction with a
+corresponding integer number and be assured that the ordering will match
+up when we get to evaluation.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">targets</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">AudioBuffer</span><span class="o">.</span><span class="n">load_folder</span><span class="p">(</span><span class="s1">&#39;./evaluation/audio&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)):</span>
+    <span class="n">audio</span> <span class="o">=</span> <span class="n">mlp_matcher</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">audio</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;./evaluation/mlp/mlp_prediction_</span><span class="si">%s</span><span class="s1">.wav&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+
+    <span class="n">audio</span> <span class="o">=</span> <span class="n">lstm_matcher</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">audio</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;./evaluation/lstm/lstm_prediction_</span><span class="si">%s</span><span class="s1">.wav&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+
+    <span class="n">audio</span> <span class="o">=</span> <span class="n">bi_lstm_matcher</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">audio</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;./evaluation/bi_lstm/bi_lstm_prediction_</span><span class="si">%s</span><span class="s1">.wav&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+
+    <span class="n">audio</span> <span class="o">=</span> <span class="n">cnn_matcher</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">audio</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;./evaluation/cnn/cnn_prediction_</span><span class="si">%s</span><span class="s1">.wav&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="fm_sound_match_genetic.html" class="btn btn-neutral float-right" title="Sound Match Genetic Algorithm Estimators" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="fm_sound_match_train_models.html" class="btn btn-neutral float-left" title="Train Deep Learning Models" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, University of Victoria
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

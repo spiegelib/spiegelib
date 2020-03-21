@@ -2,6 +2,6 @@ Examples
 ========
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
 	FM Sound Match Experiment <fm_sound_match>

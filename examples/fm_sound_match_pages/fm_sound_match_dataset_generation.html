@@ -1,0 +1,305 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Dataset Generation &mdash; SPIEGEL 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Train Deep Learning Models" href="fm_sound_match_train_models.html" />
+    <link rel="prev" title="Synthesizer Configuration" href="fm_sound_match_synth_config.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> SPIEGEL
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/getting_started.html">Getting Started</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/core.html">Core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/synth.html">Synth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/features.html">Audio Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/estimators.html">Estimators</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../examples_index.html">Examples</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../fm_sound_match.html">     FM Sound Match Experiment</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../fm_sound_match.html#experiment-sections">Experiment Sections</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="fm_sound_match_synth_config.html">Synthesizer Configuration</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Dataset Generation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fm_sound_match_train_models.html">Train Deep Learning Models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fm_sound_match_deep_learning.html">Sound Match Deep Learning Models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fm_sound_match_genetic.html">Sound Match Genetic Algorithms</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fm_sound_match_evaluation.html">Evaluation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contribution Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">SPIEGEL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../examples_index.html">Examples</a> &raquo;</li>
+        
+          <li><a href="../fm_sound_match.html">FM Sound Match Experiment</a> &raquo;</li>
+        
+      <li>Dataset Generation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/examples/fm_sound_match_pages/fm_sound_match_dataset_generation.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="dataset-generation">
+<h1>Dataset Generation<a class="headerlink" href="#dataset-generation" title="Permalink to this headline">¶</a></h1>
+<p>First step is to generate and save datasets for training and validating deep
+learning models. Additionally, we create a small audio dataset for
+evaluation.</p>
+<p>Here, we load the Dexed VST, and set the note length and render length to be one second.
+For this experiment we aren’t worried about the release of the sound,
+but you can set the render length longer than the note length to capture
+the release portion of a signal. Synthesizer parameters are loaded from
+a JSON file that describes all the overridden parameters and their
+values.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spiegel</span>
+</pre></div>
+</div>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">synth</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">synth</span><span class="o">.</span><span class="n">SynthVST</span><span class="p">(</span><span class="s2">&quot;/Library/Audio/Plug-Ins/VST/Dexed.vst&quot;</span><span class="p">,</span>
+                               <span class="n">note_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">render_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">synth</span><span class="o">.</span><span class="n">load_state</span><span class="p">(</span><span class="s2">&quot;./synth_params/dexed_simple_fm.json&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="mfcc-dataset">
+<h2>MFCC Dataset<a class="headerlink" href="#mfcc-dataset" title="Permalink to this headline">¶</a></h2>
+<p>Generate training and testing dataset using Mel-frequency Cepstral
+Coefficients feature extraction. The DatasetGenerator class works by
+generating random patches from the synthesizer, then running audio
+feature extraction on the resulting sound, and then saving the audio
+features and parameter values. Audio features and parameter values are saved in
+seperate .npy files.</p>
+<p>We set the <cite>time_major</cite> argument to <cite>True</cite> so that the orientation of the output
+is (time_slices, features), as opposed to (features, time_slices) which
+is default. This is how TensorFlow models expect the data to be
+oriented.</p>
+<p>Normalization settings used for the training dataset are saved as a .pkl file.
+These settings are used to ensure future data is normalized in the same way.</p>
+<p>The total size of this dataset is about 140MB.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mel-frequency Cepstral Coefficients audio feature extractor.</span>
+<span class="n">features</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MFCC</span><span class="p">(</span><span class="n">num_mfccs</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">time_major</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">)</span>
+
+<span class="c1"># Setup generator for MFCC output and generate 50000 training examples and 10000 testing examples</span>
+<span class="n">generator</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">DatasetGenerator</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span>
+                                     <span class="n">output_folder</span><span class="o">=</span><span class="s2">&quot;./data_simple_FM_mfcc&quot;</span><span class="p">,</span>
+                                     <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="mi">50000</span><span class="p">,</span> <span class="n">file_prefix</span><span class="o">=</span><span class="s2">&quot;train_&quot;</span><span class="p">)</span>
+<span class="n">generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="n">file_prefix</span><span class="o">=</span><span class="s2">&quot;test_&quot;</span><span class="p">)</span>
+<span class="n">generator</span><span class="o">.</span><span class="n">save_normalizers</span><span class="p">(</span><span class="s1">&#39;normalizers.pkl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="stft-dataset">
+<h2>STFT Dataset<a class="headerlink" href="#stft-dataset" title="Permalink to this headline">¶</a></h2>
+<p>Generate training and testing dataset using the magnitude of the STFT.
+This dataset will be used to train the convolutional neural network.</p>
+<p>The total size of the resulting dataset is about 10.8GB.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Magnitude STFT ouptut feature extraction</span>
+<span class="n">features</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">STFT</span><span class="p">(</span><span class="n">fft_size</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s1">&#39;magnitude&#39;</span><span class="p">,</span> <span class="n">time_major</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Setup generator and create dataset</span>
+<span class="n">generator</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">DatasetGenerator</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">output_folder</span><span class="o">=</span><span class="s2">&quot;./data_simple_FM_stft&quot;</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="mi">50000</span><span class="p">,</span> <span class="n">file_prefix</span><span class="o">=</span><span class="s2">&quot;train_&quot;</span><span class="p">)</span>
+<span class="n">generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="n">file_prefix</span><span class="o">=</span><span class="s2">&quot;test_&quot;</span><span class="p">)</span>
+<span class="n">generator</span><span class="o">.</span><span class="n">save_normalizers</span><span class="p">(</span><span class="s1">&#39;normalizers.pkl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="evaluation-dataset">
+<h2>Evaluation Dataset<a class="headerlink" href="#evaluation-dataset" title="Permalink to this headline">¶</a></h2>
+<p>Create an audio set for evaluation. We set the save_audio argument to
+True in the DatasetGenerator constructor so that audio WAV files are
+saved for this set.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eval_generator</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">DatasetGenerator</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span>
+                                          <span class="n">output_folder</span><span class="o">=</span><span class="s1">&#39;./evaluation&#39;</span><span class="p">,</span>
+                                          <span class="n">save_audio</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">eval_generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="fm_sound_match_train_models.html" class="btn btn-neutral float-right" title="Train Deep Learning Models" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="fm_sound_match_synth_config.html" class="btn btn-neutral float-left" title="Synthesizer Configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, University of Victoria
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
