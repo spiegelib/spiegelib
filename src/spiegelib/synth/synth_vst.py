@@ -10,16 +10,17 @@ and audio rendered for further processing.
 
 from __future__ import print_function
 import numpy as np
-from spiegel import AudioBuffer
-from spiegel.synth.synth_base import SynthBase
 import librenderman as rm
+
+from spiegelib import AudioBuffer
+from spiegelib.synth.synth_base import SynthBase
 
 
 class SynthVST(SynthBase):
     """
     :param plugin_path: path to vst plugin binary, defaults to None
     :type plugin_path: str, optional
-    :param keyword arguments: see :class:`spiegel.synth.synth_base.SynthBase` for details
+    :param keyword arguments: see :class:`spiegelib.synth.synth_base.SynthBase` for details
     """
 
     def __init__(self, plugin_path=None, **kwargs):
@@ -116,7 +117,7 @@ class SynthVST(SynthBase):
         Return monophonic audio from rendered patch
 
         :return: An audio buffer of the rendered patch
-        :rtype: :class:`spiegel.core.audio_buffer.AudioBuffer`
+        :rtype: :class:`spiegelib.core.audio_buffer.AudioBuffer`
         """
 
         if self.rendered_patch:

@@ -6,11 +6,12 @@ Abstract Base Class for Estimating Synthesizer Parameters using TensorFlow
 import os
 from abc import abstractmethod
 import datetime
-from spiegel.estimator.estimator_base import EstimatorBase
-from spiegel.estimator.tf_epoch_logger import TFEpochLogger
-from spiegel.estimator.highway_layer import HighwayLayer
 import numpy as np
 import tensorflow as tf
+
+from spiegelib.estimator.estimator_base import EstimatorBase
+from spiegelib.estimator.tf_epoch_logger import TFEpochLogger
+from spiegelib.estimator.highway_layer import HighwayLayer
 
 class TFEstimatorBase(EstimatorBase):
     """
@@ -276,7 +277,7 @@ class TFEstimatorBase(EstimatorBase):
             `TensorFlow Doc <`https://www.tensorflow.org/api_docs/python/tf/keras/models/load_model>`__.
         """
 
-        # Add spiegel custom objects
+        # Add spiegelib custom objects
         custom_objects = {'rms_error': TFEstimatorBase.rms_error,
                           'HighwayLayer': HighwayLayer}
 

@@ -5,12 +5,12 @@ Spectral features summarized over time using mean and variance
 
 import numpy as np
 import librosa
-from spiegel import AudioBuffer
-from spiegel.features.features_base import FeaturesBase
+from spiegelib import AudioBuffer
+from spiegelib.features.features_base import FeaturesBase
 
 class SpectralSummarized(FeaturesBase):
     """
-    :param kwargs: See :class:`spiegel.features.features_base.FeaturesBase`
+    :param kwargs: See :class:`spiegelib.features.features_base.FeaturesBase`
     """
 
     def __init__(self, **kwargs):

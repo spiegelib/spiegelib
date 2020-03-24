@@ -8,7 +8,7 @@ import numbers
 import numpy as np
 import librosa
 import scipy.io.wavfile
-import spiegel.core.utils as utils
+import spiegelib.core.utils as utils
 
 
 class AudioBuffer():
@@ -198,7 +198,7 @@ class AudioBuffer():
         :type path: str
         :param sort: Apply natural sort to file names. Default True
         :type sort: bool
-        :returns: list of :class:`spiegel.core.audio_buffer.AudioBuffer`
+        :returns: list of :class:`spiegelib.core.audio_buffer.AudioBuffer`
         :rtype: list
         """
 

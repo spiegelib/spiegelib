@@ -3,8 +3,8 @@
 Audio evaluation using MFCC error between targets and estimations
 """
 
-from spiegel.evaluation.evaluation_base import EvaluationBase
-from spiegel.features.mfcc import MFCC
+from spiegelib.evaluation.evaluation_base import EvaluationBase
+from spiegelib.features.mfcc import MFCC
 
 
 class MFCCEval(EvaluationBase):
@@ -15,15 +15,15 @@ class MFCCEval(EvaluationBase):
     Ex) targets = [y1, y2]
         estimations = [[y1_estimation1, y1_estimation2], [y2_estimation1, y2_estimation2]]
 
-    :param targets: list of :class:`spiegel.core.audio_buffer.AudioBuffer` objects
+    :param targets: list of :class:`spiegelib.core.audio_buffer.AudioBuffer` objects
         to use as the ground truth for evaluation.
     :type targets: list
-    :param estimations: List of lists of :class:`spiegel.core.audio_buffer.AudioBuffer` objects.
+    :param estimations: List of lists of :class:`spiegelib.core.audio_buffer.AudioBuffer` objects.
         There must be as many lists as there are targets, and each of those lists contain
         AudioBuffers that are estimations for the associated target AudioBuffer.
     :type estimations: list
     :param kwargs: keyword arguments to pass to base class. See
-        :class:`spiegel.evaluation.audio_eval_base.AudioEvalBase`
+        :class:`spiegelib.evaluation.audio_eval_base.AudioEvalBase`
     """
 
     def __init__(self, targets, estimations, sample_rate=None, **kwargs):

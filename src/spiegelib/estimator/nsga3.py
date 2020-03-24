@@ -12,10 +12,10 @@ from deap import base
 from deap import creator
 from deap import tools
 
-from spiegel.evaluation.evaluation_base import EvaluationBase
-from spiegel.estimator.estimator_base import EstimatorBase
-from spiegel.synth.synth_base import SynthBase
-from spiegel.features.features_base import FeaturesBase
+from spiegelib.evaluation.evaluation_base import EvaluationBase
+from spiegelib.estimator.estimator_base import EstimatorBase
+from spiegelib.synth.synth_base import SynthBase
+from spiegelib.features.features_base import FeaturesBase
 
 
 class NSGA3(EstimatorBase):

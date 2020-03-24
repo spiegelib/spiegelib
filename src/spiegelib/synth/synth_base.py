@@ -155,7 +155,7 @@ class SynthBase(ABC):
         during the last call to render_patch.
 
         :return: An audio buffer of float audio samples with a value between -1 & 1
-        :rtype: :class:`spiegel.core.audio_buffer.AudioBuffer`
+        :rtype: :class:`spiegelib.core.audio_buffer.AudioBuffer`
         """
         pass
 
