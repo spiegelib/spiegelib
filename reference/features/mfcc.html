@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>FeaturesBase Class &mdash; SPIEGEL 1.0.0 documentation</title>
+  <title>FeaturesBase Class &mdash; SpiegeLib 0.0.1 documentation</title>
   
 
   
@@ -50,7 +50,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> SPIEGEL
+            <a href="../../index.html" class="icon icon-home"> SpiegeLib
           
 
           
@@ -112,7 +112,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">SPIEGEL</a>
+          <a href="../../index.html">SpiegeLib</a>
         
       </nav>
 
@@ -164,24 +164,24 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-spiegel.features.mfcc">
-<span id="featuresbase-class"></span><span id="mfcc"></span><h1>FeaturesBase Class<a class="headerlink" href="#module-spiegel.features.mfcc" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-spiegelib.features.mfcc">
+<span id="featuresbase-class"></span><span id="mfcc"></span><h1>FeaturesBase Class<a class="headerlink" href="#module-spiegelib.features.mfcc" title="Permalink to this headline">¶</a></h1>
 <p>MFCC Audio Feature Extractor</p>
 <dl class="class">
-<dt id="spiegel.features.mfcc.MFCC">
-<em class="property">class </em><code class="sig-prename descclassname">spiegel.features.mfcc.</code><code class="sig-name descname">MFCC</code><span class="sig-paren">(</span><em class="sig-param">num_mfccs=20</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="features_base.html#spiegel.features.features_base.FeaturesBase" title="spiegel.features.features_base.FeaturesBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegel.features.features_base.FeaturesBase</span></code></a></p>
+<dt id="spiegelib.features.mfcc.MFCC">
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.features.mfcc.</code><code class="sig-name descname">MFCC</code><span class="sig-paren">(</span><em class="sig-param">num_mfccs=20</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.mfcc.MFCC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="features_base.html#spiegelib.features.features_base.FeaturesBase" title="spiegelib.features.features_base.FeaturesBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.features.features_base.FeaturesBase</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>num_mfccs</strong> (<em>int</em><em>, </em><em>optional</em>) – number of mffcs to return per frame, defaults to 20</p></li>
-<li><p><strong>kwargs</strong> – keyword arguments for base class, see <a class="reference internal" href="features_base.html#spiegel.features.features_base.FeaturesBase" title="spiegel.features.features_base.FeaturesBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegel.features.features_base.FeaturesBase</span></code></a>.</p></li>
+<li><p><strong>kwargs</strong> – keyword arguments for base class, see <a class="reference internal" href="features_base.html#spiegelib.features.features_base.FeaturesBase" title="spiegelib.features.features_base.FeaturesBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.features.features_base.FeaturesBase</span></code></a>.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="method">
-<dt id="spiegel.features.mfcc.MFCC.add_modifier">
-<code class="sig-name descname">add_modifier</code><span class="sig-paren">(</span><em class="sig-param">modifier</em>, <em class="sig-param">type</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC.add_modifier" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.mfcc.MFCC.add_modifier">
+<code class="sig-name descname">add_modifier</code><span class="sig-paren">(</span><em class="sig-param">modifier</em>, <em class="sig-param">type</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.mfcc.MFCC.add_modifier" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a data modifier to the feature extraction pipeline</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -195,8 +195,8 @@ apply some modification to that, and return a np.array</p></li>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.mfcc.MFCC.fit_normalizers">
-<code class="sig-name descname">fit_normalizers</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">transform=True</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC.fit_normalizers" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.mfcc.MFCC.fit_normalizers">
+<code class="sig-name descname">fit_normalizers</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">transform=True</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.mfcc.MFCC.fit_normalizers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit normalizers to dataset for future transforms.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -212,8 +212,8 @@ apply some modification to that, and return a np.array</p></li>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.mfcc.MFCC.fit_normalizers_2d">
-<code class="sig-name descname">fit_normalizers_2d</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">transform</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC.fit_normalizers_2d" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.mfcc.MFCC.fit_normalizers_2d">
+<code class="sig-name descname">fit_normalizers_2d</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">transform</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.mfcc.MFCC.fit_normalizers_2d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit normalizers for 2-dimensional datasets</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -229,8 +229,8 @@ apply some modification to that, and return a np.array</p></li>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.mfcc.MFCC.fit_normalizers_3d">
-<code class="sig-name descname">fit_normalizers_3d</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">transform</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC.fit_normalizers_3d" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.mfcc.MFCC.fit_normalizers_3d">
+<code class="sig-name descname">fit_normalizers_3d</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">transform</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.mfcc.MFCC.fit_normalizers_3d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit normalizers for 3-dimensional datasets</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -246,20 +246,20 @@ apply some modification to that, and return a np.array</p></li>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.mfcc.MFCC.fit_normalizers_full_data">
-<code class="sig-name descname">fit_normalizers_full_data</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">transform</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC.fit_normalizers_full_data" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.mfcc.MFCC.fit_normalizers_full_data">
+<code class="sig-name descname">fit_normalizers_full_data</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">transform</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.mfcc.MFCC.fit_normalizers_full_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit one normalizer on the entire dataset</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.mfcc.MFCC.get_features">
-<code class="sig-name descname">get_features</code><span class="sig-paren">(</span><em class="sig-param">audio</em>, <em class="sig-param">normalize=False</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC.get_features" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.mfcc.MFCC.get_features">
+<code class="sig-name descname">get_features</code><span class="sig-paren">(</span><em class="sig-param">audio</em>, <em class="sig-param">normalize=False</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.mfcc.MFCC.get_features" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run audio feature extraction on audio provided as parameter.
 Normalization should be applied based on the normalize parameter.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>audio</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">spiegel.core.audio_buffer.AudioBuffer</span></code>) – Audio to process features on</p></li>
+<li><p><strong>audio</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.core.audio_buffer.AudioBuffer</span></code>) – Audio to process features on</p></li>
 <li><p><strong>normalize</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether or not the features are normalized, defaults to False</p></li>
 </ul>
 </dd>
@@ -273,8 +273,8 @@ Normalization should be applied based on the normalize parameter.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.mfcc.MFCC.has_normalizers">
-<code class="sig-name descname">has_normalizers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC.has_normalizers" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.mfcc.MFCC.has_normalizers">
+<code class="sig-name descname">has_normalizers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.mfcc.MFCC.has_normalizers" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>a boolean indicating whether or not normalizers have been set</p>
@@ -286,8 +286,8 @@ Normalization should be applied based on the normalize parameter.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.mfcc.MFCC.load_normalizers">
-<code class="sig-name descname">load_normalizers</code><span class="sig-paren">(</span><em class="sig-param">location</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC.load_normalizers" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.mfcc.MFCC.load_normalizers">
+<code class="sig-name descname">load_normalizers</code><span class="sig-paren">(</span><em class="sig-param">location</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.mfcc.MFCC.load_normalizers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load trained normalizers from disk</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -297,8 +297,8 @@ Normalization should be applied based on the normalize parameter.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.mfcc.MFCC.normalize">
-<code class="sig-name descname">normalize</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC.normalize" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.mfcc.MFCC.normalize">
+<code class="sig-name descname">normalize</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.mfcc.MFCC.normalize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Normalize features using pre-trained normalizer</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -314,8 +314,8 @@ Normalization should be applied based on the normalize parameter.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.mfcc.MFCC.save_normalizers">
-<code class="sig-name descname">save_normalizers</code><span class="sig-paren">(</span><em class="sig-param">location</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC.save_normalizers" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.mfcc.MFCC.save_normalizers">
+<code class="sig-name descname">save_normalizers</code><span class="sig-paren">(</span><em class="sig-param">location</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.mfcc.MFCC.save_normalizers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save the trained normalizers for these features for later use</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -325,8 +325,8 @@ Normalization should be applied based on the normalize parameter.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.mfcc.MFCC.set_normalizer">
-<code class="sig-name descname">set_normalizer</code><span class="sig-paren">(</span><em class="sig-param">dimension</em>, <em class="sig-param">normalizer</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.mfcc.MFCC.set_normalizer" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.mfcc.MFCC.set_normalizer">
+<code class="sig-name descname">set_normalizer</code><span class="sig-paren">(</span><em class="sig-param">dimension</em>, <em class="sig-param">normalizer</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.mfcc.MFCC.set_normalizer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set a normalizer for a dimension, this will be used to normalize that dimension</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

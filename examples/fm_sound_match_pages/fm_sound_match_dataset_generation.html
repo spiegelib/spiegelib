@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Dataset Generation &mdash; SPIEGEL 1.0.0 documentation</title>
+  <title>Dataset Generation &mdash; SpiegeLib 0.0.1 documentation</title>
   
 
   
@@ -50,7 +50,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> SPIEGEL
+            <a href="../../index.html" class="icon icon-home"> SpiegeLib
           
 
           
@@ -122,7 +122,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">SPIEGEL</a>
+          <a href="../../index.html">SpiegeLib</a>
         
       </nav>
 
@@ -187,11 +187,11 @@ but you can set the render length longer than the note length to capture
 the release portion of a signal. Synthesizer parameters are loaded from
 a JSON file that describes all the overridden parameters and their
 values.</p>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spiegel</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spiegelib</span> <span class="k">as</span> <span class="nn">spgl</span>
 </pre></div>
 </div>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">synth</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">synth</span><span class="o">.</span><span class="n">SynthVST</span><span class="p">(</span><span class="s2">&quot;/Library/Audio/Plug-Ins/VST/Dexed.vst&quot;</span><span class="p">,</span>
-                               <span class="n">note_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">render_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">synth</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">synth</span><span class="o">.</span><span class="n">SynthVST</span><span class="p">(</span><span class="s2">&quot;/Library/Audio/Plug-Ins/VST/Dexed.vst&quot;</span><span class="p">,</span>
+                            <span class="n">note_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">render_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
 <span class="n">synth</span><span class="o">.</span><span class="n">load_state</span><span class="p">(</span><span class="s2">&quot;./synth_params/dexed_simple_fm.json&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -211,12 +211,12 @@ oriented.</p>
 These settings are used to ensure future data is normalized in the same way.</p>
 <p>The total size of this dataset is about 140MB.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mel-frequency Cepstral Coefficients audio feature extractor.</span>
-<span class="n">features</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MFCC</span><span class="p">(</span><span class="n">num_mfccs</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">time_major</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">)</span>
+<span class="n">features</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MFCC</span><span class="p">(</span><span class="n">num_mfccs</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">time_major</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">)</span>
 
 <span class="c1"># Setup generator for MFCC output and generate 50000 training examples and 10000 testing examples</span>
-<span class="n">generator</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">DatasetGenerator</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span>
-                                     <span class="n">output_folder</span><span class="o">=</span><span class="s2">&quot;./data_simple_FM_mfcc&quot;</span><span class="p">,</span>
-                                     <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">generator</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">DatasetGenerator</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span>
+                                  <span class="n">output_folder</span><span class="o">=</span><span class="s2">&quot;./data_simple_FM_mfcc&quot;</span><span class="p">,</span>
+                                  <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="mi">50000</span><span class="p">,</span> <span class="n">file_prefix</span><span class="o">=</span><span class="s2">&quot;train_&quot;</span><span class="p">)</span>
 <span class="n">generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="n">file_prefix</span><span class="o">=</span><span class="s2">&quot;test_&quot;</span><span class="p">)</span>
 <span class="n">generator</span><span class="o">.</span><span class="n">save_normalizers</span><span class="p">(</span><span class="s1">&#39;normalizers.pkl&#39;</span><span class="p">)</span>
@@ -229,10 +229,10 @@ These settings are used to ensure future data is normalized in the same way.</p>
 This dataset will be used to train the convolutional neural network.</p>
 <p>The total size of the resulting dataset is about 10.8GB.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Magnitude STFT ouptut feature extraction</span>
-<span class="n">features</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">STFT</span><span class="p">(</span><span class="n">fft_size</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s1">&#39;magnitude&#39;</span><span class="p">,</span> <span class="n">time_major</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">features</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">STFT</span><span class="p">(</span><span class="n">fft_size</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s1">&#39;magnitude&#39;</span><span class="p">,</span> <span class="n">time_major</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="c1"># Setup generator and create dataset</span>
-<span class="n">generator</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">DatasetGenerator</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">output_folder</span><span class="o">=</span><span class="s2">&quot;./data_simple_FM_stft&quot;</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">generator</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">DatasetGenerator</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">output_folder</span><span class="o">=</span><span class="s2">&quot;./data_simple_FM_stft&quot;</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="mi">50000</span><span class="p">,</span> <span class="n">file_prefix</span><span class="o">=</span><span class="s2">&quot;train_&quot;</span><span class="p">)</span>
 <span class="n">generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="n">file_prefix</span><span class="o">=</span><span class="s2">&quot;test_&quot;</span><span class="p">)</span>
 <span class="n">generator</span><span class="o">.</span><span class="n">save_normalizers</span><span class="p">(</span><span class="s1">&#39;normalizers.pkl&#39;</span><span class="p">)</span>
@@ -244,9 +244,9 @@ This dataset will be used to train the convolutional neural network.</p>
 <p>Create an audio set for evaluation. We set the save_audio argument to
 True in the DatasetGenerator constructor so that audio WAV files are
 saved for this set.</p>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eval_generator</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">DatasetGenerator</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span>
-                                          <span class="n">output_folder</span><span class="o">=</span><span class="s1">&#39;./evaluation&#39;</span><span class="p">,</span>
-                                          <span class="n">save_audio</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eval_generator</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">DatasetGenerator</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span>
+                                       <span class="n">output_folder</span><span class="o">=</span><span class="s1">&#39;./evaluation&#39;</span><span class="p">,</span>
+                                       <span class="n">save_audio</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">eval_generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
 </pre></div>
 </div>

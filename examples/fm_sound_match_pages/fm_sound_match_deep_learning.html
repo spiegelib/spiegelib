@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Sound Match Deep Learning Models &mdash; SPIEGEL 1.0.0 documentation</title>
+  <title>Sound Match Deep Learning Models &mdash; SpiegeLib 0.0.1 documentation</title>
   
 
   
@@ -50,7 +50,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> SPIEGEL
+            <a href="../../index.html" class="icon icon-home"> SpiegeLib
           
 
           
@@ -122,7 +122,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">SPIEGEL</a>
+          <a href="../../index.html">SpiegeLib</a>
         
       </nav>
 
@@ -181,19 +181,19 @@
 <p>Now we can perform sound matching of the evaluation target set using the
 trained deep learning models and save the resulting audio files to disk
 for evaluation</p>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spiegel</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spiegelib</span> <span class="k">as</span> <span class="nn">spgl</span>
 </pre></div>
 </div>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load all saved models</span>
-<span class="n">mlp</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">TFEstimatorBase</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./saved_models/simple_fm_mlp.h5&#39;</span><span class="p">)</span>
-<span class="n">lstm</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">TFEstimatorBase</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./saved_models/simple_fm_lstm.h5&#39;</span><span class="p">)</span>
-<span class="n">bi_lstm</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">TFEstimatorBase</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./saved_models/simple_fm_bi_lstm.h5&#39;</span><span class="p">)</span>
-<span class="n">cnn</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">TFEstimatorBase</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./saved_models/simple_fm_cnn.h5&#39;</span><span class="p">)</span>
+<span class="n">mlp</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">TFEstimatorBase</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./saved_models/simple_fm_mlp.h5&#39;</span><span class="p">)</span>
+<span class="n">lstm</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">TFEstimatorBase</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./saved_models/simple_fm_lstm.h5&#39;</span><span class="p">)</span>
+<span class="n">bi_lstm</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">TFEstimatorBase</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./saved_models/simple_fm_bi_lstm.h5&#39;</span><span class="p">)</span>
+<span class="n">cnn</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">TFEstimatorBase</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./saved_models/simple_fm_cnn.h5&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load synth with overriden params</span>
-<span class="n">synth</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">synth</span><span class="o">.</span><span class="n">SynthVST</span><span class="p">(</span><span class="s2">&quot;/Library/Audio/Plug-Ins/VST/Dexed.vst&quot;</span><span class="p">,</span>
-                               <span class="n">note_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">render_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">synth</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">synth</span><span class="o">.</span><span class="n">SynthVST</span><span class="p">(</span><span class="s2">&quot;/Library/Audio/Plug-Ins/VST/Dexed.vst&quot;</span><span class="p">,</span>
+                            <span class="n">note_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">render_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
 <span class="n">synth</span><span class="o">.</span><span class="n">load_state</span><span class="p">(</span><span class="s2">&quot;./synth_params/dexed_simple_fm.json&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -202,17 +202,17 @@ each model based on how it was trained. Also use the same data
 normalizers that were setup when initially creating each dataset.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># MLP feature extractor with a modifying function that flattens the time slice arrays at the end of the feature</span>
 <span class="c1"># extraction pipeline</span>
-<span class="n">mlp_extractor</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MFCC</span><span class="p">(</span><span class="n">num_mfccs</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">time_major</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">mlp_extractor</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MFCC</span><span class="p">(</span><span class="n">num_mfccs</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">time_major</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">mlp_extractor</span><span class="o">.</span><span class="n">load_normalizers</span><span class="p">(</span><span class="s1">&#39;./data_simple_fm_mfcc/normalizers.pkl&#39;</span><span class="p">)</span>
 <span class="n">mlp_extractor</span><span class="o">.</span><span class="n">add_modifier</span><span class="p">(</span><span class="k">lambda</span> <span class="n">data</span> <span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;output&#39;</span><span class="p">)</span>
 
 <span class="c1"># LSTM &amp; LSTM++ feature extractor -- time series of MFCC frames</span>
-<span class="n">lstm_extractor</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MFCC</span><span class="p">(</span><span class="n">num_mfccs</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">time_major</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">lstm_extractor</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MFCC</span><span class="p">(</span><span class="n">num_mfccs</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">time_major</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">lstm_extractor</span><span class="o">.</span><span class="n">load_normalizers</span><span class="p">(</span><span class="s1">&#39;./data_simple_fm_mfcc/normalizers.pkl&#39;</span><span class="p">)</span>
 
 <span class="c1"># CNN feature extractor uses magnitude output from STFT and then modifies the output array into a 3D array for the</span>
 <span class="c1"># 2D convolutional network becuase it is expecting an image with a single channel (ie grayscale).</span>
-<span class="n">cnn_extractor</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MagnitudeSTFT</span><span class="p">(</span><span class="n">fft_size</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">time_major</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">cnn_extractor</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MagnitudeSTFT</span><span class="p">(</span><span class="n">fft_size</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">time_major</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">cnn_extractor</span><span class="o">.</span><span class="n">load_normalizers</span><span class="p">(</span><span class="s1">&#39;./data_simple_fm_stft/normalizers.pkl&#39;</span><span class="p">)</span>
 <span class="n">cnn_extractor</span><span class="o">.</span><span class="n">add_modifier</span><span class="p">(</span><span class="k">lambda</span> <span class="n">data</span> <span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;output&#39;</span><span class="p">)</span>
 </pre></div>
@@ -225,10 +225,10 @@ object is provided, that will be used to extract features from incoming
 audio prior to running estimation. This is required for these deep
 learning models, but some estimators can handle raw audio, such as the
 genetic estimators.</p>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mlp_matcher</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">SoundMatch</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">mlp</span><span class="p">,</span> <span class="n">mlp_extractor</span><span class="p">)</span>
-<span class="n">lstm_matcher</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">SoundMatch</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">lstm</span><span class="p">,</span> <span class="n">lstm_extractor</span><span class="p">)</span>
-<span class="n">bi_lstm_matcher</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">SoundMatch</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">bi_lstm</span><span class="p">,</span> <span class="n">lstm_extractor</span><span class="p">)</span>
-<span class="n">cnn_matcher</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">SoundMatch</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">cnn</span><span class="p">,</span> <span class="n">cnn_extractor</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mlp_matcher</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">SoundMatch</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">mlp</span><span class="p">,</span> <span class="n">mlp_extractor</span><span class="p">)</span>
+<span class="n">lstm_matcher</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">SoundMatch</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">lstm</span><span class="p">,</span> <span class="n">lstm_extractor</span><span class="p">)</span>
+<span class="n">bi_lstm_matcher</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">SoundMatch</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">bi_lstm</span><span class="p">,</span> <span class="n">lstm_extractor</span><span class="p">)</span>
+<span class="n">cnn_matcher</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">SoundMatch</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">cnn</span><span class="p">,</span> <span class="n">cnn_extractor</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Load in the folder of evaluation audio samples and perform sound
@@ -237,7 +237,7 @@ performs a natural sort based on the file names of the audio contained
 in the specified folder, so we can save each prediction with a
 corresponding integer number and be assured that the ordering will match
 up when we get to evaluation.</p>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">targets</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">AudioBuffer</span><span class="o">.</span><span class="n">load_folder</span><span class="p">(</span><span class="s1">&#39;./evaluation/audio&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">targets</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">AudioBuffer</span><span class="o">.</span><span class="n">load_folder</span><span class="p">(</span><span class="s1">&#39;./evaluation/audio&#39;</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)):</span>
     <span class="n">audio</span> <span class="o">=</span> <span class="n">mlp_matcher</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Installation &mdash; SPIEGEL 1.0.0 documentation</title>
+  <title>Installation &mdash; SpiegeLib 0.0.1 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="SPIEGEL Core Classes" href="../reference/core.html" />
+    <link rel="next" title="SpiegeLib Core Classes" href="../reference/core.html" />
     <link rel="prev" title="Getting Started" href="getting_started.html" /> 
 </head>
 
@@ -50,7 +50,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> SPIEGEL
+            <a href="../index.html" class="icon icon-home"> SpiegeLib
           
 
           
@@ -117,7 +117,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">SPIEGEL</a>
+          <a href="../index.html">SpiegeLib</a>
         
       </nav>
 
@@ -171,23 +171,24 @@
             
   <div class="section" id="installation">
 <span id="id1"></span><h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<p>The easiest way to install <em>spiegel</em> is to use the Python Package Index (PyPI),
-which is used through the command line with <a class="reference external" href="https://docs.python.org/3/installing/index.html">pip</a>,
+<p>The easiest way to install <em>SpiegeLib</em> is to use the Python Package Index (PyPI),
+which is used through the command line with <a class="reference external" href="https://docs.python.org/3/installing/index.html">pip</a>.
 pip comes pre-installed with most python distributions and will automatically
-install the required dependencies for <em>spiegel</em>.</p>
+install the required dependencies for <em>SpiegeLib</em>.</p>
 <p>Currently, the only dependency
 that cannot be installed using pip is the
 <a class="reference external" href="https://github.com/fedden/RenderMan">RenderMan</a> library, which must be installed
 manually in order to enable programmatic interaction with VST synthesizers.
-Instructions for installing RenderMan are included <a class="reference internal" href="#librenderman-conda-install"><span class="std std-ref">here</span></a>.
+Instructions for installing RenderMan in a virtual environment are provided
+(<a class="reference internal" href="#librenderman-conda-install"><span class="std std-ref">Installing RenderMan in an Anaconda environment</span></a>).
 At this time, RenderMan is only available on Mac OSX and Linux operating systems.</p>
-<p>We recommend installing <em>spiegel</em> inside a virtual environment as the library
+<p>We recommend installing <em>SpiegeLib</em> inside a virtual environment as the library
 is still under active development. We recommend <a class="reference external" href="https://www.anaconda.com/">Anaconda</a>.
-Instructions for creating a new Anconda environment and installing <em>spiegel</em> inside
+Instructions for creating a new Anconda environment and installing <em>SpiegeLib</em> inside
 of that are provided.</p>
 <div class="section" id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
-<p><em>spiegel</em> requires the following:</p>
+<p><em>SpiegeLib</em> requires the following:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">&gt;=</span> <span class="mf">3.6</span>
 <span class="n">numpy</span> <span class="o">&gt;=</span> <span class="mf">1.18</span><span class="o">.</span><span class="mi">0</span>
 <span class="n">matplotlib</span> <span class="o">&gt;=</span> <span class="mf">3.2</span><span class="o">.</span><span class="mi">0</span>
@@ -199,17 +200,17 @@ of that are provided.</p>
 </pre></div>
 </div>
 <p>All of these dependencies, except for librenderman (RenderMan), will be installed automatically.
-Instructions on installing RenderMan in a virtual environment are provided.</p>
+Instructions on installing RenderMan in a virtual environment are provided <a class="reference internal" href="#librenderman-conda-install"><span class="std std-ref">below</span></a>.</p>
 </div>
 <div class="section" id="anaconda-environment">
 <span id="anaconda-env"></span><h2>Anaconda Environment<a class="headerlink" href="#anaconda-environment" title="Permalink to this headline">¶</a></h2>
-<p>These instructions show how to install <em>spiegel</em> in an anaconda environment for sandboxed
+<p>These instructions show how to install <em>SpiegeLib</em> in an anaconda environment for sandboxed
 development.</p>
 <p>Install <a class="reference external" href="https://www.anaconda.com/">anaconda</a> if you don’t have it already. Make sure
 to install the Python 3 version as <em>speigel</em> only runs on Python 3.6 and higher.</p>
 <ol class="arabic">
-<li><p>First, create a new conda environment for <em>spiegel</em>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda create --name new_spiegel_env python=3.7 numpy matplotlib
+<li><p>First, create a new conda environment for <em>SpiegeLib</em>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda create --name new_spgl_env python=3.7 numpy matplotlib
 
 ...
 
@@ -220,7 +221,7 @@ Proceed ([y]/n)? y
 #
 # To activate this environment, use
 #
-#     $ conda activate new_spiegel_env
+#     $ conda activate new_spgl_env
 #
 # To deactivate an active environment, use
 #
@@ -239,8 +240,8 @@ by pip.</div>
 </div></blockquote>
 <ol class="arabic" start="2">
 <li><p>Activate the environment:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda activate new_spiegel_env
-(new_spiegel_env)$
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda activate new_spgl_env
+(new_spgl_env)$
 </pre></div>
 </div>
 </li>
@@ -249,24 +250,24 @@ by pip.</div>
 </pre></div>
 </div>
 </li>
-<li><p>Install <em>spiegel</em> and RenderMan:</p></li>
+<li><p>Install <em>SpiegeLib</em> and RenderMan:</p></li>
 </ol>
 <blockquote>
-<div><p>The following sections provide information on installing <em>spiegel</em> using
+<div><p>The following sections provide information on installing <em>SpiegeLib</em> using
 pip (<a class="reference internal" href="#pip-installation"><span class="std std-ref">pip installation</span></a>) and installing RenderMan in a
 conda environment (<a class="reference internal" href="#librenderman-conda-install"><span class="std std-ref">RenderMan installation</span></a>)</p>
 </div></blockquote>
 </div>
 <div class="section" id="pip-installation">
 <span id="id3"></span><h2>pip installation<a class="headerlink" href="#pip-installation" title="Permalink to this headline">¶</a></h2>
-<p>Use the following command to install <em>spiegel</em> using pip from the Python Packaging
+<p>Use the following command to install <em>SpiegeLib</em> using pip from the Python Packaging
 Index (PyPI). This will also install all dependencies, except for RenderMan.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python3 -m pip install spiegel
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python3 -m pip install spiegelib
 </pre></div>
 </div>
 <p>If you want to install in a anaconda environment. Make sure you have created a python3
 anaconda environment and have activated that environment (See <a class="reference internal" href="#anaconda-env"><span class="std std-ref">Anaconda Environment</span></a>)</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(new_siegel_env)$ python -m pip install spiegel
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(new_spgl_env)$ python -m pip install spiegelib
 </pre></div>
 </div>
 </div>
@@ -281,7 +282,7 @@ a <a class="reference external" href="https://juce.com/">JUCE</a> application.</
 <ol class="arabic">
 <li><p><a class="reference external" href="https://shop.juce.com/get-juce">Download and install JUCE</a></p></li>
 <li><p>Install boost-python using conda. Make sure you have activated the conda environment that you want to install librendman into:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(new_siegel_env)$ conda install py-boost
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(new_spgl_env)$ conda install py-boost
 </pre></div>
 </div>
 </li>
@@ -300,7 +301,7 @@ $ open RenderMan-py36.jucer
 <blockquote>
 <div><p>For the Xcode (MacOSX) exporter modify the <em>Extra Linker Flags</em>: remove <code class="docutils literal notranslate"><span class="pre">-lpython3.6m</span></code>
 Change <code class="docutils literal notranslate"><span class="pre">-lboost-python</span></code> to <code class="docutils literal notranslate"><span class="pre">-lboost-python37</span></code> and add <code class="docutils literal notranslate"><span class="pre">-undefined</span> <span class="pre">dynamic_lookup</span></code></p>
-<img alt="../_images/linker_flags1.png" src="../_images/linker_flags1.png" />
+<img alt="../_images/linker_flags.png" src="../_images/linker_flags.png" />
 </div></blockquote>
 </li>
 <li><p>Update Xcode Debug export</p>
@@ -313,30 +314,30 @@ determined when you installed anaconda. The default location on MacOSX is <code 
 <div class="line"><br /></div>
 <div class="line">The following instructions will refer to that location, whatever it is on your system, as <code class="docutils literal notranslate"><span class="pre">&lt;path-to-anaconda3&gt;</span></code>.</div>
 <div class="line"><br /></div>
-<div class="line">For the <em>Header Search Paths</em>, remove the existing paths and add <code class="docutils literal notranslate"><span class="pre">&lt;path-to-anaconda3&gt;/envs/new_spiegel_env/include</span></code> and
-<code class="docutils literal notranslate"><span class="pre">&lt;path-to-anaconda3&gt;/envs/new_spiegel_env/include/python3.7m</span></code>.</div>
+<div class="line">For the <em>Header Search Paths</em>, remove the existing paths and add <code class="docutils literal notranslate"><span class="pre">&lt;path-to-anaconda3&gt;/envs/new_spgl_env/include</span></code> and
+<code class="docutils literal notranslate"><span class="pre">&lt;path-to-anaconda3&gt;/envs/new_spgl_env/include/python3.7m</span></code>.</div>
 <div class="line"><br /></div>
 <div class="line">Using the default anaconda path:</div>
 </div>
-<img alt="../_images/header_search_paths1.png" src="../_images/header_search_paths1.png" />
+<img alt="../_images/header_search_paths.png" src="../_images/header_search_paths.png" />
 <div class="line-block">
 <div class="line"><br /></div>
-<div class="line">For the <em>Extra Library Search Paths</em>, remove the existing paths and add <code class="docutils literal notranslate"><span class="pre">&lt;path-to-anaconda3&gt;/envs/new_spiegel_env/lib</span></code></div>
+<div class="line">For the <em>Extra Library Search Paths</em>, remove the existing paths and add <code class="docutils literal notranslate"><span class="pre">&lt;path-to-anaconda3&gt;/envs/new_spgl_env/lib</span></code></div>
 <div class="line"><br /></div>
 <div class="line">Using the default anaconda path:</div>
 </div>
-<img alt="../_images/extra_lib_path1.png" src="../_images/extra_lib_path1.png" />
+<img alt="../_images/extra_lib_path.png" src="../_images/extra_lib_path.png" />
 </div></blockquote>
 </li>
 <li><p>Open Xcode and build</p>
 <blockquote>
 <div><p>Open Xcode from the Projucer by clicking on the Xcode icon</p>
-<img alt="../_images/Xcode_projucer1.png" src="../_images/Xcode_projucer1.png" />
+<img alt="../_images/Xcode_projucer.png" src="../_images/Xcode_projucer.png" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <p>Build the library in Xcode</p>
-<img alt="../_images/build_xcode1.png" src="../_images/build_xcode1.png" />
+<img alt="../_images/build_xcode.png" src="../_images/build_xcode.png" />
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -346,12 +347,12 @@ determined when you installed anaconda. The default location on MacOSX is <code 
 <li><p>Rename the built library and move to conda env:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd &lt;path-to-RenderMan&gt;/Builds/MacOSX/build/Debug
 $ mv librenderman.so.dylib librenderman.so
-$ mv librenderman.so &lt;path-to-anaconda3&gt;/envs/new_spiegel_env/lib/python3.7/site-packages/
+$ mv librenderman.so &lt;path-to-anaconda3&gt;/envs/new_spgl_env/lib/python3.7/site-packages/
 </pre></div>
 </div>
 </li>
 <li><p>Test librenderman. Make sure the correct conda environment is activated:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(new_spiegel_env)$ python
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(new_spgl_env)$ python
 &gt;&gt;&gt; import librenderman as rm
 JUCE v&lt;Juce version&gt;
 &gt;&gt;&gt; engine = rm.RenderEngine(44100, 512, 512)
@@ -371,7 +372,7 @@ JUCE v&lt;Juce version&gt;
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../reference/core.html" class="btn btn-neutral float-right" title="SPIEGEL Core Classes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../reference/core.html" class="btn btn-neutral float-right" title="SpiegeLib Core Classes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="getting_started.html" class="btn btn-neutral float-left" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

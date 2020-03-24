@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Train Deep Learning Models &mdash; SPIEGEL 1.0.0 documentation</title>
+  <title>Train Deep Learning Models &mdash; SpiegeLib 0.0.1 documentation</title>
   
 
   
@@ -50,7 +50,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> SPIEGEL
+            <a href="../../index.html" class="icon icon-home"> SpiegeLib
           
 
           
@@ -122,7 +122,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">SPIEGEL</a>
+          <a href="../../index.html">SpiegeLib</a>
         
       </nav>
 
@@ -189,7 +189,7 @@ model is saved in the saved_models folder.</p>
 <p>Her we train a relatively basic fully connected MLP model. The audio
 features, which are in <em>numpy</em> arrays with time slices, need to be
 flattened prior to being fed into the network.</p>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spiegel</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spiegelib</span> <span class="k">as</span> <span class="nn">spgl</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 </pre></div>
@@ -204,13 +204,13 @@ flattened prior to being fed into the network.</p>
 <span class="n">testFeatures</span> <span class="o">=</span> <span class="n">testFeatures</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">testFeatures</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="c1"># Setup callbacks for trainings</span>
-<span class="n">logger</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">TFEpochLogger</span><span class="p">()</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">TFEpochLogger</span><span class="p">()</span>
 <span class="n">earlyStopping</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">EarlyStopping</span><span class="p">(</span><span class="n">monitor</span><span class="o">=</span><span class="s1">&#39;val_loss&#39;</span><span class="p">,</span> <span class="n">patience</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 
 <span class="c1"># Instantiate MLP Model with the input shape, output shape, and callbacks</span>
-<span class="n">mlp</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">MLP</span><span class="p">((</span><span class="n">trainFeatures</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],),</span>
-                            <span class="n">trainParams</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
-                            <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">logger</span><span class="p">,</span> <span class="n">earlyStopping</span><span class="p">])</span>
+<span class="n">mlp</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">MLP</span><span class="p">((</span><span class="n">trainFeatures</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],),</span>
+                         <span class="n">trainParams</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                         <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">logger</span><span class="p">,</span> <span class="n">earlyStopping</span><span class="p">])</span>
 
 <span class="c1"># Add training and validation data</span>
 <span class="n">mlp</span><span class="o">.</span><span class="n">add_training_data</span><span class="p">(</span><span class="n">trainFeatures</span><span class="p">,</span> <span class="n">trainParams</span><span class="p">)</span>
@@ -251,13 +251,13 @@ flattened prior to being fed into the network.</p>
 <span class="n">testParams</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./data_simple_FM_mfcc/test_patches.npy&#39;</span><span class="p">)</span>
 
 <span class="c1"># Setup callbacks for trainings</span>
-<span class="n">logger</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">TFEpochLogger</span><span class="p">()</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">TFEpochLogger</span><span class="p">()</span>
 <span class="n">earlyStopping</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">EarlyStopping</span><span class="p">(</span><span class="n">monitor</span><span class="o">=</span><span class="s1">&#39;val_loss&#39;</span><span class="p">,</span> <span class="n">patience</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 
 <span class="c1"># Instantiate LSTM Model with the input shape, output shape, and callbacks</span>
-<span class="n">lstm</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">LSTM</span><span class="p">(</span><span class="n">trainFeatures</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:],</span>
-                              <span class="n">trainParams</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
-                              <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">logger</span><span class="p">,</span> <span class="n">earlyStopping</span><span class="p">])</span>
+<span class="n">lstm</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">LSTM</span><span class="p">(</span><span class="n">trainFeatures</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:],</span>
+                           <span class="n">trainParams</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                           <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">logger</span><span class="p">,</span> <span class="n">earlyStopping</span><span class="p">])</span>
 
 <span class="n">lstm</span><span class="o">.</span><span class="n">add_training_data</span><span class="p">(</span><span class="n">trainFeatures</span><span class="p">,</span> <span class="n">trainParams</span><span class="p">)</span>
 <span class="n">lstm</span><span class="o">.</span><span class="n">add_testing_data</span><span class="p">(</span><span class="n">testFeatures</span><span class="p">,</span> <span class="n">testParams</span><span class="p">)</span>
@@ -294,14 +294,14 @@ flattened prior to being fed into the network.</p>
 <div class="section" id="bi-directional-long-short-term-memory-with-highway-layers-lstm">
 <h2>Bi-directional long short-term memory with highway layers (LSTM++)<a class="headerlink" href="#bi-directional-long-short-term-memory-with-highway-layers-lstm" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Setup callbacks for trainings</span>
-<span class="n">logger</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">TFEpochLogger</span><span class="p">()</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">TFEpochLogger</span><span class="p">()</span>
 <span class="n">earlyStopping</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">EarlyStopping</span><span class="p">(</span><span class="n">monitor</span><span class="o">=</span><span class="s1">&#39;val_loss&#39;</span><span class="p">,</span> <span class="n">patience</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 
 <span class="c1"># Instantiate LSTM++ Model with the input shape, output shape, and callbacks</span>
-<span class="n">bi_lstm</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">HwyBLSTM</span><span class="p">(</span><span class="n">trainFeatures</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:],</span>
-                                     <span class="n">trainParams</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
-                                     <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">logger</span><span class="p">,</span> <span class="n">earlyStopping</span><span class="p">],</span>
-                                     <span class="n">highway_layers</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">bi_lstm</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">HwyBLSTM</span><span class="p">(</span><span class="n">trainFeatures</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:],</span>
+                                  <span class="n">trainParams</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                  <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">logger</span><span class="p">,</span> <span class="n">earlyStopping</span><span class="p">],</span>
+                                  <span class="n">highway_layers</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
 
 <span class="n">bi_lstm</span><span class="o">.</span><span class="n">add_training_data</span><span class="p">(</span><span class="n">trainFeatures</span><span class="p">,</span> <span class="n">trainParams</span><span class="p">)</span>
 <span class="n">bi_lstm</span><span class="o">.</span><span class="n">add_testing_data</span><span class="p">(</span><span class="n">testFeatures</span><span class="p">,</span> <span class="n">testParams</span><span class="p">)</span>
@@ -358,13 +358,13 @@ flattened prior to being fed into the network.</p>
 </pre></div>
 </div>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Setup callbacks for trainings</span>
-<span class="n">logger</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">TFEpochLogger</span><span class="p">()</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">TFEpochLogger</span><span class="p">()</span>
 <span class="n">earlyStopping</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">EarlyStopping</span><span class="p">(</span><span class="n">monitor</span><span class="o">=</span><span class="s1">&#39;val_loss&#39;</span><span class="p">,</span> <span class="n">patience</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 
 <span class="c1"># Instantiate Conv6 Model with the input shape, output shape, and callbacks</span>
-<span class="n">cnn</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">Conv6</span><span class="p">(</span><span class="n">trainFeatures</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span>
-                              <span class="n">trainParams</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
-                              <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">logger</span><span class="p">,</span> <span class="n">earlyStopping</span><span class="p">])</span>
+<span class="n">cnn</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">Conv6</span><span class="p">(</span><span class="n">trainFeatures</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span>
+                           <span class="n">trainParams</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                           <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">logger</span><span class="p">,</span> <span class="n">earlyStopping</span><span class="p">])</span>
 
 <span class="n">cnn</span><span class="o">.</span><span class="n">add_training_data</span><span class="p">(</span><span class="n">trainFeatures</span><span class="p">,</span> <span class="n">trainParams</span><span class="p">)</span>
 <span class="n">cnn</span><span class="o">.</span><span class="n">add_testing_data</span><span class="p">(</span><span class="n">testFeatures</span><span class="p">,</span> <span class="n">testParams</span><span class="p">)</span>

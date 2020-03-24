@@ -14,12 +14,12 @@ values.
 
 .. code:: ipython3
 
-    import spiegel
+    import spiegelib as spgl
 
 .. code:: ipython3
 
-    synth = spiegel.synth.SynthVST("/Library/Audio/Plug-Ins/VST/Dexed.vst",
-                                   note_length_secs=1.0, render_length_secs=1.0)
+    synth = spgl.synth.SynthVST("/Library/Audio/Plug-Ins/VST/Dexed.vst",
+                                note_length_secs=1.0, render_length_secs=1.0)
     synth.load_state("./synth_params/dexed_simple_fm.json")
 
 MFCC Dataset
@@ -45,12 +45,12 @@ The total size of this dataset is about 140MB.
 .. code:: ipython3
 
     # Mel-frequency Cepstral Coefficients audio feature extractor.
-    features = spiegel.features.MFCC(num_mfccs=13, time_major=True, hop_size=1024)
+    features = spgl.features.MFCC(num_mfccs=13, time_major=True, hop_size=1024)
 
     # Setup generator for MFCC output and generate 50000 training examples and 10000 testing examples
-    generator = spiegel.DatasetGenerator(synth, features,
-                                         output_folder="./data_simple_FM_mfcc",
-                                         normalize=True)
+    generator = spgl.DatasetGenerator(synth, features,
+                                      output_folder="./data_simple_FM_mfcc",
+                                      normalize=True)
     generator.generate(50000, file_prefix="train_")
     generator.generate(10000, file_prefix="test_")
     generator.save_normalizers('normalizers.pkl')
@@ -67,10 +67,10 @@ The total size of the resulting dataset is about 10.8GB.
 .. code:: ipython3
 
     # Magnitude STFT ouptut feature extraction
-    features = spiegel.features.STFT(fft_size=512, hop_size=256, output='magnitude', time_major=True)
+    features = spgl.features.STFT(fft_size=512, hop_size=256, output='magnitude', time_major=True)
 
     # Setup generator and create dataset
-    generator = spiegel.DatasetGenerator(synth, features, output_folder="./data_simple_FM_stft", normalize=True)
+    generator = spgl.DatasetGenerator(synth, features, output_folder="./data_simple_FM_stft", normalize=True)
     generator.generate(50000, file_prefix="train_")
     generator.generate(10000, file_prefix="test_")
     generator.save_normalizers('normalizers.pkl')
@@ -85,7 +85,7 @@ saved for this set.
 
 .. code:: ipython3
 
-    eval_generator = spiegel.DatasetGenerator(synth, features,
-                                              output_folder='./evaluation',
-                                              save_audio=True)
+    eval_generator = spgl.DatasetGenerator(synth, features,
+                                           output_folder='./evaluation',
+                                           save_audio=True)
     eval_generator.generate(25)

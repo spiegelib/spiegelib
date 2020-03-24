@@ -3,27 +3,28 @@
 Installation
 ============
 
-The easiest way to install *spiegel* is to use the Python Package Index (PyPI),
-which is used through the command line with `pip <https://docs.python.org/3/installing/index.html>`_,
+The easiest way to install *SpiegeLib* is to use the Python Package Index (PyPI),
+which is used through the command line with `pip <https://docs.python.org/3/installing/index.html>`_.
 pip comes pre-installed with most python distributions and will automatically
-install the required dependencies for *spiegel*.
+install the required dependencies for *SpiegeLib*.
 
 Currently, the only dependency
 that cannot be installed using pip is the
 `RenderMan <https://github.com/fedden/RenderMan>`_ library, which must be installed
 manually in order to enable programmatic interaction with VST synthesizers.
-Instructions for installing RenderMan are included :ref:`here <librenderman_conda_install>`.
+Instructions for installing RenderMan in a virtual environment are provided
+(:ref:`Installing RenderMan in an Anaconda environment <librenderman_conda_install>`).
 At this time, RenderMan is only available on Mac OSX and Linux operating systems.
 
-We recommend installing *spiegel* inside a virtual environment as the library
+We recommend installing *SpiegeLib* inside a virtual environment as the library
 is still under active development. We recommend `Anaconda <https://www.anaconda.com/>`_.
-Instructions for creating a new Anconda environment and installing *spiegel* inside
+Instructions for creating a new Anconda environment and installing *SpiegeLib* inside
 of that are provided.
 
 Requirements
 ------------
 
-*spiegel* requires the following::
+*SpiegeLib* requires the following::
 
 	python >= 3.6
 	numpy >= 1.18.0
@@ -35,22 +36,22 @@ Requirements
 	librenderman
 
 All of these dependencies, except for librenderman (RenderMan), will be installed automatically.
-Instructions on installing RenderMan in a virtual environment are provided.
+Instructions on installing RenderMan in a virtual environment are provided :ref:`below <librenderman_conda_install>`.
 
 .. _anaconda_env:
 
 Anaconda Environment
 --------------------
 
-These instructions show how to install *spiegel* in an anaconda environment for sandboxed
+These instructions show how to install *SpiegeLib* in an anaconda environment for sandboxed
 development.
 
 Install `anaconda <https://www.anaconda.com/>`_ if you don't have it already. Make sure
 to install the Python 3 version as *speigel* only runs on Python 3.6 and higher.
 
-1) First, create a new conda environment for *spiegel*::
+1) First, create a new conda environment for *SpiegeLib*::
 
-	$ conda create --name new_spiegel_env python=3.7 numpy matplotlib
+	$ conda create --name new_spgl_env python=3.7 numpy matplotlib
 
 	...
 
@@ -61,7 +62,7 @@ to install the Python 3 version as *speigel* only runs on Python 3.6 and higher.
 	#
 	# To activate this environment, use
 	#
-	#     $ conda activate new_spiegel_env
+	#     $ conda activate new_spgl_env
 	#
 	# To deactivate an active environment, use
 	#
@@ -74,16 +75,16 @@ to install the Python 3 version as *speigel* only runs on Python 3.6 and higher.
 
 2) Activate the environment::
 
-	$ conda activate new_spiegel_env
-	(new_spiegel_env)$
+	$ conda activate new_spgl_env
+	(new_spgl_env)$
 
 3) Now we are working within the conda environment, to leave the environment::
 
 	$ conda deactivate
 
-4) Install *spiegel* and RenderMan:
+4) Install *SpiegeLib* and RenderMan:
 
-  The following sections provide information on installing *spiegel* using
+  The following sections provide information on installing *SpiegeLib* using
   pip (:ref:`pip installation <pip_installation>`) and installing RenderMan in a
   conda environment (:ref:`RenderMan installation <librenderman_conda_install>`)
 
@@ -93,19 +94,19 @@ to install the Python 3 version as *speigel* only runs on Python 3.6 and higher.
 pip installation
 ----------------
 
-Use the following command to install *spiegel* using pip from the Python Packaging
+Use the following command to install *SpiegeLib* using pip from the Python Packaging
 Index (PyPI). This will also install all dependencies, except for RenderMan.
 
 .. code-block::
 
-	$ python3 -m pip install spiegel
+	$ python3 -m pip install spiegelib
 
 If you want to install in a anaconda environment. Make sure you have created a python3
 anaconda environment and have activated that environment (See :ref:`Anaconda Environment<anaconda_env>`)
 
 .. code-block::
 
-	(new_siegel_env)$ python -m pip install spiegel
+	(new_spgl_env)$ python -m pip install spiegelib
 
 .. _librenderman_conda_install:
 
@@ -124,7 +125,7 @@ a `JUCE <https://juce.com/>`_ application.
 
 2) Install boost-python using conda. Make sure you have activated the conda environment that you want to install librendman into::
 
-	(new_siegel_env)$ conda install py-boost
+	(new_spgl_env)$ conda install py-boost
 
 3) Clone the librenderman repo::
 
@@ -151,15 +152,15 @@ a `JUCE <https://juce.com/>`_ application.
 	|
 	| The following instructions will refer to that location, whatever it is on your system, as ``<path-to-anaconda3>``.
 	|
-	| For the *Header Search Paths*, remove the existing paths and add ``<path-to-anaconda3>/envs/new_spiegel_env/include`` and
-		``<path-to-anaconda3>/envs/new_spiegel_env/include/python3.7m``.
+	| For the *Header Search Paths*, remove the existing paths and add ``<path-to-anaconda3>/envs/new_spgl_env/include`` and
+		``<path-to-anaconda3>/envs/new_spgl_env/include/python3.7m``.
 	|
 	| Using the default anaconda path:
 
 	.. image:: ../images/header_search_paths.png
 
 	|
-	| For the *Extra Library Search Paths*, remove the existing paths and add ``<path-to-anaconda3>/envs/new_spiegel_env/lib``
+	| For the *Extra Library Search Paths*, remove the existing paths and add ``<path-to-anaconda3>/envs/new_spgl_env/lib``
 	|
 	| Using the default anaconda path:
 
@@ -185,11 +186,11 @@ a `JUCE <https://juce.com/>`_ application.
 
 	$ cd <path-to-RenderMan>/Builds/MacOSX/build/Debug
 	$ mv librenderman.so.dylib librenderman.so
-	$ mv librenderman.so <path-to-anaconda3>/envs/new_spiegel_env/lib/python3.7/site-packages/
+	$ mv librenderman.so <path-to-anaconda3>/envs/new_spgl_env/lib/python3.7/site-packages/
 
 9) Test librenderman. Make sure the correct conda environment is activated::
 
-	(new_spiegel_env)$ python
+	(new_spgl_env)$ python
 	>>> import librenderman as rm
 	JUCE v<Juce version>
 	>>> engine = rm.RenderEngine(44100, 512, 512)

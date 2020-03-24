@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>LSTM Class &mdash; SPIEGEL 1.0.0 documentation</title>
+  <title>LSTM Class &mdash; SpiegeLib 0.0.1 documentation</title>
   
 
   
@@ -50,7 +50,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> SPIEGEL
+            <a href="../../index.html" class="icon icon-home"> SpiegeLib
           
 
           
@@ -113,7 +113,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">SPIEGEL</a>
+          <a href="../../index.html">SpiegeLib</a>
         
       </nav>
 
@@ -165,30 +165,30 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-spiegel.estimator.lstm">
-<span id="lstm-class"></span><span id="lstm"></span><h1>LSTM Class<a class="headerlink" href="#module-spiegel.estimator.lstm" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-spiegelib.estimator.lstm">
+<span id="lstm-class"></span><span id="lstm"></span><h1>LSTM Class<a class="headerlink" href="#module-spiegelib.estimator.lstm" title="Permalink to this headline">¶</a></h1>
 <p>LSTM Deep Learning Model</p>
 <p>Based on model proposed by Yee-King et al.</p>
 <p>“Automatic programming of VST sound synthesizers using deep networks and other techniques.”
 Yee-King, Matthew John, Leon Fedden, and Mark d’Inverno.
 IEEE Transactions on Emerging Topics in Computational Intelligence 2.2 (2018): 150-159.</p>
 <dl class="class">
-<dt id="spiegel.estimator.lstm.LSTM">
-<em class="property">class </em><code class="sig-prename descclassname">spiegel.estimator.lstm.</code><code class="sig-name descname">LSTM</code><span class="sig-paren">(</span><em class="sig-param">input_shape</em>, <em class="sig-param">num_outputs</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.lstm.LSTM" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="tf_estimator_base.html#spiegel.estimator.tf_estimator_base.TFEstimatorBase" title="spiegel.estimator.tf_estimator_base.TFEstimatorBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegel.estimator.tf_estimator_base.TFEstimatorBase</span></code></a></p>
+<dt id="spiegelib.estimator.lstm.LSTM">
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.estimator.lstm.</code><code class="sig-name descname">LSTM</code><span class="sig-paren">(</span><em class="sig-param">input_shape</em>, <em class="sig-param">num_outputs</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.lstm.LSTM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="tf_estimator_base.html#spiegelib.estimator.tf_estimator_base.TFEstimatorBase" title="spiegelib.estimator.tf_estimator_base.TFEstimatorBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.estimator.tf_estimator_base.TFEstimatorBase</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>input_shape</strong> (<em>tuple</em>) – Shape of matrix that will be passed to model input</p></li>
 <li><p><strong>num_outputs</strong> – Number of outputs the model has</p></li>
 <li><p><strong>kwargs</strong> – optional keyword arguments to pass to
-<code class="xref py py-class docutils literal notranslate"><span class="pre">spiegel.estimator.TFEstimatorBase</span></code></p></li>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.estimator.TFEstimatorBase</span></code></p></li>
 </ul>
 </dd>
 </dl>
 <dl class="method">
-<dt id="spiegel.estimator.lstm.LSTM.add_testing_data">
-<code class="sig-name descname">add_testing_data</code><span class="sig-paren">(</span><em class="sig-param">input</em>, <em class="sig-param">output</em>, <em class="sig-param">batch_size=64</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.lstm.LSTM.add_testing_data" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.estimator.lstm.LSTM.add_testing_data">
+<code class="sig-name descname">add_testing_data</code><span class="sig-paren">(</span><em class="sig-param">input</em>, <em class="sig-param">output</em>, <em class="sig-param">batch_size=64</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.lstm.LSTM.add_testing_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a tf Dataset from input and output for model testing, batches
 data if desired</p>
 <dl class="field-list simple">
@@ -204,8 +204,8 @@ set to None or 0 to prevent batching. defaults to 64</p></li>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.estimator.lstm.LSTM.add_training_data">
-<code class="sig-name descname">add_training_data</code><span class="sig-paren">(</span><em class="sig-param">input</em>, <em class="sig-param">output</em>, <em class="sig-param">batch_size=64</em>, <em class="sig-param">shuffle_size=None</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.lstm.LSTM.add_training_data" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.estimator.lstm.LSTM.add_training_data">
+<code class="sig-name descname">add_training_data</code><span class="sig-paren">(</span><em class="sig-param">input</em>, <em class="sig-param">output</em>, <em class="sig-param">batch_size=64</em>, <em class="sig-param">shuffle_size=None</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.lstm.LSTM.add_training_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a tf Dataset from input and output, and shuffles / batches
 data for training</p>
 <dl class="field-list simple">
@@ -223,8 +223,8 @@ shuffle_size, defaults to None, so shuffling does not occur</p></li>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.estimator.lstm.LSTM.build_model">
-<code class="sig-name descname">build_model</code><span class="sig-paren">(</span><em class="sig-param">highway_layers=100</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.lstm.LSTM.build_model" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.estimator.lstm.LSTM.build_model">
+<code class="sig-name descname">build_model</code><span class="sig-paren">(</span><em class="sig-param">highway_layers=100</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.lstm.LSTM.build_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct LSTM Model</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -235,8 +235,8 @@ defaults to 100</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.estimator.lstm.LSTM.fit">
-<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">epochs=1</em>, <em class="sig-param">callbacks=[]</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.lstm.LSTM.fit" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.estimator.lstm.LSTM.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">epochs=1</em>, <em class="sig-param">callbacks=[]</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.lstm.LSTM.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Train model on for a fixed number of epochs on training data and validation
 data if it has been added to this estimator</p>
 <dl class="field-list simple">
@@ -252,8 +252,8 @@ data if it has been added to this estimator</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.estimator.lstm.LSTM.load">
-<em class="property">static </em><code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.lstm.LSTM.load" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.estimator.lstm.LSTM.load">
+<em class="property">static </em><code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.lstm.LSTM.load" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load entire model and return an istantiated TFEstimatorBase class with
 the saved model loaded into it.</p>
 <dl class="field-list simple">
@@ -268,14 +268,14 @@ the saved model loaded into it.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.estimator.lstm.LSTM.load_model_from_checkpoint">
-<code class="sig-name descname">load_model_from_checkpoint</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.lstm.LSTM.load_model_from_checkpoint" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.estimator.lstm.LSTM.load_model_from_checkpoint">
+<code class="sig-name descname">load_model_from_checkpoint</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.lstm.LSTM.load_model_from_checkpoint" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load model weights from checkpoint</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.estimator.lstm.LSTM.load_weights">
-<code class="sig-name descname">load_weights</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.lstm.LSTM.load_weights" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.estimator.lstm.LSTM.load_weights">
+<code class="sig-name descname">load_weights</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.lstm.LSTM.load_weights" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load model weights from H5 or TensorFlow file</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -289,8 +289,8 @@ methods, see  <a class="reference external" href="https://www.tensorflow.org/api
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.estimator.lstm.LSTM.predict">
-<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">input</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.lstm.LSTM.predict" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.estimator.lstm.LSTM.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">input</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.lstm.LSTM.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run prediction on input</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -301,8 +301,8 @@ instance of data or a batch.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.estimator.lstm.LSTM.rms_error">
-<em class="property">static </em><code class="sig-name descname">rms_error</code><span class="sig-paren">(</span><em class="sig-param">y_true</em>, <em class="sig-param">y_pred</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.lstm.LSTM.rms_error" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.estimator.lstm.LSTM.rms_error">
+<em class="property">static </em><code class="sig-name descname">rms_error</code><span class="sig-paren">(</span><em class="sig-param">y_true</em>, <em class="sig-param">y_pred</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.lstm.LSTM.rms_error" title="Permalink to this definition">¶</a></dt>
 <dd><p>Static method for calculating root mean squared error between predictions
 and targets</p>
 <dl class="field-list simple">
@@ -316,8 +316,8 @@ and targets</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.estimator.lstm.LSTM.save_model">
-<code class="sig-name descname">save_model</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.lstm.LSTM.save_model" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.estimator.lstm.LSTM.save_model">
+<code class="sig-name descname">save_model</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.lstm.LSTM.save_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save entire model</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -331,8 +331,8 @@ see <a class="reference external" href="https://www.tensorflow.org/api_docs/pyth
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.estimator.lstm.LSTM.save_weights">
-<code class="sig-name descname">save_weights</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.estimator.lstm.LSTM.save_weights" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.estimator.lstm.LSTM.save_weights">
+<code class="sig-name descname">save_weights</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.lstm.LSTM.save_weights" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save model weights to a HDF5 or TensorFlow file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

@@ -18,7 +18,7 @@ flattened prior to being fed into the network.
 
 .. code:: ipython3
 
-    import spiegel
+    import spiegelib as spgl
     import numpy as np
     import tensorflow as tf
 
@@ -34,13 +34,13 @@ flattened prior to being fed into the network.
   testFeatures = testFeatures.reshape(testFeatures.shape[0], -1)
 
   # Setup callbacks for trainings
-  logger = spiegel.estimator.TFEpochLogger()
+  logger = spgl.estimator.TFEpochLogger()
   earlyStopping = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=10)
 
   # Instantiate MLP Model with the input shape, output shape, and callbacks
-  mlp = spiegel.estimator.MLP((trainFeatures.shape[-1],),
-                              trainParams.shape[-1],
-                              callbacks=[logger, earlyStopping])
+  mlp = spgl.estimator.MLP((trainFeatures.shape[-1],),
+                           trainParams.shape[-1],
+                           callbacks=[logger, earlyStopping])
 
   # Add training and validation data
   mlp.add_training_data(trainFeatures, trainParams)
@@ -90,13 +90,13 @@ Long short-term memory (LSTM)
   testParams = np.load('./data_simple_FM_mfcc/test_patches.npy')
 
   # Setup callbacks for trainings
-  logger = spiegel.estimator.TFEpochLogger()
+  logger = spgl.estimator.TFEpochLogger()
   earlyStopping = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=10)
 
   # Instantiate LSTM Model with the input shape, output shape, and callbacks
-  lstm = spiegel.estimator.LSTM(trainFeatures.shape[-2:],
-                                trainParams.shape[-1],
-                                callbacks=[logger, earlyStopping])
+  lstm = spgl.estimator.LSTM(trainFeatures.shape[-2:],
+                             trainParams.shape[-1],
+                             callbacks=[logger, earlyStopping])
 
   lstm.add_training_data(trainFeatures, trainParams)
   lstm.add_testing_data(testFeatures, testParams)
@@ -142,14 +142,14 @@ Bi-directional long short-term memory with highway layers (LSTM++)
 .. code:: ipython3
 
   # Setup callbacks for trainings
-  logger = spiegel.estimator.TFEpochLogger()
+  logger = spgl.estimator.TFEpochLogger()
   earlyStopping = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=10)
 
   # Instantiate LSTM++ Model with the input shape, output shape, and callbacks
-  bi_lstm = spiegel.estimator.HwyBLSTM(trainFeatures.shape[-2:],
-                                       trainParams.shape[-1],
-                                       callbacks=[logger, earlyStopping],
-                                       highway_layers=6)
+  bi_lstm = spgl.estimator.HwyBLSTM(trainFeatures.shape[-2:],
+                                    trainParams.shape[-1],
+                                    callbacks=[logger, earlyStopping],
+                                    highway_layers=6)
 
   bi_lstm.add_training_data(trainFeatures, trainParams)
   bi_lstm.add_testing_data(testFeatures, testParams)
@@ -216,13 +216,13 @@ Convolutional Neural Network (CNN)
 .. code:: ipython3
 
   # Setup callbacks for trainings
-  logger = spiegel.estimator.TFEpochLogger()
+  logger = spgl.estimator.TFEpochLogger()
   earlyStopping = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=10)
 
   # Instantiate Conv6 Model with the input shape, output shape, and callbacks
-  cnn = spiegel.estimator.Conv6(trainFeatures.shape[1:],
-                                trainParams.shape[-1],
-                                callbacks=[logger, earlyStopping])
+  cnn = spgl.estimator.Conv6(trainFeatures.shape[1:],
+                             trainParams.shape[-1],
+                             callbacks=[logger, earlyStopping])
 
   cnn.add_training_data(trainFeatures, trainParams)
   cnn.add_testing_data(testFeatures, testParams)

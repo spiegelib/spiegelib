@@ -8,13 +8,13 @@ files to disk for evaluation.
 
 .. code:: ipython3
 
-    import spiegel
+    import spiegelib as spgl
 
 .. code:: ipython3
 
    # Load synth with overridden params
-   synth = spiegel.synth.SynthVST("/Library/Audio/Plug-Ins/VST/Dexed.vst",
-                                  note_length_secs=1.0, render_length_secs=1.0)
+   synth = spgl.synth.SynthVST("/Library/Audio/Plug-Ins/VST/Dexed.vst",
+                               note_length_secs=1.0, render_length_secs=1.0)
    synth.load_state("./synth_params/dexed_simple_fm.json")
 
 Basic Genetic Algorithm
@@ -28,13 +28,13 @@ target audio sound is used the evaluate the fitness of each individual.
 .. code:: ipython3
 
    # MFCC features
-   ga_extractor = spiegel.features.MFCC(num_mfccs=13, hop_size=1024)
+   ga_extractor = spgl.features.MFCC(num_mfccs=13, hop_size=1024)
 
    # Basic Genetic Algorithm estimator
-   ga = spiegel.estimator.BasicGA(synth, ga_extractor, pop_size=300, ngen=100)
+   ga = spgl.estimator.BasicGA(synth, ga_extractor, pop_size=300, ngen=100)
 
    # Sound matching helper class
-   ga_matcher = spiegel.SoundMatch(synth, ga)
+   ga_matcher = spgl.SoundMatch(synth, ga)
 
 Non-dominated sorting genetic algorithm III (NSGA III)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -46,15 +46,15 @@ there are 3 objectives: MFCC, Spectral Summarized, and the FFT.
 .. code:: ipython3
 
    # Feature extractors for Multi-Objective GA
-   nsga_extractors = [spiegel.features.MFCC(num_mfccs=13, hop_size=1024),
-                      spiegel.features.SpectralSummarized(hop_size=1024),
-                      spiegel.features.FFT(output='magnitude')]
+   nsga_extractors = [spgl.features.MFCC(num_mfccs=13, hop_size=1024),
+                      spgl.features.SpectralSummarized(hop_size=1024),
+                      spgl.features.FFT(output='magnitude')]
 
    # NSGA3 Multi-Objective Genetic Algorithm
-   nsga = spiegel.estimator.NSGA3(synth, nsga_extractors)
+   nsga = spgl.estimator.NSGA3(synth, nsga_extractors)
 
    # Sound matching helper class
-   nsga_matcher = spiegel.SoundMatch(synth, nsga)
+   nsga_matcher = spgl.SoundMatch(synth, nsga)
 
 Sound Matching
 ^^^^^^^^^^^^^^
@@ -65,7 +65,7 @@ several hours to run on all 25 sounds.
 
 .. code:: ipython3
 
-   targets = spiegel.AudioBuffer.load_folder('./evaluation/audio')
+   targets = spgl.AudioBuffer.load_folder('./evaluation/audio')
 
    for i in range(len(targets)):
        audio = ga_matcher.match(targets[i])

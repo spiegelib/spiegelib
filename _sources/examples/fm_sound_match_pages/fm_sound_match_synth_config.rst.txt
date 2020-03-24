@@ -10,11 +10,11 @@ Load Dexed into an instance of SynthVST
 
 .. code:: ipython3
 
-    import spiegel
+    import spiegelib as spgl
 
 .. code:: ipython3
 
-    synth = spiegel.synth.SynthVST("/Library/Audio/Plug-Ins/VST/Dexed.vst")
+    synth = spgl.synth.SynthVST("/Library/Audio/Plug-Ins/VST/Dexed.vst")
 
 Dexed is an emulation of the Yamaha DX7 which contains six different
 operators that can be arranged in various ways to create complex sounds.

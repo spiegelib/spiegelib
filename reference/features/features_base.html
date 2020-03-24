@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>FeaturesBase Class &mdash; SPIEGEL 1.0.0 documentation</title>
+  <title>FeaturesBase Class &mdash; SpiegeLib 0.0.1 documentation</title>
   
 
   
@@ -50,7 +50,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> SPIEGEL
+            <a href="../../index.html" class="icon icon-home"> SpiegeLib
           
 
           
@@ -112,7 +112,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">SPIEGEL</a>
+          <a href="../../index.html">SpiegeLib</a>
         
       </nav>
 
@@ -164,12 +164,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-spiegel.features.features_base">
-<span id="featuresbase-class"></span><span id="features-base"></span><h1>FeaturesBase Class<a class="headerlink" href="#module-spiegel.features.features_base" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-spiegelib.features.features_base">
+<span id="featuresbase-class"></span><span id="features-base"></span><h1>FeaturesBase Class<a class="headerlink" href="#module-spiegelib.features.features_base" title="Permalink to this headline">¶</a></h1>
 <p>Abstract Base Class for Audio Features</p>
 <dl class="class">
-<dt id="spiegel.features.features_base.FeaturesBase">
-<em class="property">class </em><code class="sig-prename descclassname">spiegel.features.features_base.</code><code class="sig-name descname">FeaturesBase</code><span class="sig-paren">(</span><em class="sig-param">dimensions</em>, <em class="sig-param">sample_rate=44100</em>, <em class="sig-param">frame_size=2048</em>, <em class="sig-param">hop_size=512</em>, <em class="sig-param">normalize=False</em>, <em class="sig-param">time_major=False</em>, <em class="sig-param">per_feature_normalize=True</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.features_base.FeaturesBase">
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.features.features_base.</code><code class="sig-name descname">FeaturesBase</code><span class="sig-paren">(</span><em class="sig-param">dimensions</em>, <em class="sig-param">sample_rate=44100</em>, <em class="sig-param">frame_size=2048</em>, <em class="sig-param">hop_size=512</em>, <em class="sig-param">normalize=False</em>, <em class="sig-param">time_major=False</em>, <em class="sig-param">per_feature_normalize=True</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FeaturesBase" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -187,8 +187,8 @@ applies normalization for each dimension independently.</p></li>
 </dd>
 </dl>
 <dl class="method">
-<dt id="spiegel.features.features_base.FeaturesBase.add_modifier">
-<code class="sig-name descname">add_modifier</code><span class="sig-paren">(</span><em class="sig-param">modifier</em>, <em class="sig-param">type</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase.add_modifier" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.features_base.FeaturesBase.add_modifier">
+<code class="sig-name descname">add_modifier</code><span class="sig-paren">(</span><em class="sig-param">modifier</em>, <em class="sig-param">type</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FeaturesBase.add_modifier" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a data modifier to the feature extraction pipeline</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -202,8 +202,8 @@ apply some modification to that, and return a np.array</p></li>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.features_base.FeaturesBase.fit_normalizers">
-<code class="sig-name descname">fit_normalizers</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">transform=True</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase.fit_normalizers" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.features_base.FeaturesBase.fit_normalizers">
+<code class="sig-name descname">fit_normalizers</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">transform=True</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FeaturesBase.fit_normalizers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit normalizers to dataset for future transforms.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -219,8 +219,8 @@ apply some modification to that, and return a np.array</p></li>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.features_base.FeaturesBase.fit_normalizers_2d">
-<code class="sig-name descname">fit_normalizers_2d</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">transform</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase.fit_normalizers_2d" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.features_base.FeaturesBase.fit_normalizers_2d">
+<code class="sig-name descname">fit_normalizers_2d</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">transform</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FeaturesBase.fit_normalizers_2d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit normalizers for 2-dimensional datasets</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -236,8 +236,8 @@ apply some modification to that, and return a np.array</p></li>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.features_base.FeaturesBase.fit_normalizers_3d">
-<code class="sig-name descname">fit_normalizers_3d</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">transform</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase.fit_normalizers_3d" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.features_base.FeaturesBase.fit_normalizers_3d">
+<code class="sig-name descname">fit_normalizers_3d</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">transform</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FeaturesBase.fit_normalizers_3d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit normalizers for 3-dimensional datasets</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -253,19 +253,19 @@ apply some modification to that, and return a np.array</p></li>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.features_base.FeaturesBase.fit_normalizers_full_data">
-<code class="sig-name descname">fit_normalizers_full_data</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">transform</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase.fit_normalizers_full_data" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.features_base.FeaturesBase.fit_normalizers_full_data">
+<code class="sig-name descname">fit_normalizers_full_data</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">transform</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FeaturesBase.fit_normalizers_full_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit one normalizer on the entire dataset</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.features_base.FeaturesBase.get_features">
-<em class="property">abstract </em><code class="sig-name descname">get_features</code><span class="sig-paren">(</span><em class="sig-param">audio</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase.get_features" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.features_base.FeaturesBase.get_features">
+<em class="property">abstract </em><code class="sig-name descname">get_features</code><span class="sig-paren">(</span><em class="sig-param">audio</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FeaturesBase.get_features" title="Permalink to this definition">¶</a></dt>
 <dd><p>Must be implemented. Run audio feature extraction on audio provided as parameter.
 Normalization should be applied based on the normalize parameter.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>audio</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">spiegel.core.audio_buffer.AudioBuffer</span></code>) – Audio to process features on</p>
+<dd class="field-odd"><p><strong>audio</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.core.audio_buffer.AudioBuffer</span></code>) – Audio to process features on</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>results from audio feature extraction</p>
@@ -277,8 +277,8 @@ Normalization should be applied based on the normalize parameter.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.features_base.FeaturesBase.has_normalizers">
-<code class="sig-name descname">has_normalizers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase.has_normalizers" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.features_base.FeaturesBase.has_normalizers">
+<code class="sig-name descname">has_normalizers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FeaturesBase.has_normalizers" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>a boolean indicating whether or not normalizers have been set</p>
@@ -290,8 +290,8 @@ Normalization should be applied based on the normalize parameter.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.features_base.FeaturesBase.load_normalizers">
-<code class="sig-name descname">load_normalizers</code><span class="sig-paren">(</span><em class="sig-param">location</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase.load_normalizers" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.features_base.FeaturesBase.load_normalizers">
+<code class="sig-name descname">load_normalizers</code><span class="sig-paren">(</span><em class="sig-param">location</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FeaturesBase.load_normalizers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load trained normalizers from disk</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -301,8 +301,8 @@ Normalization should be applied based on the normalize parameter.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.features_base.FeaturesBase.normalize">
-<code class="sig-name descname">normalize</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase.normalize" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.features_base.FeaturesBase.normalize">
+<code class="sig-name descname">normalize</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FeaturesBase.normalize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Normalize features using pre-trained normalizer</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -318,8 +318,8 @@ Normalization should be applied based on the normalize parameter.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.features_base.FeaturesBase.save_normalizers">
-<code class="sig-name descname">save_normalizers</code><span class="sig-paren">(</span><em class="sig-param">location</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase.save_normalizers" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.features_base.FeaturesBase.save_normalizers">
+<code class="sig-name descname">save_normalizers</code><span class="sig-paren">(</span><em class="sig-param">location</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FeaturesBase.save_normalizers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save the trained normalizers for these features for later use</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -329,8 +329,8 @@ Normalization should be applied based on the normalize parameter.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.features_base.FeaturesBase.set_normalizer">
-<code class="sig-name descname">set_normalizer</code><span class="sig-paren">(</span><em class="sig-param">dimension</em>, <em class="sig-param">normalizer</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FeaturesBase.set_normalizer" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.features_base.FeaturesBase.set_normalizer">
+<code class="sig-name descname">set_normalizer</code><span class="sig-paren">(</span><em class="sig-param">dimension</em>, <em class="sig-param">normalizer</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FeaturesBase.set_normalizer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set a normalizer for a dimension, this will be used to normalize that dimension</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -345,14 +345,14 @@ Normalization should be applied based on the normalize parameter.</p>
 </dd></dl>
 
 <dl class="class">
-<dt id="spiegel.features.features_base.FullDataStandardScaler">
-<em class="property">class </em><code class="sig-prename descclassname">spiegel.features.features_base.</code><code class="sig-name descname">FullDataStandardScaler</code><a class="headerlink" href="#spiegel.features.features_base.FullDataStandardScaler" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.features_base.FullDataStandardScaler">
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.features.features_base.</code><code class="sig-name descname">FullDataStandardScaler</code><a class="headerlink" href="#spiegelib.features.features_base.FullDataStandardScaler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Custom data scaler for working with larger dimensionality datasets that
 don’t need to be scaled on a per-dimension basis such as STFT</p>
 <dl class="method">
-<dt id="spiegel.features.features_base.FullDataStandardScaler.fit">
-<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FullDataStandardScaler.fit" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.features_base.FullDataStandardScaler.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FullDataStandardScaler.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute mean and std for later scaling</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -362,8 +362,8 @@ don’t need to be scaled on a per-dimension basis such as STFT</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.features_base.FullDataStandardScaler.fit_transform">
-<code class="sig-name descname">fit_transform</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FullDataStandardScaler.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.features_base.FullDataStandardScaler.fit_transform">
+<code class="sig-name descname">fit_transform</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FullDataStandardScaler.fit_transform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute mean and std on data and then normalize it</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -379,8 +379,8 @@ don’t need to be scaled on a per-dimension basis such as STFT</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.features_base.FullDataStandardScaler.transform">
-<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.FullDataStandardScaler.transform" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.features_base.FullDataStandardScaler.transform">
+<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FullDataStandardScaler.transform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform normalization on data</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -398,18 +398,18 @@ don’t need to be scaled on a per-dimension basis such as STFT</p>
 </dd></dl>
 
 <dl class="exception">
-<dt id="spiegel.features.features_base.NormalizerError">
-<em class="property">exception </em><code class="sig-prename descclassname">spiegel.features.features_base.</code><code class="sig-name descname">NormalizerError</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.NormalizerError" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.features_base.NormalizerError">
+<em class="property">exception </em><code class="sig-prename descclassname">spiegelib.features.features_base.</code><code class="sig-name descname">NormalizerError</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.NormalizerError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 <p>Exception class for normalizers</p>
 <dl class="attribute">
-<dt id="spiegel.features.features_base.NormalizerError.args">
-<code class="sig-name descname">args</code><a class="headerlink" href="#spiegel.features.features_base.NormalizerError.args" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.features_base.NormalizerError.args">
+<code class="sig-name descname">args</code><a class="headerlink" href="#spiegelib.features.features_base.NormalizerError.args" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="spiegel.features.features_base.NormalizerError.with_traceback">
-<code class="sig-name descname">with_traceback</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.features.features_base.NormalizerError.with_traceback" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.features.features_base.NormalizerError.with_traceback">
+<code class="sig-name descname">with_traceback</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.NormalizerError.with_traceback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Exception.with_traceback(tb) –
 set self.__traceback__ to tb and return self.</p>
 </dd></dl>

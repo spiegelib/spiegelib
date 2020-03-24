@@ -3,7 +3,7 @@
 TFEstimatorBase
 ===============
 
-.. automodule:: spiegel.estimator.tf_estimator_base
+.. automodule:: spiegelib.estimator.tf_estimator_base
 	:members:
 	:show-inheritance:
 	:undoc-members:

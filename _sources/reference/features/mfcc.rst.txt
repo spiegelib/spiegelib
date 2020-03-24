@@ -3,7 +3,7 @@
 FeaturesBase Class
 ==================
 
-.. automodule:: spiegel.features.mfcc
+.. automodule:: spiegelib.features.mfcc
 	:members:
 	:show-inheritance:
 	:undoc-members:

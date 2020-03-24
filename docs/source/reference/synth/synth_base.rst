@@ -3,6 +3,6 @@
 SynthBase Class
 ===============
 
-.. automodule:: spiegel.synth.synth_base
+.. automodule:: spiegelib.synth.synth_base
 	:members:
 	:undoc-members:

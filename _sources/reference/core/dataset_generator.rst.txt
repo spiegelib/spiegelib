@@ -3,6 +3,6 @@
 DatasetGenerator Class
 ======================
 
-.. automodule:: spiegel.core.dataset_generator
+.. automodule:: spiegelib.core.dataset_generator
 	:members:
 	:undoc-members:

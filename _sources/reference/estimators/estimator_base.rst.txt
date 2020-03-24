@@ -3,7 +3,7 @@
 EstimatorBase Class
 ===================
 
-.. automodule:: spiegel.estimator.estimator_base
+.. automodule:: spiegelib.estimator.estimator_base
 	:members:
 	:show-inheritance:
 	:undoc-members:

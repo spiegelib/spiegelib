@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Sound Match Genetic Algorithm Estimators &mdash; SPIEGEL 1.0.0 documentation</title>
+  <title>Sound Match Genetic Algorithm Estimators &mdash; SpiegeLib 0.0.1 documentation</title>
   
 
   
@@ -50,7 +50,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> SPIEGEL
+            <a href="../../index.html" class="icon icon-home"> SpiegeLib
           
 
           
@@ -122,7 +122,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">SPIEGEL</a>
+          <a href="../../index.html">SpiegeLib</a>
         
       </nav>
 
@@ -181,12 +181,12 @@
 <p>Now we perform sound matching of the evaluation target set using the
 two genetic algorithm based approaches and save the resulting audio
 files to disk for evaluation.</p>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spiegel</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spiegelib</span> <span class="k">as</span> <span class="nn">spgl</span>
 </pre></div>
 </div>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load synth with overridden params</span>
-<span class="n">synth</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">synth</span><span class="o">.</span><span class="n">SynthVST</span><span class="p">(</span><span class="s2">&quot;/Library/Audio/Plug-Ins/VST/Dexed.vst&quot;</span><span class="p">,</span>
-                               <span class="n">note_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">render_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">synth</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">synth</span><span class="o">.</span><span class="n">SynthVST</span><span class="p">(</span><span class="s2">&quot;/Library/Audio/Plug-Ins/VST/Dexed.vst&quot;</span><span class="p">,</span>
+                            <span class="n">note_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">render_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
 <span class="n">synth</span><span class="o">.</span><span class="n">load_state</span><span class="p">(</span><span class="s2">&quot;./synth_params/dexed_simple_fm.json&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -197,13 +197,13 @@ algorithm. It uses a 13-band MFCC, which is calculated on every new
 individual in the population. The error between an inididual and the
 target audio sound is used the evaluate the fitness of each individual.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># MFCC features</span>
-<span class="n">ga_extractor</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MFCC</span><span class="p">(</span><span class="n">num_mfccs</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">)</span>
+<span class="n">ga_extractor</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MFCC</span><span class="p">(</span><span class="n">num_mfccs</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">)</span>
 
 <span class="c1"># Basic Genetic Algorithm estimator</span>
-<span class="n">ga</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">BasicGA</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">ga_extractor</span><span class="p">,</span> <span class="n">pop_size</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">ngen</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">ga</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">BasicGA</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">ga_extractor</span><span class="p">,</span> <span class="n">pop_size</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">ngen</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 
 <span class="c1"># Sound matching helper class</span>
-<span class="n">ga_matcher</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">SoundMatch</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">ga</span><span class="p">)</span>
+<span class="n">ga_matcher</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">SoundMatch</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">ga</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -213,15 +213,15 @@ target audio sound is used the evaluate the fitness of each individual.</p>
 Each extractor is used for one of the GA objectives, so in this instance
 there are 3 objectives: MFCC, Spectral Summarized, and the FFT.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Feature extractors for Multi-Objective GA</span>
-<span class="n">nsga_extractors</span> <span class="o">=</span> <span class="p">[</span><span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MFCC</span><span class="p">(</span><span class="n">num_mfccs</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">),</span>
-                   <span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">SpectralSummarized</span><span class="p">(</span><span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">),</span>
-                   <span class="n">spiegel</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">FFT</span><span class="p">(</span><span class="n">output</span><span class="o">=</span><span class="s1">&#39;magnitude&#39;</span><span class="p">)]</span>
+<span class="n">nsga_extractors</span> <span class="o">=</span> <span class="p">[</span><span class="n">spgl</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MFCC</span><span class="p">(</span><span class="n">num_mfccs</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">),</span>
+                   <span class="n">spgl</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">SpectralSummarized</span><span class="p">(</span><span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">),</span>
+                   <span class="n">spgl</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">FFT</span><span class="p">(</span><span class="n">output</span><span class="o">=</span><span class="s1">&#39;magnitude&#39;</span><span class="p">)]</span>
 
 <span class="c1"># NSGA3 Multi-Objective Genetic Algorithm</span>
-<span class="n">nsga</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">NSGA3</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">nsga_extractors</span><span class="p">)</span>
+<span class="n">nsga</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">NSGA3</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">nsga_extractors</span><span class="p">)</span>
 
 <span class="c1"># Sound matching helper class</span>
-<span class="n">nsga_matcher</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">SoundMatch</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">nsga</span><span class="p">)</span>
+<span class="n">nsga_matcher</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">SoundMatch</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">nsga</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -230,7 +230,7 @@ there are 3 objectives: MFCC, Spectral Summarized, and the FFT.</p>
 <p>Load in the folder of evaluation audio samples and perform sound
 matching on each one using both genetic algorithms. This may take
 several hours to run on all 25 sounds.</p>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">targets</span> <span class="o">=</span> <span class="n">spiegel</span><span class="o">.</span><span class="n">AudioBuffer</span><span class="o">.</span><span class="n">load_folder</span><span class="p">(</span><span class="s1">&#39;./evaluation/audio&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">targets</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">AudioBuffer</span><span class="o">.</span><span class="n">load_folder</span><span class="p">(</span><span class="s1">&#39;./evaluation/audio&#39;</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)):</span>
     <span class="n">audio</span> <span class="o">=</span> <span class="n">ga_matcher</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>

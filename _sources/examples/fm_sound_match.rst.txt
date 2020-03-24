@@ -8,7 +8,7 @@ replicate that sound as closely as possible. This is called sound matching. We'l
 run this experiment using the open-source *Dexed* VST emulation of the Yamaha DX7.
 Dexed can be dowloaded for free `here <https://asb2m10.github.io/dexed/>`_.
 
-Through this example will use *spiegel* to:
+Through this example will use *SpiegeLib* to:
 
 * Program and generate sounds from a VST synthesizer
 * Generate datasets for deep learning and evaluation
@@ -16,10 +16,10 @@ Through this example will use *spiegel* to:
 * Perform sound matching using different types of estimators
 * Evaluate results
 
-If you haven't already, make sure you have *spiegel* and *RenderMan* installed.
+If you haven't already, make sure you have *SpiegeLib* and *RenderMan* installed.
 See :ref:`installation instructions <installation>`. And download `Dexed <https://asb2m10.github.io/dexed/>`__.
 
-All code is available as Python notebooks on the project `github page <https://github.com/spiegel-lib/vst-fm-sound-match>`__.
+All code is available as Python notebooks on the project `github page <https://github.com/spiegelib/vst-fm-sound-match>`__.
 The trained models from this experiment are also
 available in the git repo. All datasets generated and used in
 this experiment are also available online.

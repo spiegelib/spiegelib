@@ -3,7 +3,7 @@
 LSTM Class
 ==========
 
-.. automodule:: spiegel.estimator.lstm
+.. automodule:: spiegelib.estimator.lstm
 	:members:
 	:show-inheritance:
 	:undoc-members:

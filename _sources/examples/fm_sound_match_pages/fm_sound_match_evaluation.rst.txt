@@ -17,25 +17,25 @@ of the sound matched results from each estimator.
 
 .. code:: ipython3
 
-   import spiegel
+   import spiegelib as spgl
    import numpy as np
    import matplotlib.pyplot as plt
 
 .. code:: ipython3
 
   # Load the sound targets used for sound matching
-  targets = spiegel.AudioBuffer.load_folder('./evaluation/audio')
+  targets = spgl.AudioBuffer.load_folder('./evaluation/audio')
 
   # Load all the estimations of the sound targets made by each estimator
-  estimations = [spiegel.AudioBuffer.load_folder('./evaluation/mlp'),
-                 spiegel.AudioBuffer.load_folder('./evaluation/lstm'),
-                 spiegel.AudioBuffer.load_folder('./evaluation/bi_lstm'),
-                 spiegel.AudioBuffer.load_folder('./evaluation/cnn'),
-                 spiegel.AudioBuffer.load_folder('./evaluation/ga'),
-                 spiegel.AudioBuffer.load_folder('./evaluation/nsga')]
+  estimations = [spgl.AudioBuffer.load_folder('./evaluation/mlp'),
+                 spgl.AudioBuffer.load_folder('./evaluation/lstm'),
+                 spgl.AudioBuffer.load_folder('./evaluation/bi_lstm'),
+                 spgl.AudioBuffer.load_folder('./evaluation/cnn'),
+                 spgl.AudioBuffer.load_folder('./evaluation/ga'),
+                 spgl.AudioBuffer.load_folder('./evaluation/nsga')]
 
   # Evaluate the results and save to JSON file
-  evaluation = spiegel.evaluation.MFCCEval(targets, estimations)
+  evaluation = spgl.evaluation.MFCCEval(targets, estimations)
   evaluation.evaluate()
   evaluation.save_stats_json('./evaluation/evaluation_stats.json')
 

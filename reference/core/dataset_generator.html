@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>DatasetGenerator Class &mdash; SPIEGEL 1.0.0 documentation</title>
+  <title>DatasetGenerator Class &mdash; SpiegeLib 0.0.1 documentation</title>
   
 
   
@@ -36,7 +36,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Synth Classes" href="../synth.html" />
-    <link rel="prev" title="SPIEGEL Core Classes" href="../core.html" /> 
+    <link rel="prev" title="SpiegeLib Core Classes" href="../core.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -50,7 +50,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> SPIEGEL
+            <a href="../../index.html" class="icon icon-home"> SpiegeLib
           
 
           
@@ -111,7 +111,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">SPIEGEL</a>
+          <a href="../../index.html">SpiegeLib</a>
         
       </nav>
 
@@ -142,7 +142,7 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="../core.html">SPIEGEL Core Classes</a> &raquo;</li>
+          <li><a href="../core.html">SpiegeLib Core Classes</a> &raquo;</li>
         
       <li>DatasetGenerator Class</li>
     
@@ -163,23 +163,23 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-spiegel.core.dataset_generator">
-<span id="datasetgenerator-class"></span><span id="dataset-generator"></span><h1>DatasetGenerator Class<a class="headerlink" href="#module-spiegel.core.dataset_generator" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-spiegelib.core.dataset_generator">
+<span id="datasetgenerator-class"></span><span id="dataset-generator"></span><h1>DatasetGenerator Class<a class="headerlink" href="#module-spiegelib.core.dataset_generator" title="Permalink to this headline">¶</a></h1>
 <p>Dataset Generator Class</p>
 <dl class="class">
-<dt id="spiegel.core.dataset_generator.DatasetGenerator">
-<em class="property">class </em><code class="sig-prename descclassname">spiegel.core.dataset_generator.</code><code class="sig-name descname">DatasetGenerator</code><span class="sig-paren">(</span><em class="sig-param">synth</em>, <em class="sig-param">features</em>, <em class="sig-param">output_folder='/Users/jshier/Development/Academic/spiegel/docs'</em>, <em class="sig-param">save_audio=False</em>, <em class="sig-param">normalize=False</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.core.dataset_generator.DatasetGenerator" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.core.dataset_generator.DatasetGenerator">
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.core.dataset_generator.</code><code class="sig-name descname">DatasetGenerator</code><span class="sig-paren">(</span><em class="sig-param">synth</em>, <em class="sig-param">features</em>, <em class="sig-param">output_folder='/Users/jshier/Development/Academic/spiegel/docs'</em>, <em class="sig-param">save_audio=False</em>, <em class="sig-param">normalize=False</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.core.dataset_generator.DatasetGenerator" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>synth</strong> (<em>Object</em>) – Synthesizer to generate test data from. Must inherit from
-<a class="reference internal" href="../synth/synth_base.html#spiegel.synth.synth_base.SynthBase" title="spiegel.synth.synth_base.SynthBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegel.synth.synth_base.SynthBase</span></code></a>.</p></li>
+<a class="reference internal" href="../synth/synth_base.html#spiegelib.synth.synth_base.SynthBase" title="spiegelib.synth.synth_base.SynthBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.synth.synth_base.SynthBase</span></code></a>.</p></li>
 <li><p><strong>features</strong> (<em>Object</em>) – Features to use for dataset generation. Must inherit from
-<a class="reference internal" href="../features/features_base.html#spiegel.features.features_base.FeaturesBase" title="spiegel.features.features_base.FeaturesBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegel.features.features_base.FeaturesBase</span></code></a></p></li>
+<a class="reference internal" href="../features/features_base.html#spiegelib.features.features_base.FeaturesBase" title="spiegelib.features.features_base.FeaturesBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.features.features_base.FeaturesBase</span></code></a></p></li>
 <li><p><strong>output_folder</strong> (<em>str</em><em>, </em><em>optional</em>) – Output folder for dataset, defaults to currect working directory</p></li>
 <li><p><strong>save_audio</strong> (<em>bool</em><em>, </em><em>optional</em>) – whether or not to save rendered audio files, defaults to False</p></li>
 <li><p><strong>normalize</strong> (<em>bool</em><em>, </em><em>optional</em>) – whether or not to normalize features. Requires the normalizers in the
-feature object to be pre-trained. <a class="reference internal" href="#spiegel.core.dataset_generator.DatasetGenerator.generate" title="spiegel.core.dataset_generator.DatasetGenerator.generate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">generate()</span></code></a> can be used to train the normalizers.
+feature object to be pre-trained. <a class="reference internal" href="#spiegelib.core.dataset_generator.DatasetGenerator.generate" title="spiegelib.core.dataset_generator.DatasetGenerator.generate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">generate()</span></code></a> can be used to train the normalizers.
 Defaults to True.</p></li>
 </ul>
 </dd>
@@ -193,14 +193,14 @@ created within the output folder if saving audio. Defaults to audio</p></li>
 </dd>
 </dl>
 <dl class="method">
-<dt id="spiegel.core.dataset_generator.DatasetGenerator.create_audio_folder">
-<code class="sig-name descname">create_audio_folder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.core.dataset_generator.DatasetGenerator.create_audio_folder" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.core.dataset_generator.DatasetGenerator.create_audio_folder">
+<code class="sig-name descname">create_audio_folder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.core.dataset_generator.DatasetGenerator.create_audio_folder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check for and create the audio output folder if necassary</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.core.dataset_generator.DatasetGenerator.generate">
-<code class="sig-name descname">generate</code><span class="sig-paren">(</span><em class="sig-param">size</em>, <em class="sig-param">file_prefix=''</em>, <em class="sig-param">fit_normalizers_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.core.dataset_generator.DatasetGenerator.generate" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.core.dataset_generator.DatasetGenerator.generate">
+<code class="sig-name descname">generate</code><span class="sig-paren">(</span><em class="sig-param">size</em>, <em class="sig-param">file_prefix=''</em>, <em class="sig-param">fit_normalizers_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.core.dataset_generator.DatasetGenerator.generate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate dataset with a set of random patches</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -213,8 +213,8 @@ created within the output folder if saving audio. Defaults to audio</p></li>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegel.core.dataset_generator.DatasetGenerator.save_normalizers">
-<code class="sig-name descname">save_normalizers</code><span class="sig-paren">(</span><em class="sig-param">file_name</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegel.core.dataset_generator.DatasetGenerator.save_normalizers" title="Permalink to this definition">¶</a></dt>
+<dt id="spiegelib.core.dataset_generator.DatasetGenerator.save_normalizers">
+<code class="sig-name descname">save_normalizers</code><span class="sig-paren">(</span><em class="sig-param">file_name</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.core.dataset_generator.DatasetGenerator.save_normalizers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save feature normalizers</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -238,7 +238,7 @@ created within the output folder if saving audio. Defaults to audio</p></li>
         <a href="../synth.html" class="btn btn-neutral float-right" title="Synth Classes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../core.html" class="btn btn-neutral float-left" title="SPIEGEL Core Classes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../core.html" class="btn btn-neutral float-left" title="SpiegeLib Core Classes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

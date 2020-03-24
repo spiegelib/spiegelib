@@ -1,5 +1,5 @@
-SPIEGEL Core Classes
-====================
+SpiegeLib Core Classes
+======================
 
 .. toctree::
    :maxdepth: 2

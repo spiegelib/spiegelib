@@ -7,21 +7,21 @@ for evaluation
 
 .. code:: ipython3
 
-    import spiegel
+    import spiegelib as spgl
 
 .. code:: ipython3
 
     # Load all saved models
-    mlp = spiegel.estimator.TFEstimatorBase.load('./saved_models/simple_fm_mlp.h5')
-    lstm = spiegel.estimator.TFEstimatorBase.load('./saved_models/simple_fm_lstm.h5')
-    bi_lstm = spiegel.estimator.TFEstimatorBase.load('./saved_models/simple_fm_bi_lstm.h5')
-    cnn = spiegel.estimator.TFEstimatorBase.load('./saved_models/simple_fm_cnn.h5')
+    mlp = spgl.estimator.TFEstimatorBase.load('./saved_models/simple_fm_mlp.h5')
+    lstm = spgl.estimator.TFEstimatorBase.load('./saved_models/simple_fm_lstm.h5')
+    bi_lstm = spgl.estimator.TFEstimatorBase.load('./saved_models/simple_fm_bi_lstm.h5')
+    cnn = spgl.estimator.TFEstimatorBase.load('./saved_models/simple_fm_cnn.h5')
 
 .. code:: ipython3
 
     # Load synth with overriden params
-    synth = spiegel.synth.SynthVST("/Library/Audio/Plug-Ins/VST/Dexed.vst",
-                                   note_length_secs=1.0, render_length_secs=1.0)
+    synth = spgl.synth.SynthVST("/Library/Audio/Plug-Ins/VST/Dexed.vst",
+                                note_length_secs=1.0, render_length_secs=1.0)
     synth.load_state("./synth_params/dexed_simple_fm.json")
 
 Setup all the feature extractors to provide the correct input data for
@@ -32,17 +32,17 @@ normalizers that were setup when initially creating each dataset.
 
     # MLP feature extractor with a modifying function that flattens the time slice arrays at the end of the feature
     # extraction pipeline
-    mlp_extractor = spiegel.features.MFCC(num_mfccs=13, time_major=True, hop_size=1024, normalize=True)
+    mlp_extractor = spgl.features.MFCC(num_mfccs=13, time_major=True, hop_size=1024, normalize=True)
     mlp_extractor.load_normalizers('./data_simple_fm_mfcc/normalizers.pkl')
     mlp_extractor.add_modifier(lambda data : data.flatten(), type='output')
 
     # LSTM & LSTM++ feature extractor -- time series of MFCC frames
-    lstm_extractor = spiegel.features.MFCC(num_mfccs=13, time_major=True, hop_size=1024, normalize=True)
+    lstm_extractor = spgl.features.MFCC(num_mfccs=13, time_major=True, hop_size=1024, normalize=True)
     lstm_extractor.load_normalizers('./data_simple_fm_mfcc/normalizers.pkl')
 
     # CNN feature extractor uses magnitude output from STFT and then modifies the output array into a 3D array for the
     # 2D convolutional network becuase it is expecting an image with a single channel (ie grayscale).
-    cnn_extractor = spiegel.features.MagnitudeSTFT(fft_size=512, hop_size=256, time_major=True, normalize=True)
+    cnn_extractor = spgl.features.MagnitudeSTFT(fft_size=512, hop_size=256, time_major=True, normalize=True)
     cnn_extractor.load_normalizers('./data_simple_fm_stft/normalizers.pkl')
     cnn_extractor.add_modifier(lambda data : data.reshape(data.shape[0], data.shape[1], 1), type='output')
 
@@ -57,10 +57,10 @@ genetic estimators.
 
 .. code:: ipython3
 
-    mlp_matcher = spiegel.SoundMatch(synth, mlp, mlp_extractor)
-    lstm_matcher = spiegel.SoundMatch(synth, lstm, lstm_extractor)
-    bi_lstm_matcher = spiegel.SoundMatch(synth, bi_lstm, lstm_extractor)
-    cnn_matcher = spiegel.SoundMatch(synth, cnn, cnn_extractor)
+    mlp_matcher = spgl.SoundMatch(synth, mlp, mlp_extractor)
+    lstm_matcher = spgl.SoundMatch(synth, lstm, lstm_extractor)
+    bi_lstm_matcher = spgl.SoundMatch(synth, bi_lstm, lstm_extractor)
+    cnn_matcher = spgl.SoundMatch(synth, cnn, cnn_extractor)
 
 Load in the folder of evaluation audio samples and perform sound
 matching on each one with each estimation model. AudioBuffer.load_folder
@@ -71,7 +71,7 @@ up when we get to evaluation.
 
 .. code:: ipython3
 
-    targets = spiegel.AudioBuffer.load_folder('./evaluation/audio')
+    targets = spgl.AudioBuffer.load_folder('./evaluation/audio')
 
     for i in range(len(targets)):
         audio = mlp_matcher.match(targets[i])
