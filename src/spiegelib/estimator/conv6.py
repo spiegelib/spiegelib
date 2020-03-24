@@ -9,7 +9,7 @@ IEEE/ACM Transactions on Audio, Speech, and Language Processing 27.12
 (2019): 2385-2396.
 """
 
-from spiegel.estimator.tf_estimator_base import TFEstimatorBase
+from spiegelib.estimator.tf_estimator_base import TFEstimatorBase
 import tensorflow as tf
 from tensorflow.keras import layers
 
@@ -20,7 +20,7 @@ class Conv6(TFEstimatorBase):
     :param num_outputs: Number of outputs the model has
     :type numOuputs: int
     :param kwargs: optional keyword arguments to pass to
-        :class:`spiegel.estimator.TFEstimatorBase`
+        :class:`spiegelib.estimator.TFEstimatorBase`
     """
 
     def __init__(self, input_shape, num_outputs, **kwargs):

@@ -9,9 +9,9 @@ Yee-King, Matthew John, Leon Fedden, and Mark d'Inverno.
 IEEE Transactions on Emerging Topics in Computational Intelligence 2.2 (2018): 150-159.
 """
 
-from spiegel.estimator.tf_estimator_base import TFEstimatorBase
 import tensorflow as tf
 from tensorflow.keras import layers
+from spiegelib.estimator.tf_estimator_base import TFEstimatorBase
 
 class MLP(TFEstimatorBase):
     """
@@ -19,7 +19,7 @@ class MLP(TFEstimatorBase):
     :type input_shape: tuple
     :param num_outputs: Number of outputs the model has
     :type numOuputs: int
-    :param kwargs: optional keyword arguments to pass to :class:`spiegel.estimator.TFEstimatorBase`
+    :param kwargs: optional keyword arguments to pass to :class:`spiegelib.estimator.TFEstimatorBase`
     """
 
     def __init__(self, input_shape, num_outputs, **kwargs):

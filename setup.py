@@ -6,7 +6,7 @@ from setuptools import find_packages
 __version__ = '0.0.1'
 __author__ = "Jordie Shier"
 __contact__ = "jordieshier@gmail.com"
-__url__ = "https://github.com/jorshi/spiegel"
+__url__ = "https://github.com/spiegelib/spiegelib"
 __license__ = "MIT"
 
 
@@ -14,7 +14,7 @@ with open("README.md", "r", encoding='utf-8') as f:
     readme = f.read()
 
 setup(
-    name='spiegel',
+    name='spiegelib',
     version=__version__,
     author=__author__,
     author_email=__contact__,

@@ -7,7 +7,7 @@ from abc import ABC, abstractmethod
 import numpy as np
 import matplotlib.pyplot as plt
 import json
-from spiegel import AudioBuffer
+from spiegelib import AudioBuffer
 
 class EvaluationBase(ABC):
     """

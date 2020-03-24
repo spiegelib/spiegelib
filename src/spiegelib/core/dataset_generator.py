@@ -8,18 +8,18 @@ import numpy as np
 from tqdm import trange
 import scipy.io.wavfile
 
-from spiegel.synth.synth_base import SynthBase
-from spiegel.features.features_base import FeaturesBase
-from spiegel.features.mfcc import MFCC
+from spiegelib.synth.synth_base import SynthBase
+from spiegelib.features.features_base import FeaturesBase
+from spiegelib.features.mfcc import MFCC
 
 
 class DatasetGenerator():
     """
     :param synth: Synthesizer to generate test data from. Must inherit from
-        :class:`spiegel.synth.synth_base.SynthBase`.
+        :class:`spiegelib.synth.synth_base.SynthBase`.
     :type synth: Object
     :param features: Features to use for dataset generation. Must inherit from
-        :class:`spiegel.features.features_base.FeaturesBase`
+        :class:`spiegelib.features.features_base.FeaturesBase`
     :type features: Object
     :param output_folder: Output folder for dataset, defaults to currect working directory
     :type output_folder: str, optional

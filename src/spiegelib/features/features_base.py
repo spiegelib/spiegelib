@@ -77,7 +77,7 @@ class FeaturesBase(ABC):
         feature extraction
 
         :param audio: Audio to process features on
-        :type audio: :class:`spiegel.core.audio_buffer.AudioBuffer`
+        :type audio: :class:`spiegelib.core.audio_buffer.AudioBuffer`
         :param normalize: If set, will override the normalize attribute set
             during construction.
         :type normalize: bool, optional
@@ -140,7 +140,7 @@ class FeaturesBase(ABC):
         Normalization should be applied based on the normalize parameter.
 
         :param audio: Audio to process features on
-        :type audio: :class:`spiegel.core.audio_buffer.AudioBuffer`
+        :type audio: :class:`spiegelib.core.audio_buffer.AudioBuffer`
         :returns: results from audio feature extraction
         :rtype: np.array
         """

@@ -4,16 +4,16 @@ FFT Audio Feature Extractor
 """
 
 import numpy as np
-from spiegel import AudioBuffer
-from spiegel.features.features_base import FeaturesBase
-import spiegel.features.utils as utils
+from spiegelib import AudioBuffer
+from spiegelib.features.features_base import FeaturesBase
+import spiegelib.features.utils as utils
 
 class FFT(FeaturesBase):
     """
     :param fft_size: Size of FFT, defaults to None. If set, will truncate input
         if smaller than input size, or zero pad if longer.
     :type fft_size: int, optional
-    :param kwargs: keyword arguments for base class, see :class:`spiegel.features.features_base.FeaturesBase`.
+    :param kwargs: keyword arguments for base class, see :class:`spiegelib.features.features_base.FeaturesBase`.
     """
 
     def __init__(self, fft_size=None, output='complex', **kwargs):
@@ -39,7 +39,7 @@ class FFT(FeaturesBase):
         Normalization should be applied based on the normalize parameter.
 
         :param audio: Audio to process features on
-        :type audio: :class:`spiegel.core.audio_buffer.AudioBuffer`
+        :type audio: :class:`spiegelib.core.audio_buffer.AudioBuffer`
         :param normalize: Whether or not the features are normalized, defaults to False
         :type normalize: bool, optional
         :returns: results from audio feature extraction

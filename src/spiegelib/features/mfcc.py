@@ -5,14 +5,14 @@ MFCC Audio Feature Extractor
 
 import numpy as np
 import librosa
-from spiegel import AudioBuffer
-from spiegel.features.features_base import FeaturesBase
+from spiegelib import AudioBuffer
+from spiegelib.features.features_base import FeaturesBase
 
 class MFCC(FeaturesBase):
     """
     :param num_mfccs: number of mffcs to return per frame, defaults to 20
     :type num_mfccs: int, optional
-    :param kwargs: keyword arguments for base class, see :class:`spiegel.features.features_base.FeaturesBase`.
+    :param kwargs: keyword arguments for base class, see :class:`spiegelib.features.features_base.FeaturesBase`.
     """
 
     def __init__(self, num_mfccs=20, **kwargs):
@@ -30,7 +30,7 @@ class MFCC(FeaturesBase):
         Normalization should be applied based on the normalize parameter.
 
         :param audio: Audio to process features on
-        :type audio: :class:`spiegel.core.audio_buffer.AudioBuffer`
+        :type audio: :class:`spiegelib.core.audio_buffer.AudioBuffer`
         :param normalize: Whether or not the features are normalized, defaults to False
         :type normalize: bool, optional
         :returns: results from audio feature extraction
