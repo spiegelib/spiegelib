@@ -5,21 +5,21 @@ Class for Automatic Sound Matching
 
 import os
 import librosa
-from spiegel import AudioBuffer
-from spiegel.synth.synth_base import SynthBase
-from spiegel.features.features_base import FeaturesBase, NormalizerError
-from spiegel.estimator.estimator_base import EstimatorBase
+from spiegelib import AudioBuffer
+from spiegelib.synth.synth_base import SynthBase
+from spiegelib.features.features_base import FeaturesBase, NormalizerError
+from spiegelib.estimator.estimator_base import EstimatorBase
 
 class SoundMatch():
     """
     :param synth: synthesizer, must inherit from
-        :class:`spiegel.synth.synth_base.SynthBase`.
+        :class:`spiegelib.synth.synth_base.SynthBase`.
     :type synth: Object
     :param features: feature extraction, must inherit from
-        :class:`spiegel.features.feature_base.FeatureBase`.
+        :class:`spiegelib.features.feature_base.FeatureBase`.
     :type features: Object
     :param estimator: paramter estimator, must inherit from
-        :class:`spiegel.estimator.estimator_base.EstimatorBase`.
+        :class:`spiegelib.estimator.estimator_base.EstimatorBase`.
     :type estimator: Object
     """
 
@@ -66,7 +66,7 @@ class SoundMatch():
         Attempt to estimate parameters for target audio
 
         :param target: input audio to use as target
-        :type target: :class:`spiegel.core.audio_buffer.AudioBuffer`
+        :type target: :class:`spiegelib.core.audio_buffer.AudioBuffer`
         """
 
         # Attempt to run feature extraction if features have been provided
