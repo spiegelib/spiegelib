@@ -3,18 +3,18 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-SPIEGEL
-=======
+SpiegeLib
+=========
 Synthesizer Programming with Intelligent Exploration, Generation, and Evaluation Library
 
-*spiegel* is named after composer Laurie Spiegel, an early pioneer in electronic music.
+*SpiegeLib* is named after composer Laurie Spiegel, an early pioneer in electronic music.
 She is known for her work with synthesizers and for automating various aspects of
 the music composition process. Her philosophy for using technology and automation in music
 serves as motivation for this project:
 
 "I automate whatever can be automated to be freer to focus on those aspects of music that can't be automated. The challenge is to figure out which is which."
 
-To learn more about Laurie Spiegel and her work visit her `website <http://retiary.org/ls/>`_. 
+To learn more about Laurie Spiegel and her work visit her `website <http://retiary.org/ls/>`_.
 
 .. toctree::
    :maxdepth: 2
