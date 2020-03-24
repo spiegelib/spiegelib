@@ -51,7 +51,7 @@ to install the Python 3 version as *speigel* only runs on Python 3.6 and higher.
 
 1) First, create a new conda environment for *SpiegeLib*::
 
-	$ conda create --name new_spgl_env python=3.7 numpy matplotlib
+	$ conda create --name spiegelib_env python=3.7 numpy matplotlib
 
 	...
 
@@ -62,7 +62,7 @@ to install the Python 3 version as *speigel* only runs on Python 3.6 and higher.
 	#
 	# To activate this environment, use
 	#
-	#     $ conda activate new_spgl_env
+	#     $ conda activate spiegelib_env
 	#
 	# To deactivate an active environment, use
 	#
@@ -75,8 +75,8 @@ to install the Python 3 version as *speigel* only runs on Python 3.6 and higher.
 
 2) Activate the environment::
 
-	$ conda activate new_spgl_env
-	(new_spgl_env)$
+	$ conda activate spiegelib_env
+	(spiegelib_env)$
 
 3) Now we are working within the conda environment, to leave the environment::
 
@@ -106,7 +106,7 @@ anaconda environment and have activated that environment (See :ref:`Anaconda Env
 
 .. code-block::
 
-	(new_spgl_env)$ python -m pip install spiegelib
+	(spiegelib_env)$ python -m pip install spiegelib
 
 .. _librenderman_conda_install:
 
@@ -125,7 +125,7 @@ a `JUCE <https://juce.com/>`_ application.
 
 2) Install boost-python using conda. Make sure you have activated the conda environment that you want to install librendman into::
 
-	(new_spgl_env)$ conda install py-boost
+	(spiegelib_env)$ conda install py-boost
 
 3) Clone the librenderman repo::
 
@@ -152,15 +152,15 @@ a `JUCE <https://juce.com/>`_ application.
 	|
 	| The following instructions will refer to that location, whatever it is on your system, as ``<path-to-anaconda3>``.
 	|
-	| For the *Header Search Paths*, remove the existing paths and add ``<path-to-anaconda3>/envs/new_spgl_env/include`` and
-		``<path-to-anaconda3>/envs/new_spgl_env/include/python3.7m``.
+	| For the *Header Search Paths*, remove the existing paths and add ``<path-to-anaconda3>/envs/spiegelib_env/include`` and
+		``<path-to-anaconda3>/envs/spiegelib_env/include/python3.7m``.
 	|
 	| Using the default anaconda path:
 
 	.. image:: ../images/header_search_paths.png
 
 	|
-	| For the *Extra Library Search Paths*, remove the existing paths and add ``<path-to-anaconda3>/envs/new_spgl_env/lib``
+	| For the *Extra Library Search Paths*, remove the existing paths and add ``<path-to-anaconda3>/envs/spiegelib_env/lib``
 	|
 	| Using the default anaconda path:
 
@@ -186,11 +186,11 @@ a `JUCE <https://juce.com/>`_ application.
 
 	$ cd <path-to-RenderMan>/Builds/MacOSX/build/Debug
 	$ mv librenderman.so.dylib librenderman.so
-	$ mv librenderman.so <path-to-anaconda3>/envs/new_spgl_env/lib/python3.7/site-packages/
+	$ mv librenderman.so <path-to-anaconda3>/envs/spiegelib_env/lib/python3.7/site-packages/
 
 9) Test librenderman. Make sure the correct conda environment is activated::
 
-	(new_spgl_env)$ python
+	(spiegelib_env)$ python
 	>>> import librenderman as rm
 	JUCE v<Juce version>
 	>>> engine = rm.RenderEngine(44100, 512, 512)

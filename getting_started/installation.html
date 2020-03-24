@@ -210,7 +210,7 @@ development.</p>
 to install the Python 3 version as <em>speigel</em> only runs on Python 3.6 and higher.</p>
 <ol class="arabic">
 <li><p>First, create a new conda environment for <em>SpiegeLib</em>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda create --name new_spgl_env python=3.7 numpy matplotlib
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda create --name spiegelib_env python=3.7 numpy matplotlib
 
 ...
 
@@ -221,7 +221,7 @@ Proceed ([y]/n)? y
 #
 # To activate this environment, use
 #
-#     $ conda activate new_spgl_env
+#     $ conda activate spiegelib_env
 #
 # To deactivate an active environment, use
 #
@@ -240,8 +240,8 @@ by pip.</div>
 </div></blockquote>
 <ol class="arabic" start="2">
 <li><p>Activate the environment:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda activate new_spgl_env
-(new_spgl_env)$
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda activate spiegelib_env
+(spiegelib_env)$
 </pre></div>
 </div>
 </li>
@@ -267,7 +267,7 @@ Index (PyPI). This will also install all dependencies, except for RenderMan.</p>
 </div>
 <p>If you want to install in a anaconda environment. Make sure you have created a python3
 anaconda environment and have activated that environment (See <a class="reference internal" href="#anaconda-env"><span class="std std-ref">Anaconda Environment</span></a>)</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(new_spgl_env)$ python -m pip install spiegelib
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(spiegelib_env)$ python -m pip install spiegelib
 </pre></div>
 </div>
 </div>
@@ -282,7 +282,7 @@ a <a class="reference external" href="https://juce.com/">JUCE</a> application.</
 <ol class="arabic">
 <li><p><a class="reference external" href="https://shop.juce.com/get-juce">Download and install JUCE</a></p></li>
 <li><p>Install boost-python using conda. Make sure you have activated the conda environment that you want to install librendman into:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(new_spgl_env)$ conda install py-boost
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(spiegelib_env)$ conda install py-boost
 </pre></div>
 </div>
 </li>
@@ -314,15 +314,15 @@ determined when you installed anaconda. The default location on MacOSX is <code 
 <div class="line"><br /></div>
 <div class="line">The following instructions will refer to that location, whatever it is on your system, as <code class="docutils literal notranslate"><span class="pre">&lt;path-to-anaconda3&gt;</span></code>.</div>
 <div class="line"><br /></div>
-<div class="line">For the <em>Header Search Paths</em>, remove the existing paths and add <code class="docutils literal notranslate"><span class="pre">&lt;path-to-anaconda3&gt;/envs/new_spgl_env/include</span></code> and
-<code class="docutils literal notranslate"><span class="pre">&lt;path-to-anaconda3&gt;/envs/new_spgl_env/include/python3.7m</span></code>.</div>
+<div class="line">For the <em>Header Search Paths</em>, remove the existing paths and add <code class="docutils literal notranslate"><span class="pre">&lt;path-to-anaconda3&gt;/envs/spiegelib_env/include</span></code> and
+<code class="docutils literal notranslate"><span class="pre">&lt;path-to-anaconda3&gt;/envs/spiegelib_env/include/python3.7m</span></code>.</div>
 <div class="line"><br /></div>
 <div class="line">Using the default anaconda path:</div>
 </div>
 <img alt="../_images/header_search_paths.png" src="../_images/header_search_paths.png" />
 <div class="line-block">
 <div class="line"><br /></div>
-<div class="line">For the <em>Extra Library Search Paths</em>, remove the existing paths and add <code class="docutils literal notranslate"><span class="pre">&lt;path-to-anaconda3&gt;/envs/new_spgl_env/lib</span></code></div>
+<div class="line">For the <em>Extra Library Search Paths</em>, remove the existing paths and add <code class="docutils literal notranslate"><span class="pre">&lt;path-to-anaconda3&gt;/envs/spiegelib_env/lib</span></code></div>
 <div class="line"><br /></div>
 <div class="line">Using the default anaconda path:</div>
 </div>
@@ -347,12 +347,12 @@ determined when you installed anaconda. The default location on MacOSX is <code 
 <li><p>Rename the built library and move to conda env:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd &lt;path-to-RenderMan&gt;/Builds/MacOSX/build/Debug
 $ mv librenderman.so.dylib librenderman.so
-$ mv librenderman.so &lt;path-to-anaconda3&gt;/envs/new_spgl_env/lib/python3.7/site-packages/
+$ mv librenderman.so &lt;path-to-anaconda3&gt;/envs/spiegelib_env/lib/python3.7/site-packages/
 </pre></div>
 </div>
 </li>
 <li><p>Test librenderman. Make sure the correct conda environment is activated:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(new_spgl_env)$ python
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(spiegelib_env)$ python
 &gt;&gt;&gt; import librenderman as rm
 JUCE v&lt;Juce version&gt;
 &gt;&gt;&gt; engine = rm.RenderEngine(44100, 512, 512)
