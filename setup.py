@@ -36,7 +36,9 @@ setup(
     ],
     extras_require={
         'dev': [
-            'sphinx'
+            'sphinx',
+            'sphinx_rtd_theme',
+            'ipython',
         ],
     }
 )
