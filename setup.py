@@ -18,7 +18,7 @@ setup(
     version=__version__,
     author=__author__,
     author_email=__contact__,
-    description='Automatic Synthesizer Programming Library',
+    description='Synthesizer Programming with Intelligent Exploration, Generation, and Evaluation Library',
     long_description=readme,
     long_description_content_type='text/markdown',
     url=__url__,
