@@ -34,4 +34,9 @@ setup(
         'tensorflow',
         'deap',
     ],
+    extras_require={
+        'dev': [
+            'sphinx'
+        ],
+    }
 )
