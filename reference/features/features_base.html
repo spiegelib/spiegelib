@@ -21,10 +21,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -167,6 +167,25 @@
   <div class="section" id="module-spiegelib.features.features_base">
 <span id="featuresbase-class"></span><span id="features-base"></span><h1>FeaturesBase Class<a class="headerlink" href="#module-spiegelib.features.features_base" title="Permalink to this headline">¶</a></h1>
 <p>Abstract Base Class for Audio Features</p>
+<dl class="exception">
+<dt id="spiegelib.features.features_base.NormalizerError">
+<em class="property">exception </em><code class="sig-prename descclassname">spiegelib.features.features_base.</code><code class="sig-name descname">NormalizerError</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.NormalizerError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Exception class for normalizers</p>
+<dl class="method">
+<dt id="spiegelib.features.features_base.NormalizerError.with_traceback">
+<code class="sig-name descname">with_traceback</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.NormalizerError.with_traceback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exception.with_traceback(tb) –
+set self.__traceback__ to tb and return self.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="spiegelib.features.features_base.NormalizerError.args">
+<code class="sig-name descname">args</code><a class="headerlink" href="#spiegelib.features.features_base.NormalizerError.args" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="class">
 <dt id="spiegelib.features.features_base.FeaturesBase">
 <em class="property">class </em><code class="sig-prename descclassname">spiegelib.features.features_base.</code><code class="sig-name descname">FeaturesBase</code><span class="sig-paren">(</span><em class="sig-param">dimensions</em>, <em class="sig-param">sample_rate=44100</em>, <em class="sig-param">frame_size=2048</em>, <em class="sig-param">hop_size=512</em>, <em class="sig-param">normalize=False</em>, <em class="sig-param">time_major=False</em>, <em class="sig-param">per_feature_normalize=True</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FeaturesBase" title="Permalink to this definition">¶</a></dt>
@@ -393,25 +412,6 @@ don’t need to be scaled on a per-dimension basis such as STFT</p>
 <dd class="field-odd"><p>np.ndarray</p>
 </dd>
 </dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="exception">
-<dt id="spiegelib.features.features_base.NormalizerError">
-<em class="property">exception </em><code class="sig-prename descclassname">spiegelib.features.features_base.</code><code class="sig-name descname">NormalizerError</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.NormalizerError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
-<p>Exception class for normalizers</p>
-<dl class="attribute">
-<dt id="spiegelib.features.features_base.NormalizerError.args">
-<code class="sig-name descname">args</code><a class="headerlink" href="#spiegelib.features.features_base.NormalizerError.args" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="spiegelib.features.features_base.NormalizerError.with_traceback">
-<code class="sig-name descname">with_traceback</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.NormalizerError.with_traceback" title="Permalink to this definition">¶</a></dt>
-<dd><p>Exception.with_traceback(tb) –
-set self.__traceback__ to tb and return self.</p>
 </dd></dl>
 
 </dd></dl>

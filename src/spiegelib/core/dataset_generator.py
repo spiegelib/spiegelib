@@ -127,6 +127,8 @@ class DatasetGenerator():
     def create_audio_folder(self):
         """
         Check for and create the audio output folder if necassary
+
+        :meta private:
         """
         self.audio_folder_path = os.path.abspath(os.path.join(self.output_folder, self.audio_folder_name))
         if not (os.path.exists(self.audio_folder_path) and os.path.isdir(self.audio_folder_path)):

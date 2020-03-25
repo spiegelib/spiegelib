@@ -4,6 +4,8 @@ SynthVST Class
 ==============
 
 .. automodule:: spiegelib.synth.synth_vst
+
+.. autoclass:: spiegelib.synth.SynthVST
 	:members:
 	:show-inheritance:
 	:undoc-members:

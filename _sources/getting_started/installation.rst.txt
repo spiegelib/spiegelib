@@ -180,8 +180,6 @@ a `JUCE <https://juce.com/>`_ application.
 
 	|
 
-	Celebrate successful build!
-
 8) Rename the built library and move to conda env::
 
 	$ cd <path-to-RenderMan>/Builds/MacOSX/build/Debug
