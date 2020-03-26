@@ -178,21 +178,19 @@
             
   <div class="section" id="dataset-generation">
 <h1>Dataset Generation<a class="headerlink" href="#dataset-generation" title="Permalink to this headline">¶</a></h1>
-<p>First step is to generate and save datasets for training and validating deep
-learning models. Additionally, we create a small audio dataset for
-evaluation.</p>
-<p>Here, we load the Dexed VST, and set the note length and render length to be one second.
-For this experiment we aren’t worried about the release of the sound,
-but you can set the render length longer than the note length to capture
-the release portion of a signal. Synthesizer parameters are loaded from
-a JSON file that describes all the overridden parameters and their
-values.</p>
+<p>Here we generate and save datasets for training and
+validating deep learning models. Additionally, we create a small audio
+dataset for evaluation.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spiegelib</span> <span class="k">as</span> <span class="nn">spgl</span>
 </pre></div>
 </div>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">synth</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">synth</span><span class="o">.</span><span class="n">SynthVST</span><span class="p">(</span><span class="s2">&quot;/Library/Audio/Plug-Ins/VST/Dexed.vst&quot;</span><span class="p">,</span>
-                            <span class="n">note_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">render_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
-<span class="n">synth</span><span class="o">.</span><span class="n">load_state</span><span class="p">(</span><span class="s2">&quot;./synth_params/dexed_simple_fm.json&quot;</span><span class="p">)</span>
+<p>Load Dexed and set the note length and render length to be one second.
+For this experiment we aren’t worried about the release of the sound. To
+capture the release portion of a synth signal, set the render length to
+longer than the note length. We also reload the configuration previously
+saved.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">synth</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">synth</span><span class="o">.</span><span class="n">SynthVST</span><span class="p">(</span><span class="s2">&quot;/Library/Audio/Plug-Ins/VST/Dexed.vst&quot;</span><span class="p">,</span> <span class="n">note_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">render_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">synth</span><span class="o">.</span><span class="n">load_state</span><span class="p">(</span><span class="s1">&#39;./synth_params/dexed_simple_fm.json&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="section" id="mfcc-dataset">
@@ -201,17 +199,18 @@ values.</p>
 Coefficients feature extraction. The DatasetGenerator class works by
 generating random patches from the synthesizer, then running audio
 feature extraction on the resulting sound, and then saving the audio
-features and parameter values. Audio features and parameter values are saved in
-seperate .npy files.</p>
-<p>We set the <cite>time_major</cite> argument to <cite>True</cite> so that the orientation of the output
-is (time_slices, features), as opposed to (features, time_slices) which
-is default. This is how TensorFlow models expect the data to be
+features and parameter values. Audio features and parameter values are
+saved in separate .npy files.</p>
+<p>We set the time_major argument to True so that the orientation of the
+output is (time_slices, features), as opposed to (features, time_slices)
+which is default. This is how TensorFlow models expect the data to be
 oriented.</p>
-<p>Normalization settings used for the training dataset are saved as a .pkl file.
-These settings are used to ensure future data is normalized in the same way.</p>
+<p>Normalization settings used for the training dataset are saved as a
+pickle file. These settings are used to ensure future data is normalized
+in the same way.</p>
 <p>The total size of this dataset is about 140MB.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mel-frequency Cepstral Coefficients audio feature extractor.</span>
-<span class="n">features</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MFCC</span><span class="p">(</span><span class="n">num_mfccs</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">time_major</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">)</span>
+<span class="n">features</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MFCC</span><span class="p">(</span><span class="n">num_mfccs</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">frame_size</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span> <span class="n">time_major</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="c1"># Setup generator for MFCC output and generate 50000 training examples and 10000 testing examples</span>
 <span class="n">generator</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">DatasetGenerator</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span>
@@ -243,7 +242,7 @@ This dataset will be used to train the convolutional neural network.</p>
 <h2>Evaluation Dataset<a class="headerlink" href="#evaluation-dataset" title="Permalink to this headline">¶</a></h2>
 <p>Create an audio set for evaluation. We set the save_audio argument to
 True in the DatasetGenerator constructor so that audio WAV files are
-saved for this set.</p>
+saved.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eval_generator</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">DatasetGenerator</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span>
                                        <span class="n">output_folder</span><span class="o">=</span><span class="s1">&#39;./evaluation&#39;</span><span class="p">,</span>
                                        <span class="n">save_audio</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>

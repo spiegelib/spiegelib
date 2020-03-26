@@ -178,7 +178,7 @@
             
   <div class="section" id="sound-match-genetic-algorithm-estimators">
 <h1>Sound Match Genetic Algorithm Estimators<a class="headerlink" href="#sound-match-genetic-algorithm-estimators" title="Permalink to this headline">¶</a></h1>
-<p>Now we perform sound matching of the evaluation target set using the
+<p>Now we perform sound matching of the evaluation target set using
 two genetic algorithm based approaches and save the resulting audio
 files to disk for evaluation.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spiegelib</span> <span class="k">as</span> <span class="nn">spgl</span>
@@ -194,7 +194,7 @@ files to disk for evaluation.</p>
 <h2>Basic Genetic Algorithm<a class="headerlink" href="#basic-genetic-algorithm" title="Permalink to this headline">¶</a></h2>
 <p>Setup the feature extractor for the basic single-objective genetic
 algorithm. It uses a 13-band MFCC, which is calculated on every new
-individual in the population. The error between an inididual and the
+individual in the population. The error between an individual and the
 target audio sound is used the evaluate the fitness of each individual.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># MFCC features</span>
 <span class="n">ga_extractor</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MFCC</span><span class="p">(</span><span class="n">num_mfccs</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">hop_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">)</span>

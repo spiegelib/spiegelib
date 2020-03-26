@@ -178,14 +178,13 @@
             
   <div class="section" id="synthesizer-configuration">
 <h1>Synthesizer Configuration<a class="headerlink" href="#synthesizer-configuration" title="Permalink to this headline">¶</a></h1>
-<p>In this notebook we get the synthesizer that we are performing
-experiments on setup. We’re using the free and open-source <a class="reference external" href="https://asb2m10.github.io/dexed/">Dexed VST</a>.,
-which is an emulation of the Yamaha DX7. To simplify the experiment,
-we’ll only use a small subset of all the available parameters.</p>
-<p>Load Dexed into an instance of SynthVST</p>
+<p>First, we setup Dexed for the experiment by selecting
+parameters to automatically program. To simplify the experiment, we’ll
+only use a small subset of all the available parameters.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spiegelib</span> <span class="k">as</span> <span class="nn">spgl</span>
 </pre></div>
 </div>
+<p>Load Dexed into an instance of SynthVST</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">synth</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">synth</span><span class="o">.</span><span class="n">SynthVST</span><span class="p">(</span><span class="s2">&quot;/Library/Audio/Plug-Ins/VST/Dexed.vst&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -199,19 +198,19 @@ override and freeze most of the other parameters.</p>
 <p>To start, we’ll save the parameter values to a JSON file showing the
 parameter ID, values, and a short description of all the available
 parameters. Parameters can also be flagged as overridden in the JSON
-file so when it is loaded the value of that parameter will be locked.</p>
+file. This allows parameter configurations to be saved, modified, and reloaded.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">synth</span><span class="o">.</span><span class="n">save_state</span><span class="p">(</span><span class="s2">&quot;./synth_params/dexed_simple_fm_init.json&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>We can now manually edit the JSON file and reload it to update
+<p>We can now manually edit the JSON file and reload it to update our
 synthesizer configuration. We can also programmatically set overridden
 parameters and save a new synthesizer configuration file. We’ll do the
 latter.</p>
 <p>All parameters have a range between 0.0 and 1.0</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The algorithm sets the arrangement of the FM operators.</span>
 <span class="c1"># There are 32 differen arrangements available in Dexed.</span>
-<span class="c1"># This selects the first algorithm which causes the 2nd</span>
-<span class="c1"># operator to modulate the first</span>
+<span class="c1"># This selects the first algorithm. This algorithm sets</span>
+<span class="c1"># the second operator to frequency modulate the first.</span>
 <span class="n">algorithm_number</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">alg</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mf">32.0</span><span class="p">)</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">algorithm_number</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.001</span>
 
@@ -287,8 +286,8 @@ latter.</p>
 </div>
 <p>Now we have a synthesizer configuration setup that turns Dexed into a
 simple two-operator FM synthesizer. Only nine parameters have been left
-un-overridden, these are all on operator two and control the envelope
-and tuning of that operator. Let’s save that configuration so we can
+un-overridden. These parameters control the pitch and envelope
+parameters of operator two. Let’s save that configuration so we can
 reuse it throughout this experiment.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">synth</span><span class="o">.</span><span class="n">save_state</span><span class="p">(</span><span class="s2">&quot;./synth_params/dexed_simple_fm.json&quot;</span><span class="p">)</span>
 </pre></div>

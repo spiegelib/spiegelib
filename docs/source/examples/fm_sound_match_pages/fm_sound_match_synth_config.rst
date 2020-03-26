@@ -1,16 +1,15 @@
 Synthesizer Configuration
 -------------------------
 
-In this notebook we get the synthesizer that we are performing
-experiments on setup. We’re using the free and open-source `Dexed VST <https://asb2m10.github.io/dexed/>`__.,
-which is an emulation of the Yamaha DX7. To simplify the experiment,
-we’ll only use a small subset of all the available parameters.
-
-Load Dexed into an instance of SynthVST
+First, we setup Dexed for the experiment by selecting
+parameters to automatically program. To simplify the experiment, we’ll
+only use a small subset of all the available parameters.
 
 .. code:: ipython3
 
     import spiegelib as spgl
+
+Load Dexed into an instance of SynthVST
 
 .. code:: ipython3
 
@@ -27,13 +26,13 @@ override and freeze most of the other parameters.
 To start, we’ll save the parameter values to a JSON file showing the
 parameter ID, values, and a short description of all the available
 parameters. Parameters can also be flagged as overridden in the JSON
-file so when it is loaded the value of that parameter will be locked.
+file. This allows parameter configurations to be saved, modified, and reloaded.
 
 .. code:: ipython3
 
     synth.save_state("./synth_params/dexed_simple_fm_init.json")
 
-We can now manually edit the JSON file and reload it to update
+We can now manually edit the JSON file and reload it to update our
 synthesizer configuration. We can also programmatically set overridden
 parameters and save a new synthesizer configuration file. We’ll do the
 latter.
@@ -44,8 +43,8 @@ All parameters have a range between 0.0 and 1.0
 
     # The algorithm sets the arrangement of the FM operators.
     # There are 32 differen arrangements available in Dexed.
-    # This selects the first algorithm which causes the 2nd
-    # operator to modulate the first
+    # This selects the first algorithm. This algorithm sets
+    # the second operator to frequency modulate the first.
     algorithm_number = 1
     alg = (1.0 / 32.0) * float(algorithm_number - 1) + 0.001
 
@@ -121,8 +120,8 @@ All parameters have a range between 0.0 and 1.0
 
 Now we have a synthesizer configuration setup that turns Dexed into a
 simple two-operator FM synthesizer. Only nine parameters have been left
-un-overridden, these are all on operator two and control the envelope
-and tuning of that operator. Let’s save that configuration so we can
+un-overridden. These parameters control the pitch and envelope
+parameters of operator two. Let’s save that configuration so we can
 reuse it throughout this experiment.
 
 .. code:: ipython3

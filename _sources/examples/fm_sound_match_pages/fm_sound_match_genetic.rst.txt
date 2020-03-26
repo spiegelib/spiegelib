@@ -2,7 +2,7 @@
 Sound Match Genetic Algorithm Estimators
 ----------------------------------------
 
-Now we perform sound matching of the evaluation target set using the
+Now we perform sound matching of the evaluation target set using
 two genetic algorithm based approaches and save the resulting audio
 files to disk for evaluation.
 
@@ -22,7 +22,7 @@ Basic Genetic Algorithm
 
 Setup the feature extractor for the basic single-objective genetic
 algorithm. It uses a 13-band MFCC, which is calculated on every new
-individual in the population. The error between an inididual and the
+individual in the population. The error between an individual and the
 target audio sound is used the evaluate the fitness of each individual.
 
 .. code:: ipython3

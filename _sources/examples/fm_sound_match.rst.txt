@@ -2,18 +2,17 @@ FM Sound Match Experiment
 =========================
 
 This experiment compares several different algorithms for estimating parameters for
-an FM synthesizer. The goal is to be able to provide an example (target) sound to
-an algorithm and have the algorithm estimate synthesizer parameters in order to
-replicate that sound as closely as possible. This is called sound matching. We'll
+an FM synthesizer. The goal is to be able to select synthesizer parameters in order
+to replicate a target sound as closely as possible. This is called sound matching. We'll
 run this experiment using the open-source *Dexed* VST emulation of the Yamaha DX7.
 Dexed can be dowloaded for free `here <https://asb2m10.github.io/dexed/>`_.
 
-Through this example will use *SpiegeLib* to:
+Through this example we will use *SpiegeLib* to:
 
 * Program and generate sounds from a VST synthesizer
 * Generate datasets for deep learning and evaluation
 * Train deep learning models
-* Perform sound matching using different types of estimators
+* Perform sound matching using deep learning and genetic algorithms
 * Evaluate results
 
 If you haven't already, make sure you have *SpiegeLib* and *RenderMan* installed.

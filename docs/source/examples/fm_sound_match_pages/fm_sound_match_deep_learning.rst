@@ -2,7 +2,7 @@ Sound Match Deep Learning Models
 --------------------------------
 
 Now we can perform sound matching of the evaluation target set using the
-trained deep learning models and save the resulting audio files to disk
+trained deep learning models and save the resulting audio files
 for evaluation
 
 .. code:: ipython3
