@@ -174,6 +174,23 @@ class AudioBuffer():
         self.audio = new_audio
 
 
+    def plot_spectrogram(self, **kwargs):
+        """
+        Plot spectrogram of this audio buffer. Uses librosas `specshow <https://librosa.github.io/librosa/generated/librosa.display.specshow.html>`_
+        function. Uses matplotlib.pyplot to plot spectrogram.
+
+        Defaults to logarithmic y-axis in Hertz.
+
+        :param kwargs: see `specshow <https://librosa.github.io/librosa/generated/librosa.display.specshow.html>`_
+        :returns: The axis handle for figures
+        :rtype: `axes <https://matplotlib.org/api/axes_api.html>`_
+        """
+
+        D = librosa.amplitude_to_db(np.abs(librosa.stft(self.get_audio())), ref=np.max)
+        y_axis = 'log' if not 'y_axis' in kwargs else kwargs['y_axis']
+        return librosa.display.specshow(D, y_axis='log', **kwargs)
+
+
     @staticmethod
     def peak_normalize(audio):
         """
