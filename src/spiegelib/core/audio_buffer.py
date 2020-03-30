@@ -26,6 +26,20 @@ Load an entire folder of audio samples into a list of ``AudioBuffer`` objects::
 
     >>> audio_files = spiegelib.AudioBuffer.load_folder('./audio_folder')
 
+Plot a spectrogram
+
+.. code-block:: python
+    :linenos:
+
+    import spiegelib as spgl
+    import matplotlib.pyplot as plt
+
+    audio = spgl.AudioBuffer('./audio_file.wav')
+    audio.plot_spectrogram()
+    plt.show()
+
+.. image:: ./images/audio_buffer_spect.png
+
 """
 
 import os
@@ -206,7 +220,7 @@ class AudioBuffer():
         Plot spectrogram of this audio buffer. Uses librosas `specshow <https://librosa.github.io/librosa/generated/librosa.display.specshow.html>`_
         function. Uses matplotlib.pyplot to plot spectrogram.
 
-        Defaults to logarithmic y-axis in Hertz.
+        Defaults to logarithmic y-axis in Hertz and seconds along the x-axis.
 
         :param kwargs: see `specshow <https://librosa.github.io/librosa/generated/librosa.display.specshow.html>`_
         :returns: The axis handle for figures
@@ -215,7 +229,8 @@ class AudioBuffer():
 
         D = librosa.amplitude_to_db(np.abs(librosa.stft(self.get_audio())), ref=np.max)
         y_axis = 'log' if not 'y_axis' in kwargs else kwargs['y_axis']
-        return librosa.display.specshow(D, y_axis='log', **kwargs)
+        x_axis = 's' if not 'y_axis' in kwargs else kwargs['x_axis']
+        return librosa.display.specshow(D, y_axis=y_axis, x_axis=x_axis, **kwargs)
 
 
     @staticmethod
