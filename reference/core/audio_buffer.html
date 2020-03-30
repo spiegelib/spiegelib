@@ -1,0 +1,414 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>AudioBuffer Class &mdash; SpiegeLib 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="DatasetGenerator Class" href="dataset_generator.html" />
+    <link rel="prev" title="SpiegeLib Core Classes" href="../core.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> SpiegeLib
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/getting_started.html">Getting Started</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../core.html">Core</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">AudioBuffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataset_generator.html">     DatesetGenerator</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../synth.html">Synth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../features.html">Audio Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../estimators.html">Estimators</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/examples_index.html">Examples</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contribution Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">SpiegeLib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../core.html">SpiegeLib Core Classes</a> &raquo;</li>
+        
+      <li>AudioBuffer Class</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/core/audio_buffer.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-spiegelib.core.audio_buffer">
+<span id="audiobuffer-class"></span><span id="audio-buffer"></span><h1>AudioBuffer Class<a class="headerlink" href="#module-spiegelib.core.audio_buffer" title="Permalink to this headline">¶</a></h1>
+<p>Class for storing and passing audio signals around. Can be instantiated with an
+array of audio samples or location to load audio from disk. Stores sample rate,
+number of channels, and the file name if loaded from disk.</p>
+<p>Also has utility functions for loading and saving audio from disk, normalizing,
+resizing buffers, and plotting spectrograms.</p>
+<p class="rubric">Examples</p>
+<p>Create a new empty <code class="docutils literal notranslate"><span class="pre">AudioBuffer</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">audio</span> <span class="o">=</span> <span class="n">spiegelib</span><span class="o">.</span><span class="n">AudioBuffer</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Create an <code class="docutils literal notranslate"><span class="pre">AudioBuffer</span></code> from existing audio samples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">audio</span> <span class="o">=</span> <span class="n">spiegelib</span><span class="o">.</span><span class="n">AudioBuffer</span><span class="p">(</span><span class="n">audio_samples</span><span class="p">,</span> <span class="mi">44100</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Load audio from disk into a new <code class="docutils literal notranslate"><span class="pre">AudioBuffer</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">audio</span> <span class="o">=</span> <span class="n">spiegelib</span><span class="o">.</span><span class="n">AudioBuffer</span><span class="p">(</span><span class="s1">&#39;./some_audio_file.wav&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Load an entire folder of audio samples into a list of <code class="docutils literal notranslate"><span class="pre">AudioBuffer</span></code> objects:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">audio_files</span> <span class="o">=</span> <span class="n">spiegelib</span><span class="o">.</span><span class="n">AudioBuffer</span><span class="o">.</span><span class="n">load_folder</span><span class="p">(</span><span class="s1">&#39;./audio_folder&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="class">
+<dt id="spiegelib.AudioBuffer">
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.</code><code class="sig-name descname">AudioBuffer</code><span class="sig-paren">(</span><em class="sig-param">input=None</em>, <em class="sig-param">sample_rate=None</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input</strong> (<em>optional</em><em>, </em><em>np.ndarray</em><em>, </em><em>list</em><em>, </em><em>str</em><em>, </em><em>file-like object</em>) – Can be an array of audio samples (np.ndarray or list), or a path
+to a location of an audio file on disk. Defaults to None.</p></li>
+<li><p><strong>sample_rate</strong> (<em>optional</em><em>, </em><em>int</em>) – rate of sampled audio if audio data was passed in, or rate
+to resample audio data loaded from disk at, defaults to None. If loading audio
+from a file, will automatically resample to 44100 if no sample rate provided.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="spiegelib.AudioBuffer.get_audio">
+<code class="sig-name descname">get_audio</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.get_audio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for audio data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Array of audio samples</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.AudioBuffer.get_sample_rate">
+<code class="sig-name descname">get_sample_rate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.get_sample_rate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for sample rate</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Sample rate of audio buffer</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.AudioBuffer.load">
+<code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">sample_rate=44100</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read audio from a file into a numpy array at specific audio rate.
+Uses librosa’s audio load function, see <a class="reference external" href="https://librosa.github.io/librosa/generated/librosa.core.load.html#librosa.core.load">documentation</a>.
+for more information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em><em>, </em><em>int</em><em>, </em><em>pathlib.Path</em><em>, or </em><em>file-like object</em>) – location of audio file on disk</p></li>
+<li><p><strong>sample_rate</strong> (<em>number</em>) – resample audio to this rate, defaults to 44100</p></li>
+<li><p><strong>kwargs</strong> – keyword args to pass into librosa load function</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(audio samples, sample rate)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple (np.ndarray, number)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.AudioBuffer.load_folder">
+<em class="property">static </em><code class="sig-name descname">load_folder</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">sort=True</em>, <em class="sig-param">sample_rate=44100</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.load_folder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Try to load a folder of audio samples</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – Path to directory of audio files</p></li>
+<li><p><strong>sort</strong> (<em>bool</em>) – Apply natural sort to file names. Default True</p></li>
+<li><p><strong>sample_rate</strong> (<em>int</em>) – Sample rate to load audio files at. Defualts to 44100</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of <code class="docutils literal notranslate"><span class="pre">AudioBuffer</span></code> objects</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.AudioBuffer.peak_normalize">
+<em class="property">static </em><code class="sig-name descname">peak_normalize</code><span class="sig-paren">(</span><em class="sig-param">audio</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.peak_normalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Peak normalize audio data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>audio</strong> (<em>np.ndarray</em>) – array of audio samples</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>normalized array of audio samples</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.AudioBuffer.plot_spectrogram">
+<code class="sig-name descname">plot_spectrogram</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.plot_spectrogram" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot spectrogram of this audio buffer. Uses librosas <a class="reference external" href="https://librosa.github.io/librosa/generated/librosa.display.specshow.html">specshow</a>
+function. Uses matplotlib.pyplot to plot spectrogram.</p>
+<p>Defaults to logarithmic y-axis in Hertz.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>kwargs</strong> – <p>see <a class="reference external" href="https://librosa.github.io/librosa/generated/librosa.display.specshow.html">specshow</a></p>
+</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The axis handle for figures</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://matplotlib.org/api/axes_api.html">axes</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.AudioBuffer.replace_audio_data">
+<code class="sig-name descname">replace_audio_data</code><span class="sig-paren">(</span><em class="sig-param">audio</em>, <em class="sig-param">sample_rate</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.replace_audio_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace audio data in this object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>audio</strong> (<em>np.ndarray</em>) – array of audio samples</p></li>
+<li><p><strong>sample_rate</strong> (<em>int</em>) – rate that audio data was sampled at</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.AudioBuffer.resize">
+<code class="sig-name descname">resize</code><span class="sig-paren">(</span><em class="sig-param">num_samples</em>, <em class="sig-param">start=0</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.resize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resize audio to a set number of samples. If new length is less than the
+current audio buffer size, then the buffer will be trimmed. If the new
+length is greater than current audio buffer, then the resulting buffer
+will be zero-padded at the end.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_samples</strong> (<em>int</em>) – New length of audio buffer in samples</p></li>
+<li><p><strong>start_sample</strong> (<em>int</em><em>, </em><em>optional</em>) – Start reading from certain number of samples into
+current buffer, defaults to 0</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.AudioBuffer.save">
+<code class="sig-name descname">save</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">normalize=False</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save an audio to disk as WAV file at given sample rate. Can normalize
+before saving as well.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em><em> or </em><em>open file handle</em>) – location to save audio to</p></li>
+<li><p><strong>normalize</strong> (<em>boolean</em>) – normalize audio before writing, defaults to false</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="dataset_generator.html" class="btn btn-neutral float-right" title="DatasetGenerator Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../core.html" class="btn btn-neutral float-left" title="SpiegeLib Core Classes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, University of Victoria
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

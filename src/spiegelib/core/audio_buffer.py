@@ -1,13 +1,40 @@
 #!/usr/bin/env python
 """
-Class for handling audio signals
+Class for storing and passing audio signals around. Can be instantiated with an
+array of audio samples or location to load audio from disk. Stores sample rate,
+number of channels, and the file name if loaded from disk.
+
+Also has utility functions for loading and saving audio from disk, normalizing,
+resizing buffers, and plotting spectrograms.
+
+Examples
+^^^^^^^^
+
+Create a new empty ``AudioBuffer``::
+
+    >>> audio = spiegelib.AudioBuffer()
+
+Create an ``AudioBuffer`` from existing audio samples::
+
+    >>> audio = spiegelib.AudioBuffer(audio_samples, 44100)
+
+Load audio from disk into a new ``AudioBuffer``::
+
+    >>> audio = spiegelib.AudioBuffer('./some_audio_file.wav')
+
+Load an entire folder of audio samples into a list of ``AudioBuffer`` objects::
+
+    >>> audio_files = spiegelib.AudioBuffer.load_folder('./audio_folder')
+
 """
 
 import os
 import numbers
+
 import numpy as np
 import librosa
 import scipy.io.wavfile
+
 import spiegelib.core.utils as utils
 
 
@@ -17,7 +44,8 @@ class AudioBuffer():
         to a location of an audio file on disk. Defaults to None.
     :type input: optional, np.ndarray, list, str, file-like object
     :param sample_rate: rate of sampled audio if audio data was passed in, or rate
-        to resample audio data loaded from disk at, defaults to None.
+        to resample audio data loaded from disk at, defaults to None. If loading audio
+        from a file, will automatically resample to 44100 if no sample rate provided.
     :type sample_rate: optional, int
     """
 
@@ -98,8 +126,7 @@ class AudioBuffer():
     def load(self, path, sample_rate=44100, **kwargs):
         """
         Read audio from a file into a numpy array at specific audio rate.
-        Uses librosa's audio load function, see ` documentation
-        <https://librosa.github.io/librosa/generated/librosa.core.load.html#librosa.core.load>`_.
+        Uses librosa's audio load function, see `documentation <https://librosa.github.io/librosa/generated/librosa.core.load.html#librosa.core.load>`__.
         for more information.
 
         :param path: location of audio file on disk
@@ -195,6 +222,12 @@ class AudioBuffer():
     def peak_normalize(audio):
         """
         Peak normalize audio data
+
+        Args:
+            audio (np.ndarray) : array of audio samples
+
+        Returns:
+            np.ndarray : normalized array of audio samples
         """
 
         maxSample = np.max(np.abs(audio))
@@ -207,16 +240,17 @@ class AudioBuffer():
 
 
     @staticmethod
-    def load_folder(path, sort=True):
+    def load_folder(path, sort=True, sample_rate=44100):
         """
         Try to load a folder of audio samples
 
-        :param path: Path to directory of audio files
-        :type path: str
-        :param sort: Apply natural sort to file names. Default True
-        :type sort: bool
-        :returns: list of :class:`spiegelib.core.audio_buffer.AudioBuffer`
-        :rtype: list
+        Args:
+            path (str): Path to directory of audio files
+            sort (bool): Apply natural sort to file names. Default True
+            sample_rate (int): Sample rate to load audio files at. Defualts to 44100
+
+        Returns:
+            list: List of ``AudioBuffer`` objects
         """
 
         abspath = os.path.abspath(path)
