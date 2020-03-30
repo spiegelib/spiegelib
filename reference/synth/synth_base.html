@@ -194,6 +194,35 @@ range of values. Defaults to True.</p></li>
 </dd>
 </dl>
 <dl class="method">
+<dt id="spiegelib.synth.SynthBase.set_patch">
+<code class="sig-name descname">set_patch</code><span class="sig-paren">(</span><em class="sig-param">parameters</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthBase.set_patch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a new patch with updated parameter values with a list of flaots or a
+list of tuples referring to parameter indices and values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>parameters</strong> (<em>list</em>) – A list of floats or tuples. If passing in a list of numbers,
+the length must be either the number of non-overridden parameters of the
+number of total parameters for this synth. Parameter values will then be
+mapped to corresponding parameter in order. If a list of tuples is provided,
+the tuples must have the shape (int, float) where the int is the parameter
+number and the float is the parameter value.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.synth.SynthBase.load_patch">
+<em class="property">abstract </em><code class="sig-name descname">load_patch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthBase.load_patch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Must be overridden. Load current patch into synth engine</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.synth.SynthBase.render_patch">
+<em class="property">abstract </em><code class="sig-name descname">render_patch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthBase.render_patch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Must be overridden. Should render audio for the currently loaded patch</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="spiegelib.synth.SynthBase.get_audio">
 <em class="property">abstract </em><code class="sig-name descname">get_audio</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthBase.get_audio" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method must be overridden and should return an audio buffer rendered
@@ -204,6 +233,28 @@ during the last call to render_patch.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.core.audio_buffer.AudioBuffer</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.synth.SynthBase.randomize_patch">
+<em class="property">abstract </em><code class="sig-name descname">randomize_patch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthBase.randomize_patch" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method must be overridden and should have the effect
+of randomizing parameters of the synthesizer. Overridden methods should be
+uneffected by this randomization</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.synth.SynthBase.get_random_example">
+<code class="sig-name descname">get_random_example</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthBase.get_random_example" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns audio from a new random patch</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>An audio buffer</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>np.array</p>
 </dd>
 </dl>
 </dd></dl>
@@ -236,49 +287,15 @@ from results, defaults to True</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegelib.synth.SynthBase.get_random_example">
-<code class="sig-name descname">get_random_example</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthBase.get_random_example" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns audio from a new random patch</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>An audio buffer</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>np.array</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="spiegelib.synth.SynthBase.load_patch">
-<em class="property">abstract </em><code class="sig-name descname">load_patch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthBase.load_patch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Must be overridden. Load current patch into synth engine</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="spiegelib.synth.SynthBase.load_state">
-<code class="sig-name descname">load_state</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthBase.load_state" title="Permalink to this definition">¶</a></dt>
-<dd><p>Load parameter state from JSON file. Will set a new patch and overridden
-parameters.</p>
+<dt id="spiegelib.synth.SynthBase.set_overridden_parameters">
+<code class="sig-name descname">set_overridden_parameters</code><span class="sig-paren">(</span><em class="sig-param">parameters</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthBase.set_overridden_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override parameters with specific values</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Location to load JSON file from</p>
+<dd class="field-odd"><p><strong>parameters</strong> – List of parameter tuples with parameter index and parameter
+value that will be patched and then the parameter frozen.</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="spiegelib.synth.SynthBase.randomize_patch">
-<em class="property">abstract </em><code class="sig-name descname">randomize_patch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthBase.randomize_patch" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method must be overridden and should have the effect
-of randomizing parameters of the synthesizer. Overridden methods should be
-uneffected by this randomization</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="spiegelib.synth.SynthBase.render_patch">
-<em class="property">abstract </em><code class="sig-name descname">render_patch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthBase.render_patch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Must be overridden. Should render audio for the currently loaded patch</p>
 </dd></dl>
 
 <dl class="method">
@@ -294,30 +311,13 @@ a parameter has been overridden so this can be used to save synth configuration<
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegelib.synth.SynthBase.set_overridden_parameters">
-<code class="sig-name descname">set_overridden_parameters</code><span class="sig-paren">(</span><em class="sig-param">parameters</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthBase.set_overridden_parameters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Override parameters with specific values</p>
+<dt id="spiegelib.synth.SynthBase.load_state">
+<code class="sig-name descname">load_state</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthBase.load_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load parameter state from JSON file. Will set a new patch and overridden
+parameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>parameters</strong> – List of parameter tuples with parameter index and parameter
-value that will be patched and then the parameter frozen.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="spiegelib.synth.SynthBase.set_patch">
-<code class="sig-name descname">set_patch</code><span class="sig-paren">(</span><em class="sig-param">parameters</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthBase.set_patch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set a new patch with updated parameter values with a list of flaots or a
-list of tuples referring to parameter indices and values.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>parameters</strong> (<em>list</em>) – A list of floats or tuples. If passing in a list of numbers,
-the length must be either the number of non-overridden parameters of the
-number of total parameters for this synth. Parameter values will then be
-mapped to corresponding parameter in order. If a list of tuples is provided,
-the tuples must have the shape (int, float) where the int is the parameter
-number and the float is the parameter value.</p>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Location to load JSON file from</p>
 </dd>
 </dl>
 </dd></dl>

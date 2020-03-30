@@ -187,6 +187,18 @@ IEEE Transactions on Emerging Topics in Computational Intelligence 2.2 (2018): 1
 </dd>
 </dl>
 <dl class="method">
+<dt id="spiegelib.estimator.lstm.LSTM.build_model">
+<code class="sig-name descname">build_model</code><span class="sig-paren">(</span><em class="sig-param">highway_layers=100</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.lstm.LSTM.build_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct LSTM Model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>highway_layers</strong> (<em>int</em><em>, </em><em>optional</em>) – dimensionality of outer space of hidden layers,
+defaults to 100</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="spiegelib.estimator.lstm.LSTM.add_testing_data">
 <code class="sig-name descname">add_testing_data</code><span class="sig-paren">(</span><em class="sig-param">input</em>, <em class="sig-param">output</em>, <em class="sig-param">batch_size=64</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.lstm.LSTM.add_testing_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a tf Dataset from input and output for model testing, batches
@@ -218,18 +230,6 @@ set to None or 0 to prevent batching. defaults to 64</p></li>
 <li><p><strong>shuffle_size</strong> – If provided, will shuffle data with a buffer size of
 shuffle_size, defaults to None, so shuffling does not occur</p></li>
 </ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="spiegelib.estimator.lstm.LSTM.build_model">
-<code class="sig-name descname">build_model</code><span class="sig-paren">(</span><em class="sig-param">highway_layers=100</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.lstm.LSTM.build_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Construct LSTM Model</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>highway_layers</strong> (<em>int</em><em>, </em><em>optional</em>) – dimensionality of outer space of hidden layers,
-defaults to 100</p>
 </dd>
 </dl>
 </dd></dl>

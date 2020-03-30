@@ -180,6 +180,27 @@
 </dd>
 </dl>
 <dl class="method">
+<dt id="spiegelib.features.mfcc.MFCC.get_features">
+<code class="sig-name descname">get_features</code><span class="sig-paren">(</span><em class="sig-param">audio</em>, <em class="sig-param">normalize=False</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.mfcc.MFCC.get_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run audio feature extraction on audio provided as parameter.
+Normalization should be applied based on the normalize parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>audio</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.core.audio_buffer.AudioBuffer</span></code>) – Audio to process features on</p></li>
+<li><p><strong>normalize</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether or not the features are normalized, defaults to False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>results from audio feature extraction</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="spiegelib.features.mfcc.MFCC.add_modifier">
 <code class="sig-name descname">add_modifier</code><span class="sig-paren">(</span><em class="sig-param">modifier</em>, <em class="sig-param">type</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.mfcc.MFCC.add_modifier" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a data modifier to the feature extraction pipeline</p>
@@ -249,27 +270,6 @@ apply some modification to that, and return a np.array</p></li>
 <dt id="spiegelib.features.mfcc.MFCC.fit_normalizers_full_data">
 <code class="sig-name descname">fit_normalizers_full_data</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">transform</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.mfcc.MFCC.fit_normalizers_full_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit one normalizer on the entire dataset</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="spiegelib.features.mfcc.MFCC.get_features">
-<code class="sig-name descname">get_features</code><span class="sig-paren">(</span><em class="sig-param">audio</em>, <em class="sig-param">normalize=False</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.mfcc.MFCC.get_features" title="Permalink to this definition">¶</a></dt>
-<dd><p>Run audio feature extraction on audio provided as parameter.
-Normalization should be applied based on the normalize parameter.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>audio</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.core.audio_buffer.AudioBuffer</span></code>) – Audio to process features on</p></li>
-<li><p><strong>normalize</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether or not the features are normalized, defaults to False</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>results from audio feature extraction</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>np.array</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="method">

@@ -209,9 +209,10 @@ resizing buffers, and plotting spectrograms.</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>input</strong> (<em>optional</em><em>, </em><em>np.ndarray</em><em>, </em><em>list</em><em>, </em><em>str</em><em>, </em><em>file-like object</em>) – Can be an array of audio samples (np.ndarray or list), or a path
-to a location of an audio file on disk. Defaults to None.</p></li>
-<li><p><strong>sample_rate</strong> (<em>optional</em><em>, </em><em>int</em>) – rate of sampled audio if audio data was passed in, or rate
+<li><p><strong>input</strong> (<em>np.ndarray</em><em>, </em><em>list</em><em>, </em><em>str</em><em>, </em><em>file-like object</em>) – Can be an array
+of audio samples (np.ndarray or list), or a path to a location of an
+audio file on disk. Defaults to None.</p></li>
+<li><p><strong>sample_rate</strong> (<em>int</em>) – Rate of sampled audio if audio data was passed in, or rate
 to resample audio data loaded from disk at, defaults to None. If loading audio
 from a file, will automatically resample to 44100 if no sample rate provided.</p></li>
 </ul>
@@ -248,43 +249,83 @@ from a file, will automatically resample to 44100 if no sample rate provided.</p
 <dl class="method">
 <dt id="spiegelib.AudioBuffer.load">
 <code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">sample_rate=44100</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.load" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read audio from a file into a numpy array at specific audio rate.
-Uses librosa’s audio load function, see <a class="reference external" href="https://librosa.github.io/librosa/generated/librosa.core.load.html#librosa.core.load">documentation</a>.
-for more information.</p>
+<dd><p>Read audio from a file into a numpy array at specific audio rate. Stores
+in this <code class="docutils literal notranslate"><span class="pre">AudioBuffer</span></code> object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>path</strong> (<em>str</em><em>, </em><em>int</em><em>, </em><em>pathlib.Path</em><em>, or </em><em>file-like object</em>) – location of audio file on disk</p></li>
-<li><p><strong>sample_rate</strong> (<em>number</em>) – resample audio to this rate, defaults to 44100</p></li>
-<li><p><strong>kwargs</strong> – keyword args to pass into librosa load function</p></li>
+<li><p><strong>sample_rate</strong> (<em>int</em>) – resample audio to this rate, defaults to 44100. None uses
+native sampling rate.</p></li>
+<li><p><strong>kwargs</strong> – keyword args to pass into <a class="reference external" href="https://librosa.github.io/librosa/generated/librosa.core.load.html">librosa load function</a>.</p></li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>(audio samples, sample rate)</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>tuple (np.ndarray, number)</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegelib.AudioBuffer.load_folder">
-<em class="property">static </em><code class="sig-name descname">load_folder</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">sort=True</em>, <em class="sig-param">sample_rate=44100</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.load_folder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Try to load a folder of audio samples</p>
+<dt id="spiegelib.AudioBuffer.plot_spectrogram">
+<code class="sig-name descname">plot_spectrogram</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.plot_spectrogram" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot spectrogram of this audio buffer. Uses librosas <a class="reference external" href="https://librosa.github.io/librosa/generated/librosa.display.specshow.html">specshow</a>
+function. Uses matplotlib.pyplot to plot spectrogram.</p>
+<p>Defaults to logarithmic y-axis in Hertz and seconds along the x-axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>kwargs</strong> – <p>see <a class="reference external" href="https://librosa.github.io/librosa/generated/librosa.display.specshow.html">specshow</a>.</p>
+</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The axis handle for figures</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>axes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.AudioBuffer.replace_audio_data">
+<code class="sig-name descname">replace_audio_data</code><span class="sig-paren">(</span><em class="sig-param">audio</em>, <em class="sig-param">sample_rate</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.replace_audio_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace audio data in this object</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>path</strong> (<em>str</em>) – Path to directory of audio files</p></li>
-<li><p><strong>sort</strong> (<em>bool</em>) – Apply natural sort to file names. Default True</p></li>
-<li><p><strong>sample_rate</strong> (<em>int</em>) – Sample rate to load audio files at. Defualts to 44100</p></li>
+<li><p><strong>audio</strong> (<em>np.ndarray</em>) – Array of audio samples</p></li>
+<li><p><strong>sample_rate</strong> (<em>int</em>) – Rate that audio data was sampled at</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>List of <code class="docutils literal notranslate"><span class="pre">AudioBuffer</span></code> objects</p>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.AudioBuffer.resize">
+<code class="sig-name descname">resize</code><span class="sig-paren">(</span><em class="sig-param">num_samples</em>, <em class="sig-param">start=0</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.resize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resize audio to a set number of samples. If new length is less than the
+current audio buffer size, then the buffer will be trimmed. If the new
+length is greater than current audio buffer, then the resulting buffer
+will be zero-padded at the end.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_samples</strong> (<em>int</em>) – New length of audio buffer in samples</p></li>
+<li><p><strong>start_sample</strong> (<em>int</em>) – Start reading from certain number of samples into
+current buffer</p></li>
+</ul>
 </dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>list</p>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.AudioBuffer.save">
+<code class="sig-name descname">save</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">normalize=False</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save an audio to disk as WAV file at given sample rate. Can normalize
+before saving as well.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em><em> or </em><em>open file handle</em>) – location to save audio to</p></li>
+<li><p><strong>normalize</strong> (<em>boolean</em>) – normalize audio before writing, defaults to false</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -307,68 +348,22 @@ for more information.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegelib.AudioBuffer.plot_spectrogram">
-<code class="sig-name descname">plot_spectrogram</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.plot_spectrogram" title="Permalink to this definition">¶</a></dt>
-<dd><p>Plot spectrogram of this audio buffer. Uses librosas <a class="reference external" href="https://librosa.github.io/librosa/generated/librosa.display.specshow.html">specshow</a>
-function. Uses matplotlib.pyplot to plot spectrogram.</p>
-<p>Defaults to logarithmic y-axis in Hertz and seconds along the x-axis.</p>
+<dt id="spiegelib.AudioBuffer.load_folder">
+<em class="property">static </em><code class="sig-name descname">load_folder</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">sort=True</em>, <em class="sig-param">sample_rate=44100</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.load_folder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Try to load a folder of audio samples</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>kwargs</strong> – <p>see <a class="reference external" href="https://librosa.github.io/librosa/generated/librosa.display.specshow.html">specshow</a></p>
-</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – Path to directory of audio files</p></li>
+<li><p><strong>sort</strong> (<em>bool</em>) – Apply natural sort to file names. Default True</p></li>
+<li><p><strong>sample_rate</strong> (<em>int</em>) – Sample rate to load audio files at. Defualts to 44100</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The axis handle for figures</p>
+<dd class="field-even"><p>List of <code class="docutils literal notranslate"><span class="pre">AudioBuffer</span></code> objects</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://matplotlib.org/api/axes_api.html">axes</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="spiegelib.AudioBuffer.replace_audio_data">
-<code class="sig-name descname">replace_audio_data</code><span class="sig-paren">(</span><em class="sig-param">audio</em>, <em class="sig-param">sample_rate</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.replace_audio_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Replace audio data in this object</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>audio</strong> (<em>np.ndarray</em>) – array of audio samples</p></li>
-<li><p><strong>sample_rate</strong> (<em>int</em>) – rate that audio data was sampled at</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="spiegelib.AudioBuffer.resize">
-<code class="sig-name descname">resize</code><span class="sig-paren">(</span><em class="sig-param">num_samples</em>, <em class="sig-param">start=0</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.resize" title="Permalink to this definition">¶</a></dt>
-<dd><p>Resize audio to a set number of samples. If new length is less than the
-current audio buffer size, then the buffer will be trimmed. If the new
-length is greater than current audio buffer, then the resulting buffer
-will be zero-padded at the end.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>num_samples</strong> (<em>int</em>) – New length of audio buffer in samples</p></li>
-<li><p><strong>start_sample</strong> (<em>int</em><em>, </em><em>optional</em>) – Start reading from certain number of samples into
-current buffer, defaults to 0</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="spiegelib.AudioBuffer.save">
-<code class="sig-name descname">save</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">normalize=False</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.save" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save an audio to disk as WAV file at given sample rate. Can normalize
-before saving as well.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>path</strong> (<em>str</em><em> or </em><em>open file handle</em>) – location to save audio to</p></li>
-<li><p><strong>normalize</strong> (<em>boolean</em>) – normalize audio before writing, defaults to false</p></li>
-</ul>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
 </dd></dl>

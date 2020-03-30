@@ -183,6 +183,41 @@ and audio rendered for further processing.</p>
 </dd>
 </dl>
 <dl class="method">
+<dt id="spiegelib.synth.SynthVST.load_plugin">
+<code class="sig-name descname">load_plugin</code><span class="sig-paren">(</span><em class="sig-param">plugin_path</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.load_plugin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a synth VST plugin</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>plugin_path</strong> (<em>str</em>) – path to vst plugin binary</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.synth.SynthVST.load_patch">
+<code class="sig-name descname">load_patch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.load_patch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update patch parameter. Overridden parameters will not be effected.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.synth.SynthVST.is_valid_parameter_setting">
+<code class="sig-name descname">is_valid_parameter_setting</code><span class="sig-paren">(</span><em class="sig-param">parameter</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.is_valid_parameter_setting" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks to see if a parameter is valid for the currently loaded synth.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>parameter</strong> (<em>tuple</em>) – A parameter tuple with form <cite>(parameter_index, parameter_value)</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.synth.SynthVST.render_patch">
+<code class="sig-name descname">render_patch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.render_patch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Render the current patch. Uses the values of midi_note, midi_velocity, note_length_secs,
+and render_length_secs to render audio. Plugin must be loaded first.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="spiegelib.synth.SynthVST.get_audio">
 <code class="sig-name descname">get_audio</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.get_audio" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return monophonic audio from rendered patch</p>
@@ -194,6 +229,12 @@ and audio rendered for further processing.</p>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.core.audio_buffer.AudioBuffer</span></code></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.synth.SynthVST.randomize_patch">
+<code class="sig-name descname">randomize_patch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.randomize_patch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Randomize the current patch. Overridden parameteres will be unaffected.</p>
 </dd></dl>
 
 <dl class="method">
@@ -238,34 +279,6 @@ from results, defaults to True</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spiegelib.synth.SynthVST.is_valid_parameter_setting">
-<code class="sig-name descname">is_valid_parameter_setting</code><span class="sig-paren">(</span><em class="sig-param">parameter</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.is_valid_parameter_setting" title="Permalink to this definition">¶</a></dt>
-<dd><p>Checks to see if a parameter is valid for the currently loaded synth.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>parameter</strong> (<em>tuple</em>) – A parameter tuple with form <cite>(parameter_index, parameter_value)</cite></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="spiegelib.synth.SynthVST.load_patch">
-<code class="sig-name descname">load_patch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.load_patch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Update patch parameter. Overridden parameters will not be effected.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="spiegelib.synth.SynthVST.load_plugin">
-<code class="sig-name descname">load_plugin</code><span class="sig-paren">(</span><em class="sig-param">plugin_path</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.load_plugin" title="Permalink to this definition">¶</a></dt>
-<dd><p>Loads a synth VST plugin</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>plugin_path</strong> (<em>str</em>) – path to vst plugin binary</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
 <dt id="spiegelib.synth.SynthVST.load_state">
 <code class="sig-name descname">load_state</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.load_state" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load parameter state from JSON file. Will set a new patch and overridden
@@ -275,19 +288,6 @@ parameters.</p>
 <dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Location to load JSON file from</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="spiegelib.synth.SynthVST.randomize_patch">
-<code class="sig-name descname">randomize_patch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.randomize_patch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Randomize the current patch. Overridden parameteres will be unaffected.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="spiegelib.synth.SynthVST.render_patch">
-<code class="sig-name descname">render_patch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.render_patch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Render the current patch. Uses the values of midi_note, midi_velocity, note_length_secs,
-and render_length_secs to render audio. Plugin must be loaded first.</p>
 </dd></dl>
 
 <dl class="method">
