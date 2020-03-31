@@ -108,8 +108,7 @@ class SoundMatch():
             target (:ref:`AudioBuffer <audio_buffer>`): input audio to use as target
 
         Returns:
-            :ref:`AudioBuffer <audio_buffer>`: audio output from synthesizer
-                after sound matching
+            :ref:`AudioBuffer <audio_buffer>`: audio output from synthesizer after sound matching
         """
 
         # Attempt to run feature extraction if features have been provided
@@ -136,8 +135,7 @@ class SoundMatch():
             filepath (str): location of audio file on disk
 
         Returns:
-            :ref:`AudioBuffer <audio_buffer>`: audio output from synthesizer
-                after sound matching
+            :ref:`AudioBuffer <audio_buffer>`: audio output from synthesizer after sound matching
         """
 
         target = AudioBuffer(path, self.features.sample_rate)
