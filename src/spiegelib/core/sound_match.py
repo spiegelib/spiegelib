@@ -1,10 +1,46 @@
 #!/usr/bin/env python
 """
-Class for Automatic Sound Matching
+This class performs synthesizer sound matching by estimating parameters for synthesizer
+in order to match a target input sound. It accepts an implementation of :ref:`SynthBase <synth_base>`
+to estimate parameters for and an implementation of :ref:`EstimatorBase <estimator_base>`, which
+performs the parameter estimation. Optionally, feature extraction can be performed on
+the target audio file prior to being fed into the estimator using an implementation
+of :ref:`FeaturesBase <features_base>`.
+
+Example
+^^^^^^^
+
+Sound matching with a genetic algorithm
+
+.. code-block:: python
+    :linenos:
+
+    import spiegelib as spgl
+
+    # Load synth
+    synth = spgl.synth.SynthVST("/Library/Audio/Plug-Ins/VST/Dexed.vst")
+
+    # Setup a basic GA using MFCC error as the evaluation function
+    ga_extractor = spgl.features.MFCC(num_mfccs=13, hop_size=1024)
+    ga = spgl.estimator.BasicGA(synth, ga_extractor)
+
+
+    # Setup sound match object with synth and GA
+    ga_matcher = spgl.SoundMatch(synth, ga)
+
+    # Load a target audio file
+    target = spgl.AudioBuffer('./target.wav')
+
+    # Perform sound matching on audio target
+    result_audio = ga_matcher.match(target)
+    result_patch = ga_matcher.get_patch()
+
 """
 
 import os
+
 import librosa
+
 from spiegelib import AudioBuffer
 from spiegelib.synth.synth_base import SynthBase
 from spiegelib.features.features_base import FeaturesBase, NormalizerError
@@ -12,15 +48,14 @@ from spiegelib.estimator.estimator_base import EstimatorBase
 
 class SoundMatch():
     """
-    :param synth: synthesizer, must inherit from
-        :class:`spiegelib.synth.synth_base.SynthBase`.
-    :type synth: Object
-    :param features: feature extraction, must inherit from
-        :class:`spiegelib.features.feature_base.FeatureBase`.
-    :type features: Object
-    :param estimator: paramter estimator, must inherit from
-        :class:`spiegelib.estimator.estimator_base.EstimatorBase`.
-    :type estimator: Object
+    Args:
+        synth (Object): must inherit from :class:`spiegelib.synth.SynthBase`
+        estimator (Object): must inherit from :class:`spiegelib.estimator.EstimatorBase`
+        features (Object, optional): must inherit from :class:`spiegelib.features.FeatureBase`
+
+    Raises:
+        TypeError: If synth, estimator, or features parameters do not inherit from
+            the correct base class.
     """
 
     def __init__(self, synth, estimator, features=None):
@@ -53,7 +88,11 @@ class SoundMatch():
 
     def get_patch(self):
         """
-        Return the estimated sound matched patch
+        Returns:
+            dict: The resuling patch after estimation
+
+        Raises:
+            Exception: If sound matching has not been run first
         """
         if not self.patch:
             raise Exception('Please run match first')
@@ -65,8 +104,12 @@ class SoundMatch():
         """
         Attempt to estimate parameters for target audio
 
-        :param target: input audio to use as target
-        :type target: :class:`spiegelib.core.audio_buffer.AudioBuffer`
+        Args:
+            target (:ref:`AudioBuffer <audio_buffer>`): input audio to use as target
+
+        Returns:
+            :ref:`AudioBuffer <audio_buffer>`: audio output from synthesizer
+                after sound matching
         """
 
         # Attempt to run feature extraction if features have been provided
@@ -89,10 +132,12 @@ class SoundMatch():
         """
         Load audio file from disk and perform sound matching on it
 
-        :param path: filepath
-        :type path: str
-        :returns: resulting audio from sound matching
-        :rtype: np.ndarray
+        Args:
+            filepath (str): location of audio file on disk
+
+        Returns:
+            :ref:`AudioBuffer <audio_buffer>`: audio output from synthesizer
+                after sound matching
         """
 
         target = AudioBuffer(path, self.features.sample_rate)
