@@ -1,0 +1,284 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>NSGA3 Class &mdash; SpiegeLib 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Examples" href="../../examples/examples_index.html" />
+    <link rel="prev" title="BasicGA Class" href="basic_ga.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> SpiegeLib
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/getting_started.html">Getting Started</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core.html">Core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../synth.html">Synth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../features.html">Audio Features</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../estimators.html">Estimators</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="estimator_base.html">     EstimatorBase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../estimators.html#deep-learning">Deep Learning</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../estimators.html#evolutionary">Evolutionary</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="basic_ga.html">BasicGA</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">NSGA3</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/examples_index.html">Examples</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contribution Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">SpiegeLib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../estimators.html">Estimator Classes</a> &raquo;</li>
+        
+      <li>NSGA3 Class</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/estimators/nsga3.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-spiegelib.estimator.nsga3">
+<span id="nsga3-class"></span><span id="nsga3"></span><h1>NSGA3 Class<a class="headerlink" href="#module-spiegelib.estimator.nsga3" title="Permalink to this headline">¶</a></h1>
+<p>Non-dominated Sorting Genetic Algorithm with multiple objectives. Based on the
+implementation by Tatar et al. <a class="footnote-reference brackets" href="#id2" id="id1">1</a></p>
+<dl class="class">
+<dt id="spiegelib.estimator.NSGA3">
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.estimator.</code><code class="sig-name descname">NSGA3</code><span class="sig-paren">(</span><em class="sig-param">synth</em>, <em class="sig-param">features_list</em>, <em class="sig-param">seed=None</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.NSGA3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="estimator_base.html#spiegelib.estimator.estimator_base.EstimatorBase" title="spiegelib.estimator.estimator_base.EstimatorBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.estimator.estimator_base.EstimatorBase</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>synth</strong> (<em>Object</em>) – Instance of <a class="reference internal" href="../synth/synth_base.html#spiegelib.synth.SynthBase" title="spiegelib.synth.SynthBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.synth.SynthBase</span></code></a></p></li>
+<li><p><strong>features</strong> (<em>list</em>) – A list of <code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.features.FeaturesBase</span></code> objects.
+Each feature extraction object defines an objective and is used
+in the evaluation function to determine <em>fitness</em> of an individual.</p></li>
+<li><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – Seed for random. Defaults to current system time.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="spiegelib.estimator.NSGA3.fitness">
+<code class="sig-name descname">fitness</code><span class="sig-paren">(</span><em class="sig-param">individual</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.NSGA3.fitness" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is automatically called during prediction. Evaluation that calculates
+the fitness of an individual. The individual is a new estimated synthesizer
+parameter setting, and fitness is calculated by rendering an audio sample using
+those parameter settings and then measuring the error between that sample
+and the target sound using a set of audio feature extractors set during
+construction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>individual</strong> (<em>list</em>) – List of float values representing a synthesizer patch</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of the error values, one for each feature extractor</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.estimator.NSGA3.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">input</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.NSGA3.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run prection on input audio target</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>input</strong> (<a class="reference internal" href="../core/audio_buffer.html#audio-buffer"><span class="std std-ref">AudioBuffer</span></a>) – AudioBuffer to use as target</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="footnote brackets">
+<dt class="label" id="id2"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Tatar, Kıvanç, Matthieu Macret, and Philippe Pasquier.
+“Automatic synthesizer preset generation with PresetGen.”
+Journal of New Music Research 45.2 (2016): 124-144.</p>
+</dd>
+</dl>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../examples/examples_index.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="basic_ga.html" class="btn btn-neutral float-left" title="BasicGA Class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, University of Victoria
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
