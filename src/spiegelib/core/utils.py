@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Selection of utility functions
+Contains a number of utility functions used throughout the library.
 """
 
 
@@ -14,19 +14,19 @@ spectrum_types = ['complex', 'magnitude', 'power', 'magnitude_phase', 'power_pha
 def convert_spectrum(spectrum, type, dtype=np.float32, complex_dtype=np.complex64):
     """
     Convert a raw spectrum to magnitue, power, magnitude with phase, or power
-    with phase
+    with phase. If output is magnitude or power, the output array shape is the
+    same as the input. If either of the options with phase are selected, the output is
+    the same shape but each element is replaced with a 2-element vector containing
+    the magnitude or power in the first element and the phase in the second.
 
-    :param spectrum: raw audio spectrum with real/imag values to convert
-    :type spectrum: np.ndarray
-    :param type: type of conversion to apply ('magnitude', 'power', 'magnitude_phase',
-        'power_phase')
-    :type type: str
-    :param dtype: number type of regular (non-complex) numbers to return, defaults to np.float32
-    :type dtype: np number type, optional
-    :param complex_dtype: complex number type, defaults to np.complex64
-    :type complex_dtype: np complex number type, optional
-    :returns: converted spectrum
-    :rtype: np.ndarray
+    Args:
+        spectrum (np.ndarray): array of complex values
+        type (str): type of conversion to apply ('magnitude', 'power', 'magnitude_phase', 'power_phase')
+        dtype (np number type, optional): number type of regular (non-complex) numbers to return, defaults to np.float32
+        complex_dtype (np complex type, optional): complex number type, defaults to np.complex64
+
+    Returns:
+        np.ndarray: converted spectrum
     """
 
     if not type in spectrum_types:
@@ -52,10 +52,6 @@ def convert_spectrum(spectrum, type, dtype=np.float32, complex_dtype=np.complex6
     # If we get here, then the type is complex, so return a complex array
     # with an updated data type
     return np.array(spectrum, dtype=complex_dtype)
-
-
-#===========================================================================
-#
 
 
 def atoi(text):

@@ -168,7 +168,7 @@
             
   <div class="section" id="module-spiegelib.core.utils">
 <span id="utility-functions"></span><span id="core-utils"></span><h1>Utility Functions<a class="headerlink" href="#module-spiegelib.core.utils" title="Permalink to this headline">¶</a></h1>
-<p>Selection of utility functions</p>
+<p>Contains a number of utility functions used throughout the library.</p>
 <dl class="data">
 <dt id="spiegelib.core.utils.spectrum_types">
 <code class="sig-prename descclassname">spiegelib.core.utils.</code><code class="sig-name descname">spectrum_types</code><em class="property"> = ['complex', 'magnitude', 'power', 'magnitude_phase', 'power_phase']</em><a class="headerlink" href="#spiegelib.core.utils.spectrum_types" title="Permalink to this definition">¶</a></dt>
@@ -179,15 +179,17 @@
 <dt id="spiegelib.core.utils.convert_spectrum">
 <code class="sig-prename descclassname">spiegelib.core.utils.</code><code class="sig-name descname">convert_spectrum</code><span class="sig-paren">(</span><em class="sig-param">spectrum</em>, <em class="sig-param">type</em>, <em class="sig-param">dtype=&lt;class 'numpy.float32'&gt;</em>, <em class="sig-param">complex_dtype=&lt;class 'numpy.complex64'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.core.utils.convert_spectrum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert a raw spectrum to magnitue, power, magnitude with phase, or power
-with phase</p>
+with phase. If output is magnitude or power, the output array shape is the
+same as the input. If either of the options with phase are selected, the output is
+the same shape but each element is replaced with a 2-element vector containing
+the magnitude or power in the first element and the phase in the second.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>spectrum</strong> (<em>np.ndarray</em>) – raw audio spectrum with real/imag values to convert</p></li>
-<li><p><strong>type</strong> (<em>str</em>) – type of conversion to apply (‘magnitude’, ‘power’, ‘magnitude_phase’,
-‘power_phase’)</p></li>
+<li><p><strong>spectrum</strong> (<em>np.ndarray</em>) – array of complex values</p></li>
+<li><p><strong>type</strong> (<em>str</em>) – type of conversion to apply (‘magnitude’, ‘power’, ‘magnitude_phase’, ‘power_phase’)</p></li>
 <li><p><strong>dtype</strong> (<em>np number type</em><em>, </em><em>optional</em>) – number type of regular (non-complex) numbers to return, defaults to np.float32</p></li>
-<li><p><strong>complex_dtype</strong> (<em>np complex number type</em><em>, </em><em>optional</em>) – complex number type, defaults to np.complex64</p></li>
+<li><p><strong>complex_dtype</strong> (<em>np complex type</em><em>, </em><em>optional</em>) – complex number type, defaults to np.complex64</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
