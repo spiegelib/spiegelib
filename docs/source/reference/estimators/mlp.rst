@@ -1,11 +1,11 @@
-.. _lstm:
+.. _mlp:
 
-LSTM Class
-==========
+MLP Class
+=========
 
-.. automodule:: spiegelib.estimator.lstm
+.. automodule:: spiegelib.estimator.mlp
 
-.. autoclass:: spiegelib.estimator.LSTM
+.. autoclass:: spiegelib.estimator.MLP
 	:members:
 	:show-inheritance:
 	:undoc-members:

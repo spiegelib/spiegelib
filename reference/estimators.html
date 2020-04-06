@@ -91,7 +91,10 @@
 <li class="toctree-l2"><a class="reference internal" href="estimators/estimator_base.html">     EstimatorBase</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#deep-learning">Deep Learning</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="estimators/tf_estimator_base.html">TFEstimatorBase</a></li>
+<li class="toctree-l3"><a class="reference internal" href="estimators/conv6.html">Conv6</a></li>
+<li class="toctree-l3"><a class="reference internal" href="estimators/hwy_blstm.html">HwyBLSTM (LSTM++)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="estimators/lstm.html">LSTM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="estimators/mlp.html">MLP</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#evolutionary">Evolutionary</a><ul>
@@ -173,6 +176,7 @@
             
   <div class="section" id="estimator-classes">
 <h1>Estimator Classes<a class="headerlink" href="#estimator-classes" title="Permalink to this headline">¶</a></h1>
+<p>All estimators inherit from the following abstract base class:</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="estimators/estimator_base.html">     EstimatorBase</a></li>
@@ -180,15 +184,27 @@
 </div>
 <div class="section" id="deep-learning">
 <h2>Deep Learning<a class="headerlink" href="#deep-learning" title="Permalink to this headline">¶</a></h2>
+<p>The following deep learning models utilize TensorFlow with the Keras high-level
+interface. All current implementations inherit from the following abstract base
+class:</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="estimators/tf_estimator_base.html">TFEstimatorBase</a></li>
+</ul>
+</div>
+<p>Current deep learing model implementations:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="estimators/conv6.html">Conv6</a></li>
+<li class="toctree-l1"><a class="reference internal" href="estimators/hwy_blstm.html">HwyBLSTM (LSTM++)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="estimators/lstm.html">LSTM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="estimators/mlp.html">MLP</a></li>
 </ul>
 </div>
 </div>
 <div class="section" id="evolutionary">
 <h2>Evolutionary<a class="headerlink" href="#evolutionary" title="Permalink to this headline">¶</a></h2>
+<p>Current evolutionary based estimators:</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="estimators/basic_ga.html">BasicGA</a></li>

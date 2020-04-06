@@ -27,8 +27,8 @@ First Steps
 
    Getting Started <getting_started/getting_started>
 
-spiegel Reference
------------------
+SpiegeLib Reference
+-------------------
 .. toctree::
    :maxdepth: 2
 

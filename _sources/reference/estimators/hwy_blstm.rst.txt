@@ -1,11 +1,11 @@
-.. _lstm:
+.. _hwy_blstm:
 
-LSTM Class
-==========
+HwyBLSTM Class
+==============
 
-.. automodule:: spiegelib.estimator.lstm
+.. automodule:: spiegelib.estimator.hwy_blstm
 
-.. autoclass:: spiegelib.estimator.LSTM
+.. autoclass:: spiegelib.estimator.HwyBLSTM
 	:members:
 	:show-inheritance:
 	:undoc-members:
