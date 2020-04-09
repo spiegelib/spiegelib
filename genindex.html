@@ -171,6 +171,7 @@
  | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
@@ -209,6 +210,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/estimators/basic_ga.html#spiegelib.estimator.BasicGA">BasicGA (class in spiegelib.estimator)</a>
 </li>
+      <li><a href="reference/estimators/highway_layer.html#spiegelib.estimator.HighwayLayer.build">build() (spiegelib.estimator.HighwayLayer method)</a>
+</li>
       <li><a href="reference/estimators/conv6.html#spiegelib.estimator.Conv6.build_model">build_model() (spiegelib.estimator.Conv6 method)</a>
 
       <ul>
@@ -227,10 +230,14 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reference/estimators/conv6.html#spiegelib.estimator.Conv6">Conv6 (class in spiegelib.estimator)</a>
+      <li><a href="reference/estimators/highway_layer.html#spiegelib.estimator.HighwayLayer.call">call() (spiegelib.estimator.HighwayLayer method)</a>
+</li>
+      <li><a href="reference/estimators/highway_layer.html#spiegelib.estimator.HighwayLayer.compute_output_shape">compute_output_shape() (spiegelib.estimator.HighwayLayer method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/estimators/conv6.html#spiegelib.estimator.Conv6">Conv6 (class in spiegelib.estimator)</a>
+</li>
       <li><a href="reference/core/utils.html#spiegelib.core.utils.convert_spectrum">convert_spectrum() (in module spiegelib.core.utils)</a>
 </li>
   </ul></td>
@@ -317,6 +324,8 @@
         <li><a href="reference/synth/synth_vst.html#spiegelib.synth.SynthVST.get_audio">(spiegelib.synth.SynthVST method)</a>
 </li>
       </ul></li>
+      <li><a href="reference/estimators/highway_layer.html#spiegelib.estimator.HighwayLayer.get_config">get_config() (spiegelib.estimator.HighwayLayer method)</a>
+</li>
       <li><a href="reference/features/features_base.html#spiegelib.features.features_base.FeaturesBase.get_features">get_features() (spiegelib.features.features_base.FeaturesBase method)</a>
 
       <ul>
@@ -339,6 +348,8 @@
         <li><a href="reference/synth/synth_vst.html#spiegelib.synth.SynthVST.get_patch">(spiegelib.synth.SynthVST method)</a>
 </li>
       </ul></li>
+      <li><a href="reference/estimators/tf_epoch_logger.html#spiegelib.estimator.TFEpochLogger.get_plotting_data">get_plotting_data() (spiegelib.estimator.TFEpochLogger method)</a>
+</li>
       <li><a href="reference/synth/synth_base.html#spiegelib.synth.SynthBase.get_random_example">get_random_example() (spiegelib.synth.SynthBase method)</a>
 
       <ul>
@@ -361,6 +372,8 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/estimators/highway_layer.html#spiegelib.estimator.HighwayLayer">HighwayLayer (class in spiegelib.estimator)</a>
+</li>
       <li><a href="reference/estimators/hwy_blstm.html#spiegelib.estimator.HwyBLSTM">HwyBLSTM (class in spiegelib.estimator)</a>
 </li>
   </ul></td>
@@ -409,6 +422,8 @@
       </ul></li>
       <li><a href="reference/estimators/tf_estimator_base.html#spiegelib.estimator.TFEstimatorBase.load_weights">load_weights() (spiegelib.estimator.TFEstimatorBase method)</a>
 </li>
+      <li><a href="reference/estimators/tf_epoch_logger.html#spiegelib.estimator.TFEpochLogger.log_data">log_data (spiegelib.estimator.TFEpochLogger attribute)</a>
+</li>
       <li><a href="reference/estimators/lstm.html#spiegelib.estimator.LSTM">LSTM (class in spiegelib.estimator)</a>
 </li>
   </ul></td>
@@ -452,12 +467,22 @@
   </ul></td>
 </tr></table>
 
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/estimators/tf_epoch_logger.html#spiegelib.estimator.TFEpochLogger.on_epoch_end">on_epoch_end() (spiegelib.estimator.TFEpochLogger method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/core/dataset_generator.html#spiegelib.DatasetGenerator.patches_filename">patches_filename (spiegelib.DatasetGenerator attribute)</a>
 </li>
       <li><a href="reference/core/audio_buffer.html#spiegelib.AudioBuffer.peak_normalize">peak_normalize() (spiegelib.AudioBuffer static method)</a>
+</li>
+      <li><a href="reference/estimators/tf_epoch_logger.html#spiegelib.estimator.TFEpochLogger.plot">plot() (spiegelib.estimator.TFEpochLogger method)</a>
 </li>
       <li><a href="reference/core/audio_buffer.html#spiegelib.AudioBuffer.plot_spectrogram">plot_spectrogram() (spiegelib.AudioBuffer method)</a>
 </li>
@@ -549,10 +574,10 @@
 </li>
       <li><a href="reference/core/audio_buffer.html#module-spiegelib.core.audio_buffer">spiegelib.core.audio_buffer (module)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/core/dataset_generator.html#module-spiegelib.core.dataset_generator">spiegelib.core.dataset_generator (module)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/core/sound_match.html#module-spiegelib.core.sound_match">spiegelib.core.sound_match (module)</a>
 </li>
       <li><a href="reference/core/utils.html#module-spiegelib.core.utils">spiegelib.core.utils (module)</a>
@@ -563,6 +588,8 @@
 </li>
       <li><a href="reference/estimators/estimator_base.html#module-spiegelib.estimator.estimator_base">spiegelib.estimator.estimator_base (module)</a>
 </li>
+      <li><a href="reference/estimators/highway_layer.html#module-spiegelib.estimator.highway_layer">spiegelib.estimator.highway_layer (module)</a>
+</li>
       <li><a href="reference/estimators/hwy_blstm.html#module-spiegelib.estimator.hwy_blstm">spiegelib.estimator.hwy_blstm (module)</a>
 </li>
       <li><a href="reference/estimators/lstm.html#module-spiegelib.estimator.lstm">spiegelib.estimator.lstm (module)</a>
@@ -570,6 +597,8 @@
       <li><a href="reference/estimators/mlp.html#module-spiegelib.estimator.mlp">spiegelib.estimator.mlp (module)</a>
 </li>
       <li><a href="reference/estimators/nsga3.html#module-spiegelib.estimator.nsga3">spiegelib.estimator.nsga3 (module)</a>
+</li>
+      <li><a href="reference/estimators/tf_epoch_logger.html#module-spiegelib.estimator.tf_epoch_logger">spiegelib.estimator.tf_epoch_logger (module)</a>
 </li>
       <li><a href="reference/estimators/tf_estimator_base.html#module-spiegelib.estimator.tf_estimator_base">spiegelib.estimator.tf_estimator_base (module)</a>
 </li>
@@ -591,10 +620,12 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reference/estimators/tf_estimator_base.html#spiegelib.estimator.TFEstimatorBase">TFEstimatorBase (class in spiegelib.estimator)</a>
+      <li><a href="reference/estimators/tf_epoch_logger.html#spiegelib.estimator.TFEpochLogger">TFEpochLogger (class in spiegelib.estimator)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/estimators/tf_estimator_base.html#spiegelib.estimator.TFEstimatorBase">TFEstimatorBase (class in spiegelib.estimator)</a>
+</li>
       <li><a href="reference/features/features_base.html#spiegelib.features.features_base.FullDataStandardScaler.transform">transform() (spiegelib.features.features_base.FullDataStandardScaler method)</a>
 </li>
   </ul></td>

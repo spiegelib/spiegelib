@@ -19,7 +19,7 @@ class:
 
    TFEstimatorBase <estimators/tf_estimator_base>
 
-Current deep learing model implementations:
+Current deep learning model implementations:
 
 .. toctree::
    :maxdepth: 2
@@ -28,6 +28,14 @@ Current deep learing model implementations:
    HwyBLSTM (LSTM++) <estimators/hwy_blstm>
    LSTM <estimators/lstm>
    MLP <estimators/mlp>
+
+Other deep learning classes:
+
+.. toctree::
+   :maxdepth: 2
+
+   TFEpochLogger <estimators/tf_epoch_logger>
+   HighwayLayer <estimators/highway_layer>
 
 Evolutionary
 """"""""""""

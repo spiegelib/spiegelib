@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MLP Class &mdash; SpiegeLib 0.0.1 documentation</title>
+  <title>TFEpochLogger &mdash; SpiegeLib 0.0.1 documentation</title>
   
 
   
@@ -35,8 +35,8 @@
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="TFEpochLogger" href="tf_epoch_logger.html" />
-    <link rel="prev" title="LSTM Class" href="lstm.html" /> 
+    <link rel="next" title="BasicGA Class" href="basic_ga.html" />
+    <link rel="prev" title="MLP Class" href="mlp.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -94,8 +94,8 @@
 <li class="toctree-l3"><a class="reference internal" href="conv6.html">Conv6</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hwy_blstm.html">HwyBLSTM (LSTM++)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lstm.html">LSTM</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">MLP</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tf_epoch_logger.html">TFEpochLogger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mlp.html">MLP</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">TFEpochLogger</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../estimators.html#evolutionary">Evolutionary</a></li>
@@ -154,13 +154,13 @@
         
           <li><a href="../estimators.html">Estimator Classes</a> &raquo;</li>
         
-      <li>MLP Class</li>
+      <li>TFEpochLogger</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/reference/estimators/mlp.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/reference/estimators/tf_epoch_logger.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -173,39 +173,56 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-spiegelib.estimator.mlp">
-<span id="mlp-class"></span><span id="mlp"></span><h1>MLP Class<a class="headerlink" href="#module-spiegelib.estimator.mlp" title="Permalink to this headline">¶</a></h1>
-<p>Simple Multi-layer Perceptron Deep Learning Model</p>
-<p>Based on model proposed by Yee-King et al. <a class="footnote-reference brackets" href="#id2" id="id1">1</a></p>
+  <div class="section" id="module-spiegelib.estimator.tf_epoch_logger">
+<span id="tfepochlogger"></span><span id="tf-epoch-logger"></span><h1>TFEpochLogger<a class="headerlink" href="#module-spiegelib.estimator.tf_epoch_logger" title="Permalink to this headline">¶</a></h1>
+<p>Logger class for logging accuracy and loss from epochs when training a
+<code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code>. Inherits from <code class="docutils literal notranslate"><span class="pre">tf.keras.callbacks.Callback</span></code> and should
+be passed in as a callback during model training.</p>
 <dl class="class">
-<dt id="spiegelib.estimator.MLP">
-<em class="property">class </em><code class="sig-prename descclassname">spiegelib.estimator.</code><code class="sig-name descname">MLP</code><span class="sig-paren">(</span><em class="sig-param">input_shape</em>, <em class="sig-param">num_outputs</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.MLP" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.estimator.tf_estimator_base.TFEstimatorBase</span></code></p>
+<dt id="spiegelib.estimator.TFEpochLogger">
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.estimator.</code><code class="sig-name descname">TFEpochLogger</code><a class="headerlink" href="#spiegelib.estimator.TFEpochLogger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tensorflow.python.keras.callbacks.Callback</span></code></p>
+<dl class="attribute">
+<dt id="spiegelib.estimator.TFEpochLogger.log_data">
+<code class="sig-name descname">log_data</code><a class="headerlink" href="#spiegelib.estimator.TFEpochLogger.log_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dictionary of data logged at the end of each epoch
+during training. Keyed on the epoch number.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.estimator.TFEpochLogger.on_epoch_end">
+<code class="sig-name descname">on_epoch_end</code><span class="sig-paren">(</span><em class="sig-param">epoch</em>, <em class="sig-param">logs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.TFEpochLogger.on_epoch_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logging on end of an epoch. This is called automatically during training.
+Stores infomation passed in the logs parameter into <code class="docutils literal notranslate"><span class="pre">log_data</span></code> attribute.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>input_shape</strong> (<em>tuple</em>) – Shape of matrix that will be passed to model input</p></li>
-<li><p><strong>num_outputs</strong> – Number of outputs the model has</p></li>
-<li><p><strong>kwargs</strong> – optional keyword arguments to pass to <a class="reference internal" href="tf_estimator_base.html#spiegelib.estimator.TFEstimatorBase" title="spiegelib.estimator.TFEstimatorBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.estimator.TFEstimatorBase</span></code></a></p></li>
+<li><p><strong>epoch</strong> (<em>int</em>) – current epoch that just finished</p></li>
+<li><p><strong>logs</strong> – Any data to be logged</p></li>
 </ul>
 </dd>
 </dl>
+</dd></dl>
+
 <dl class="method">
-<dt id="spiegelib.estimator.MLP.build_model">
-<code class="sig-name descname">build_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.MLP.build_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Construct MLP Model</p>
+<dt id="spiegelib.estimator.TFEpochLogger.get_plotting_data">
+<code class="sig-name descname">get_plotting_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.TFEpochLogger.get_plotting_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function to organize log_data for easier plotting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.estimator.TFEpochLogger.plot">
+<code class="sig-name descname">plot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.TFEpochLogger.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot logged training and validation data using matplotlib</p>
 </dd></dl>
 
 </dd></dl>
 
-<dl class="footnote brackets">
-<dt class="label" id="id2"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
-<dd><p>Yee-King, Matthew John, Leon Fedden, and Mark d’Inverno.
-“Automatic programming of VST sound synthesizers using deep networks and
-other techniques.” IEEE Transactions on Emerging Topics in Computational
-Intelligence 2.2 (2018): 150-159.</p>
-</dd>
-</dl>
 </div>
 
 
@@ -216,10 +233,10 @@ Intelligence 2.2 (2018): 150-159.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="tf_epoch_logger.html" class="btn btn-neutral float-right" title="TFEpochLogger" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="basic_ga.html" class="btn btn-neutral float-right" title="BasicGA Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="lstm.html" class="btn btn-neutral float-left" title="LSTM Class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="mlp.html" class="btn btn-neutral float-left" title="MLP Class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
