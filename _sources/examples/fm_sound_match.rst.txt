@@ -1,3 +1,5 @@
+.. _fm_sound_match:
+
 FM Sound Match Experiment
 =========================
 
