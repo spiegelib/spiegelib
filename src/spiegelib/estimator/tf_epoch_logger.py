@@ -1,13 +1,19 @@
 #!/usr/bin/env python
 """
 Logger class for logging accuracy and loss from epochs when training a
-TensoFlow Model
+``tf.keras.Model``. Inherits from ``tf.keras.callbacks.Callback`` and should
+be passed in as a callback during model training.
 """
 
 import matplotlib.pyplot as plt
 from tensorflow.keras.callbacks import Callback
 
 class TFEpochLogger(Callback):
+    """
+    Attributes:
+        log_data (dict): Dictionary of data logged at the end of each epoch
+            during training. Keyed on the epoch number.
+    """
 
     def __init__(self):
         """
@@ -20,7 +26,12 @@ class TFEpochLogger(Callback):
 
     def on_epoch_end(self, epoch, logs=None):
         """
-        Logging on end of an epoch
+        Logging on end of an epoch. This is called automatically during training.
+        Stores infomation passed in the logs parameter into ``log_data`` attribute.
+
+        Args:
+            epoch (int): current epoch that just finished
+            logs: Any data to be logged
         """
 
         self.log_data[epoch] = logs

@@ -1,6 +1,48 @@
 #!/usr/bin/env python
 """
-Abstract Base Class for Estimating Synthesizer Parameters using TensorFlow
+Abstract Base Class for Estimating Synthesizer Parameters using TensorFlow.
+
+Wraps TensorFlow library calls and provides functionality for training and making
+synthesizer parameter predictions. Inheriting classes must implement the ``build_model()``
+method, which is automatically called upon construction and sets up the neural network
+model.
+
+Examples
+^^^^^^^^
+
+Here is an example of extending ``TFEstimatorBase`` to create a simple multi-layer
+perceptron network::
+
+        import tensorflow as tf
+        from tensorflow.keras import layers
+        import spiegelib.estimators import TFEstimatorBase
+
+        class MLP(TFEstimatorBase):
+
+            def __init__(self, input_shape, num_outputs, **kwargs):
+
+                # Call TFEstimatorBase constructor
+                super().__init__(input_shape, num_outputs, **kwargs)
+
+
+            def build_model(self):
+
+                # Model must be defined in the model attribute
+                self.model = tf.keras.Sequential()
+                self.model.add(layers.Dense(50, input_shape=self.input_shape, activation='relu'))
+                self.model.add(layers.Dense(40, activation='relu'))
+                self.model.add(layers.Dense(30, activation='relu'))
+                self.model.add(layers.Dense(self.num_outputs))
+
+                self.model.compile(
+                    optimizer=tf.optimizers.Adam(),
+                    loss=TFEstimatorBase.rms_error,
+                    metrics=['accuracy']
+                )
+
+For a detailed example of running a synthesizer sound matching experiment using
+deep learning models like this, see the :ref:`FM Sound Match Example <fm_sound_match>`.
+
 """
 
 import os
@@ -15,22 +57,18 @@ from spiegelib.estimator.highway_layer import HighwayLayer
 
 class TFEstimatorBase(EstimatorBase):
     """
-    :param input_shape: Shape of matrix that will be passed to model input
-    :type input_shape: tuple
-    :param num_outputs: Number of outputs the model has
-    :type num_outputs: int
-    :param checkpoint_path: If given, checkpoints will be saved to this location
-        during training, defaults to ""
-    :type checkpoint_path: string, optional
-    :param weights_path: If given, model weights will be loaded from this file,
-        defaults to ""
-    :type weights_path: string, optional
-    :param callbacks: A list of callbacks to be passed into model fit method,
-        defaults to []
-    :type callbacks: list
+    Args:
+        input_shape (tuple, optional): Shape of matrix that will be passed to model input
+        num_outputes (int, optional): Number of outputs the model has. If estimating
+            synthesizer parameters this will typically be the number of parameters.
+        weights_path (string, optional): If given, model weights will be loaded from this file
+        callbacks (list, optional): A list of callbacks to be passed into model fit method
+
+    Attributes:
+        model (``tf.keras.Model``): Attribute for the model, see `TensorFlow docs <https://www.tensorflow.org/api_docs/python/tf/keras/Model>`__
     """
 
-    def __init__(self, input_shape=None, num_outputs=None, checkpoint_path = "",
+    def __init__(self, input_shape=None, num_outputs=None,
                  weights_path = "", callbacks=[]):
         """
         Constructor
@@ -56,36 +94,33 @@ class TFEstimatorBase(EstimatorBase):
             raise Exception('loggers argument must be of type list, '
                             'received %s' % type(loggers))
 
-        # Checkpoints
-        self.checkpoint_path = None
-        self.checkpoint_dir = None
-        if checkpoint_path:
-            self.checkpoint_path = os.path.abspath(checkpoint_path)
-            self.checkpoint_dir = os.path.dirname(self.checkpoint_path)
-            if os.path.exists(self.checkpoint_dir):
-                self.load_model_from_checkpoint()
-
         # Attempt to load model weights if provided
         if weights_path:
             self.load_weights(weights_path)
 
 
+    @abstractmethod
+    def build_model(self):
+        """
+        Abstract method that should contain the model definition when implemented
+        """
+        pass
+
+
     def add_training_data(self, input, output, batch_size=64,
                           shuffle_size=None):
         """
-        Create a tf Dataset from input and output, and shuffles / batches
-        data for training
+        Create a `tf.data.Dataset <https://www.tensorflow.org/api_docs/python/tf/data/Dataset>`_
+        from training data, and shuffles / batches data for training. Stores
+        results in the ``train_data`` attribute.
 
-        :param input: matrix of training data
-        :type input: np.ndarray
-        :param output: matrix of training data ground truth
-        :type output: np.ndarray
-        :param batch_size: If provided, will batch data into batches of this size,
-            set to None or 0 to prevent batching. defaults to 64
-        :type batch_size: int, optional
-        :param shuffle_size: If provided, will shuffle data with a buffer size of
-            shuffle_size, defaults to None, so shuffling does not occur
-        :type batch_size: int, optional
+        Args:
+            input (np.ndarray): training data tensor (ex, audio features)
+            output (np.ndarray): ground truth data (ex, parameter values)
+            batch_size: (int, optional): If provided, will batch data into batches of
+                this size. None or 0 will be no batching. Defaults to 64.
+            shuffle_size (int, optional): If provided will shuffle data with a buffer
+                of this size. None or 0 corresponds to no shuffling. Defaults to None.
         """
 
         if not input.shape[1:] == self.input_shape:
@@ -107,16 +142,14 @@ class TFEstimatorBase(EstimatorBase):
 
     def add_testing_data(self, input, output, batch_size=64):
         """
-        Create a tf Dataset from input and output for model testing, batches
-        data if desired
+        Create a `tf.data.Dataset <https://www.tensorflow.org/api_docs/python/tf/data/Dataset>`_
+        and optionally batches for validation. Stores results in the ``test_data`` attribute.
 
-        :param input: matrix of data to use as testing data
-        :type input: np.array
-        :param output: matrix of data to use as ground truth for testing data
-        :type output: np.array
-        :param batch_size: If provided, will batch data into batches of this size,
-            set to None or 0 to prevent batching. defaults to 64
-        :type batch_size: int, optional
+        Args:
+            input (np.ndarray): validation data (ex, audio features)
+            output (np.ndarray): ground truth data (ex, parameter values)
+            batch_size: (int, optional): If provided, will batch data into batches of
+                this size. None or 0 will be no batching. Defaults to 64.
         """
 
         if not input.shape[1:] == self.input_shape:
@@ -133,63 +166,22 @@ class TFEstimatorBase(EstimatorBase):
             self.test_data = self.test_data.batch(batch_size)
 
 
-    @abstractmethod
-    def build_model(self):
-        """
-        Abstract method that should contain the model definition when implemented
-        """
-        pass
-
-
-    def predict(self, input):
-        """
-        Run prediction on input
-
-        :param input: matrix of input data to run predictions on. Can be a single
-            instance of data or a batch.
-        :type input: np.array
-        """
-
-        # If this is a single instance we need to wrap in an np.array
-        is_single_input = False
-        if input.shape == self.input_shape:
-            is_single_input = True
-            input = np.array([input])
-        else:
-            raise Exception('Input data has incorrect shape, expected %s, '
-                             'got %s' % (self.input_shape, input.shape))
-
-        prediction = self.model.predict(input)
-        return prediction[0] if is_single_input else prediction
-
-
     def fit(self, epochs=1, callbacks=[], **kwargs):
         """
         Train model on for a fixed number of epochs on training data and validation
         data if it has been added to this estimator
 
-        :param epochs: Number of epochs to train model on, defaults to 1
-        :type epochs: int, optional
-        :param callbacks: List of callback functions for training, defaults to []
-        :type callbacks: list, optional
-        :param kwargs: Keyword args passed to model fit method. See
-            `Tensflow Docs <https://www.tensorflow.org/api_docs/python/tf/keras/Model#fit>`_.
+        Args:
+            epochs (int, optional): Number of epocs to train model on.
+            callbacks (list, optional): List of callback functions for training.
+            kwargs: Keyword args passed to model fit method. See
+                `Tensflow Docs <https://www.tensorflow.org/api_docs/python/tf/keras/Model#fit>`_.
         """
 
         # Check for callbacks in k
         if not isinstance(callbacks, list):
             raise Exception('Callbacks must be a list, received %s' \
                             % type(callbacks))
-
-        # Add a checkpoint callback if the checkpoint path has been set
-        if self.checkpoint_path:
-            callbacks.append(
-                tf.keras.callbacks.ModelCheckpoint(
-                    filepath=self.checkpoint_path,
-                    save_weights_only=True,
-                    verbose=1
-                )
-            )
 
         # Add callbacks
         if self.callbacks:
@@ -205,23 +197,35 @@ class TFEstimatorBase(EstimatorBase):
             **kwargs
         )
 
-    def load_model_from_checkpoint(self):
+    def predict(self, input):
         """
-        Load model weights from checkpoint
+        Run prediction on input
+
+        Arg (np.ndarray): matrix of input data to run predictions on. Can a single
+            instance or a batch
         """
 
-        latest = tf.train.latest_checkpoint(self.checkpoint_dir)
-        self.model.load_weights(latest)
+        # If this is a single instance we need to wrap in an np.array
+        is_single_input = False
+        if input.shape == self.input_shape:
+            is_single_input = True
+            input = np.array([input])
+        else:
+            raise Exception('Input data has incorrect shape, expected %s, '
+                             'got %s' % (self.input_shape, input.shape))
+
+        prediction = self.model.predict(input)
+        return prediction[0] if is_single_input else prediction
 
 
     def load_weights(self, filepath, **kwargs):
         """
         Load model weights from H5 or TensorFlow file
 
-        :param filepath: filepath to saved model weights
-        :type filepath: string
-        :param kwargs: optional keyword arguments passed to tf load_weights
-            methods, see  `TensorFlow Docs <https://www.tensorflow.org/api_docs/python/tf/keras/Model#load_weights>`__.
+        Args:
+            filepath (string): location of saved model weights
+            kwargs: optional keyword arguments passed to tf load_weights
+                methods, see  `TensorFlow Docs <https://www.tensorflow.org/api_docs/python/tf/keras/Model#load_weights>`__.
         """
 
         self.model.load_weights(filepath, **kwargs)
@@ -231,12 +235,12 @@ class TFEstimatorBase(EstimatorBase):
         """
         Save model weights to a HDF5 or TensorFlow file.
 
-        :param filepath: filepath to save model weights.  Using a file suffix of
-            '.h5' or '.keras' will save in HDF5 format. Otherwise will save as
-            TensorFlow.
-        :type filepath: string
-        :param kwargs: optional keyword arguments passed to tf save_weights
-            method,  see `Tensflow Docs <https://www.tensorflow.org/api_docs/python/tf/keras/Model#save_weights>`__.
+        Args:
+            filepath (str): filepath to save model weights.  Using a file suffix of
+                '.h5' or '.keras' will save in HDF5 format. Otherwise will save as
+                TensorFlow.
+            kwargs: optional keyword arguments passed to tf save_weights
+                method,  see `Tensflow Docs <https://www.tensorflow.org/api_docs/python/tf/keras/Model#save_weights>`__.
         """
 
         path = os.path.abspath(filepath)
@@ -251,10 +255,10 @@ class TFEstimatorBase(EstimatorBase):
         """
         Save entire model
 
-        :param filepath: path to SavedModel or H5 file to save the model.
-        :type filepath: str
-        :param kwargs: optional keyword arguments pass to tf save method,
-            see `TensorFlow Docs <https://www.tensorflow.org/api_docs/python/tf/keras/Model#save>`__.
+        Args:
+            filepath (str): path to SavedModel or H5 file to save the model.
+            kwargs: optional keyword arguments pass to tf save method,
+                see `TensorFlow Docs <https://www.tensorflow.org/api_docs/python/tf/keras/Model#save>`__.
         """
 
         path = os.path.abspath(filepath)
@@ -271,10 +275,10 @@ class TFEstimatorBase(EstimatorBase):
         Load entire model and return an istantiated TFEstimatorBase class with
         the saved model loaded into it.
 
-        :param filepath: path to SavedModel or H5 file of saved model.
-        :type filepath: str
-        :param kwargs: Keyword arguments to pass into load_model function. See
-            `TensorFlow Doc <`https://www.tensorflow.org/api_docs/python/tf/keras/models/load_model>`__.
+        Args:
+            filepath (str): path to SavedModel or H5 file of saved model.
+            kwargs: Keyword arguments to pass into load_model function. See
+                `TensorFlow Doc <`https://www.tensorflow.org/api_docs/python/tf/keras/models/load_model>`__.
         """
 
         # Add spiegelib custom objects
@@ -298,10 +302,9 @@ class TFEstimatorBase(EstimatorBase):
         Static method for calculating root mean squared error between predictions
         and targets
 
-        :param labels: Matrix of ground truth labels
-        :type labels: Tensor
-        :param prediction: Matrix of predictions
-        :type prediction: Tensor
+        Args:
+            y_true (Tensor): Ground truth labels
+            y_pred (Tensor): Predictions
         """
 
         return tf.sqrt(tf.reduce_mean(tf.square(tf.subtract(y_true, y_pred))))

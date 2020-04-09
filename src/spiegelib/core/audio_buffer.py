@@ -1,24 +1,66 @@
 #!/usr/bin/env python
 """
-Class for handling audio signals
+Class for storing and passing audio signals around. Can be instantiated with an
+array of audio samples or location to load audio from disk. Stores sample rate,
+number of channels, and the file name if loaded from disk.
+
+Also has utility functions for loading and saving audio from disk, normalizing,
+resizing buffers, and plotting spectrograms.
+
+Examples
+^^^^^^^^
+
+Create a new empty ``AudioBuffer``::
+
+    >>> audio = spiegelib.AudioBuffer()
+
+Create an ``AudioBuffer`` from existing audio samples::
+
+    >>> audio = spiegelib.AudioBuffer(audio_samples, 44100)
+
+Load audio from disk into a new ``AudioBuffer``::
+
+    >>> audio = spiegelib.AudioBuffer('./some_audio_file.wav')
+
+Load an entire folder of audio samples into a list of ``AudioBuffer`` objects::
+
+    >>> audio_files = spiegelib.AudioBuffer.load_folder('./audio_folder')
+
+Plot a spectrogram
+
+.. code-block:: python
+    :linenos:
+
+    import spiegelib as spgl
+    import matplotlib.pyplot as plt
+
+    audio = spgl.AudioBuffer('./audio_file.wav')
+    audio.plot_spectrogram()
+    plt.show()
+
+.. image:: ./images/audio_buffer_spect.png
+
 """
 
 import os
 import numbers
+
 import numpy as np
 import librosa
 import scipy.io.wavfile
+
 import spiegelib.core.utils as utils
 
 
 class AudioBuffer():
     """
-    :param input: Can be an array of audio samples (np.ndarray or list), or a path
-        to a location of an audio file on disk. Defaults to None.
-    :type input: optional, np.ndarray, list, str, file-like object
-    :param sample_rate: rate of sampled audio if audio data was passed in, or rate
-        to resample audio data loaded from disk at, defaults to None.
-    :type sample_rate: optional, int
+    Args:
+        input (np.ndarray, list, str, file-like object): Can be an array
+            of audio samples (np.ndarray or list), or a path to a location of an
+            audio file on disk. Defaults to None.
+        sample_rate (int): Rate of sampled audio if audio data was passed in, or rate
+            to resample audio data loaded from disk at, defaults to None. If loading audio
+            from a file, will automatically resample to 44100 if no sample rate provided.
     """
 
     def __init__(self, input=None, sample_rate=None):
@@ -65,8 +107,8 @@ class AudioBuffer():
         """
         Getter for audio data
 
-        :returns: Array of audio samples
-        :rtype: np.ndarray
+        Returns:
+            np.ndarray: Array of audio samples
         """
         return self.audio
 
@@ -75,40 +117,22 @@ class AudioBuffer():
         """
         Getter for sample rate
 
-        :returns: Sample rate of audio buffer
-        :rtype: int
+        Returns:
+            int: Sample rate of audio buffer
         """
         return self.sample_rate
 
 
-    def replace_audio_data(self, audio, sample_rate):
-        """
-        Replace audio data in this object
-
-        :param audio: array of audio samples
-        :type audio: np.ndarray
-        :param sample_rate: rate that audio data was sampled at
-        :type sample_rate: int
-        """
-
-        self.audio = audio
-        self.sample_rate = sample_rate
-
-
     def load(self, path, sample_rate=44100, **kwargs):
         """
-        Read audio from a file into a numpy array at specific audio rate.
-        Uses librosa's audio load function, see ` documentation
-        <https://librosa.github.io/librosa/generated/librosa.core.load.html#librosa.core.load>`_.
-        for more information.
+        Read audio from a file into a numpy array at specific audio rate. Stores
+        in this ``AudioBuffer`` object.
 
-        :param path: location of audio file on disk
-        :type path: str, int, pathlib.Path, or file-like object
-        :param sample_rate: resample audio to this rate, defaults to 44100
-        :type sample_rate: number
-        :param kwargs: keyword args to pass into librosa load function
-        :returns: (audio samples, sample rate)
-        :rtype: tuple (np.ndarray, number)
+        Args:
+            path (str, int, pathlib.Path, or file-like object): location of audio file on disk
+            sample_rate (int): resample audio to this rate, defaults to 44100. None uses
+                native sampling rate.
+            kwargs: keyword args to pass into `librosa load function <https://librosa.github.io/librosa/generated/librosa.core.load.html>`_.
         """
 
         self.audio, self.sample_rate = librosa.core.load(path, sr=sample_rate, **kwargs)
@@ -116,15 +140,73 @@ class AudioBuffer():
         self.file_name = path
 
 
+    def plot_spectrogram(self, **kwargs):
+        """
+        Plot spectrogram of this audio buffer. Uses librosas `specshow <https://librosa.github.io/librosa/generated/librosa.display.specshow.html>`_
+        function. Uses matplotlib.pyplot to plot spectrogram.
+
+        Defaults to logarithmic y-axis in Hertz and seconds along the x-axis.
+
+        Args:
+            kwargs: see `specshow <https://librosa.github.io/librosa/generated/librosa.display.specshow.html>`_.
+
+        Returns:
+            axes: The axis handle for figures
+        """
+
+        D = librosa.amplitude_to_db(np.abs(librosa.stft(self.get_audio())), ref=np.max)
+        y_axis = 'log' if not 'y_axis' in kwargs else kwargs['y_axis']
+        x_axis = 's' if not 'y_axis' in kwargs else kwargs['x_axis']
+        return librosa.display.specshow(D, y_axis=y_axis, x_axis=x_axis, **kwargs)
+
+
+    def replace_audio_data(self, audio, sample_rate):
+        """
+        Replace audio data in this object
+
+        Args:
+            audio (np.ndarray): Array of audio samples
+            sample_rate (int): Rate that audio data was sampled at
+        """
+
+        self.audio = audio
+        self.sample_rate = sample_rate
+
+
+    def resize(self, num_samples, start=0):
+        """
+        Resize audio to a set number of samples. If new length is less than the
+        current audio buffer size, then the buffer will be trimmed. If the new
+        length is greater than current audio buffer, then the resulting buffer
+        will be zero-padded at the end.
+
+        Args:
+            num_samples (int): New length of audio buffer in samples
+            start_sample (int): Start reading from certain number of samples into
+                current buffer
+        """
+
+        new_shape = (self.channels, num_samples) if self.channels > 1 else (num_samples,)
+        new_audio = np.zeros(new_shape)
+        current = self.audio.shape[1] if self.channels > 1 else self.audio.shape[0]
+        smaller = min(current-start, num_samples)
+
+        if self.channels > 1:
+            new_audio[:,0:smaller] = self.audio[:,start:start+smaller]
+        else:
+            new_audio[0:smaller] = self.audio[start:start+smaller]
+
+        self.audio = new_audio
+
+
     def save(self, path, normalize=False):
         """
         Save an audio to disk as WAV file at given sample rate. Can normalize
         before saving as well.
 
-        :param path: location to save audio to
-        :type path: str or open file handle
-        :param normalize: normalize audio before writing, defaults to false
-        :type normalize: boolean
+        Args:
+            path (str or open file handle): location to save audio to
+            normalize (boolean): normalize audio before writing, defaults to false
         """
 
         # Make directory if it doesn't exist
@@ -147,54 +229,16 @@ class AudioBuffer():
         )
 
 
-    def resize(self, num_samples, start=0):
-        """
-        Resize audio to a set number of samples. If new length is less than the
-        current audio buffer size, then the buffer will be trimmed. If the new
-        length is greater than current audio buffer, then the resulting buffer
-        will be zero-padded at the end.
-
-        :param num_samples: New length of audio buffer in samples
-        :type num_samples: int
-        :param start_sample: Start reading from certain number of samples into
-            current buffer, defaults to 0
-        :type start_sample: int, optional
-        """
-
-        new_shape = (self.channels, num_samples) if self.channels > 1 else (num_samples,)
-        new_audio = np.zeros(new_shape)
-        current = self.audio.shape[1] if self.channels > 1 else self.audio.shape[0]
-        smaller = min(current-start, num_samples)
-
-        if self.channels > 1:
-            new_audio[:,0:smaller] = self.audio[:,start:start+smaller]
-        else:
-            new_audio[0:smaller] = self.audio[start:start+smaller]
-
-        self.audio = new_audio
-
-
-    def plot_spectrogram(self, **kwargs):
-        """
-        Plot spectrogram of this audio buffer. Uses librosas `specshow <https://librosa.github.io/librosa/generated/librosa.display.specshow.html>`_
-        function. Uses matplotlib.pyplot to plot spectrogram.
-
-        Defaults to logarithmic y-axis in Hertz.
-
-        :param kwargs: see `specshow <https://librosa.github.io/librosa/generated/librosa.display.specshow.html>`_
-        :returns: The axis handle for figures
-        :rtype: `axes <https://matplotlib.org/api/axes_api.html>`_
-        """
-
-        D = librosa.amplitude_to_db(np.abs(librosa.stft(self.get_audio())), ref=np.max)
-        y_axis = 'log' if not 'y_axis' in kwargs else kwargs['y_axis']
-        return librosa.display.specshow(D, y_axis='log', **kwargs)
-
-
     @staticmethod
     def peak_normalize(audio):
         """
         Peak normalize audio data
+
+        Args:
+            audio (np.ndarray) : array of audio samples
+
+        Returns:
+            np.ndarray : normalized array of audio samples
         """
 
         maxSample = np.max(np.abs(audio))
@@ -207,16 +251,17 @@ class AudioBuffer():
 
 
     @staticmethod
-    def load_folder(path, sort=True):
+    def load_folder(path, sort=True, sample_rate=44100):
         """
         Try to load a folder of audio samples
 
-        :param path: Path to directory of audio files
-        :type path: str
-        :param sort: Apply natural sort to file names. Default True
-        :type sort: bool
-        :returns: list of :class:`spiegelib.core.audio_buffer.AudioBuffer`
-        :rtype: list
+        Args:
+            path (str): Path to directory of audio files
+            sort (bool): Apply natural sort to file names. Default True
+            sample_rate (int): Sample rate to load audio files at. Defualts to 44100
+
+        Returns:
+            list: List of ``AudioBuffer`` objects
         """
 
         abspath = os.path.abspath(path)
