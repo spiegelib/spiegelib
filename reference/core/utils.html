@@ -94,6 +94,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../synth.html">Synth</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../features.html">Audio Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../estimators.html">Estimators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../evaluation.html">Evaluation</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../examples/examples_index.html">Examples</a></li>
@@ -236,6 +237,17 @@ makes sure numbers are sorted in a natural way.</p>
 <dd class="field-odd"><p>list</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="spiegelib.core.utils.NumpyNumberEncoder">
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.core.utils.</code><code class="sig-name descname">NumpyNumberEncoder</code><span class="sig-paren">(</span><em class="sig-param">*</em>, <em class="sig-param">skipkeys=False</em>, <em class="sig-param">ensure_ascii=True</em>, <em class="sig-param">check_circular=True</em>, <em class="sig-param">allow_nan=True</em>, <em class="sig-param">sort_keys=False</em>, <em class="sig-param">indent=None</em>, <em class="sig-param">separators=None</em>, <em class="sig-param">default=None</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.core.utils.NumpyNumberEncoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encodes Numpy number values into values that can be saved as JSON files.</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+    <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">NumpyNumberEncoder</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Estimator Classes &mdash; SpiegeLib 0.0.1 documentation</title>
+  <title>Evaluation Classes &mdash; SpiegeLib 0.0.1 documentation</title>
   
 
   
@@ -35,8 +35,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="EstimatorBase Class" href="estimators/estimator_base.html" />
-    <link rel="prev" title="FeaturesBase Class" href="features/mfcc.html" /> 
+    <link rel="next" title="EvaluationBase Class" href="evaluation/evaluation_base.html" />
+    <link rel="prev" title="NSGA3 Class" href="estimators/nsga3.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -87,26 +87,11 @@
 <li class="toctree-l1"><a class="reference internal" href="core.html">Core</a></li>
 <li class="toctree-l1"><a class="reference internal" href="synth.html">Synth</a></li>
 <li class="toctree-l1"><a class="reference internal" href="features.html">Audio Features</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Estimators</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="estimators/estimator_base.html">     EstimatorBase</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#deep-learning">Deep Learning</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="estimators/tf_estimator_base.html">TFEstimatorBase</a></li>
-<li class="toctree-l3"><a class="reference internal" href="estimators/conv6.html">Conv6</a></li>
-<li class="toctree-l3"><a class="reference internal" href="estimators/hwy_blstm.html">HwyBLSTM (LSTM++)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="estimators/lstm.html">LSTM</a></li>
-<li class="toctree-l3"><a class="reference internal" href="estimators/mlp.html">MLP</a></li>
-<li class="toctree-l3"><a class="reference internal" href="estimators/tf_epoch_logger.html">TFEpochLogger</a></li>
-<li class="toctree-l3"><a class="reference internal" href="estimators/highway_layer.html">HighwayLayer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="estimators.html">Estimators</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Evaluation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="evaluation/evaluation_base.html">     EvaluationBase</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#evolutionary">Evolutionary</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="estimators/basic_ga.html">BasicGA</a></li>
-<li class="toctree-l3"><a class="reference internal" href="estimators/nsga3.html">NSGA3</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Evaluation</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../examples/examples_index.html">Examples</a></li>
@@ -158,13 +143,13 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Estimator Classes</li>
+      <li>Evaluation Classes</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/reference/estimators.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/reference/evaluation.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -177,50 +162,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="estimator-classes">
-<h1>Estimator Classes<a class="headerlink" href="#estimator-classes" title="Permalink to this headline">¶</a></h1>
-<p>All estimators inherit from the following abstract base class:</p>
+  <div class="section" id="evaluation-classes">
+<h1>Evaluation Classes<a class="headerlink" href="#evaluation-classes" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="estimators/estimator_base.html">     EstimatorBase</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation/evaluation_base.html">     EvaluationBase</a></li>
 </ul>
-</div>
-<div class="section" id="deep-learning">
-<h2>Deep Learning<a class="headerlink" href="#deep-learning" title="Permalink to this headline">¶</a></h2>
-<p>The following deep learning models utilize TensorFlow with the Keras high-level
-interface. All current implementations inherit from the following abstract base
-class:</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="estimators/tf_estimator_base.html">TFEstimatorBase</a></li>
-</ul>
-</div>
-<p>Current deep learning model implementations:</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="estimators/conv6.html">Conv6</a></li>
-<li class="toctree-l1"><a class="reference internal" href="estimators/hwy_blstm.html">HwyBLSTM (LSTM++)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="estimators/lstm.html">LSTM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="estimators/mlp.html">MLP</a></li>
-</ul>
-</div>
-<p>Other deep learning classes:</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="estimators/tf_epoch_logger.html">TFEpochLogger</a></li>
-<li class="toctree-l1"><a class="reference internal" href="estimators/highway_layer.html">HighwayLayer</a></li>
-</ul>
-</div>
-</div>
-<div class="section" id="evolutionary">
-<h2>Evolutionary<a class="headerlink" href="#evolutionary" title="Permalink to this headline">¶</a></h2>
-<p>Current evolutionary based estimators:</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="estimators/basic_ga.html">BasicGA</a></li>
-<li class="toctree-l1"><a class="reference internal" href="estimators/nsga3.html">NSGA3</a></li>
-</ul>
-</div>
 </div>
 </div>
 
@@ -232,10 +179,10 @@ class:</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="estimators/estimator_base.html" class="btn btn-neutral float-right" title="EstimatorBase Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="evaluation/evaluation_base.html" class="btn btn-neutral float-right" title="EvaluationBase Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="features/mfcc.html" class="btn btn-neutral float-left" title="FeaturesBase Class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="estimators/nsga3.html" class="btn btn-neutral float-left" title="NSGA3 Class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

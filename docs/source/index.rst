@@ -36,6 +36,7 @@ SpiegeLib Reference
    Synth <reference/synth>
    Audio Features <reference/features>
    Estimators <reference/estimators>
+   Evaluation <reference/evaluation>
 
 Examples
 --------

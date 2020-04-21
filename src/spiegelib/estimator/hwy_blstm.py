@@ -34,7 +34,7 @@ class HwyBLSTM(TFEstimatorBase):
 
     def build_model(self):
         """
-        Construct LSTM Model
+        Construct LSTM++ Model
         """
 
         self.model = tf.keras.Sequential()

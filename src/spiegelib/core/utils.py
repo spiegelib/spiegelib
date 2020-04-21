@@ -6,6 +6,7 @@ Contains a number of utility functions used throughout the library.
 
 import re
 import numpy as np
+import json
 
 
 #: Selection of spectrum outputs
@@ -84,3 +85,23 @@ def natural_keys(text):
         list: List of text and integers separated from text to use as the key argument in a sort algorithm.
     """
     return [ atoi(c) for c in re.split(r'(\d+)', text) ]
+
+
+
+class NumpyNumberEncoder(json.JSONEncoder):
+    """
+    Encodes Numpy number values into values that can be saved as JSON files.
+
+    Usage::
+
+        with open(path, 'w') as fp:
+            json.dump(data, fp, indent=True, cls=NumpyNumberEncoder)
+    """
+
+    def default(self, obj):
+        if type(obj).__module__ == np.__name__:
+            try:
+                return float(obj)
+            except TypeError:
+                pass
+        return json.JSONEncoder.default(self, obj)

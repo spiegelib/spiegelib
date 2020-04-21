@@ -87,6 +87,7 @@
 <li class="toctree-l1"><a class="reference internal" href="reference/synth.html">Synth</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference/features.html">Audio Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference/estimators.html">Estimators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/evaluation.html">Evaluation</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="examples/examples_index.html">Examples</a></li>
@@ -176,6 +177,7 @@
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
+ | <a href="#V"><strong>V</strong></a>
  | <a href="#W"><strong>W</strong></a>
  
 </div>
@@ -255,6 +257,16 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/estimators/estimator_base.html#spiegelib.estimator.estimator_base.EstimatorBase">EstimatorBase (class in spiegelib.estimator.estimator_base)</a>
+</li>
+      <li><a href="reference/evaluation/evaluation_base.html#spiegelib.evaluation.EvaluationBase.euclidian_distance">euclidian_distance() (spiegelib.evaluation.EvaluationBase static method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/evaluation/evaluation_base.html#spiegelib.evaluation.EvaluationBase.evaluate">evaluate() (spiegelib.evaluation.EvaluationBase method)</a>
+</li>
+      <li><a href="reference/evaluation/evaluation_base.html#spiegelib.evaluation.EvaluationBase.evaluate_target">evaluate_target() (spiegelib.evaluation.EvaluationBase method)</a>
+</li>
+      <li><a href="reference/evaluation/evaluation_base.html#spiegelib.evaluation.EvaluationBase">EvaluationBase (class in spiegelib.evaluation)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -358,6 +370,10 @@
       </ul></li>
       <li><a href="reference/core/audio_buffer.html#spiegelib.AudioBuffer.get_sample_rate">get_sample_rate() (spiegelib.AudioBuffer method)</a>
 </li>
+      <li><a href="reference/evaluation/evaluation_base.html#spiegelib.evaluation.EvaluationBase.get_scores">get_scores() (spiegelib.evaluation.EvaluationBase method)</a>
+</li>
+      <li><a href="reference/evaluation/evaluation_base.html#spiegelib.evaluation.EvaluationBase.get_stats">get_stats() (spiegelib.evaluation.EvaluationBase method)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -432,12 +448,18 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/evaluation/evaluation_base.html#spiegelib.evaluation.EvaluationBase.manhattan_distance">manhattan_distance() (spiegelib.evaluation.EvaluationBase static method)</a>
+</li>
       <li><a href="reference/core/sound_match.html#spiegelib.SoundMatch.match">match() (spiegelib.SoundMatch method)</a>
 </li>
       <li><a href="reference/core/sound_match.html#spiegelib.SoundMatch.match_from_file">match_from_file() (spiegelib.SoundMatch method)</a>
 </li>
+      <li><a href="reference/evaluation/evaluation_base.html#spiegelib.evaluation.EvaluationBase.mean_abs_error">mean_abs_error() (spiegelib.evaluation.EvaluationBase static method)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/evaluation/evaluation_base.html#spiegelib.evaluation.EvaluationBase.mean_squared_error">mean_squared_error() (spiegelib.evaluation.EvaluationBase static method)</a>
+</li>
       <li><a href="reference/features/mfcc.html#spiegelib.features.mfcc.MFCC">MFCC (class in spiegelib.features.mfcc)</a>
 </li>
       <li><a href="reference/estimators/mlp.html#spiegelib.estimator.MLP">MLP (class in spiegelib.estimator)</a>
@@ -464,6 +486,8 @@
 </li>
       <li><a href="reference/estimators/nsga3.html#spiegelib.estimator.NSGA3">NSGA3 (class in spiegelib.estimator)</a>
 </li>
+      <li><a href="reference/core/utils.html#spiegelib.core.utils.NumpyNumberEncoder">NumpyNumberEncoder (class in spiegelib.core.utils)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -484,10 +508,12 @@
 </li>
       <li><a href="reference/estimators/tf_epoch_logger.html#spiegelib.estimator.TFEpochLogger.plot">plot() (spiegelib.estimator.TFEpochLogger method)</a>
 </li>
-      <li><a href="reference/core/audio_buffer.html#spiegelib.AudioBuffer.plot_spectrogram">plot_spectrogram() (spiegelib.AudioBuffer method)</a>
+      <li><a href="reference/evaluation/evaluation_base.html#spiegelib.evaluation.EvaluationBase.plot_hist">plot_hist() (spiegelib.evaluation.EvaluationBase method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/core/audio_buffer.html#spiegelib.AudioBuffer.plot_spectrogram">plot_spectrogram() (spiegelib.AudioBuffer method)</a>
+</li>
       <li><a href="reference/estimators/basic_ga.html#spiegelib.estimator.BasicGA.predict">predict() (spiegelib.estimator.BasicGA method)</a>
 
       <ul>
@@ -542,12 +568,16 @@
         <li><a href="reference/features/mfcc.html#spiegelib.features.mfcc.MFCC.save_normalizers">(spiegelib.features.mfcc.MFCC method)</a>
 </li>
       </ul></li>
+      <li><a href="reference/evaluation/evaluation_base.html#spiegelib.evaluation.EvaluationBase.save_scores_json">save_scores_json() (spiegelib.evaluation.EvaluationBase method)</a>
+</li>
       <li><a href="reference/synth/synth_base.html#spiegelib.synth.SynthBase.save_state">save_state() (spiegelib.synth.SynthBase method)</a>
 
       <ul>
         <li><a href="reference/synth/synth_vst.html#spiegelib.synth.SynthVST.save_state">(spiegelib.synth.SynthVST method)</a>
 </li>
       </ul></li>
+      <li><a href="reference/evaluation/evaluation_base.html#spiegelib.evaluation.EvaluationBase.save_stats_json">save_stats_json() (spiegelib.evaluation.EvaluationBase method)</a>
+</li>
       <li><a href="reference/estimators/tf_estimator_base.html#spiegelib.estimator.TFEstimatorBase.save_weights">save_weights() (spiegelib.estimator.TFEstimatorBase method)</a>
 </li>
       <li><a href="reference/features/features_base.html#spiegelib.features.features_base.FeaturesBase.set_normalizer">set_normalizer() (spiegelib.features.features_base.FeaturesBase method)</a>
@@ -574,10 +604,10 @@
 </li>
       <li><a href="reference/core/audio_buffer.html#module-spiegelib.core.audio_buffer">spiegelib.core.audio_buffer (module)</a>
 </li>
-      <li><a href="reference/core/dataset_generator.html#module-spiegelib.core.dataset_generator">spiegelib.core.dataset_generator (module)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/core/dataset_generator.html#module-spiegelib.core.dataset_generator">spiegelib.core.dataset_generator (module)</a>
+</li>
       <li><a href="reference/core/sound_match.html#module-spiegelib.core.sound_match">spiegelib.core.sound_match (module)</a>
 </li>
       <li><a href="reference/core/utils.html#module-spiegelib.core.utils">spiegelib.core.utils (module)</a>
@@ -601,6 +631,8 @@
       <li><a href="reference/estimators/tf_epoch_logger.html#module-spiegelib.estimator.tf_epoch_logger">spiegelib.estimator.tf_epoch_logger (module)</a>
 </li>
       <li><a href="reference/estimators/tf_estimator_base.html#module-spiegelib.estimator.tf_estimator_base">spiegelib.estimator.tf_estimator_base (module)</a>
+</li>
+      <li><a href="reference/evaluation/evaluation_base.html#module-spiegelib.evaluation.evaluation_base">spiegelib.evaluation.evaluation_base (module)</a>
 </li>
       <li><a href="reference/features/features_base.html#module-spiegelib.features.features_base">spiegelib.features.features_base (module)</a>
 </li>
@@ -627,6 +659,18 @@
       <li><a href="reference/estimators/tf_estimator_base.html#spiegelib.estimator.TFEstimatorBase">TFEstimatorBase (class in spiegelib.estimator)</a>
 </li>
       <li><a href="reference/features/features_base.html#spiegelib.features.features_base.FullDataStandardScaler.transform">transform() (spiegelib.features.features_base.FullDataStandardScaler method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/evaluation/evaluation_base.html#spiegelib.evaluation.EvaluationBase.verify_audio_input_list">verify_audio_input_list() (spiegelib.evaluation.EvaluationBase static method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/evaluation/evaluation_base.html#spiegelib.evaluation.EvaluationBase.verify_input_list">verify_input_list() (spiegelib.evaluation.EvaluationBase method)</a>
 </li>
   </ul></td>
 </tr></table>

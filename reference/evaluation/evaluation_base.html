@@ -1,0 +1,452 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>EvaluationBase Class &mdash; SpiegeLib 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Examples" href="../../examples/examples_index.html" />
+    <link rel="prev" title="Evaluation Classes" href="../evaluation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> SpiegeLib
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/getting_started.html">Getting Started</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core.html">Core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../synth.html">Synth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../features.html">Audio Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../estimators.html">Estimators</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../evaluation.html">Evaluation</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">     EvaluationBase</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/examples_index.html">Examples</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contribution Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">SpiegeLib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../evaluation.html">Evaluation Classes</a> &raquo;</li>
+        
+      <li>EvaluationBase Class</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/evaluation/evaluation_base.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-spiegelib.evaluation.evaluation_base">
+<span id="evaluationbase-class"></span><span id="evaluation-base"></span><h1>EvaluationBase Class<a class="headerlink" href="#module-spiegelib.evaluation.evaluation_base" title="Permalink to this headline">¶</a></h1>
+<p>Abstract Base Class for evaluating audio files</p>
+<dl class="class">
+<dt id="spiegelib.evaluation.EvaluationBase">
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.evaluation.</code><code class="sig-name descname">EvaluationBase</code><span class="sig-paren">(</span><em class="sig-param">targets</em>, <em class="sig-param">estimations</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Example Input:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">targets</span> <span class="o">=</span> <span class="p">[</span><span class="n">target_1</span><span class="p">,</span> <span class="n">target_2</span><span class="p">]</span>
+<span class="n">estimations</span> <span class="o">=</span> <span class="p">[[</span><span class="n">prediction_1_for_target_1</span><span class="p">,</span> <span class="n">prediction_2_for_target_1</span><span class="p">],</span>
+               <span class="p">[</span><span class="n">prediction_1_for_target_2</span><span class="p">,</span> <span class="n">prediction_2_for_target_2</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>Where prediction_1 and prediction_2 would represent results from two different
+methods or sources. For example, audio for all prediction_1 samples might be
+from a GA and all audio for prediction_2 samples might be from a deep learning
+approach.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>targets</strong> (<em>list</em>) – a list of <a class="reference internal" href="../core/audio_buffer.html#audio-buffer"><span class="std std-ref">AudioBuffer</span></a> objects to use
+as the ground truth for evaluation</p></li>
+<li><p><strong>estimations</strong> (<em>lits</em>) – a 2D list of <a class="reference internal" href="../core/audio_buffer.html#audio-buffer"><span class="std std-ref">AudioBuffer</span></a> objects.
+Should contain a list of AudioBuffers for each target. The position of an
+AudioBuffer in each list is used to distinguish between different
+audio sources. For example, if you are comparing two different
+synthesizer programming methods, then you would want to make sure to
+have the results from each method in the same position in each list.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="spiegelib.evaluation.EvaluationBase.evaluate_target">
+<em class="property">abstract </em><code class="sig-name descname">evaluate_target</code><span class="sig-paren">(</span><em class="sig-param">target</em>, <em class="sig-param">predictions</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.evaluate_target" title="Permalink to this definition">¶</a></dt>
+<dd><p>Abstract method. Must be implemented and evaluate a single target and predictions
+made for that target.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target</strong> (<em>list</em>) – Audio to use as ground truth in evaluation</p></li>
+<li><p><strong>predictions</strong> (<em>list</em>) – list of <a class="reference internal" href="../core/audio_buffer.html#audio-buffer"><span class="std std-ref">AudioBuffer</span></a> objects to evaluate
+against the target audio file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of dictionaries with stats for each prediction evaluation</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.evaluation.EvaluationBase.evaluate">
+<code class="sig-name descname">evaluate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run evaluation. Calls evaluate_target on all targets and creates a dictionary
+of metrics stored in the scores attribute.</p>
+<p>Saves each prediction for a target in a dictionary keyed by the position in
+the prediction list that it was constructed with - uses the key ‘source_#’.
+Where # is the position index.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.evaluation.EvaluationBase.get_scores">
+<code class="sig-name descname">get_scores</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.get_scores" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>scores calculated during evaluation</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.evaluation.EvaluationBase.get_stats">
+<code class="sig-name descname">get_stats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.get_stats" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>stats that summarize the scores for each source using mean, median,                 standard deviation, minimum, and maximum.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.evaluation.EvaluationBase.save_scores_json">
+<code class="sig-name descname">save_scores_json</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.save_scores_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save scores to a JSON file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – location to save JSON file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.evaluation.EvaluationBase.save_stats_json">
+<code class="sig-name descname">save_stats_json</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.save_stats_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save score statistics as a JSON file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – location to save JSON file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.evaluation.EvaluationBase.plot_hist">
+<code class="sig-name descname">plot_hist</code><span class="sig-paren">(</span><em class="sig-param">sources</em>, <em class="sig-param">metric</em>, <em class="sig-param">bins=None</em>, <em class="sig-param">clip_upper=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.plot_hist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot a histogram of results of evaluation. Uses Matplotlib.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sources</strong> (<em>list</em>) – Which audio sources to include in histogram. source_0
+would use the first prediction source passed in during construction,
+source_1 would use the seconds, etc.</p></li>
+<li><p><strong>metric</strong> (<em>str</em>) – Which metric to use for creating the histogram. Depends on
+which were used during evaluation.</p></li>
+<li><p><strong>bins</strong> (<em>int</em><em> or </em><em>sequence</em><em> or </em><em>str</em><em>, </em><em>optional</em>) – passed into matplotlib hist
+method and indicates the number of bins to use, or if it is a list
+then it dfines bin edges. With Numpy 1.11 or newer, you can alternatively
+provide a string describing a binning strategy, such as ‘auto’,
+‘sturges’, ‘fd’, ‘doane’, ‘scott’, ‘rice’ or ‘sqrt’</p></li>
+<li><p><strong>clipper_upper</strong> (<em>number</em><em>, </em><em>optional</em>) – Set an upper range for input values.
+This can be used to force any values above a certain range into the
+right most hitogram bin.</p></li>
+<li><p><strong>kwargs</strong> – Keyword arguments to be passed into <a class="reference external" href="https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.hist.html">hist</a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.evaluation.EvaluationBase.verify_input_list">
+<code class="sig-name descname">verify_input_list</code><span class="sig-paren">(</span><em class="sig-param">input_list</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.verify_input_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base method for verifying input list. Override to implement verification.
+For example, override and call <a class="reference internal" href="#spiegelib.evaluation.EvaluationBase.verify_audio_input_list" title="spiegelib.evaluation.EvaluationBase.verify_audio_input_list"><code class="xref py py-func docutils literal notranslate"><span class="pre">verify_audio_input_list()</span></code></a>
+on input_list to verify that <a class="reference internal" href="../core/audio_buffer.html#audio-buffer"><span class="std std-ref">AudioBuffer</span></a> objects are being
+passed in.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.evaluation.EvaluationBase.verify_audio_input_list">
+<em class="property">static </em><code class="sig-name descname">verify_audio_input_list</code><span class="sig-paren">(</span><em class="sig-param">input_list</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.verify_audio_input_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Static method for verifying input lists with audio buffers</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.evaluation.EvaluationBase.euclidian_distance">
+<em class="property">static </em><code class="sig-name descname">euclidian_distance</code><span class="sig-paren">(</span><em class="sig-param">A</em>, <em class="sig-param">B</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.euclidian_distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the euclidian distance between two arrays.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>A</strong> (<em>np.ndarray</em>) – First array  (Ground truth)</p></li>
+<li><p><strong>B</strong> (<em>np.ndarray</em>) – Second array (Prediction)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Euclidian distance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.evaluation.EvaluationBase.manhattan_distance">
+<em class="property">static </em><code class="sig-name descname">manhattan_distance</code><span class="sig-paren">(</span><em class="sig-param">A</em>, <em class="sig-param">B</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.manhattan_distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the manhattan distance between two arrays.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>A</strong> (<em>np.ndarray</em>) – First array  (Ground truth)</p></li>
+<li><p><strong>B</strong> (<em>np.ndarray</em>) – Second array (Prediction)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Manhattan distance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.evaluation.EvaluationBase.mean_abs_error">
+<em class="property">static </em><code class="sig-name descname">mean_abs_error</code><span class="sig-paren">(</span><em class="sig-param">A</em>, <em class="sig-param">B</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.mean_abs_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates mean absolute error between two arrays. Mean(ABS(A-B)).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>A</strong> (<em>np.ndarray</em>) – First array  (Ground truth)</p></li>
+<li><p><strong>B</strong> (<em>np.ndarray</em>) – Second array (Prediction)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Mean absolute error</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.evaluation.EvaluationBase.mean_squared_error">
+<em class="property">static </em><code class="sig-name descname">mean_squared_error</code><span class="sig-paren">(</span><em class="sig-param">A</em>, <em class="sig-param">B</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.mean_squared_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates mean squared error between two arrays. Mean(Square(A-B)).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>A</strong> (<em>np.ndarray</em>) – First array  (Ground truth)</p></li>
+<li><p><strong>B</strong> (<em>np.ndarray</em>) – Second array (Prediction)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Mean squared error</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../examples/examples_index.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../evaluation.html" class="btn btn-neutral float-left" title="Evaluation Classes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, University of Victoria
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
