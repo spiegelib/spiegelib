@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Contains a number of utility functions used throughout the library.
+Contains utility functions and classes used in library.
 """
 
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Abstract Base Class for evaluating audio files
+Abstract Base Class for objective evaluations
 """
 
 from abc import ABC, abstractmethod
@@ -25,12 +25,12 @@ class EvaluationBase(ABC):
     approach.
 
     Args:
-        targets (list): a list of :ref:`AudioBuffer <audio_buffer>` objects to use
+        targets (list): a list of objects to use
             as the ground truth for evaluation
-        estimations (lits): a 2D list of :ref:`AudioBuffer <audio_buffer>` objects.
-            Should contain a list of AudioBuffers for each target. The position of an
-            AudioBuffer in each list is used to distinguish between different
-            audio sources. For example, if you are comparing two different
+        estimations (lits): a 2D list of objects.
+            Should contain a list of objects representing estimations for each target.
+            The position of an object in each list is used to distinguish between different
+            sources. For example, if you are comparing two different
             synthesizer programming methods, then you would want to make sure to
             have the results from each method in the same position in each list.
     """
@@ -50,8 +50,7 @@ class EvaluationBase(ABC):
 
         for item in estimations:
             if not isinstance(item, list):
-                raise TypeError("Expected list of lists of AudioBuffers for "
-                                "estimations")
+                raise TypeError("Expected list of lists for estimations")
 
             self.verify_input_list(item)
 
@@ -65,7 +64,7 @@ class EvaluationBase(ABC):
     def evaluate_target(self, target, predictions):
         """
         Abstract method. Must be implemented and evaluate a single target and predictions
-        made for that target.
+        made for that target. Called automatically by :func:`~evaluate`
 
         Args:
             target (list): Audio to use as ground truth in evaluation
@@ -164,9 +163,9 @@ class EvaluationBase(ABC):
         Plot a histogram of results of evaluation. Uses Matplotlib.
 
         Args:
-            sources (list): Which audio sources to include in histogram. source_0
+            sources (list): Which audio sources to include in histogram. [0]
                 would use the first prediction source passed in during construction,
-                source_1 would use the seconds, etc.
+                [1] would use the seconds, etc.
             metric (str): Which metric to use for creating the histogram. Depends on
                 which were used during evaluation.
             bins (int or sequence or str, optional): passed into matplotlib hist
@@ -179,6 +178,7 @@ class EvaluationBase(ABC):
                 right most hitogram bin.
             kwargs: Keyword arguments to be passed into `hist <https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.hist.html>`_
         """
+
         values = []
         for source in sources:
             values.extend([self.scores[key]['source_%s' % source][metric]

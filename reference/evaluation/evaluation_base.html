@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Examples" href="../../examples/examples_index.html" />
+    <link rel="next" title="MFCCEval Class" href="mfcc_eval.html" />
     <link rel="prev" title="Evaluation Classes" href="../evaluation.html" /> 
 </head>
 
@@ -90,6 +90,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../estimators.html">Estimators</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../evaluation.html">Evaluation</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">     EvaluationBase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mfcc_eval.html">     MFCCEval</a></li>
 </ul>
 </li>
 </ul>
@@ -166,7 +167,7 @@
             
   <div class="section" id="module-spiegelib.evaluation.evaluation_base">
 <span id="evaluationbase-class"></span><span id="evaluation-base"></span><h1>EvaluationBase Class<a class="headerlink" href="#module-spiegelib.evaluation.evaluation_base" title="Permalink to this headline">¶</a></h1>
-<p>Abstract Base Class for evaluating audio files</p>
+<p>Abstract Base Class for objective evaluations</p>
 <dl class="class">
 <dt id="spiegelib.evaluation.EvaluationBase">
 <em class="property">class </em><code class="sig-prename descclassname">spiegelib.evaluation.</code><code class="sig-name descname">EvaluationBase</code><span class="sig-paren">(</span><em class="sig-param">targets</em>, <em class="sig-param">estimations</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase" title="Permalink to this definition">¶</a></dt>
@@ -184,12 +185,12 @@ approach.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>targets</strong> (<em>list</em>) – a list of <a class="reference internal" href="../core/audio_buffer.html#audio-buffer"><span class="std std-ref">AudioBuffer</span></a> objects to use
+<li><p><strong>targets</strong> (<em>list</em>) – a list of objects to use
 as the ground truth for evaluation</p></li>
-<li><p><strong>estimations</strong> (<em>lits</em>) – a 2D list of <a class="reference internal" href="../core/audio_buffer.html#audio-buffer"><span class="std std-ref">AudioBuffer</span></a> objects.
-Should contain a list of AudioBuffers for each target. The position of an
-AudioBuffer in each list is used to distinguish between different
-audio sources. For example, if you are comparing two different
+<li><p><strong>estimations</strong> (<em>lits</em>) – a 2D list of objects.
+Should contain a list of objects representing estimations for each target.
+The position of an object in each list is used to distinguish between different
+sources. For example, if you are comparing two different
 synthesizer programming methods, then you would want to make sure to
 have the results from each method in the same position in each list.</p></li>
 </ul>
@@ -199,7 +200,7 @@ have the results from each method in the same position in each list.</p></li>
 <dt id="spiegelib.evaluation.EvaluationBase.evaluate_target">
 <em class="property">abstract </em><code class="sig-name descname">evaluate_target</code><span class="sig-paren">(</span><em class="sig-param">target</em>, <em class="sig-param">predictions</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.evaluate_target" title="Permalink to this definition">¶</a></dt>
 <dd><p>Abstract method. Must be implemented and evaluate a single target and predictions
-made for that target.</p>
+made for that target. Called automatically by <a class="reference internal" href="#spiegelib.evaluation.EvaluationBase.evaluate" title="spiegelib.evaluation.EvaluationBase.evaluate"><code class="xref py py-func docutils literal notranslate"><span class="pre">evaluate()</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -282,9 +283,9 @@ Where # is the position index.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>sources</strong> (<em>list</em>) – Which audio sources to include in histogram. source_0
+<li><p><strong>sources</strong> (<em>list</em>) – Which audio sources to include in histogram. [0]
 would use the first prediction source passed in during construction,
-source_1 would use the seconds, etc.</p></li>
+[1] would use the seconds, etc.</p></li>
 <li><p><strong>metric</strong> (<em>str</em>) – Which metric to use for creating the histogram. Depends on
 which were used during evaluation.</p></li>
 <li><p><strong>bins</strong> (<em>int</em><em> or </em><em>sequence</em><em> or </em><em>str</em><em>, </em><em>optional</em>) – passed into matplotlib hist
@@ -408,7 +409,7 @@ passed in.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../examples/examples_index.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="mfcc_eval.html" class="btn btn-neutral float-right" title="MFCCEval Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../evaluation.html" class="btn btn-neutral float-left" title="Evaluation Classes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
