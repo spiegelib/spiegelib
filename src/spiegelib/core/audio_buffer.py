@@ -170,6 +170,7 @@ class AudioBuffer():
         """
 
         self.audio = audio
+        self.channels = len(self.audio.shape)
         self.sample_rate = sample_rate
 
 
