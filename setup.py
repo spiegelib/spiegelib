@@ -39,6 +39,9 @@ setup(
             'sphinx',
             'sphinx_rtd_theme',
             'ipython',
+            'pytest'
+            'pytest-datadir',
+            'tox'
         ],
     }
 )
