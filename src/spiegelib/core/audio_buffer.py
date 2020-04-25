@@ -47,6 +47,7 @@ import numbers
 
 import numpy as np
 import librosa
+import librosa.display
 import scipy.io.wavfile
 
 import spiegelib.core.utils as utils
@@ -61,9 +62,11 @@ class AudioBuffer():
         sample_rate (int): Rate of sampled audio if audio data was passed in, or rate
             to resample audio data loaded from disk at, defaults to None. If loading audio
             from a file, will automatically resample to 44100 if no sample rate provided.
+        kwargs: keyword args to pass into `librosa load function <https://librosa.github.io/librosa/generated/librosa.core.load.html>`_.
+
     """
 
-    def __init__(self, input=None, sample_rate=None):
+    def __init__(self, input=None, sample_rate=None, **kwargs):
         """
         Constructor
         """
@@ -83,7 +86,7 @@ class AudioBuffer():
         # a path to an audio file
         if isinstance(input, np.ndarray):
             audio = input
-        elif isinstance(input, list) and isinstance(input[0], numbers.Number):
+        elif isinstance(input, list):
             audio = np.array(input)
         elif input:
             path = input
@@ -92,7 +95,7 @@ class AudioBuffer():
 
         # If an audio file location was provided, load audio from disk on construction
         if path:
-            self.load(path, sample_rate=(sample_rate if sample_rate else 44100))
+            self.load(path, sample_rate=(sample_rate if sample_rate else 44100), **kwargs)
 
         # If audio data was passed in directly
         elif audio_set and sample_rate:
@@ -252,7 +255,7 @@ class AudioBuffer():
 
 
     @staticmethod
-    def load_folder(path, sort=True, sample_rate=44100):
+    def load_folder(path, sort=True, sample_rate=44100, **kwargs):
         """
         Try to load a folder of audio samples
 
@@ -260,6 +263,7 @@ class AudioBuffer():
             path (str): Path to directory of audio files
             sort (bool): Apply natural sort to file names. Default True
             sample_rate (int): Sample rate to load audio files at. Defualts to 44100
+            kwargs: keyword args to pass into `librosa load function <https://librosa.github.io/librosa/generated/librosa.core.load.html>`_.
 
         Returns:
             list: List of ``AudioBuffer`` objects
@@ -276,7 +280,7 @@ class AudioBuffer():
         audio_files = []
         for file in dir:
             try:
-                audioFile = AudioBuffer(os.path.join(abspath, file))
+                audioFile = AudioBuffer(os.path.join(abspath, file), sample_rate, **kwargs)
                 audioFile.file_name = file
                 audio_files.append(audioFile)
             except:

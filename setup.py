@@ -41,6 +41,7 @@ setup(
             'ipython',
             'pytest'
             'pytest-datadir',
+            'pytest-mpl',
             'tox'
         ],
     }
