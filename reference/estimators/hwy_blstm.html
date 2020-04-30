@@ -179,9 +179,9 @@
 <span id="hwyblstm-class"></span><span id="hwy-blstm"></span><h1>HwyBLSTM Class<a class="headerlink" href="#module-spiegelib.estimator.hwy_blstm" title="Permalink to this headline">¶</a></h1>
 <p>Bidirection LSTM with Highway Layers - LSTM++</p>
 <p>Based on model proposed by Yee-King et al. <a class="footnote-reference brackets" href="#id2" id="id1">1</a></p>
-<dl class="class">
+<dl class="py class">
 <dt id="spiegelib.estimator.HwyBLSTM">
-<em class="property">class </em><code class="sig-prename descclassname">spiegelib.estimator.</code><code class="sig-name descname">HwyBLSTM</code><span class="sig-paren">(</span><em class="sig-param">input_shape</em>, <em class="sig-param">num_outputs</em>, <em class="sig-param">lstm_size=128</em>, <em class="sig-param">highway_layers=6</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.HwyBLSTM" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.estimator.</code><code class="sig-name descname">HwyBLSTM</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_shape</span></em>, <em class="sig-param"><span class="n">num_outputs</span></em>, <em class="sig-param"><span class="n">lstm_size</span><span class="o">=</span><span class="default_value">128</span></em>, <em class="sig-param"><span class="n">highway_layers</span><span class="o">=</span><span class="default_value">6</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.HwyBLSTM" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.estimator.tf_estimator_base.TFEstimatorBase</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -193,7 +193,7 @@
 </ul>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.estimator.HwyBLSTM.build_model">
 <code class="sig-name descname">build_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.HwyBLSTM.build_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct LSTM++ Model</p>

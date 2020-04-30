@@ -193,9 +193,9 @@ running objective evaluation using inheriting classes, such as this one.</p>
 <span class="n">evaluation</span><span class="o">.</span><span class="n">plot_hist</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;mean_abs_error&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<dl class="class">
+<dl class="py class">
 <dt id="spiegelib.evaluation.MFCCEval">
-<em class="property">class </em><code class="sig-prename descclassname">spiegelib.evaluation.</code><code class="sig-name descname">MFCCEval</code><span class="sig-paren">(</span><em class="sig-param">targets</em>, <em class="sig-param">estimations</em>, <em class="sig-param">sample_rate=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.MFCCEval" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.evaluation.</code><code class="sig-name descname">MFCCEval</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">targets</span></em>, <em class="sig-param"><span class="n">estimations</span></em>, <em class="sig-param"><span class="n">sample_rate</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.MFCCEval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.evaluation.evaluation_base.EvaluationBase</span></code></p>
 <p>Pass in a list of target <a class="reference internal" href="../core/audio_buffer.html#spiegelib.AudioBuffer" title="spiegelib.AudioBuffer"><code class="xref py py-class docutils literal notranslate"><span class="pre">AudioBuffer</span></code></a> objects and lists of
 estimated <a class="reference internal" href="../core/audio_buffer.html#spiegelib.AudioBuffer" title="spiegelib.AudioBuffer"><code class="xref py py-class docutils literal notranslate"><span class="pre">AudioBuffer</span></code></a> objects for each target.</p>
@@ -226,9 +226,9 @@ to the audio rate of the first target.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.evaluation.MFCCEval.evaluate_target">
-<code class="sig-name descname">evaluate_target</code><span class="sig-paren">(</span><em class="sig-param">target</em>, <em class="sig-param">predictions</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.MFCCEval.evaluate_target" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">evaluate_target</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">target</span></em>, <em class="sig-param"><span class="n">predictions</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.MFCCEval.evaluate_target" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called automatically by <a class="reference internal" href="evaluation_base.html#spiegelib.evaluation.EvaluationBase.evaluate" title="spiegelib.evaluation.EvaluationBase.evaluate"><code class="xref py py-func docutils literal notranslate"><span class="pre">spiegelib.evaluation.EvaluationBase.evaluate()</span></code></a></p>
 <p>Evaluates difference between a target <a class="reference internal" href="../core/audio_buffer.html#audio-buffer"><span class="std std-ref">AudioBuffer</span></a> and
 a list of estimation <a class="reference internal" href="../core/audio_buffer.html#audio-buffer"><span class="std std-ref">AudioBuffers</span></a>. Calculates mean absolute
@@ -251,9 +251,9 @@ against the target audio file.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.evaluation.MFCCEval.verify_input_list">
-<code class="sig-name descname">verify_input_list</code><span class="sig-paren">(</span><em class="sig-param">input_list</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.MFCCEval.verify_input_list" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">verify_input_list</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_list</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.MFCCEval.verify_input_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overriding verification method to check for AudioBuffers. Called automatically
 during construction.</p>
 </dd></dl>

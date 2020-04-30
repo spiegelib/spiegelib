@@ -180,11 +180,11 @@
 <p>Logger class for logging accuracy and loss from epochs when training a
 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code>. Inherits from <code class="docutils literal notranslate"><span class="pre">tf.keras.callbacks.Callback</span></code> and should
 be passed in as a callback during model training.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="spiegelib.estimator.TFEpochLogger">
 <em class="property">class </em><code class="sig-prename descclassname">spiegelib.estimator.</code><code class="sig-name descname">TFEpochLogger</code><a class="headerlink" href="#spiegelib.estimator.TFEpochLogger" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tensorflow.python.keras.callbacks.Callback</span></code></p>
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="spiegelib.estimator.TFEpochLogger.log_data">
 <code class="sig-name descname">log_data</code><a class="headerlink" href="#spiegelib.estimator.TFEpochLogger.log_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Dictionary of data logged at the end of each epoch
@@ -196,9 +196,9 @@ during training. Keyed on the epoch number.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.estimator.TFEpochLogger.on_epoch_end">
-<code class="sig-name descname">on_epoch_end</code><span class="sig-paren">(</span><em class="sig-param">epoch</em>, <em class="sig-param">logs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.TFEpochLogger.on_epoch_end" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">on_epoch_end</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">epoch</span></em>, <em class="sig-param"><span class="n">logs</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.TFEpochLogger.on_epoch_end" title="Permalink to this definition">¶</a></dt>
 <dd><p>Logging on end of an epoch. This is called automatically during training.
 Stores infomation passed in the logs parameter into <code class="docutils literal notranslate"><span class="pre">log_data</span></code> attribute.</p>
 <dl class="field-list simple">
@@ -211,13 +211,13 @@ Stores infomation passed in the logs parameter into <code class="docutils litera
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.estimator.TFEpochLogger.get_plotting_data">
 <code class="sig-name descname">get_plotting_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.TFEpochLogger.get_plotting_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Helper function to organize log_data for easier plotting</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.estimator.TFEpochLogger.plot">
 <code class="sig-name descname">plot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.TFEpochLogger.plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot logged training and validation data using matplotlib</p>
