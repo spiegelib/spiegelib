@@ -6,7 +6,7 @@ FFT Audio Feature Extractor
 import numpy as np
 from spiegelib import AudioBuffer
 from spiegelib.features.features_base import FeaturesBase
-import spiegelib.features.utils as utils
+import spiegelib.core.utils as utils
 
 class FFT(FeaturesBase):
     """

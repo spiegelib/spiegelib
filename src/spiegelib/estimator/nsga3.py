@@ -1,12 +1,13 @@
 #!/usr/bin/python
 """
-Non-dominated Sorting Genetic Algorithm with multiple objectives
+Non-dominated Sorting Genetic Algorithm with multiple objectives. Based on the
+implementation by Tatar et al. [1]_
 """
 
-import numpy as np
 import random
-from tqdm import tqdm
 
+import numpy as np
+from tqdm import tqdm
 from deap import algorithms
 from deap import base
 from deap import creator
@@ -20,6 +21,12 @@ from spiegelib.features.features_base import FeaturesBase
 
 class NSGA3(EstimatorBase):
     """
+        Args:
+            synth (Object): Instance of :class:`spiegelib.synth.SynthBase`
+            features (list): A list of :class:`spiegelib.features.FeaturesBase` objects.
+                Each feature extraction object defines an objective and is used
+                in the evaluation function to determine *fitness* of an individual.
+            seed (int, optional): Seed for random. Defaults to current system time.
     """
 
     def __init__(self, synth, features_list, seed=None):
@@ -43,10 +50,10 @@ class NSGA3(EstimatorBase):
         self.logbook = tools.Logbook()
 
         random.seed(seed)
-        self.setup()
+        self._setup()
 
 
-    def setup(self):
+    def _setup(self):
         """
         Setup genetic algorithm
         """
@@ -87,7 +94,18 @@ class NSGA3(EstimatorBase):
 
     def fitness(self, individual):
         """
-        Evaluate fitness
+        This is automatically called during prediction. Evaluation that calculates
+        the fitness of an individual. The individual is a new estimated synthesizer
+        parameter setting, and fitness is calculated by rendering an audio sample using
+        those parameter settings and then measuring the error between that sample
+        and the target sound using a set of audio feature extractors set during
+        construction.
+
+        Args:
+            individual (list): List of float values representing a synthesizer patch
+
+        Returns:
+            list: A list of the error values, one for each feature extractor
         """
 
         self.synth.set_patch(individual)
@@ -107,7 +125,10 @@ class NSGA3(EstimatorBase):
 
     def predict(self, input):
         """
-        Run GA prection on input
+        Run prection on input audio target
+
+        Args:
+            input (:ref:`AudioBuffer <audio_buffer>`): AudioBuffer to use as target
         """
 
         self.target = []

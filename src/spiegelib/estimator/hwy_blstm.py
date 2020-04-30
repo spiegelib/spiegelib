@@ -1,16 +1,13 @@
 #!/usr/bin/env python
 """
-Bidirection LSTM with Highway Layers - Deep Learning Model
+Bidirection LSTM with Highway Layers - LSTM++
 
-Based on model proposed by Yee-King et al.
-
-"Automatic programming of VST sound synthesizers using deep networks and other techniques."
-Yee-King, Matthew John, Leon Fedden, and Mark d'Inverno.
-IEEE Transactions on Emerging Topics in Computational Intelligence 2.2 (2018): 150-159.
+Based on model proposed by Yee-King et al. [1]_
 """
 
 import tensorflow as tf
 from tensorflow.keras import layers
+
 from spiegelib.estimator.highway_layer import HighwayLayer
 from spiegelib.estimator.tf_estimator_base import TFEstimatorBase
 
@@ -37,7 +34,7 @@ class HwyBLSTM(TFEstimatorBase):
 
     def build_model(self):
         """
-        Construct LSTM Model
+        Construct LSTM++ Model
         """
 
         self.model = tf.keras.Sequential()

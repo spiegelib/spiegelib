@@ -19,6 +19,15 @@ from spiegelib.features.features_base import FeaturesBase
 
 class BasicGA(EstimatorBase):
     """
+    Args:
+        synth (Object): Instance of :class:`spiegelib.synth.SynthBase`
+        features (Object): Instance of :class:`spiegelib.features.FeaturesBase`.
+            This is used in the evaluation function to determine *fitness* of an individual.
+        seed (int, optional): Seed for random. Defaults to current system time.
+        pop_size (int, optional): Size of population at each generation
+        ngen (int, optional): Number of generations to run
+        cxpb (float, optional): Crossover probability, must be between 0 and 1.
+        mutpb (float, optional): Mutation probability, must be between 0 and 1.
     """
 
     def __init__(self, synth, features, seed=None, pop_size=100, ngen=25,
@@ -48,10 +57,10 @@ class BasicGA(EstimatorBase):
         self.logbook = None
 
         random.seed(seed)
-        self.setup()
+        self._setup()
 
 
-    def setup(self):
+    def _setup(self):
         """
         Setup genetic algorithm
         """
@@ -81,7 +90,19 @@ class BasicGA(EstimatorBase):
 
     def fitness(self, individual):
         """
-        Evaluate fitness
+        This is automatically called during prediction. Evaluation that calculates
+        the fitness of an individual. The individual is
+        a new estimated synthesizer parameter setting, and fitness is calculated
+        by rendering an audio sample using those parameter settings and then measuring
+        the error between that sample and the target sound using audio feature extraction.
+        The type of feature extraction is set in the constructor.
+
+        Args:
+            individual (list): List of float values representing a synthesizer patch
+
+        Returns:
+            list: A list of the error values (b/c this is a single objective GA \
+                the list only has one element)
         """
 
         self.synth.set_patch(individual)
@@ -94,7 +115,10 @@ class BasicGA(EstimatorBase):
 
     def predict(self, input):
         """
-        Run GA prection on input
+        Run GA prection on input audio target
+
+        Args:
+            input (:ref:`AudioBuffer <audio_buffer>`): AudioBuffer to use as target
         """
 
 
