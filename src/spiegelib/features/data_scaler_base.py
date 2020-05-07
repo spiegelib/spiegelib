@@ -17,7 +17,7 @@ class DataScalerBase(ABC):
         :param axis: axis or axes to use for calculating scaling parameters on.
         :type axis: int, tuple
         """
-        pass
+        raise NotImplementedError
 
 
     @abstractmethod
@@ -30,10 +30,10 @@ class DataScalerBase(ABC):
         :returns: sacled data
         :rtype: np.ndarray
         """
-        pass
+        raise NotImplementedError
 
 
-    def fit_transform(self, data):
+    def fit_transform(self, data, axis=None):
         """
         Fit scaling parameters and then scale data
 
@@ -43,5 +43,5 @@ class DataScalerBase(ABC):
         :rtype: np.ndarray
         """
 
-        self.fit(data)
+        self.fit(data, axis)
         return self.transform(data)

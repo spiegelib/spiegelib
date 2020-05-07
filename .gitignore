@@ -8,6 +8,7 @@ __pycache__/
 *.so
 *~
 data/
+!tests/data
 
 # due to using tox and pytest
 .tox
