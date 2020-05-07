@@ -60,17 +60,23 @@ class FeaturesBase(ABC):
 
         if uses_time_slices == None:
             raise NotImplementedError(("Inheriting classes must specify whether "
-                                       "results are returned with time slices or not"))
+                                       "results are returned with time slices or not. "
+                                       "Make sure you set the uses_time_slices arg when "
+                                       "calling the FeatureBase constructor"))
         self.uses_time_slices = uses_time_slices
 
         if scale_axis == None:
             raise NotImplementedError(("Inheriting classes must specify a scale axis "
-                                       "to scale results along"))
+                                       "to scale results along. "
+                                       "Make sure you set the scale_axis arg when "
+                                       "calling the FeatureBase constructor"))
         self.scale_axis = scale_axis
 
         if uses_time_slices and scale_axis_time_major == None:
             raise NotImplementedError(("Inheriting classes must spcify a scale axis "
-                                       "to scale results along for time major results"))
+                                       "to scale results along for time major results. "
+                                       "Make sure you set the scale_axis_time_major arg when "
+                                       "calling the FeatureBase constructor"))
         self.scale_axis_time_major = scale_axis_time_major
 
 
