@@ -16,12 +16,22 @@ class FFT(FeaturesBase):
     :param kwargs: keyword arguments for base class, see :class:`spiegelib.features.features_base.FeaturesBase`.
     """
 
-    def __init__(self, fft_size=None, output='complex', **kwargs):
+    def __init__(self, output='complex', fft_size=None, **kwargs):
         """
         Contructor
         """
 
-        super().__init__(0, per_feature_normalize=False, **kwargs)
+        per_feature_normalize = False
+        scale_axis = (0,)
+        if output in ('magnitude_phase', 'power_phase'):
+            per_feature_normalize = True
+            scale_axis = (0,1)
+
+        # Setup feature base class -- FFT is time summarized, so no
+        # time slices are used, defaults to normalizing the entire result
+        # as opposed to normalizing across each bin separately.
+        super().__init__(uses_time_slices=False, scale_axis=scale_axis,
+                         per_feature_normalize=per_feature_normalize, **kwargs)
 
         self.frame_size = fft_size
 
