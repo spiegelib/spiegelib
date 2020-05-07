@@ -17,8 +17,7 @@ class SpectralSummarized(FeaturesBase):
         """
         Constructor
         """
-        dimensions = 10
-        super().__init__(dimensions, **kwargs)
+        super().__init__(uses_time_slices=False, scale_axis=(0,), **kwargs)
 
 
     def get_features(self, audio, normalize=False):
@@ -77,17 +76,31 @@ class SpectralSummarized(FeaturesBase):
             hop_length=self.hop_size,
         )
 
+        print(spectral_rolloff)
+
         features = np.array([
             spectral_centroid.mean(),
             spectral_centroid.var(),
             spectral_bandwidth.mean(),
             spectral_bandwidth.var(),
-            spectral_contrast.mean(),
-            spectral_contrast.var(),
             spectral_flatness.mean(),
             spectral_flatness.var(),
             spectral_rolloff.mean(),
-            spectral_rolloff.var()
+            spectral_rolloff.var(),
+            spectral_contrast[0].mean(),
+            spectral_contrast[0].var(),
+            spectral_contrast[1].mean(),
+            spectral_contrast[1].var(),
+            spectral_contrast[2].mean(),
+            spectral_contrast[2].var(),
+            spectral_contrast[3].mean(),
+            spectral_contrast[3].var(),
+            spectral_contrast[4].mean(),
+            spectral_contrast[4].var(),
+            spectral_contrast[5].mean(),
+            spectral_contrast[5].var(),
+            spectral_contrast[6].mean(),
+            spectral_contrast[6].var(),
         ])
 
         return features
