@@ -21,8 +21,17 @@ class STFT(FeaturesBase):
         Contructor
         """
 
-        dims = int(1 + (fft_size / 2))
-        super().__init__(dims, per_feature_normalize=False, **kwargs)
+        per_feature_normalize = False
+        scale_axis = (0,2)
+        scale_axis_time_major = (0,1)
+        if output in ('magnitude_phase', 'power_phase'):
+            per_feature_normalize = True
+            scale_axis = (0,2,3)
+            scale_axis_time_major = (0,1,2)
+
+        super().__init__(uses_time_slices=True, scale_axis=scale_axis,
+                         scale_axis_time_major=scale_axis_time_major,
+                         per_feature_normalize=per_feature_normalize, **kwargs)
 
         if output not in utils.spectrum_types:
             raise TypeError('output must be one of %s' % utils.spectrum_types)
