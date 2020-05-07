@@ -236,7 +236,7 @@ class FeaturesBase(ABC):
         :type location: str
         """
 
-        joblib.dump(self.normalizers, location)
+        joblib.dump(self.normalizer, location)
 
 
     def load_normalizers(self, location):
@@ -247,4 +247,4 @@ class FeaturesBase(ABC):
         :type location: str
         """
 
-        self.normalizers = joblib.load(location)
+        self.normalizer = joblib.load(location)
