@@ -76,8 +76,6 @@ class SpectralSummarized(FeaturesBase):
             hop_length=self.hop_size,
         )
 
-        print(spectral_rolloff)
-
         features = np.array([
             spectral_centroid.mean(),
             spectral_centroid.var(),
