@@ -248,3 +248,62 @@ class FeaturesBase(ABC):
         """
 
         self.normalizer = joblib.load(location)
+
+
+class FullDataStandardScaler():
+    """
+    Custom data scaler for working with larger dimensionality datasets that
+    don't need to be scaled on a per-dimension basis such as STFT
+    """
+
+    def _reset(self):
+        """
+        Reset attributes
+        """
+
+        if hasattr(self, 'mean'):
+            del self.mean
+            del self.std
+
+
+    def fit(self, data):
+        """
+        Compute mean and std for later scaling
+
+        :param data: data to use to calculate mean and std on
+        :type data: np.ndarray
+        """
+
+        self._reset()
+        self.mean = data.mean()
+        self.std = data.std()
+
+
+    def transform(self, data):
+        """
+        Perform normalization on data
+
+        :param data: data to normalize
+        :type data: np.array
+        :returns: Normalized data
+        :rtype: np.ndarray
+        """
+
+        if not hasattr(self, 'mean'):
+            raise Exception("You must fit this scaler first")
+
+        return (data - self.mean) / self.std
+
+
+    def fit_transform(self, data):
+        """
+        Compute mean and std on data and then normalize it
+
+        :param data: data to computer mean and std on and normalize
+        :type data: np.array
+        :returns: Normalized data
+        :rtype: np.ndarray
+        """
+
+        self.fit(data)
+        return self.transform(data)
