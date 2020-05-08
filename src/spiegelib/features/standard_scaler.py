@@ -32,7 +32,17 @@ class StandardScaler(DataScalerBase):
 
         self._reset()
         self.mean = data.mean(axis)
-        self.std = data.std(axis)
+
+        # Calculate standard deviation and handle zeros
+        variance = data.var(axis)
+        if isinstance(variance, np.ndarray):
+            variance[variance == 0.0] = 1.0
+            self.std = np.sqrt(variance)
+
+        elif np.isscalar(variance):
+            variance = 1.0 if variance == 0.0 else variance
+            self.std = np.sqrt(variance)
+
         self.fit_axis = axis
         if self.fit_axis != None and not isinstance(self.fit_axis, tuple):
             self.fit_axis = (self.fit_axis,)
