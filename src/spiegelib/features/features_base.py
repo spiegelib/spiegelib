@@ -82,10 +82,10 @@ class FeaturesBase(ABC):
             features = modifier(features)
 
         # Normalize features
-        shouldScale = scale if scale != None else self.should_scale
-        if shouldScale:
+        should_scale = scale if scale != None else self.should_scale
+        if should_scale:
             assert self.has_scaler(), "Scaler must be set first."
-            features = self.normalize(features)
+            features = self.scale(features)
 
         # Apply any output data modification
         for modifier in self.output_modifiers:

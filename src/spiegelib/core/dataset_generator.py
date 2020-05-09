@@ -156,7 +156,7 @@ class DatasetGenerator():
             self.features.fit_scaler(feature_set, transform=False)
             return
 
-        if self.scale and not self.features.has_scaler():
+        if self.should_scale and not self.features.has_scaler():
             print("Fitting scaler and scaler data", flush=True)
             feature_set = self.features.fit_scaler(feature_set)
 
