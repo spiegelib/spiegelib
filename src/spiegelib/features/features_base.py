@@ -178,7 +178,7 @@ class FeaturesBase(ABC):
 
     def has_scaler(self):
         """
-        :returns: a boolean indicating whether or not normalizers have been set
+        :returns: a boolean indicating whether or not scaler has been set
         :rtype: boolean
         """
         return self.scaler != None
