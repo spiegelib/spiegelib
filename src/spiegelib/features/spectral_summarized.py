@@ -17,7 +17,7 @@ class SpectralSummarized(FeaturesBase):
         """
         Constructor
         """
-        super().__init__(uses_time_slices=False, scale_axis=(0,), **kwargs)
+        super().__init__(**kwargs)
 
 
     def get_features(self, audio, normalize=False):

@@ -121,7 +121,7 @@ class TestSTFT():
 
         bin_freq = 44100. / 1024.
         length = (1024. * 10) + 1
-        stft = STFT(output='magnitude', fft_size=1024, hop_size=512, time_major=True)
+        stft = STFT(output='magnitude', fft_size=1024, hop_size=512, time_major=True, scale_axis=None)
         batch_size = 10
         features = np.zeros((10,21,513))
 
@@ -130,7 +130,7 @@ class TestSTFT():
             audio = AudioBuffer(sine, 44100)
             features[i] = stft(audio)
 
-        scaled = stft.fit_normalizers(features)
+        scaled = stft.fit_scaler(features)
         assert scaled.shape == (10,21,513)
         assert scaled.mean() == pytest.approx(0.)
         assert scaled.std() == pytest.approx(1.)

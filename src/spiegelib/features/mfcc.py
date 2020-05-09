@@ -21,7 +21,7 @@ class MFCC(FeaturesBase):
         """
 
         self.num_mfccs = num_mfccs
-        super().__init__(uses_time_slices=True, scale_axis=(0,2), scale_axis_time_major=(0,1), **kwargs)
+        super().__init__(**kwargs)
 
 
     def get_features(self, audio, normalize=False):

@@ -122,7 +122,7 @@ class TestFFT():
 
         bin_freq = 44100. / 1024.
         feature_batch = np.zeros((10, 513))
-        fft = FFT(output='magnitude')
+        fft = FFT(output='magnitude', scale_axis=None)
 
         for i in range(10):
             bin = (i+1)*2
@@ -130,17 +130,17 @@ class TestFFT():
             audio = AudioBuffer(sine, 44100)
             feature_batch[i] = fft(audio)
 
-        scaled = fft.fit_normalizers(feature_batch)
+        scaled = fft.fit_scaler(feature_batch)
         expected_mean = (512.0 * 10) / (513.0 * 10)
 
-        assert fft.normalizer.mean == pytest.approx(expected_mean)
+        assert fft.scaler.mean == pytest.approx(expected_mean)
 
 
     def test_batch_scale_magnitude_phase(self):
 
         bin_freq = 44100. / 1024.
         feature_batch = np.zeros((10,513,2))
-        fft = FFT(output='magnitude_phase')
+        fft = FFT(output='magnitude_phase', scale_axis=(0,1))
 
         for i in range(10):
             bin = (i+1)*2
@@ -148,9 +148,9 @@ class TestFFT():
             audio = AudioBuffer(sine, 44100)
             feature_batch[i] = fft(audio)
 
-        scaled = fft.fit_normalizers(feature_batch)
+        scaled = fft.fit_scaler(feature_batch)
         expected_mean = (512.0 * 10) / (513.0 * 10)
 
-        assert fft.normalizer.mean.shape == (2,)
-        assert fft.normalizer.mean[0] == pytest.approx(expected_mean)
+        assert fft.scaler.mean.shape == (2,)
+        assert fft.scaler.mean[0] == pytest.approx(expected_mean)
         assert scaled.shape == feature_batch.shape

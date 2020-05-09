@@ -30,18 +30,8 @@ class FeaturesBase(ABC):
     :type per_feature_normalize: bool, optional
     """
 
-    def __init__(
-        self,
-        sample_rate=44100,
-        frame_size=2048,
-        hop_size=512,
-        normalize=False,
-        time_major=False,
-        per_feature_normalize=True,
-        uses_time_slices=None,
-        scale_axis=None,
-        scale_axis_time_major=None
-    ):
+    def __init__(self, sample_rate=44100, frame_size=2048, hop_size=512,
+                 time_major=False, scale=False, scale_axis=(0,)):
         """
         Constructor
         """
@@ -51,36 +41,12 @@ class FeaturesBase(ABC):
         self.sample_rate = sample_rate
         self.frame_size = frame_size
         self.hop_size = hop_size
-        self.should_normalize = normalize
-
-        self.per_feature_normalize = per_feature_normalize
-        self.normalizer = None
-        self.Scaler = StandardScaler
-
-
-        if uses_time_slices == None:
-            raise NotImplementedError(("Inheriting classes must specify whether "
-                                       "results are returned with time slices or not. "
-                                       "Make sure you set the uses_time_slices arg when "
-                                       "calling the FeatureBase constructor"))
-        self.uses_time_slices = uses_time_slices
-
-        if scale_axis == None:
-            raise NotImplementedError(("Inheriting classes must specify a scale axis "
-                                       "to scale results along. "
-                                       "Make sure you set the scale_axis arg when "
-                                       "calling the FeatureBase constructor"))
-        self.scale_axis = scale_axis
-
-        if uses_time_slices and scale_axis_time_major == None:
-            raise NotImplementedError(("Inheriting classes must spcify a scale axis "
-                                       "to scale results along for time major results. "
-                                       "Make sure you set the scale_axis_time_major arg when "
-                                       "calling the FeatureBase constructor"))
-        self.scale_axis_time_major = scale_axis_time_major
-
-
         self.time_major = time_major
+
+        self.should_scale = scale
+        self.scaler = None
+        self.scale_axis = scale_axis
+        self.ScalerClass = StandardScaler
 
         self.input_modifiers = []
         self.prenorm_modifiers = []
@@ -90,7 +56,7 @@ class FeaturesBase(ABC):
         self.dtype = np.float32
 
 
-    def __call__(self, audio, normalize=None):
+    def __call__(self, audio, scale=None):
         """
         Calls the get_features method. Applies data modifiers prior to and after
         feature extraction
@@ -116,9 +82,9 @@ class FeaturesBase(ABC):
             features = modifier(features)
 
         # Normalize features
-        shouldNormalize = normalize if normalize != None else self.should_normalize
-        if shouldNormalize:
-            assert self.has_normalizers(), "Normalizers must be set first."
+        shouldScale = scale if scale != None else self.should_scale
+        if shouldScale:
+            assert self.has_scaler(), "Scaler must be set first."
             features = self.normalize(features)
 
         # Apply any output data modification
@@ -146,10 +112,8 @@ class FeaturesBase(ABC):
         elif type == 'output':
             self.output_modifiers.append(modifier)
         else:
-            raise ValueError(
-                'Type must be one of ("input", "prenormalize", or '
-                '"output"), received %s' % type
-            )
+            raise ValueError('Type must be one of ("input", "prenormalize", or '
+                             '"output"), received %s' % type)
 
 
     @abstractmethod
@@ -166,144 +130,77 @@ class FeaturesBase(ABC):
         pass
 
 
-    def set_normalizer(self, normalizer):
+    def set_scaler(self, scaler):
         """
-        Set a normalizer for a dimension, this will be used to normalize that dimension
+        Set a scaler for a dimension, this will be used to normalize that dimension
 
-        :param normalizer: A trained normalizer object
-        :type normalizer:
+        :param scaler: A trained scaler object
+        :type scaler:
         """
 
-        self.normalizer = normalizer
+        self.scaler = scaler
 
 
-    def fit_normalizers(self, data, transform=True):
+    def fit_scaler(self, data, transform=True):
         """
-        Fit normalizers to dataset for future transforms.
+        Fit scaler to dataset for future transforms.
 
-        :param data: data to train normalizer on
+        :param data: data to train scaler on
         :type data: np.ndarray
-        :returns: np.ndarray with normalized data
+        :returns: np.ndarray with scaled data
         :rtype: np.ndarray
         """
 
-        # Fit a new normalizer to dataset
-        self.normalizer = self.Scaler()
-        if not self.per_feature_normalize:
-            self.normalizer.fit(data)
-
-        elif self.uses_time_slices and self.time_major:
-            self.normalizer.fit(data, self.scale_axis_time_major)
-
-        else:
-            self.normalizer.fit(data, self.scale_axis)
+        # Fit a new scaler to dataset
+        self.scaler = self.ScalerClass()
+        self.scaler.fit(data, self.scale_axis)
 
         # Scale the input dataset
         if transform:
-            return self.normalizer.transform(data)
+            return self.scaler.transform(data)
         else:
             return None
 
 
-    def normalize(self, data):
+    def scale(self, data):
         """
-        Normalize features using pre-trained normalizer
+        Scale features using pre-trained scaler
 
         :param data: data to be normalized
         :type data: np.array
-        :returns: normalized data
+        :returns: scaled data
         :rtype: np.array
         """
 
-        if self.normalizer == None:
-            raise Exception("Normalizer must be fit first")
-
-        return self.normalizer.transform(data)
+        assert self.has_scaler(), "Scaler must be set first"
+        return self.scaler.transform(data)
 
 
-    def has_normalizers(self):
+    def has_scaler(self):
         """
         :returns: a boolean indicating whether or not normalizers have been set
         :rtype: boolean
         """
-        return self.normalizer != None
+        return self.scaler != None
 
-    def save_normalizers(self, location):
+
+    def save_scaler(self, location):
         """
-        Save the trained normalizers for these features for later use
+        Save the trained scaler for these features for later use
 
-        :param location: Location to save pickled normalizers
+        :param location: Location to save pickled scaler
         :type location: str
         """
 
-        joblib.dump(self.normalizer, location)
+        joblib.dump(self.scaler, location)
 
 
-    def load_normalizers(self, location):
+    def load_scaler(self, location):
         """
-        Load trained normalizers from disk
+        Load trained scaler from disk
 
-        :param location: Pickled file of trained normalizers
+        :param location: Pickled file of trained scaler
         :type location: str
         """
 
-        self.normalizer = joblib.load(location)
-
-
-class FullDataStandardScaler():
-    """
-    Custom data scaler for working with larger dimensionality datasets that
-    don't need to be scaled on a per-dimension basis such as STFT
-    """
-
-    def _reset(self):
-        """
-        Reset attributes
-        """
-
-        if hasattr(self, 'mean'):
-            del self.mean
-            del self.std
-
-
-    def fit(self, data):
-        """
-        Compute mean and std for later scaling
-
-        :param data: data to use to calculate mean and std on
-        :type data: np.ndarray
-        """
-
-        self._reset()
-        self.mean = data.mean()
-        self.std = data.std()
-
-
-    def transform(self, data):
-        """
-        Perform normalization on data
-
-        :param data: data to normalize
-        :type data: np.array
-        :returns: Normalized data
-        :rtype: np.ndarray
-        """
-
-        if not hasattr(self, 'mean'):
-            raise Exception("You must fit this scaler first")
-
-        return (data - self.mean) / self.std
-
-
-    def fit_transform(self, data):
-        """
-        Compute mean and std on data and then normalize it
-
-        :param data: data to computer mean and std on and normalize
-        :type data: np.array
-        :returns: Normalized data
-        :rtype: np.ndarray
-        """
-
-        self.fit(data)
-        return self.transform(data)
+        self.scaler = joblib.load(location)

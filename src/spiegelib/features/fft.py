@@ -21,17 +21,10 @@ class FFT(FeaturesBase):
         Contructor
         """
 
-        per_feature_normalize = False
-        scale_axis = (0,)
-        if output in ('magnitude_phase', 'power_phase'):
-            per_feature_normalize = True
-            scale_axis = (0,1)
-
         # Setup feature base class -- FFT is time summarized, so no
         # time slices are used, defaults to normalizing the entire result
         # as opposed to normalizing across each bin separately.
-        super().__init__(uses_time_slices=False, scale_axis=scale_axis,
-                         per_feature_normalize=per_feature_normalize, **kwargs)
+        super().__init__(**kwargs)
 
         self.frame_size = fft_size
 

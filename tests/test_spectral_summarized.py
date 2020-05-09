@@ -71,7 +71,7 @@ class TestSpectralSummarized():
             features[i] = spectral(audio)
 
         assert features.shape == (10,22)
-        scaled = spectral.fit_normalizers(features)
+        scaled = spectral.fit_scaler(features)
 
         assert scaled.mean() == pytest.approx(0.)
         assert scaled.std() == pytest.approx(1.)
