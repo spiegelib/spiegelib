@@ -13,12 +13,11 @@ class SpectralSummarized(FeaturesBase):
     :param kwargs: See :class:`spiegelib.features.features_base.FeaturesBase`
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, scale_axis=0, **kwargs):
         """
         Constructor
         """
-        dimensions = 10
-        super().__init__(dimensions, **kwargs)
+        super().__init__(scale_axis=scale_axis, **kwargs)
 
 
     def get_features(self, audio, normalize=False):
@@ -82,12 +81,24 @@ class SpectralSummarized(FeaturesBase):
             spectral_centroid.var(),
             spectral_bandwidth.mean(),
             spectral_bandwidth.var(),
-            spectral_contrast.mean(),
-            spectral_contrast.var(),
             spectral_flatness.mean(),
             spectral_flatness.var(),
             spectral_rolloff.mean(),
-            spectral_rolloff.var()
+            spectral_rolloff.var(),
+            spectral_contrast[0].mean(),
+            spectral_contrast[0].var(),
+            spectral_contrast[1].mean(),
+            spectral_contrast[1].var(),
+            spectral_contrast[2].mean(),
+            spectral_contrast[2].var(),
+            spectral_contrast[3].mean(),
+            spectral_contrast[3].var(),
+            spectral_contrast[4].mean(),
+            spectral_contrast[4].var(),
+            spectral_contrast[5].mean(),
+            spectral_contrast[5].var(),
+            spectral_contrast[6].mean(),
+            spectral_contrast[6].var(),
         ])
 
         return features
