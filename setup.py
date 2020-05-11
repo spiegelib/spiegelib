@@ -42,7 +42,8 @@ setup(
             'pytest',
             'pytest-datadir',
             'pytest-mpl',
-            'tox'
+            'tox',
+            'twine'
         ],
     }
 )
