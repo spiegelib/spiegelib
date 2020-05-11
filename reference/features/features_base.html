@@ -35,8 +35,8 @@
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="FeaturesBase Class" href="mfcc.html" />
-    <link rel="prev" title="Audio Feature Extraction Classes" href="../features.html" /> 
+    <link rel="next" title="FFT Class" href="fft.html" />
+    <link rel="prev" title="Audio Feature Extraction" href="../features.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -88,7 +88,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../synth.html">Synth</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../features.html">Audio Features</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">     FeaturesBase</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mfcc.html">     MFCC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fft.html">Fast Fourier Transform (FFT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stft.html">Short Time Fourier Transform (STFT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mfcc.html">     Mel-Frequency Cepstral Coefficients (MFCC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spectral_summarized.html">Time Summarized Spectral Features (SpectralSummarized)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../features.html#data-scaling">Data Scaling:</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../estimators.html">Estimators</a></li>
@@ -144,7 +148,7 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="../features.html">Audio Feature Extraction Classes</a> &raquo;</li>
+          <li><a href="../features.html">Audio Feature Extraction</a> &raquo;</li>
         
       <li>FeaturesBase Class</li>
     
@@ -167,211 +171,167 @@
             
   <div class="section" id="module-spiegelib.features.features_base">
 <span id="featuresbase-class"></span><span id="features-base"></span><h1>FeaturesBase Class<a class="headerlink" href="#module-spiegelib.features.features_base" title="Permalink to this headline">¶</a></h1>
-<p>Abstract Base Class for Audio Features</p>
-<dl class="py class">
-<dt id="spiegelib.features.features_base.FeaturesBase">
-<em class="property">class </em><code class="sig-prename descclassname">spiegelib.features.features_base.</code><code class="sig-name descname">FeaturesBase</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dimensions</span></em>, <em class="sig-param"><span class="n">sample_rate</span><span class="o">=</span><span class="default_value">44100</span></em>, <em class="sig-param"><span class="n">frame_size</span><span class="o">=</span><span class="default_value">2048</span></em>, <em class="sig-param"><span class="n">hop_size</span><span class="o">=</span><span class="default_value">512</span></em>, <em class="sig-param"><span class="n">normalize</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">time_major</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">per_feature_normalize</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FeaturesBase" title="Permalink to this definition">¶</a></dt>
+<p>Abstract Base Class for audio feature extraction. Defines an interface for
+audio feature extraction algorithms.</p>
+<p>Inheriting classes must override <a class="reference internal" href="#spiegelib.features.FeaturesBase.get_features" title="spiegelib.features.FeaturesBase.get_features"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_features()</span></code></a> and implement feature
+extraction in that function, which accepts an <a class="reference internal" href="../core/audio_buffer.html#audio-buffer"><span class="std std-ref">AudioBuffer</span></a> and
+must return a <cite>np.ndarray</cite> containing results.</p>
+<p>Feature extraction is run in inheriting classes through the __call__ member function.</p>
+<p>Example of FFT, which inherits from FeaturesBase:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">audio</span> <span class="o">=</span> <span class="n">AudioBuffer</span><span class="p">(</span><span class="s1">&#39;./some_audio.wav&#39;</span><span class="p">)</span>
+<span class="n">fft</span> <span class="o">=</span> <span class="n">FFT</span><span class="p">()</span>
+
+<span class="c1"># Now feature extraction is run by treating</span>
+<span class="c1"># the FFT instance, fft, like a function</span>
+<span class="n">spectrum</span> <span class="o">=</span> <span class="n">fft</span><span class="p">(</span><span class="n">audio</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="class">
+<dt id="spiegelib.features.FeaturesBase">
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.features.</code><code class="sig-name descname">FeaturesBase</code><span class="sig-paren">(</span><em class="sig-param">sample_rate=44100</em>, <em class="sig-param">time_major=False</em>, <em class="sig-param">scale=False</em>, <em class="sig-param">scale_axis=(0</em>, <em class="sig-param">)</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.FeaturesBase" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dimensions</strong> (<em>int</em>) – Number of dimensions associated with these features</p></li>
-<li><p><strong>sample_rate</strong> (<em>int</em><em>, </em><em>optional</em>) – Audio sample rate, defaults to 44100</p></li>
-<li><p><strong>frame_size</strong> (<em>int</em><em>, </em><em>optional</em>) – frame size in audio samples, defaults to 2048</p></li>
-<li><p><strong>hop_size</strong> (<em>int</em><em>, </em><em>optional</em>) – hop size in audio samples, defaults to 512</p></li>
-<li><p><strong>time_major</strong> (<em>boolean</em><em>, </em><em>optional</em>) – indicates orientation of matrix that features are returned in,
-time_major is (time_slices, features). Defaults to (features, time_slices).</p></li>
-<li><p><strong>per_feature_normalize</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether normalization should be applied to each
-dimension independently, or on entire feature space. Defaults to True, which
-applies normalization for each dimension independently.</p></li>
+<li><p><strong>sample_rate</strong> (<em>int</em><em>, </em><em>optional</em>) – audio sample rate, defaults to 44100</p></li>
+<li><p><strong>time_major</strong> (<em>bool</em><em>, </em><em>optional</em>) – for audio feature extraction that uses time slices,
+used to indicate the orientation of features and time slices in the resulting
+matrix. True indicates that results should be returned with an orientation
+like (time_slices, features). False (default) refers to an orientation
+of (features, time_slices).</p></li>
+<li><p><strong>scale</strong> (<em>bool</em><em>, </em><em>optional</em>) – whether to scale the results of feature extraction. The scaler
+must be set before scaling called be applied. See <a class="reference internal" href="#spiegelib.features.FeaturesBase.fit_scaler" title="spiegelib.features.FeaturesBase.fit_scaler"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit_scaler()</span></code></a> or
+<a class="reference internal" href="#spiegelib.features.FeaturesBase.set_scaler" title="spiegelib.features.FeaturesBase.set_scaler"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_scaler()</span></code></a>.</p></li>
+<li><p><strong>scale_axis</strong> (<em>int</em><em>, </em><em>tuple</em><em>, </em><em>None</em><em>, </em><em>optional</em>) – indicates the axis to use for fitting scalers and
+applying data scaling. A value of None flattens the dataset and calculates
+scaling parameters on that. A value of an int or a tuple indicates the axis
+or axes to use. Defaults to (0,) which causes scaling variables to be calculated
+on each feature independently.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt id="spiegelib.features.features_base.FeaturesBase.add_modifier">
-<code class="sig-name descname">add_modifier</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">modifier</span></em>, <em class="sig-param"><span class="n">type</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FeaturesBase.add_modifier" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a data modifier to the feature extraction pipeline</p>
+<dl class="method">
+<dt id="spiegelib.features.FeaturesBase.__call__">
+<code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param">audio</em>, <em class="sig-param">scale=None</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.FeaturesBase.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run this feature extraction pipeline.</p>
+<p>Applies functions in this order: input modifiers &gt; feature extraction &gt;
+prescale modifiers &gt; data scaling &gt; output modifiers</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>audio</strong> (<a class="reference internal" href="../core/audio_buffer.html#audio-buffer"><span class="std std-ref">AudioBuffer</span></a>) – Audio to extract features from</p></li>
+<li><p><strong>scale</strong> (<em>bool</em><em>, </em><em>optional</em>) – If set, will override scale attribute set
+during construction.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>results from audio feature extraction with modifiers and scaling.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.features.FeaturesBase.get_features">
+<em class="property">abstract </em><code class="sig-name descname">get_features</code><span class="sig-paren">(</span><em class="sig-param">audio</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.FeaturesBase.get_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Must be implemented. Run audio feature extraction on audio provided as parameter.
+Must check the <cite>time_major</cite> attribute and return data in the correct
+orientation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>audio</strong> (<a class="reference internal" href="../core/audio_buffer.html#audio-buffer"><span class="std std-ref">AudioBuffer</span></a>) – Audio to extract features from</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Results of audio feature extraction</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.features.FeaturesBase.add_modifier">
+<code class="sig-name descname">add_modifier</code><span class="sig-paren">(</span><em class="sig-param">modifier</em>, <em class="sig-param">type</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.FeaturesBase.add_modifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a data modifier to the feature extraction pipeline.</p>
+<p>Input modifiers are applied to raw <cite>AudioBuffers &lt;audio_buffer&gt;</cite> prior
+to feature extraction. Prescale modifiers are applied to results of audio
+feature extraction and before data scaling (if applicable). Output modifiers
+are applied after data scaling.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>modifier</strong> (<em>lambda</em>) – data modifier function. Should accept an np.array,
 apply some modification to that, and return a np.array</p></li>
-<li><p><strong>type</strong> (<em>str</em>) – Where to add this into the pipeline. (‘input’, ‘prenormalize’, or ‘output’)</p></li>
+<li><p><strong>type</strong> (<em>str</em>) – Where to add function into pipeline. Must be one of
+(‘input’, ‘prescale’, or ‘output’)</p></li>
 </ul>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt id="spiegelib.features.features_base.FeaturesBase.get_features">
-<em class="property">abstract </em><code class="sig-name descname">get_features</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">audio</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FeaturesBase.get_features" title="Permalink to this definition">¶</a></dt>
-<dd><p>Must be implemented. Run audio feature extraction on audio provided as parameter.
-Normalization should be applied based on the normalize parameter.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>audio</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.core.audio_buffer.AudioBuffer</span></code>) – Audio to process features on</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>results from audio feature extraction</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>np.array</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="spiegelib.features.features_base.FeaturesBase.set_normalizer">
-<code class="sig-name descname">set_normalizer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dimension</span></em>, <em class="sig-param"><span class="n">normalizer</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FeaturesBase.set_normalizer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set a normalizer for a dimension, this will be used to normalize that dimension</p>
+<dl class="method">
+<dt id="spiegelib.features.FeaturesBase.fit_scaler">
+<code class="sig-name descname">fit_scaler</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">transform=True</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.FeaturesBase.fit_scaler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit scaler to dataset for future transforms.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dimension</strong> (<em>int</em>) – Which feature dimension to save this normalizer for</p></li>
-<li><p><strong>normalizer</strong> (<em>Sklean Scaler</em>) – A trained normalizer object</p></li>
+<li><p><strong>data</strong> (<em>np.ndarray</em>) – data to train (fit) scaler on</p></li>
+<li><p><strong>transform</strong> (<em>bool</em><em>, </em><em>optional</em>) – if True will also apply scaling
+to the data</p></li>
 </ul>
 </dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="spiegelib.features.features_base.FeaturesBase.fit_normalizers">
-<code class="sig-name descname">fit_normalizers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">transform</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FeaturesBase.fit_normalizers" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fit normalizers to dataset for future transforms.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>np.ndarray</em>) – data to train normalizer on</p>
-</dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>np.ndarray with normalized data</p>
+<dd class="field-even"><p>Scaled data if transform parameter is True, otherwise                returns None.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>np.ndarray</p>
+<dd class="field-odd"><p>np.ndarray, None</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt id="spiegelib.features.features_base.FeaturesBase.fit_normalizers_full_data">
-<code class="sig-name descname">fit_normalizers_full_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">transform</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FeaturesBase.fit_normalizers_full_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fit one normalizer on the entire dataset</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="spiegelib.features.features_base.FeaturesBase.fit_normalizers_2d">
-<code class="sig-name descname">fit_normalizers_2d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">transform</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FeaturesBase.fit_normalizers_2d" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fit normalizers for 2-dimensional datasets</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>np.ndarray</em>) – data to train normalizer on</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>np.ndarray with normalized data</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>np.ndarray</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="spiegelib.features.features_base.FeaturesBase.fit_normalizers_3d">
-<code class="sig-name descname">fit_normalizers_3d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">transform</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FeaturesBase.fit_normalizers_3d" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fit normalizers for 3-dimensional datasets</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>np.ndarray</em>) – data to train normalizer on</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>np.ndarray with normalized data</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>np.ndarray</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="spiegelib.features.features_base.FeaturesBase.normalize">
-<code class="sig-name descname">normalize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FeaturesBase.normalize" title="Permalink to this definition">¶</a></dt>
-<dd><p>Normalize features using pre-trained normalizer</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>np.array</em>) – data to be normalized</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>normalized data</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>np.array</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="spiegelib.features.features_base.FeaturesBase.has_normalizers">
-<code class="sig-name descname">has_normalizers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FeaturesBase.has_normalizers" title="Permalink to this definition">¶</a></dt>
+<dl class="method">
+<dt id="spiegelib.features.FeaturesBase.has_scaler">
+<code class="sig-name descname">has_scaler</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.FeaturesBase.has_scaler" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a boolean indicating whether or not normalizers have been set</p>
+<dd class="field-odd"><p>whether or not the scaler has been set</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>boolean</p>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt id="spiegelib.features.features_base.FeaturesBase.save_normalizers">
-<code class="sig-name descname">save_normalizers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">location</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FeaturesBase.save_normalizers" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save the trained normalizers for these features for later use</p>
+<dl class="method">
+<dt id="spiegelib.features.FeaturesBase.set_scaler">
+<code class="sig-name descname">set_scaler</code><span class="sig-paren">(</span><em class="sig-param">scaler</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.FeaturesBase.set_scaler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a scaler for a dimension, this will be used to normalize that dimension</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>location</strong> (<em>str</em>) – Location to save pickled normalizers</p>
+<dd class="field-odd"><p><strong>scaler</strong> (<em>object</em>) – a Scaler object to use to scale data. Must be a
+<a class="reference internal" href="data_scaler_base.html#data-scaler-base"><span class="std std-ref">DataScalerBase</span></a> type to use the <a class="reference internal" href="#spiegelib.features.FeaturesBase.fit_scaler" title="spiegelib.features.FeaturesBase.fit_scaler"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit_scaler()</span></code></a>
+method. Otherwise, other scalers like sklearn scalers could potentially
+be fit and then passed in here – just needs to have a transform method
+to apply scaling. (note, using other objects outside of <a class="reference internal" href="data_scaler_base.html#data-scaler-base"><span class="std std-ref">DataScalerBase</span></a> type
+has not been tested!)</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt id="spiegelib.features.features_base.FeaturesBase.load_normalizers">
-<code class="sig-name descname">load_normalizers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">location</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FeaturesBase.load_normalizers" title="Permalink to this definition">¶</a></dt>
-<dd><p>Load trained normalizers from disk</p>
+<dl class="method">
+<dt id="spiegelib.features.FeaturesBase.scale">
+<code class="sig-name descname">scale</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.FeaturesBase.scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scale features using pre-trained scaler</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>location</strong> (<em>str</em>) – Pickled file of trained normalizers</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt id="spiegelib.features.features_base.FullDataStandardScaler">
-<em class="property">class </em><code class="sig-prename descclassname">spiegelib.features.features_base.</code><code class="sig-name descname">FullDataStandardScaler</code><a class="headerlink" href="#spiegelib.features.features_base.FullDataStandardScaler" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Custom data scaler for working with larger dimensionality datasets that
-don’t need to be scaled on a per-dimension basis such as STFT</p>
-<dl class="py method">
-<dt id="spiegelib.features.features_base.FullDataStandardScaler.fit">
-<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FullDataStandardScaler.fit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute mean and std for later scaling</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>np.ndarray</em>) – data to use to calculate mean and std on</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="spiegelib.features.features_base.FullDataStandardScaler.transform">
-<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FullDataStandardScaler.transform" title="Permalink to this definition">¶</a></dt>
-<dd><p>Perform normalization on data</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>np.array</em>) – data to normalize</p>
+<dd class="field-odd"><p><strong>data</strong> (<em>np.ndarray</em>) – data to be scaled</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Normalized data</p>
+<dd class="field-even"><p>scaled data</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>np.ndarray</p>
@@ -379,40 +339,26 @@ don’t need to be scaled on a per-dimension basis such as STFT</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt id="spiegelib.features.features_base.FullDataStandardScaler.fit_transform">
-<code class="sig-name descname">fit_transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.FullDataStandardScaler.fit_transform" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute mean and std on data and then normalize it</p>
+<dl class="method">
+<dt id="spiegelib.features.FeaturesBase.load_scaler">
+<code class="sig-name descname">load_scaler</code><span class="sig-paren">(</span><em class="sig-param">location</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.FeaturesBase.load_scaler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load trained scaler from a pickled file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>np.array</em>) – data to computer mean and std on and normalize</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Normalized data</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>np.ndarray</p>
+<dd class="field-odd"><p><strong>location</strong> (<em>str</em>) – Location of pickled scaler object</p>
 </dd>
 </dl>
 </dd></dl>
 
-</dd></dl>
-
-<dl class="py exception">
-<dt id="spiegelib.features.features_base.NormalizerError">
-<em class="property">exception </em><code class="sig-prename descclassname">spiegelib.features.features_base.</code><code class="sig-name descname">NormalizerError</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.NormalizerError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
-<p>Exception class for normalizers</p>
-<dl class="py attribute">
-<dt id="spiegelib.features.features_base.NormalizerError.args">
-<code class="sig-name descname">args</code><a class="headerlink" href="#spiegelib.features.features_base.NormalizerError.args" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="spiegelib.features.features_base.NormalizerError.with_traceback">
-<code class="sig-name descname">with_traceback</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.features_base.NormalizerError.with_traceback" title="Permalink to this definition">¶</a></dt>
-<dd><p>Exception.with_traceback(tb) –
-set self.__traceback__ to tb and return self.</p>
+<dl class="method">
+<dt id="spiegelib.features.FeaturesBase.save_scaler">
+<code class="sig-name descname">save_scaler</code><span class="sig-paren">(</span><em class="sig-param">location</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.FeaturesBase.save_scaler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the trained scaler for these features as a pickle for later use</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>location</strong> (<em>str</em>) – Location to save pickled scaler object</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -427,10 +373,10 @@ set self.__traceback__ to tb and return self.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="mfcc.html" class="btn btn-neutral float-right" title="FeaturesBase Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="fft.html" class="btn btn-neutral float-right" title="FFT Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../features.html" class="btn btn-neutral float-left" title="Audio Feature Extraction Classes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../features.html" class="btn btn-neutral float-left" title="Audio Feature Extraction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

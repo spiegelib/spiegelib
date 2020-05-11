@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>LSTM Class &mdash; SpiegeLib 0.0.1 documentation</title>
+  <title>SpectralSummarized Class &mdash; SpiegeLib 0.0.1 documentation</title>
   
 
   
@@ -35,8 +35,8 @@
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="MLP Class" href="mlp.html" />
-    <link rel="prev" title="HwyBLSTM Class" href="hwy_blstm.html" /> 
+    <link rel="next" title="Estimator Classes" href="../estimators.html" />
+    <link rel="prev" title="MFCC Class" href="mfcc.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -86,22 +86,15 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../core.html">Core</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../synth.html">Synth</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../features.html">Audio Features</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../estimators.html">Estimators</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="estimator_base.html">     EstimatorBase</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../estimators.html#deep-learning">Deep Learning</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="tf_estimator_base.html">TFEstimatorBase</a></li>
-<li class="toctree-l3"><a class="reference internal" href="conv6.html">Conv6</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hwy_blstm.html">HwyBLSTM (LSTM++)</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">LSTM</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mlp.html">MLP</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tf_epoch_logger.html">TFEpochLogger</a></li>
-<li class="toctree-l3"><a class="reference internal" href="highway_layer.html">HighwayLayer</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../features.html">Audio Features</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="features_base.html">     FeaturesBase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fft.html">Fast Fourier Transform (FFT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stft.html">Short Time Fourier Transform (STFT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mfcc.html">     Mel-Frequency Cepstral Coefficients (MFCC)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Time Summarized Spectral Features (SpectralSummarized)</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../estimators.html#evolutionary">Evolutionary</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../estimators.html">Estimators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../evaluation.html">Evaluation</a></li>
 </ul>
 <ul>
@@ -154,15 +147,15 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="../estimators.html">Estimator Classes</a> &raquo;</li>
+          <li><a href="../features.html">Audio Feature Extraction Classes</a> &raquo;</li>
         
-      <li>LSTM Class</li>
+      <li>SpectralSummarized Class</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/reference/estimators/lstm.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/reference/features/spectral_summarized.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -175,46 +168,41 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-spiegelib.estimator.lstm">
-<span id="lstm-class"></span><span id="lstm"></span><h1>LSTM Class<a class="headerlink" href="#module-spiegelib.estimator.lstm" title="Permalink to this headline">¶</a></h1>
-<p>LSTM Deep Learning Model</p>
-<p>Based on model proposed by Yee-King et al. <a class="footnote-reference brackets" href="#id2" id="id1">1</a></p>
+  <div class="section" id="module-spiegelib.features.spectral_summarized">
+<span id="spectralsummarized-class"></span><span id="spectral-summarized"></span><h1>SpectralSummarized Class<a class="headerlink" href="#module-spiegelib.features.spectral_summarized" title="Permalink to this headline">¶</a></h1>
+<p>Spectral features summarized over time using mean and variance</p>
 <dl class="class">
-<dt id="spiegelib.estimator.LSTM">
-<em class="property">class </em><code class="sig-prename descclassname">spiegelib.estimator.</code><code class="sig-name descname">LSTM</code><span class="sig-paren">(</span><em class="sig-param">input_shape</em>, <em class="sig-param">num_outputs</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.LSTM" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.estimator.tf_estimator_base.TFEstimatorBase</span></code></p>
+<dt id="spiegelib.features.SpectralSummarized">
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.features.</code><code class="sig-name descname">SpectralSummarized</code><span class="sig-paren">(</span><em class="sig-param">scale_axis=0</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.SpectralSummarized" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.features.features_base.FeaturesBase</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>input_shape</strong> (<em>tuple</em>) – Shape of matrix that will be passed to model input</p></li>
-<li><p><strong>num_outputs</strong> – Number of outputs the model has</p></li>
-<li><p><strong>kwargs</strong> – optional keyword arguments to pass to
-<a class="reference internal" href="tf_estimator_base.html#spiegelib.estimator.TFEstimatorBase" title="spiegelib.estimator.TFEstimatorBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.estimator.TFEstimatorBase</span></code></a></p></li>
-</ul>
+<dd class="field-odd"><p><strong>kwargs</strong> – See <code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.features.features_base.FeaturesBase</span></code></p>
 </dd>
 </dl>
 <dl class="method">
-<dt id="spiegelib.estimator.LSTM.build_model">
-<code class="sig-name descname">build_model</code><span class="sig-paren">(</span><em class="sig-param">highway_layers=100</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.LSTM.build_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Construct LSTM Model</p>
+<dt id="spiegelib.features.SpectralSummarized.get_features">
+<code class="sig-name descname">get_features</code><span class="sig-paren">(</span><em class="sig-param">audio</em>, <em class="sig-param">normalize=False</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.SpectralSummarized.get_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run audio feature extraction on audio provided as parameter.
+Normalization should be applied based on the normalize parameter.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>highway_layers</strong> (<em>int</em><em>, </em><em>optional</em>) – dimensionality of outer space of hidden layers,
-defaults to 100</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>audio</strong> (<em>np.array</em>) – Audio to process features on</p></li>
+<li><p><strong>normalize</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether or not the features are normalized, defaults to False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>results from audio feature extraction</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.array</p>
 </dd>
 </dl>
 </dd></dl>
 
 </dd></dl>
 
-<dl class="footnote brackets">
-<dt class="label" id="id2"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
-<dd><p>Yee-King, Matthew John, Leon Fedden, and Mark d’Inverno.
-“Automatic programming of VST sound synthesizers using deep networks and
-other techniques.” IEEE Transactions on Emerging Topics in Computational
-Intelligence 2.2 (2018): 150-159.</p>
-</dd>
-</dl>
 </div>
 
 
@@ -225,10 +213,10 @@ Intelligence 2.2 (2018): 150-159.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="mlp.html" class="btn btn-neutral float-right" title="MLP Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../estimators.html" class="btn btn-neutral float-right" title="Estimator Classes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="hwy_blstm.html" class="btn btn-neutral float-left" title="HwyBLSTM Class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="mfcc.html" class="btn btn-neutral float-left" title="MFCC Class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

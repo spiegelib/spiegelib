@@ -177,8 +177,8 @@ useful for creating large sets of data for training and validating deep learning
 patch configuration in <em>Dexed</em>, and then rendering a one second audio clip of
 that patch. A 13-band MFCC is computed on the resulting audio. These audio features
 and the synthesizer parameters used to synthesize the audio are saved in numpy files.
-Audio features are normalized by removing the mean and scaling to unit variance. The
-values used for normalization are saved after the first dataset generation so they
+Audio features are standardized by removing the mean and scaling to unit variance. The
+values used for scaling are saved after the first dataset generation so they
 can be used on future data.</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -214,29 +214,29 @@ can be used on future data.</p>
                                   <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="mi">50000</span><span class="p">,</span> <span class="n">file_prefix</span><span class="o">=</span><span class="s2">&quot;train_&quot;</span><span class="p">)</span>
 <span class="n">generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="n">file_prefix</span><span class="o">=</span><span class="s2">&quot;test_&quot;</span><span class="p">)</span>
-<span class="n">generator</span><span class="o">.</span><span class="n">save_normalizers</span><span class="p">(</span><span class="s1">&#39;normalizers.pkl&#39;</span><span class="p">)</span>
+<span class="n">generator</span><span class="o">.</span><span class="n">save_scaler</span><span class="p">(</span><span class="s1">&#39;data_scaler.pkl&#39;</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
-<dl class="py class">
+<dl class="class">
 <dt id="spiegelib.DatasetGenerator">
-<em class="property">class </em><code class="sig-prename descclassname">spiegelib.</code><code class="sig-name descname">DatasetGenerator</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">synth</span></em>, <em class="sig-param"><span class="n">features</span></em>, <em class="sig-param"><span class="n">output_folder</span><span class="o">=</span><span class="default_value">'/Users/jshier/Development/Academic/spiegel/docs'</span></em>, <em class="sig-param"><span class="n">save_audio</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">normalize</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.DatasetGenerator" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.</code><code class="sig-name descname">DatasetGenerator</code><span class="sig-paren">(</span><em class="sig-param">synth</em>, <em class="sig-param">features</em>, <em class="sig-param">output_folder='/Users/jshier/Development/Academic/spiegel/docs'</em>, <em class="sig-param">save_audio=False</em>, <em class="sig-param">scale=False</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.DatasetGenerator" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>synth</strong> (<em>Object</em>) – Synthesizer to generate test data from. Must inherit from
 <a class="reference internal" href="../synth/synth_base.html#spiegelib.synth.SynthBase" title="spiegelib.synth.SynthBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.synth.SynthBase</span></code></a>.</p></li>
 <li><p><strong>features</strong> (<em>Object</em>) – Features to use for dataset generation. Must inherit from
-<code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.features.FeaturesBase</span></code>.</p></li>
+<a class="reference internal" href="../features/features_base.html#spiegelib.features.FeaturesBase" title="spiegelib.features.FeaturesBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.features.FeaturesBase</span></code></a>.</p></li>
 <li><p><strong>output_folder</strong> (<em>str</em><em>, </em><em>optional</em>) – Output folder for dataset, defaults to currect working directory.</p></li>
 <li><p><strong>save_audio</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether or not to save rendered audio files, defaults to False.</p></li>
-<li><p><strong>normalize</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether or not to normalize resulting feature vector. If the feature
-object does not have normalizers set, then this will train normalizers based on the
-generated dataset and store them in the features object. Call <a class="reference internal" href="#spiegelib.DatasetGenerator.save_normalizers" title="spiegelib.DatasetGenerator.save_normalizers"><code class="xref py py-meth docutils literal notranslate"><span class="pre">save_normalizers()</span></code></a>
-to store normalization settings. Defaults to False.</p></li>
+<li><p><strong>scale</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether or not to scale resulting feature vector. If the feature
+object does not have a scaler set, then this will train a data scaler based on the
+generated dataset and store them in the features object. Call <a class="reference internal" href="#spiegelib.DatasetGenerator.save_scaler" title="spiegelib.DatasetGenerator.save_scaler"><code class="xref py py-meth docutils literal notranslate"><span class="pre">save_scaler()</span></code></a>
+to store scaler settings. Defaults to False.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py attribute">
+<dl class="attribute">
 <dt id="spiegelib.DatasetGenerator.features_filename">
 <code class="sig-name descname">features_filename</code><a class="headerlink" href="#spiegelib.DatasetGenerator.features_filename" title="Permalink to this definition">¶</a></dt>
 <dd><p>filename for features output file, defaults to features.npy</p>
@@ -247,7 +247,7 @@ to store normalization settings. Defaults to False.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="py attribute">
+<dl class="attribute">
 <dt id="spiegelib.DatasetGenerator.patches_filename">
 <code class="sig-name descname">patches_filename</code><a class="headerlink" href="#spiegelib.DatasetGenerator.patches_filename" title="Permalink to this definition">¶</a></dt>
 <dd><p>filename for patches output file, defaults to patches.npy</p>
@@ -258,7 +258,7 @@ to store normalization settings. Defaults to False.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="py attribute">
+<dl class="attribute">
 <dt id="spiegelib.DatasetGenerator.audio_folder_name">
 <code class="sig-name descname">audio_folder_name</code><a class="headerlink" href="#spiegelib.DatasetGenerator.audio_folder_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>folder name for the audio output if used. Will be automatically
@@ -270,9 +270,9 @@ created within the output folder if saving audio. Defaults to audio</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.DatasetGenerator.generate">
-<code class="sig-name descname">generate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">size</span></em>, <em class="sig-param"><span class="n">file_prefix</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">fit_normalizers_only</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.DatasetGenerator.generate" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">generate</code><span class="sig-paren">(</span><em class="sig-param">size</em>, <em class="sig-param">file_prefix=''</em>, <em class="sig-param">fit_scaler_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.DatasetGenerator.generate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate dataset with a set of random patches. Saves the extracted features
 and parameter settings in separate .npy files. Files are stored in the output
 folder set during construction (defaults to current working directory) and
@@ -286,21 +286,21 @@ by the file_prefix.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>size</strong> (<em>int</em>) – Number of different synthesizer patches to render.</p></li>
 <li><p><strong>file_prefix</strong> (<em>str</em><em>, </em><em>optional</em>) – filename prefix for all output data.</p></li>
-<li><p><strong>fit_normalizers_only</strong> (<em>bool</em><em>, </em><em>optional</em>) – If this is set to True, then
-no data will be saved and only normalizers will be set or reset
+<li><p><strong>fit_scaler_only</strong> (<em>bool</em><em>, </em><em>optional</em>) – If this is set to True, then
+no data will be saved and only scaler will be set or reset
 for the feature object.</p></li>
 </ul>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt id="spiegelib.DatasetGenerator.save_normalizers">
-<code class="sig-name descname">save_normalizers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.DatasetGenerator.save_normalizers" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save feature normalizers also a pickle file.</p>
+<dl class="method">
+<dt id="spiegelib.DatasetGenerator.save_scaler">
+<code class="sig-name descname">save_scaler</code><span class="sig-paren">(</span><em class="sig-param">file_name</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.DatasetGenerator.save_scaler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save feature scaler as a pickle file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>file_name</strong> (<em>str</em>) – file name for normalizer pickle file</p>
+<dd class="field-odd"><p><strong>file_name</strong> (<em>str</em>) – file name for scaler pickle file</p>
 </dd>
 </dl>
 </dd></dl>

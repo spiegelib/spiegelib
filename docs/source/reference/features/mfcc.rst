@@ -1,10 +1,11 @@
 .. _mfcc:
 
-FeaturesBase Class
-==================
+MFCC Class
+==========
 
 .. automodule:: spiegelib.features.mfcc
+
+.. autoclass:: spiegelib.features.MFCC
 	:members:
 	:show-inheritance:
 	:undoc-members:
-	:inherited-members:

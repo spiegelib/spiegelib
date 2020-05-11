@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Audio Feature Extraction Classes &mdash; SpiegeLib 0.0.1 documentation</title>
+  <title>Audio Feature Extraction &mdash; SpiegeLib 0.0.1 documentation</title>
   
 
   
@@ -88,7 +88,15 @@
 <li class="toctree-l1"><a class="reference internal" href="synth.html">Synth</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Audio Features</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="features/features_base.html">     FeaturesBase</a></li>
-<li class="toctree-l2"><a class="reference internal" href="features/mfcc.html">     MFCC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="features/fft.html">Fast Fourier Transform (FFT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="features/stft.html">Short Time Fourier Transform (STFT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="features/mfcc.html">     Mel-Frequency Cepstral Coefficients (MFCC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="features/spectral_summarized.html">Time Summarized Spectral Features (SpectralSummarized)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-scaling">Data Scaling:</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="features/data_scaler_base.html">DataScalerBase</a></li>
+<li class="toctree-l3"><a class="reference internal" href="features/standard_scaler.html">StandardScaler</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="estimators.html">Estimators</a></li>
@@ -144,7 +152,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Audio Feature Extraction Classes</li>
+      <li>Audio Feature Extraction</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -163,13 +171,44 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="audio-feature-extraction-classes">
-<h1>Audio Feature Extraction Classes<a class="headerlink" href="#audio-feature-extraction-classes" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="audio-feature-extraction">
+<h1>Audio Feature Extraction<a class="headerlink" href="#audio-feature-extraction" title="Permalink to this headline">¶</a></h1>
+<p>The following classes can be used to extract relevant features from audio. Audio
+feature extraction helps to transform raw audio data into a representation that is
+more representative of human perception. This representation is often used to provide
+a more meaningful comparison of audio files and can be used as input to machine learning
+approaches and to evaluate results.</p>
+<p>All audio features in <cite>SpiegeLib</cite> currently use <a class="reference external" href="https://librosa.github.io/">librosa</a>.
+The <a class="reference internal" href="features/features_base.html#features-base"><span class="std std-ref">FeaturesBase</span></a> class is an abstract base class that defines an interface
+for performing feature extraction within <cite>SpiegeLib</cite>. All feature extraction classes
+inherit from <a class="reference internal" href="features/features_base.html#features-base"><span class="std std-ref">FeaturesBase</span></a> and provide a wrapper to functions within
+<a class="reference external" href="https://librosa.github.io/">librosa</a>.</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="features/features_base.html">     FeaturesBase</a></li>
-<li class="toctree-l1"><a class="reference internal" href="features/mfcc.html">     MFCC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="features/fft.html">Fast Fourier Transform (FFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="features/stft.html">Short Time Fourier Transform (STFT)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="features/mfcc.html">     Mel-Frequency Cepstral Coefficients (MFCC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="features/spectral_summarized.html">Time Summarized Spectral Features (SpectralSummarized)</a></li>
 </ul>
+</div>
+<div class="section" id="data-scaling">
+<h2>Data Scaling:<a class="headerlink" href="#data-scaling" title="Permalink to this headline">¶</a></h2>
+<p>Data scaling is an important step in pre-processing data prior to machine learning
+algorithms. All classes that inherit from <a class="reference internal" href="features/features_base.html#features-base"><span class="std std-ref">FeaturesBase</span></a> have
+a <code class="docutils literal notranslate"><span class="pre">scaler</span></code> attribute which holds a data scaler object and can be used to normalize
+or standardize feature extraction results. These scalers are inspired by the scalers
+implemented in <cite>sklearn &lt;https://scikit-learn.org/stable/modules/classes.html#module-sklearn.preprocessing&gt;</cite>,
+but can handle datasets with more dimensions. They are simplified and are designed
+to be fit in one pass and to handle dense matrixes.</p>
+<p>Scalers must be ‘trained’ (fit) before they can be used to scale new results. See the example
+in <a class="reference internal" href="features/standard_scaler.html#standard-scaler"><span class="std std-ref">StandardScaler</span></a> for an example on how to perform this.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="features/data_scaler_base.html">DataScalerBase</a></li>
+<li class="toctree-l1"><a class="reference internal" href="features/standard_scaler.html">StandardScaler</a></li>
+</ul>
+</div>
 </div>
 </div>
 

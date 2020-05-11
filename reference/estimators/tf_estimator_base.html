@@ -214,9 +214,9 @@ perceptron network:</p>
 </div>
 <p>For a detailed example of running a synthesizer sound matching experiment using
 deep learning models like this, see the <a class="reference internal" href="../../examples/fm_sound_match.html#fm-sound-match"><span class="std std-ref">FM Sound Match Example</span></a>.</p>
-<dl class="py class">
+<dl class="class">
 <dt id="spiegelib.estimator.TFEstimatorBase">
-<em class="property">class </em><code class="sig-prename descclassname">spiegelib.estimator.</code><code class="sig-name descname">TFEstimatorBase</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_shape</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">num_outputs</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">weights_path</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">callbacks</span><span class="o">=</span><span class="default_value">[]</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.TFEstimatorBase" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.estimator.</code><code class="sig-name descname">TFEstimatorBase</code><span class="sig-paren">(</span><em class="sig-param">input_shape=None</em>, <em class="sig-param">num_outputs=None</em>, <em class="sig-param">weights_path=''</em>, <em class="sig-param">callbacks=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.TFEstimatorBase" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="estimator_base.html#spiegelib.estimator.estimator_base.EstimatorBase" title="spiegelib.estimator.estimator_base.EstimatorBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.estimator.estimator_base.EstimatorBase</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -229,7 +229,7 @@ synthesizer parameters this will typically be the number of parameters.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py attribute">
+<dl class="attribute">
 <dt id="spiegelib.estimator.TFEstimatorBase.model">
 <code class="sig-name descname">model</code><a class="headerlink" href="#spiegelib.estimator.TFEstimatorBase.model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Attribute for the model, see <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/Model">TensorFlow docs</a></p>
@@ -240,15 +240,15 @@ synthesizer parameters this will typically be the number of parameters.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.estimator.TFEstimatorBase.build_model">
 <em class="property">abstract </em><code class="sig-name descname">build_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.TFEstimatorBase.build_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Abstract method that should contain the model definition when implemented</p>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.estimator.TFEstimatorBase.add_training_data">
-<code class="sig-name descname">add_training_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em>, <em class="sig-param"><span class="n">output</span></em>, <em class="sig-param"><span class="n">batch_size</span><span class="o">=</span><span class="default_value">64</span></em>, <em class="sig-param"><span class="n">shuffle_size</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.TFEstimatorBase.add_training_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_training_data</code><span class="sig-paren">(</span><em class="sig-param">input</em>, <em class="sig-param">output</em>, <em class="sig-param">batch_size=64</em>, <em class="sig-param">shuffle_size=None</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.TFEstimatorBase.add_training_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/data/Dataset">tf.data.Dataset</a>
 from training data, and shuffles / batches data for training. Stores
 results in the <code class="docutils literal notranslate"><span class="pre">train_data</span></code> attribute.</p>
@@ -266,9 +266,9 @@ of this size. None or 0 corresponds to no shuffling. Defaults to None.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.estimator.TFEstimatorBase.add_testing_data">
-<code class="sig-name descname">add_testing_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em>, <em class="sig-param"><span class="n">output</span></em>, <em class="sig-param"><span class="n">batch_size</span><span class="o">=</span><span class="default_value">64</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.TFEstimatorBase.add_testing_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_testing_data</code><span class="sig-paren">(</span><em class="sig-param">input</em>, <em class="sig-param">output</em>, <em class="sig-param">batch_size=64</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.TFEstimatorBase.add_testing_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/data/Dataset">tf.data.Dataset</a>
 and optionally batches for validation. Stores results in the <code class="docutils literal notranslate"><span class="pre">test_data</span></code> attribute.</p>
 <dl class="field-list simple">
@@ -283,9 +283,9 @@ this size. None or 0 will be no batching. Defaults to 64.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.estimator.TFEstimatorBase.fit">
-<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">epochs</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">callbacks</span><span class="o">=</span><span class="default_value">[]</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.TFEstimatorBase.fit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">epochs=1</em>, <em class="sig-param">callbacks=[]</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.TFEstimatorBase.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Train model on for a fixed number of epochs on training data and validation
 data if it has been added to this estimator</p>
 <dl class="field-list simple">
@@ -300,9 +300,9 @@ data if it has been added to this estimator</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.estimator.TFEstimatorBase.predict">
-<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.TFEstimatorBase.predict" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">input</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.TFEstimatorBase.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run prediction on input</p>
 <dl class="simple">
 <dt>Arg (np.ndarray): matrix of input data to run predictions on. Can a single</dt><dd><p>instance or a batch</p>
@@ -310,9 +310,9 @@ data if it has been added to this estimator</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.estimator.TFEstimatorBase.load_weights">
-<code class="sig-name descname">load_weights</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filepath</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.TFEstimatorBase.load_weights" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">load_weights</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.TFEstimatorBase.load_weights" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load model weights from H5 or TensorFlow file</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -325,9 +325,9 @@ methods, see  <a class="reference external" href="https://www.tensorflow.org/api
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.estimator.TFEstimatorBase.save_weights">
-<code class="sig-name descname">save_weights</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filepath</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.TFEstimatorBase.save_weights" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">save_weights</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.TFEstimatorBase.save_weights" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save model weights to a HDF5 or TensorFlow file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -342,9 +342,9 @@ method,  see <a class="reference external" href="https://www.tensorflow.org/api_
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.estimator.TFEstimatorBase.save_model">
-<code class="sig-name descname">save_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filepath</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.TFEstimatorBase.save_model" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">save_model</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.TFEstimatorBase.save_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save entire model</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -357,9 +357,9 @@ see <a class="reference external" href="https://www.tensorflow.org/api_docs/pyth
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.estimator.TFEstimatorBase.load">
-<em class="property">static </em><code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filepath</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.TFEstimatorBase.load" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.TFEstimatorBase.load" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load entire model and return an istantiated TFEstimatorBase class with
 the saved model loaded into it.</p>
 <dl class="field-list simple">
@@ -373,9 +373,9 @@ the saved model loaded into it.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.estimator.TFEstimatorBase.rms_error">
-<em class="property">static </em><code class="sig-name descname">rms_error</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y_true</span></em>, <em class="sig-param"><span class="n">y_pred</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.TFEstimatorBase.rms_error" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">rms_error</code><span class="sig-paren">(</span><em class="sig-param">y_true</em>, <em class="sig-param">y_pred</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.TFEstimatorBase.rms_error" title="Permalink to this definition">¶</a></dt>
 <dd><p>Static method for calculating root mean squared error between predictions
 and targets</p>
 <dl class="field-list simple">

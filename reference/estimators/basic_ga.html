@@ -173,15 +173,15 @@
   <div class="section" id="module-spiegelib.estimator.basic_ga">
 <span id="basicga-class"></span><span id="basic-ga"></span><h1>BasicGA Class<a class="headerlink" href="#module-spiegelib.estimator.basic_ga" title="Permalink to this headline">¶</a></h1>
 <p>Basic single objective genetic algorithm</p>
-<dl class="py class">
+<dl class="class">
 <dt id="spiegelib.estimator.BasicGA">
-<em class="property">class </em><code class="sig-prename descclassname">spiegelib.estimator.</code><code class="sig-name descname">BasicGA</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">synth</span></em>, <em class="sig-param"><span class="n">features</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">pop_size</span><span class="o">=</span><span class="default_value">100</span></em>, <em class="sig-param"><span class="n">ngen</span><span class="o">=</span><span class="default_value">25</span></em>, <em class="sig-param"><span class="n">cxpb</span><span class="o">=</span><span class="default_value">0.5</span></em>, <em class="sig-param"><span class="n">mutpb</span><span class="o">=</span><span class="default_value">0.3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.BasicGA" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.estimator.</code><code class="sig-name descname">BasicGA</code><span class="sig-paren">(</span><em class="sig-param">synth</em>, <em class="sig-param">features</em>, <em class="sig-param">seed=None</em>, <em class="sig-param">pop_size=100</em>, <em class="sig-param">ngen=25</em>, <em class="sig-param">cxpb=0.5</em>, <em class="sig-param">mutpb=0.3</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.BasicGA" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="estimator_base.html#spiegelib.estimator.estimator_base.EstimatorBase" title="spiegelib.estimator.estimator_base.EstimatorBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.estimator.estimator_base.EstimatorBase</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>synth</strong> (<em>Object</em>) – Instance of <a class="reference internal" href="../synth/synth_base.html#spiegelib.synth.SynthBase" title="spiegelib.synth.SynthBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.synth.SynthBase</span></code></a></p></li>
-<li><p><strong>features</strong> (<em>Object</em>) – Instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.features.FeaturesBase</span></code>.
+<li><p><strong>features</strong> (<em>Object</em>) – Instance of <a class="reference internal" href="../features/features_base.html#spiegelib.features.FeaturesBase" title="spiegelib.features.FeaturesBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.features.FeaturesBase</span></code></a>.
 This is used in the evaluation function to determine <em>fitness</em> of an individual.</p></li>
 <li><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – Seed for random. Defaults to current system time.</p></li>
 <li><p><strong>pop_size</strong> (<em>int</em><em>, </em><em>optional</em>) – Size of population at each generation</p></li>
@@ -191,9 +191,9 @@ This is used in the evaluation function to determine <em>fitness</em> of an indi
 </ul>
 </dd>
 </dl>
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.estimator.BasicGA.fitness">
-<code class="sig-name descname">fitness</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">individual</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.BasicGA.fitness" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">fitness</code><span class="sig-paren">(</span><em class="sig-param">individual</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.BasicGA.fitness" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is automatically called during prediction. Evaluation that calculates
 the fitness of an individual. The individual is
 a new estimated synthesizer parameter setting, and fitness is calculated
@@ -213,9 +213,9 @@ The type of feature extraction is set in the constructor.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.estimator.BasicGA.predict">
-<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.BasicGA.predict" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">input</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.BasicGA.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run GA prection on input audio target</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

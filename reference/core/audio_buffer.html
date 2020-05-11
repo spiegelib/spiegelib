@@ -206,9 +206,9 @@ resizing buffers, and plotting spectrograms.</p>
 </pre></div>
 </td></tr></table></div>
 <img alt="../../_images/audio_buffer_spect.png" src="../../_images/audio_buffer_spect.png" />
-<dl class="py class">
+<dl class="class">
 <dt id="spiegelib.AudioBuffer">
-<em class="property">class </em><code class="sig-prename descclassname">spiegelib.</code><code class="sig-name descname">AudioBuffer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">sample_rate</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.</code><code class="sig-name descname">AudioBuffer</code><span class="sig-paren">(</span><em class="sig-param">input=None</em>, <em class="sig-param">sample_rate=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -222,7 +222,7 @@ from a file, will automatically resample to 44100 if no sample rate provided.</p
 </ul>
 </dd>
 </dl>
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.AudioBuffer.get_audio">
 <code class="sig-name descname">get_audio</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.get_audio" title="Permalink to this definition">¶</a></dt>
 <dd><p>Getter for audio data</p>
@@ -236,7 +236,7 @@ from a file, will automatically resample to 44100 if no sample rate provided.</p
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.AudioBuffer.get_sample_rate">
 <code class="sig-name descname">get_sample_rate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.get_sample_rate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Getter for sample rate</p>
@@ -250,9 +250,9 @@ from a file, will automatically resample to 44100 if no sample rate provided.</p
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.AudioBuffer.load">
-<code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">sample_rate</span><span class="o">=</span><span class="default_value">44100</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.load" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">sample_rate=44100</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.load" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read audio from a file into a numpy array at specific audio rate. Stores
 in this <code class="docutils literal notranslate"><span class="pre">AudioBuffer</span></code> object.</p>
 <dl class="field-list simple">
@@ -268,9 +268,9 @@ native sampling rate.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.AudioBuffer.plot_spectrogram">
-<code class="sig-name descname">plot_spectrogram</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.plot_spectrogram" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">plot_spectrogram</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.plot_spectrogram" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot spectrogram of this audio buffer. Uses librosas <a class="reference external" href="https://librosa.github.io/librosa/generated/librosa.display.specshow.html">specshow</a>
 function. Uses matplotlib.pyplot to plot spectrogram.</p>
 <p>Defaults to logarithmic y-axis in Hertz and seconds along the x-axis.</p>
@@ -288,9 +288,9 @@ function. Uses matplotlib.pyplot to plot spectrogram.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.AudioBuffer.replace_audio_data">
-<code class="sig-name descname">replace_audio_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">audio</span></em>, <em class="sig-param"><span class="n">sample_rate</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.replace_audio_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">replace_audio_data</code><span class="sig-paren">(</span><em class="sig-param">audio</em>, <em class="sig-param">sample_rate</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.replace_audio_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Replace audio data in this object</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -302,9 +302,9 @@ function. Uses matplotlib.pyplot to plot spectrogram.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.AudioBuffer.resize">
-<code class="sig-name descname">resize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">num_samples</span></em>, <em class="sig-param"><span class="n">start</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.resize" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">resize</code><span class="sig-paren">(</span><em class="sig-param">num_samples</em>, <em class="sig-param">start=0</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.resize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resize audio to a set number of samples. If new length is less than the
 current audio buffer size, then the buffer will be trimmed. If the new
 length is greater than current audio buffer, then the resulting buffer
@@ -320,9 +320,9 @@ current buffer</p></li>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.AudioBuffer.save">
-<code class="sig-name descname">save</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">normalize</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.save" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">save</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">normalize=False</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.save" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save an audio to disk as WAV file at given sample rate. Can normalize
 before saving as well.</p>
 <dl class="field-list simple">
@@ -335,9 +335,9 @@ before saving as well.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.AudioBuffer.peak_normalize">
-<em class="property">static </em><code class="sig-name descname">peak_normalize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">audio</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.peak_normalize" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">peak_normalize</code><span class="sig-paren">(</span><em class="sig-param">audio</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.peak_normalize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Peak normalize audio data</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -352,9 +352,9 @@ before saving as well.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.AudioBuffer.load_folder">
-<em class="property">static </em><code class="sig-name descname">load_folder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">sort</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">sample_rate</span><span class="o">=</span><span class="default_value">44100</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.load_folder" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">load_folder</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">sort=True</em>, <em class="sig-param">sample_rate=44100</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.AudioBuffer.load_folder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Try to load a folder of audio samples</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

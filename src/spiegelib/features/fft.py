@@ -26,7 +26,7 @@ class FFT(FeaturesBase):
         # as opposed to normalizing across each bin separately.
         super().__init__(scale_axis=scale_axis, **kwargs)
 
-        self.frame_size = fft_size
+        self.fft_size = fft_size
 
         if output not in utils.spectrum_types:
             raise TypeError('output must be one of %s' % utils.spectrum_types)
@@ -60,7 +60,7 @@ class FFT(FeaturesBase):
         self.dimensions = n_output
 
         # Run Fast Fourier Transform
-        spectrum = np.fft.fft(audio.get_audio(), n=self.frame_size)[0:n_output]
+        spectrum = np.fft.fft(audio.get_audio(), n=self.fft_size)[0:n_output]
         features = utils.convert_spectrum(spectrum, self.output, dtype=self.dtype,
                                          complex_dtype=self.complex_dtype)
 

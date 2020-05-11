@@ -15,12 +15,14 @@ class MFCC(FeaturesBase):
     :param kwargs: keyword arguments for base class, see :class:`spiegelib.features.features_base.FeaturesBase`.
     """
 
-    def __init__(self, num_mfccs=20, scale_axis=0, **kwargs):
+    def __init__(self, num_mfccs=20, frame_size=2048, hop_size=512, scale_axis=0, **kwargs):
         """
         Contructor
         """
 
         self.num_mfccs = num_mfccs
+        self.frame_size = frame_size
+        self.hop_size = hop_size
         super().__init__(scale_axis=scale_axis, **kwargs)
 
 
