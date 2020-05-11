@@ -16,12 +16,12 @@ class STFT(FeaturesBase):
     :param kwargs: keyword arguments for base class, see :class:`spiegelib.features.features_base.FeaturesBase`.
     """
 
-    def __init__(self, fft_size=1024, output='complex', **kwargs):
+    def __init__(self, fft_size=1024, output='complex', scale_axis=None, **kwargs):
         """
         Contructor
         """
 
-        super().__init__(**kwargs)
+        super().__init__(scale_axis=scale_axis, **kwargs)
 
         if output not in utils.spectrum_types:
             raise TypeError('output must be one of %s' % utils.spectrum_types)

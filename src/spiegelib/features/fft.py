@@ -16,7 +16,7 @@ class FFT(FeaturesBase):
     :param kwargs: keyword arguments for base class, see :class:`spiegelib.features.features_base.FeaturesBase`.
     """
 
-    def __init__(self, output='complex', fft_size=None, **kwargs):
+    def __init__(self, output='complex', fft_size=None, scale_axis=None, **kwargs):
         """
         Contructor
         """
@@ -24,7 +24,7 @@ class FFT(FeaturesBase):
         # Setup feature base class -- FFT is time summarized, so no
         # time slices are used, defaults to normalizing the entire result
         # as opposed to normalizing across each bin separately.
-        super().__init__(**kwargs)
+        super().__init__(scale_axis=scale_axis, **kwargs)
 
         self.frame_size = fft_size
 

@@ -13,11 +13,11 @@ class SpectralSummarized(FeaturesBase):
     :param kwargs: See :class:`spiegelib.features.features_base.FeaturesBase`
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, scale_axis=0, **kwargs):
         """
         Constructor
         """
-        super().__init__(**kwargs)
+        super().__init__(scale_axis=scale_axis, **kwargs)
 
 
     def get_features(self, audio, normalize=False):
