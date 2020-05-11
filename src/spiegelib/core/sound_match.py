@@ -43,7 +43,7 @@ import librosa
 
 from spiegelib import AudioBuffer
 from spiegelib.synth.synth_base import SynthBase
-from spiegelib.features.features_base import FeaturesBase, NormalizerError
+from spiegelib.features.features_base import FeaturesBase
 from spiegelib.estimator.estimator_base import EstimatorBase
 
 class SoundMatch():

@@ -39,7 +39,7 @@ setup(
             'sphinx',
             'sphinx_rtd_theme',
             'ipython',
-            'pytest'
+            'pytest',
             'pytest-datadir',
             'pytest-mpl',
             'tox'
