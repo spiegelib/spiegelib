@@ -299,6 +299,7 @@ class TestAudioBuffer():
         assert audio[2].file_name == 'test_3.wav'
 
 
+    @pytest.mark.filterwarnings("ignore:PySoundFile failed. Trying audioread instead.")
     def test_load_folder_with_non_audio_mono(self, shared_datadir):
         file_name = (shared_datadir / 'audio').resolve()
         audio = AudioBuffer.load_folder(file_name)
@@ -312,6 +313,7 @@ class TestAudioBuffer():
         assert audio[1].file_name == 'test_sine_stereo.wav'
 
 
+    @pytest.mark.filterwarnings("ignore:PySoundFile failed. Trying audioread instead.")
     def test_load_folder_with_non_audio_stereo(self, shared_datadir):
         file_name = (shared_datadir / 'audio').resolve()
         audio = AudioBuffer.load_folder(file_name, mono=False)

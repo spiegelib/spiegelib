@@ -1,6 +1,22 @@
 #!/usr/bin/env python
 """
-Abstract Base Class for Audio Features
+Abstract Base Class for audio feature extraction. Defines an interface for
+audio feature extraction algorithms.
+
+Inheriting classes must override :py:meth:`~spiegelib.features.FeaturesBase.get_features` and implement feature
+extraction in that function, which accepts an :ref:`AudioBuffer <audio_buffer>` and
+must return a `np.ndarray` containing results.
+
+Feature extraction is run in inheriting classes through the __call__ member function.
+
+Example of FFT, which inherits from FeaturesBase::
+
+    audio = AudioBuffer('./some_audio.wav')
+    fft = FFT()
+
+    # Now feature extraction is run by treating
+    # the FFT instance, fft, like a function
+    spectrum = fft(audio)
 """
 
 from abc import ABC, abstractmethod
@@ -15,23 +31,24 @@ from spiegelib.features import StandardScaler
 
 class FeaturesBase(ABC):
     """
-    :param sample_rate: Audio sample rate, defaults to 44100
-    :type sample_rate: int, optional
-    :param frame_size: frame size in audio samples, defaults to 2048
-    :type frame_size: int, optional
-    :param hop_size: hop size in audio samples, defaults to 512
-    :type hop_size: int, optional
-    :param time_major: indicates orientation of matrix that features are returned in,
-        time_major is (time_slices, features). Defaults to (features, time_slices).
-    :type time_major: boolean, optional
-    :param per_feature_normalize: Whether normalization should be applied to each
-        dimension independently, or on entire feature space. Defaults to True, which
-        applies normalization for each dimension independently.
-    :type per_feature_normalize: bool, optional
+    Args:
+        sample_rate (int, optional): audio sample rate, defaults to 44100
+        time_major (bool, optional): for audio feature extraction that uses time slices,
+            used to indicate the orientation of features and time slices in the resulting
+            matrix. True indicates that results should be returned with an orientation
+            like (time_slices, features). False (default) refers to an orientation
+            of (features, time_slices).
+        scale (bool, optional): whether to scale the results of feature extraction. The scaler
+            must be set before scaling called be applied. See :py:meth:`~spiegelib.features.FeaturesBase.fit_scaler` or
+            :py:meth:`~spiegelib.features.FeaturesBase.set_scaler`.
+        scale_axis (int, tuple, None, optional): indicates the axis to use for fitting scalers and
+            applying data scaling. A value of None flattens the dataset and calculates
+            scaling parameters on that. A value of an int or a tuple indicates the axis
+            or axes to use. Defaults to (0,) which causes scaling variables to be calculated
+            on each feature independently.
     """
 
-    def __init__(self, sample_rate=44100, frame_size=2048, hop_size=512,
-                 time_major=False, scale=False, scale_axis=(0,)):
+    def __init__(self, sample_rate=44100, time_major=False, scale=False, scale_axis=(0,)):
         """
         Constructor
         """
@@ -39,8 +56,6 @@ class FeaturesBase(ABC):
         super().__init__()
 
         self.sample_rate = sample_rate
-        self.frame_size = frame_size
-        self.hop_size = hop_size
         self.time_major = time_major
 
         self.should_scale = scale
@@ -49,7 +64,7 @@ class FeaturesBase(ABC):
         self.ScalerClass = StandardScaler
 
         self.input_modifiers = []
-        self.prenorm_modifiers = []
+        self.prescale_modifiers = []
         self.output_modifiers = []
 
         # Update this in inheriting classes if you need
@@ -58,16 +73,18 @@ class FeaturesBase(ABC):
 
     def __call__(self, audio, scale=None):
         """
-        Calls the get_features method. Applies data modifiers prior to and after
-        feature extraction
+        Run this feature extraction pipeline.
 
-        :param audio: Audio to process features on
-        :type audio: :class:`spiegelib.core.audio_buffer.AudioBuffer`
-        :param normalize: If set, will override the normalize attribute set
-            during construction.
-        :type normalize: bool, optional
-        :returns: results from audio feature extraction
-        :rtype: np.array
+        Applies functions in this order: input modifiers > feature extraction >
+        prescale modifiers > data scaling > output modifiers
+
+        Args:
+            audio (:ref:`AudioBuffer <audio_buffer>`): Audio to extract features from
+            scale (bool, optional): If set, will override scale attribute set
+                during construction.
+
+        Returns:
+            np.ndarray: results from audio feature extraction with modifiers and scaling.
         """
 
         # Input data modification
@@ -77,8 +94,8 @@ class FeaturesBase(ABC):
         # Run feature extraction
         features = self.get_features(audio)
 
-        # Apply any prenormalization data modification
-        for modifier in self.prenorm_modifiers:
+        # Apply any prescaling data modification
+        for modifier in self.prescale_modifiers:
             features = modifier(features)
 
         # Normalize features
@@ -94,61 +111,61 @@ class FeaturesBase(ABC):
         return features
 
 
-    def add_modifier(self, modifier, type):
-        """
-        Add a data modifier to the feature extraction pipeline
-
-        :param modifier: data modifier function. Should accept an np.array,
-            apply some modification to that, and return a np.array
-        :type modifier: lambda
-        :param type: Where to add this into the pipeline. ('input', 'prenormalize', or 'output')
-        :type type: str
-        """
-
-        if type == 'input':
-            self.input_modifiers.append(modifier)
-        elif type == 'prenormalize':
-            self.prenorm_modifiers.append(modifier)
-        elif type == 'output':
-            self.output_modifiers.append(modifier)
-        else:
-            raise ValueError('Type must be one of ("input", "prenormalize", or '
-                             '"output"), received %s' % type)
-
-
     @abstractmethod
     def get_features(self, audio):
         """
         Must be implemented. Run audio feature extraction on audio provided as parameter.
-        Normalization should be applied based on the normalize parameter.
+        Must check the `time_major` attribute and return data in the correct
+        orientation.
 
-        :param audio: Audio to process features on
-        :type audio: :class:`spiegelib.core.audio_buffer.AudioBuffer`
-        :returns: results from audio feature extraction
-        :rtype: np.array
+        Args:
+            audio (:ref:`AudioBuffer <audio_buffer>`): Audio to extract features from
+
+        Returns:
+            np.ndarray: Results of audio feature extraction
         """
         pass
 
 
-    def set_scaler(self, scaler):
+    def add_modifier(self, modifier, type):
         """
-        Set a scaler for a dimension, this will be used to normalize that dimension
+        Add a data modifier to the feature extraction pipeline.
 
-        :param scaler: A trained scaler object
-        :type scaler:
+        Input modifiers are applied to raw `AudioBuffers <audio_buffer>` prior
+        to feature extraction. Prescale modifiers are applied to results of audio
+        feature extraction and before data scaling (if applicable). Output modifiers
+        are applied after data scaling.
+
+        Args:
+            modifier (lambda): data modifier function. Should accept an np.array,
+                apply some modification to that, and return a np.array
+            type (str): Where to add function into pipeline. Must be one of
+                ('input', 'prescale', or 'output')
         """
 
-        self.scaler = scaler
+        if type == 'input':
+            self.input_modifiers.append(modifier)
+        elif type == 'prescale':
+            self.prescale_modifiers.append(modifier)
+        elif type == 'output':
+            self.output_modifiers.append(modifier)
+        else:
+            raise ValueError('type must be one of ("input", "prescale", or '
+                             '"output"), received: %s' % type)
 
 
     def fit_scaler(self, data, transform=True):
         """
         Fit scaler to dataset for future transforms.
 
-        :param data: data to train scaler on
-        :type data: np.ndarray
-        :returns: np.ndarray with scaled data
-        :rtype: np.ndarray
+        Args:
+            data (np.ndarray): data to train (fit) scaler on
+            transform (bool, optional): if True will also apply scaling
+                to the data
+
+        Returns:
+            np.ndarray, None: Scaled data if transform parameter is True, otherwise\
+                returns None.
         """
 
         # Fit a new scaler to dataset
@@ -162,45 +179,62 @@ class FeaturesBase(ABC):
             return None
 
 
+    def has_scaler(self):
+        """
+        Returns:
+            bool: whether or not the scaler has been set
+        """
+        return self.scaler != None
+
+
+    def set_scaler(self, scaler):
+        """
+        Set a scaler for a dimension, this will be used to normalize that dimension
+
+        Args:
+            scaler (object): a Scaler object to use to scale data. Must be a
+                :ref:`DataScalerBase <data_scaler_base>` type to use the :py:meth:`~spiegelib.features.FeaturesBase.fit_scaler`
+                method. Otherwise, other scalers like sklearn scalers could potentially
+                be fit and then passed in here -- just needs to have a transform method
+                to apply scaling. (note, using other objects outside of :ref:`DataScalerBase <data_scaler_base>` type
+                has not been tested!)
+        """
+
+        self.scaler = scaler
+
+
     def scale(self, data):
         """
         Scale features using pre-trained scaler
 
-        :param data: data to be normalized
-        :type data: np.array
-        :returns: scaled data
-        :rtype: np.array
+        Args:
+            data (np.ndarray): data to be scaled
+
+        Returns:
+            np.ndarray: scaled data
         """
 
         assert self.has_scaler(), "Scaler must be set first"
         return self.scaler.transform(data)
 
 
-    def has_scaler(self):
+    def load_scaler(self, location):
         """
-        :returns: a boolean indicating whether or not scaler has been set
-        :rtype: boolean
+        Load trained scaler from a pickled file.
+
+        Args:
+            location (str): Location of pickled scaler object
         """
-        return self.scaler != None
+
+        self.scaler = joblib.load(location)
 
 
     def save_scaler(self, location):
         """
-        Save the trained scaler for these features for later use
+        Save the trained scaler for these features as a pickle for later use
 
-        :param location: Location to save pickled scaler
-        :type location: str
+        Args:
+            location (str): Location to save pickled scaler object
         """
 
         joblib.dump(self.scaler, location)
-
-
-    def load_scaler(self, location):
-        """
-        Load trained scaler from disk
-
-        :param location: Pickled file of trained scaler
-        :type location: str
-        """
-
-        self.scaler = joblib.load(location)
