@@ -16,7 +16,7 @@ class STFT(FeaturesBase):
     :param kwargs: keyword arguments for base class, see :class:`spiegelib.features.features_base.FeaturesBase`.
     """
 
-    def __init__(self, fft_size=1024, output='complex', scale_axis=None, **kwargs):
+    def __init__(self, fft_size=1024, hop_size=512, output='complex', scale_axis=None, **kwargs):
         """
         Contructor
         """
@@ -28,6 +28,7 @@ class STFT(FeaturesBase):
 
         self.output = output
         self.frame_size = fft_size
+        self.hop_size = hop_size
         self.dtype = np.float32
         self.complex_dtype = np.complex64
 
