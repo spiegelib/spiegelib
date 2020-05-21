@@ -26,25 +26,25 @@ for evaluation
 
 Setup all the feature extractors to provide the correct input data for
 each model based on how it was trained. Also use the same data
-normalizers that were setup when initially creating each dataset.
+scalers that were setup when initially creating each dataset.
 
 .. code:: ipython3
 
-    # MLP feature extractor with a modifying function that flattens the time slice arrays at the end of the feature
-    # extraction pipeline
-    mlp_extractor = spgl.features.MFCC(num_mfccs=13, time_major=True, hop_size=1024, normalize=True)
-    mlp_extractor.load_normalizers('./data_simple_fm_mfcc/normalizers.pkl')
-    mlp_extractor.add_modifier(lambda data : data.flatten(), type='output')
+   # MLP feature extractor with a modifying function that flattens the time slice arrays at the end of the feature
+   # extraction pipeline
+   mlp_extractor = spgl.features.MFCC(num_mfccs=13, time_major=True, hop_size=1024, scale=True)
+   mlp_extractor.load_scaler('./data_simple_fm_mfcc/data_scaler.pkl')
+   mlp_extractor.add_modifier(lambda data : data.flatten(), type='output')
 
-    # LSTM & LSTM++ feature extractor -- time series of MFCC frames
-    lstm_extractor = spgl.features.MFCC(num_mfccs=13, time_major=True, hop_size=1024, normalize=True)
-    lstm_extractor.load_normalizers('./data_simple_fm_mfcc/normalizers.pkl')
+   # LSTM & LSTM++ feature extractor -- time series of MFCC frames
+   lstm_extractor = spgl.features.MFCC(num_mfccs=13, time_major=True, hop_size=1024, scale=True)
+   lstm_extractor.load_scaler('./data_simple_fm_mfcc/data_scaler.pkl')
 
-    # CNN feature extractor uses magnitude output from STFT and then modifies the output array into a 3D array for the
-    # 2D convolutional network becuase it is expecting an image with a single channel (ie grayscale).
-    cnn_extractor = spgl.features.MagnitudeSTFT(fft_size=512, hop_size=256, time_major=True, normalize=True)
-    cnn_extractor.load_normalizers('./data_simple_fm_stft/normalizers.pkl')
-    cnn_extractor.add_modifier(lambda data : data.reshape(data.shape[0], data.shape[1], 1), type='output')
+   # CNN feature extractor uses magnitude output from STFT and then modifies the output array into a 3D array for the
+   # 2D convolutional network because it is expecting an image with a single channel (ie grayscale).
+   cnn_extractor = spgl.features.STFT(output='magnitude', fft_size=512, hop_size=256, time_major=True, scale=True)
+   cnn_extractor.load_scaler('./data_simple_fm_stft/data_scaler.pkl')
+   cnn_extractor.add_modifier(lambda data : data.reshape(data.shape[0], data.shape[1], 1), type='output')
 
 SoundMatch is a class designed to help run sound matches for a
 synthesizer and a specific estimator type. Each SoundMatch object

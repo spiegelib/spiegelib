@@ -41,7 +41,7 @@ All parameters have a range between 0.0 and 1.0
 
 .. code:: ipython3
 
-    # The algorithm sets the arrangement of the FM operators.
+    # The algorithm paramter sets the arrangement of the FM operators.
     # There are 32 differen arrangements available in Dexed.
     # This selects the first algorithm. This algorithm sets
     # the second operator to frequency modulate the first.
