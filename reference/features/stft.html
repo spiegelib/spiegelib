@@ -92,6 +92,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Short Time Fourier Transform (STFT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mfcc.html">     Mel-Frequency Cepstral Coefficients (MFCC)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spectral_summarized.html">Time Summarized Spectral Features (SpectralSummarized)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../features.html#data-scaling">Data Scaling</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../estimators.html">Estimators</a></li>
@@ -147,7 +148,7 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="../features.html">Audio Feature Extraction Classes</a> &raquo;</li>
+          <li><a href="../features.html">Audio Feature Extraction</a> &raquo;</li>
         
       <li>STFT Class</li>
     
@@ -173,7 +174,7 @@
 <p>STFT Audio Feature Extractor</p>
 <dl class="class">
 <dt id="spiegelib.features.STFT">
-<em class="property">class </em><code class="sig-prename descclassname">spiegelib.features.</code><code class="sig-name descname">STFT</code><span class="sig-paren">(</span><em class="sig-param">fft_size=1024</em>, <em class="sig-param">output='complex'</em>, <em class="sig-param">scale_axis=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.STFT" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.features.</code><code class="sig-name descname">STFT</code><span class="sig-paren">(</span><em class="sig-param">fft_size=1024</em>, <em class="sig-param">hop_size=512</em>, <em class="sig-param">output='complex'</em>, <em class="sig-param">scale_axis=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.STFT" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.features.features_base.FeaturesBase</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

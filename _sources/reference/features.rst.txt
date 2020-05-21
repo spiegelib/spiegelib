@@ -24,8 +24,8 @@ inherit from :ref:`FeaturesBase <features_base>` and provide a wrapper to functi
    Time Summarized Spectral Features (SpectralSummarized) <features/spectral_summarized>
 
 
-Data Scaling:
-"""""""""""""
+Data Scaling
+""""""""""""
 
 Data scaling is an important step in pre-processing data prior to machine learning
 algorithms. All classes that inherit from :ref:`FeaturesBase <features_base>` have
