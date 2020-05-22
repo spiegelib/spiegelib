@@ -17,8 +17,10 @@ Through this example we will use *SpiegeLib* to:
 * Perform sound matching using deep learning and genetic algorithms
 * Evaluate results
 
-If you haven't already, make sure you have *SpiegeLib* and *RenderMan* installed.
+If you want to follow along or recreate any part of this experiment, make sure you have *SpiegeLib* and *RenderMan* installed.
 See :ref:`installation instructions <installation>`. And download `Dexed <https://asb2m10.github.io/dexed/>`__.
+
+If you want to jump ahead and hear the results, check out the :ref:`audio results page <fm_sound_match_listen>`
 
 All code is available as Python notebooks on the project `github page <https://github.com/spiegelib/vst-fm-sound-match>`__.
 The trained models from this experiment are also
@@ -37,3 +39,4 @@ Experiment Sections
    Sound Match Deep Learning Models <fm_sound_match_pages/fm_sound_match_deep_learning>
    Sound Match Genetic Algorithms <fm_sound_match_pages/fm_sound_match_genetic>
    Evaluation <fm_sound_match_pages/fm_sound_match_evaluation>
+   Audio Results <fm_sound_match_pages/fm_sound_match_listen>

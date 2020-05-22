@@ -1,0 +1,1433 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Sound Matching Audio Clips &mdash; SpiegeLib 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Contribution Guide" href="../../contributing.html" />
+    <link rel="prev" title="Evaluation" href="fm_sound_match_evaluation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> SpiegeLib
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/getting_started.html">Getting Started</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/core.html">Core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/synth.html">Synth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/features.html">Audio Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/estimators.html">Estimators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/evaluation.html">Evaluation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../examples_index.html">Examples</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../fm_sound_match.html">     FM Sound Match Experiment</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../fm_sound_match.html#experiment-sections">Experiment Sections</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="fm_sound_match_synth_config.html">Synthesizer Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fm_sound_match_dataset_generation.html">Dataset Generation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fm_sound_match_train_models.html">Train Deep Learning Models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fm_sound_match_deep_learning.html">Sound Match Deep Learning Models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fm_sound_match_genetic.html">Sound Match Genetic Algorithms</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fm_sound_match_evaluation.html">Evaluation</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Audio Results</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contribution Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">SpiegeLib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../examples_index.html">Examples</a> &raquo;</li>
+        
+          <li><a href="../fm_sound_match.html">FM Sound Match Experiment</a> &raquo;</li>
+        
+      <li>Sound Matching Audio Clips</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/examples/fm_sound_match_pages/fm_sound_match_listen.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sound-matching-audio-clips">
+<span id="fm-sound-match-listen"></span><h1>Sound Matching Audio Clips<a class="headerlink" href="#sound-matching-audio-clips" title="Permalink to this headline">¶</a></h1>
+<div style="float:left; width:100%">
+        <p style="margin-bottom:0px;">Target 1</p>
+        <audio controls>
+                <source src="../../_static/audio/targets/output_0.wav" type="audio/wav">
+        You're browser does not support the audio element
+        </audio>
+</div>
+<div style="float:left; width:50%">
+        <p style="margin-bottom:0px;">MLP</p>
+        <audio controls>
+                <source src="../../_static/audio/mlp/mlp_prediction_0.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM</p>
+        <audio controls>
+                <source src="../../_static/audio/lstm/lstm_prediction_0.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM++</p>
+        <audio controls>
+                <source src="../../_static/audio/bi_lstm/bi_lstm_prediction_0.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">CNN</p>
+        <audio controls>
+                <source src="../../_static/audio/cnn/cnn_prediction_0.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">GA</p>
+        <audio controls>
+                <source src="../../_static/audio/ga/ga_predicition_0.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">NSGA III</p>
+        <audio controls>
+                <source src="../../_static/audio/nsga/nsga_prediction_0.wav" type="audio/wav">
+        </audio>
+</div>
+
+<div style="float:left; width:100%; height:50px;">
+        <hr>
+</div>
+
+<div style="float:left; width:100%">
+        <p style="margin-bottom:0px;">Target 2</p>
+        <audio controls>
+                <source src="../../_static/audio/targets/output_1.wav" type="audio/wav">
+        You're browser does not support the audio element
+        </audio>
+</div>
+<div style="float:left; width:50%">
+        <p style="margin-bottom:0px;">MLP</p>
+        <audio controls>
+                <source src="../../_static/audio/mlp/mlp_prediction_1.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM</p>
+        <audio controls>
+                <source src="../../_static/audio/lstm/lstm_prediction_1.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM++</p>
+        <audio controls>
+                <source src="../../_static/audio/bi_lstm/bi_lstm_prediction_1.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">CNN</p>
+        <audio controls>
+                <source src="../../_static/audio/cnn/cnn_prediction_1.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">GA</p>
+        <audio controls>
+                <source src="../../_static/audio/ga/ga_predicition_1.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">NSGA III</p>
+        <audio controls>
+                <source src="../../_static/audio/nsga/nsga_prediction_1.wav" type="audio/wav">
+        </audio>
+</div>
+
+<div style="float:left; width:100%; height:50px;">
+        <hr>
+</div>
+
+<div style="float:left; width:100%">
+        <p style="margin-bottom:0px;">Target 3</p>
+        <audio controls>
+                <source src="../../_static/audio/targets/output_2.wav" type="audio/wav">
+        You're browser does not support the audio element
+        </audio>
+</div>
+<div style="float:left; width:50%">
+        <p style="margin-bottom:0px;">MLP</p>
+        <audio controls>
+                <source src="../../_static/audio/mlp/mlp_prediction_2.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM</p>
+        <audio controls>
+                <source src="../../_static/audio/lstm/lstm_prediction_2.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM++</p>
+        <audio controls>
+                <source src="../../_static/audio/bi_lstm/bi_lstm_prediction_2.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">CNN</p>
+        <audio controls>
+                <source src="../../_static/audio/cnn/cnn_prediction_2.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">GA</p>
+        <audio controls>
+                <source src="../../_static/audio/ga/ga_predicition_2.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">NSGA III</p>
+        <audio controls>
+                <source src="../../_static/audio/nsga/nsga_prediction_2.wav" type="audio/wav">
+        </audio>
+</div>
+
+<div style="float:left; width:100%; height:50px;">
+        <hr>
+</div>
+
+<div style="float:left; width:100%">
+        <p style="margin-bottom:0px;">Target 4</p>
+        <audio controls>
+                <source src="../../_static/audio/targets/output_3.wav" type="audio/wav">
+        You're browser does not support the audio element
+        </audio>
+</div>
+<div style="float:left; width:50%">
+        <p style="margin-bottom:0px;">MLP</p>
+        <audio controls>
+                <source src="../../_static/audio/mlp/mlp_prediction_3.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM</p>
+        <audio controls>
+                <source src="../../_static/audio/lstm/lstm_prediction_3.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM++</p>
+        <audio controls>
+                <source src="../../_static/audio/bi_lstm/bi_lstm_prediction_3.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">CNN</p>
+        <audio controls>
+                <source src="../../_static/audio/cnn/cnn_prediction_3.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">GA</p>
+        <audio controls>
+                <source src="../../_static/audio/ga/ga_predicition_3.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">NSGA III</p>
+        <audio controls>
+                <source src="../../_static/audio/nsga/nsga_prediction_3.wav" type="audio/wav">
+        </audio>
+</div>
+
+<div style="float:left; width:100%; height:50px;">
+        <hr>
+</div>
+
+<div style="float:left; width:100%">
+        <p style="margin-bottom:0px;">Target 5</p>
+        <audio controls>
+                <source src="../../_static/audio/targets/output_4.wav" type="audio/wav">
+        You're browser does not support the audio element
+        </audio>
+</div>
+<div style="float:left; width:50%">
+        <p style="margin-bottom:0px;">MLP</p>
+        <audio controls>
+                <source src="../../_static/audio/mlp/mlp_prediction_4.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM</p>
+        <audio controls>
+                <source src="../../_static/audio/lstm/lstm_prediction_4.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM++</p>
+        <audio controls>
+                <source src="../../_static/audio/bi_lstm/bi_lstm_prediction_4.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">CNN</p>
+        <audio controls>
+                <source src="../../_static/audio/cnn/cnn_prediction_4.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">GA</p>
+        <audio controls>
+                <source src="../../_static/audio/ga/ga_predicition_4.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">NSGA III</p>
+        <audio controls>
+                <source src="../../_static/audio/nsga/nsga_prediction_4.wav" type="audio/wav">
+        </audio>
+</div>
+
+<div style="float:left; width:100%; height:50px;">
+        <hr>
+</div>
+
+<div style="float:left; width:100%">
+        <p style="margin-bottom:0px;">Target 6</p>
+        <audio controls>
+                <source src="../../_static/audio/targets/output_5.wav" type="audio/wav">
+        You're browser does not support the audio element
+        </audio>
+</div>
+<div style="float:left; width:50%">
+        <p style="margin-bottom:0px;">MLP</p>
+        <audio controls>
+                <source src="../../_static/audio/mlp/mlp_prediction_5.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM</p>
+        <audio controls>
+                <source src="../../_static/audio/lstm/lstm_prediction_5.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM++</p>
+        <audio controls>
+                <source src="../../_static/audio/bi_lstm/bi_lstm_prediction_5.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">CNN</p>
+        <audio controls>
+                <source src="../../_static/audio/cnn/cnn_prediction_5.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">GA</p>
+        <audio controls>
+                <source src="../../_static/audio/ga/ga_predicition_5.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">NSGA III</p>
+        <audio controls>
+                <source src="../../_static/audio/nsga/nsga_prediction_5.wav" type="audio/wav">
+        </audio>
+</div>
+
+
+<div style="float:left; width:100%; height:50px;">
+        <hr>
+</div>
+
+<div style="float:left; width:100%">
+        <p style="margin-bottom:0px;">Target 7</p>
+        <audio controls>
+                <source src="../../_static/audio/targets/output_6.wav" type="audio/wav">
+        You're browser does not support the audio element
+        </audio>
+</div>
+<div style="float:left; width:50%">
+        <p style="margin-bottom:0px;">MLP</p>
+        <audio controls>
+                <source src="../../_static/audio/mlp/mlp_prediction_6.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM</p>
+        <audio controls>
+                <source src="../../_static/audio/lstm/lstm_prediction_6.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM++</p>
+        <audio controls>
+                <source src="../../_static/audio/bi_lstm/bi_lstm_prediction_6.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">CNN</p>
+        <audio controls>
+                <source src="../../_static/audio/cnn/cnn_prediction_6.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">GA</p>
+        <audio controls>
+                <source src="../../_static/audio/ga/ga_predicition_6.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">NSGA III</p>
+        <audio controls>
+                <source src="../../_static/audio/nsga/nsga_prediction_6.wav" type="audio/wav">
+        </audio>
+</div>
+
+<div style="float:left; width:100%; height:50px;">
+        <hr>
+</div>
+
+<div style="float:left; width:100%">
+        <p style="margin-bottom:0px;">Target 8</p>
+        <audio controls>
+                <source src="../../_static/audio/targets/output_7.wav" type="audio/wav">
+        You're browser does not support the audio element
+        </audio>
+</div>
+<div style="float:left; width:50%">
+        <p style="margin-bottom:0px;">MLP</p>
+        <audio controls>
+                <source src="../../_static/audio/mlp/mlp_prediction_7.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM</p>
+        <audio controls>
+                <source src="../../_static/audio/lstm/lstm_prediction_7.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM++</p>
+        <audio controls>
+                <source src="../../_static/audio/bi_lstm/bi_lstm_prediction_7.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">CNN</p>
+        <audio controls>
+                <source src="../../_static/audio/cnn/cnn_prediction_7.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">GA</p>
+        <audio controls>
+                <source src="../../_static/audio/ga/ga_predicition_7.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">NSGA III</p>
+        <audio controls>
+                <source src="../../_static/audio/nsga/nsga_prediction_7.wav" type="audio/wav">
+        </audio>
+</div>
+
+<div style="float:left; width:100%; height:50px;">
+        <hr>
+</div>
+
+<div style="float:left; width:100%">
+        <p style="margin-bottom:0px;">Target 9</p>
+        <audio controls>
+                <source src="../../_static/audio/targets/output_8.wav" type="audio/wav">
+        You're browser does not support the audio element
+        </audio>
+</div>
+<div style="float:left; width:50%">
+        <p style="margin-bottom:0px;">MLP</p>
+        <audio controls>
+                <source src="../../_static/audio/mlp/mlp_prediction_8.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM</p>
+        <audio controls>
+                <source src="../../_static/audio/lstm/lstm_prediction_8.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM++</p>
+        <audio controls>
+                <source src="../../_static/audio/bi_lstm/bi_lstm_prediction_8.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">CNN</p>
+        <audio controls>
+                <source src="../../_static/audio/cnn/cnn_prediction_8.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">GA</p>
+        <audio controls>
+                <source src="../../_static/audio/ga/ga_predicition_8.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">NSGA III</p>
+        <audio controls>
+                <source src="../../_static/audio/nsga/nsga_prediction_8.wav" type="audio/wav">
+        </audio>
+</div>
+
+<div style="float:left; width:100%; height:50px;">
+        <hr>
+</div>
+
+<div style="float:left; width:100%">
+        <p style="margin-bottom:0px;">Target 10</p>
+        <audio controls>
+                <source src="../../_static/audio/targets/output_9.wav" type="audio/wav">
+        You're browser does not support the audio element
+        </audio>
+</div>
+<div style="float:left; width:50%">
+        <p style="margin-bottom:0px;">MLP</p>
+        <audio controls>
+                <source src="../../_static/audio/mlp/mlp_prediction_9.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM</p>
+        <audio controls>
+                <source src="../../_static/audio/lstm/lstm_prediction_9.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM++</p>
+        <audio controls>
+                <source src="../../_static/audio/bi_lstm/bi_lstm_prediction_9.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">CNN</p>
+        <audio controls>
+                <source src="../../_static/audio/cnn/cnn_prediction_9.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">GA</p>
+        <audio controls>
+                <source src="../../_static/audio/ga/ga_predicition_9.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">NSGA III</p>
+        <audio controls>
+                <source src="../../_static/audio/nsga/nsga_prediction_9.wav" type="audio/wav">
+        </audio>
+</div>
+
+<div style="float:left; width:100%; height:50px;">
+        <hr>
+</div>
+
+<div style="float:left; width:100%">
+        <p style="margin-bottom:0px;">Target 11</p>
+        <audio controls>
+                <source src="../../_static/audio/targets/output_10.wav" type="audio/wav">
+        You're browser does not support the audio element
+        </audio>
+</div>
+<div style="float:left; width:50%">
+        <p style="margin-bottom:0px;">MLP</p>
+        <audio controls>
+                <source src="../../_static/audio/mlp/mlp_prediction_10.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM</p>
+        <audio controls>
+                <source src="../../_static/audio/lstm/lstm_prediction_10.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM++</p>
+        <audio controls>
+                <source src="../../_static/audio/bi_lstm/bi_lstm_prediction_10.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">CNN</p>
+        <audio controls>
+                <source src="../../_static/audio/cnn/cnn_prediction_10.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">GA</p>
+        <audio controls>
+                <source src="../../_static/audio/ga/ga_predicition_10.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">NSGA III</p>
+        <audio controls>
+                <source src="../../_static/audio/nsga/nsga_prediction_10.wav" type="audio/wav">
+        </audio>
+</div>
+
+<div style="float:left; width:100%; height:50px;">
+        <hr>
+</div>
+
+<div style="float:left; width:100%">
+        <p style="margin-bottom:0px;">Target 12</p>
+        <audio controls>
+                <source src="../../_static/audio/targets/output_11.wav" type="audio/wav">
+        You're browser does not support the audio element
+        </audio>
+</div>
+<div style="float:left; width:50%">
+        <p style="margin-bottom:0px;">MLP</p>
+        <audio controls>
+                <source src="../../_static/audio/mlp/mlp_prediction_11.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM</p>
+        <audio controls>
+                <source src="../../_static/audio/lstm/lstm_prediction_11.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM++</p>
+        <audio controls>
+                <source src="../../_static/audio/bi_lstm/bi_lstm_prediction_11.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">CNN</p>
+        <audio controls>
+                <source src="../../_static/audio/cnn/cnn_prediction_11.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">GA</p>
+        <audio controls>
+                <source src="../../_static/audio/ga/ga_predicition_11.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">NSGA III</p>
+        <audio controls>
+                <source src="../../_static/audio/nsga/nsga_prediction_11.wav" type="audio/wav">
+        </audio>
+</div>
+
+<div style="float:left; width:100%; height:50px;">
+        <hr>
+</div>
+
+<div style="float:left; width:100%">
+        <p style="margin-bottom:0px;">Target 13</p>
+        <audio controls>
+                <source src="../../_static/audio/targets/output_12.wav" type="audio/wav">
+        You're browser does not support the audio element
+        </audio>
+</div>
+<div style="float:left; width:50%">
+        <p style="margin-bottom:0px;">MLP</p>
+        <audio controls>
+                <source src="../../_static/audio/mlp/mlp_prediction_12.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM</p>
+        <audio controls>
+                <source src="../../_static/audio/lstm/lstm_prediction_12.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM++</p>
+        <audio controls>
+                <source src="../../_static/audio/bi_lstm/bi_lstm_prediction_12.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">CNN</p>
+        <audio controls>
+                <source src="../../_static/audio/cnn/cnn_prediction_12.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">GA</p>
+        <audio controls>
+                <source src="../../_static/audio/ga/ga_predicition_12.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">NSGA III</p>
+        <audio controls>
+                <source src="../../_static/audio/nsga/nsga_prediction_12.wav" type="audio/wav">
+        </audio>
+</div>
+
+<div style="float:left; width:100%; height:50px;">
+        <hr>
+</div>
+
+<div style="float:left; width:100%">
+        <p style="margin-bottom:0px;">Target 14</p>
+        <audio controls>
+                <source src="../../_static/audio/targets/output_13.wav" type="audio/wav">
+        You're browser does not support the audio element
+        </audio>
+</div>
+<div style="float:left; width:50%">
+        <p style="margin-bottom:0px;">MLP</p>
+        <audio controls>
+                <source src="../../_static/audio/mlp/mlp_prediction_13.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM</p>
+        <audio controls>
+                <source src="../../_static/audio/lstm/lstm_prediction_13.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM++</p>
+        <audio controls>
+                <source src="../../_static/audio/bi_lstm/bi_lstm_prediction_13.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">CNN</p>
+        <audio controls>
+                <source src="../../_static/audio/cnn/cnn_prediction_13.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">GA</p>
+        <audio controls>
+                <source src="../../_static/audio/ga/ga_predicition_13.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">NSGA III</p>
+        <audio controls>
+                <source src="../../_static/audio/nsga/nsga_prediction_13.wav" type="audio/wav">
+        </audio>
+</div>
+
+<div style="float:left; width:100%; height:50px;">
+        <hr>
+</div>
+
+<div style="float:left; width:100%">
+        <p style="margin-bottom:0px;">Target 15</p>
+        <audio controls>
+                <source src="../../_static/audio/targets/output_14.wav" type="audio/wav">
+        You're browser does not support the audio element
+        </audio>
+</div>
+<div style="float:left; width:50%">
+        <p style="margin-bottom:0px;">MLP</p>
+        <audio controls>
+                <source src="../../_static/audio/mlp/mlp_prediction_14.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM</p>
+        <audio controls>
+                <source src="../../_static/audio/lstm/lstm_prediction_14.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM++</p>
+        <audio controls>
+                <source src="../../_static/audio/bi_lstm/bi_lstm_prediction_14.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">CNN</p>
+        <audio controls>
+                <source src="../../_static/audio/cnn/cnn_prediction_14.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">GA</p>
+        <audio controls>
+                <source src="../../_static/audio/ga/ga_predicition_14.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">NSGA III</p>
+        <audio controls>
+                <source src="../../_static/audio/nsga/nsga_prediction_14.wav" type="audio/wav">
+        </audio>
+</div>
+
+<div style="float:left; width:100%; height:50px;">
+        <hr>
+</div>
+
+<div style="float:left; width:100%">
+        <p style="margin-bottom:0px;">Target 16</p>
+        <audio controls>
+                <source src="../../_static/audio/targets/output_15.wav" type="audio/wav">
+        You're browser does not support the audio element
+        </audio>
+</div>
+<div style="float:left; width:50%">
+        <p style="margin-bottom:0px;">MLP</p>
+        <audio controls>
+                <source src="../../_static/audio/mlp/mlp_prediction_15.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM</p>
+        <audio controls>
+                <source src="../../_static/audio/lstm/lstm_prediction_15.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM++</p>
+        <audio controls>
+                <source src="../../_static/audio/bi_lstm/bi_lstm_prediction_15.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">CNN</p>
+        <audio controls>
+                <source src="../../_static/audio/cnn/cnn_prediction_15.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">GA</p>
+        <audio controls>
+                <source src="../../_static/audio/ga/ga_predicition_15.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">NSGA III</p>
+        <audio controls>
+                <source src="../../_static/audio/nsga/nsga_prediction_15.wav" type="audio/wav">
+        </audio>
+</div>
+
+<div style="float:left; width:100%; height:50px;">
+        <hr>
+</div>
+
+<div style="float:left; width:100%">
+        <p style="margin-bottom:0px;">Target 17</p>
+        <audio controls>
+                <source src="../../_static/audio/targets/output_16.wav" type="audio/wav">
+        You're browser does not support the audio element
+        </audio>
+</div>
+<div style="float:left; width:50%">
+        <p style="margin-bottom:0px;">MLP</p>
+        <audio controls>
+                <source src="../../_static/audio/mlp/mlp_prediction_16.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM</p>
+        <audio controls>
+                <source src="../../_static/audio/lstm/lstm_prediction_16.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM++</p>
+        <audio controls>
+                <source src="../../_static/audio/bi_lstm/bi_lstm_prediction_16.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">CNN</p>
+        <audio controls>
+                <source src="../../_static/audio/cnn/cnn_prediction_16.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">GA</p>
+        <audio controls>
+                <source src="../../_static/audio/ga/ga_predicition_16.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">NSGA III</p>
+        <audio controls>
+                <source src="../../_static/audio/nsga/nsga_prediction_16.wav" type="audio/wav">
+        </audio>
+</div>
+
+<div style="float:left; width:100%; height:50px;">
+        <hr>
+</div>
+
+<div style="float:left; width:100%">
+        <p style="margin-bottom:0px;">Target 18</p>
+        <audio controls>
+                <source src="../../_static/audio/targets/output_17.wav" type="audio/wav">
+        You're browser does not support the audio element
+        </audio>
+</div>
+<div style="float:left; width:50%">
+        <p style="margin-bottom:0px;">MLP</p>
+        <audio controls>
+                <source src="../../_static/audio/mlp/mlp_prediction_17.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM</p>
+        <audio controls>
+                <source src="../../_static/audio/lstm/lstm_prediction_17.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM++</p>
+        <audio controls>
+                <source src="../../_static/audio/bi_lstm/bi_lstm_prediction_17.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">CNN</p>
+        <audio controls>
+                <source src="../../_static/audio/cnn/cnn_prediction_17.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">GA</p>
+        <audio controls>
+                <source src="../../_static/audio/ga/ga_predicition_17.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">NSGA III</p>
+        <audio controls>
+                <source src="../../_static/audio/nsga/nsga_prediction_17.wav" type="audio/wav">
+        </audio>
+</div>
+
+<div style="float:left; width:100%; height:50px;">
+        <hr>
+</div>
+
+<div style="float:left; width:100%">
+        <p style="margin-bottom:0px;">Target 19</p>
+        <audio controls>
+                <source src="../../_static/audio/targets/output_18.wav" type="audio/wav">
+        You're browser does not support the audio element
+        </audio>
+</div>
+<div style="float:left; width:50%">
+        <p style="margin-bottom:0px;">MLP</p>
+        <audio controls>
+                <source src="../../_static/audio/mlp/mlp_prediction_18.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM</p>
+        <audio controls>
+                <source src="../../_static/audio/lstm/lstm_prediction_18.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM++</p>
+        <audio controls>
+                <source src="../../_static/audio/bi_lstm/bi_lstm_prediction_18.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">CNN</p>
+        <audio controls>
+                <source src="../../_static/audio/cnn/cnn_prediction_18.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">GA</p>
+        <audio controls>
+                <source src="../../_static/audio/ga/ga_predicition_18.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">NSGA III</p>
+        <audio controls>
+                <source src="../../_static/audio/nsga/nsga_prediction_18.wav" type="audio/wav">
+        </audio>
+</div>
+
+<div style="float:left; width:100%; height:50px;">
+        <hr>
+</div>
+
+<div style="float:left; width:100%">
+        <p style="margin-bottom:0px;">Target 20</p>
+        <audio controls>
+                <source src="../../_static/audio/targets/output_19.wav" type="audio/wav">
+        You're browser does not support the audio element
+        </audio>
+</div>
+<div style="float:left; width:50%">
+        <p style="margin-bottom:0px;">MLP</p>
+        <audio controls>
+                <source src="../../_static/audio/mlp/mlp_prediction_19.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM</p>
+        <audio controls>
+                <source src="../../_static/audio/lstm/lstm_prediction_19.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM++</p>
+        <audio controls>
+                <source src="../../_static/audio/bi_lstm/bi_lstm_prediction_19.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">CNN</p>
+        <audio controls>
+                <source src="../../_static/audio/cnn/cnn_prediction_19.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">GA</p>
+        <audio controls>
+                <source src="../../_static/audio/ga/ga_predicition_19.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">NSGA III</p>
+        <audio controls>
+                <source src="../../_static/audio/nsga/nsga_prediction_19.wav" type="audio/wav">
+        </audio>
+</div>
+
+<div style="float:left; width:100%; height:50px;">
+        <hr>
+</div>
+
+<div style="float:left; width:100%">
+        <p style="margin-bottom:0px;">Target 21</p>
+        <audio controls>
+                <source src="../../_static/audio/targets/output_20.wav" type="audio/wav">
+        You're browser does not support the audio element
+        </audio>
+</div>
+<div style="float:left; width:50%">
+        <p style="margin-bottom:0px;">MLP</p>
+        <audio controls>
+                <source src="../../_static/audio/mlp/mlp_prediction_20.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM</p>
+        <audio controls>
+                <source src="../../_static/audio/lstm/lstm_prediction_20.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM++</p>
+        <audio controls>
+                <source src="../../_static/audio/bi_lstm/bi_lstm_prediction_20.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">CNN</p>
+        <audio controls>
+                <source src="../../_static/audio/cnn/cnn_prediction_20.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">GA</p>
+        <audio controls>
+                <source src="../../_static/audio/ga/ga_predicition_20.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">NSGA III</p>
+        <audio controls>
+                <source src="../../_static/audio/nsga/nsga_prediction_20.wav" type="audio/wav">
+        </audio>
+</div>
+
+<div style="float:left; width:100%; height:50px;">
+        <hr>
+</div>
+
+<div style="float:left; width:100%">
+        <p style="margin-bottom:0px;">Target 22</p>
+        <audio controls>
+                <source src="../../_static/audio/targets/output_21.wav" type="audio/wav">
+        You're browser does not support the audio element
+        </audio>
+</div>
+<div style="float:left; width:50%">
+        <p style="margin-bottom:0px;">MLP</p>
+        <audio controls>
+                <source src="../../_static/audio/mlp/mlp_prediction_21.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM</p>
+        <audio controls>
+                <source src="../../_static/audio/lstm/lstm_prediction_21.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM++</p>
+        <audio controls>
+                <source src="../../_static/audio/bi_lstm/bi_lstm_prediction_21.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">CNN</p>
+        <audio controls>
+                <source src="../../_static/audio/cnn/cnn_prediction_21.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">GA</p>
+        <audio controls>
+                <source src="../../_static/audio/ga/ga_predicition_21.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">NSGA III</p>
+        <audio controls>
+                <source src="../../_static/audio/nsga/nsga_prediction_21.wav" type="audio/wav">
+        </audio>
+</div>
+
+<div style="float:left; width:100%; height:50px;">
+        <hr>
+</div>
+
+<div style="float:left; width:100%">
+        <p style="margin-bottom:0px;">Target 23</p>
+        <audio controls>
+                <source src="../../_static/audio/targets/output_22.wav" type="audio/wav">
+        You're browser does not support the audio element
+        </audio>
+</div>
+<div style="float:left; width:50%">
+        <p style="margin-bottom:0px;">MLP</p>
+        <audio controls>
+                <source src="../../_static/audio/mlp/mlp_prediction_22.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM</p>
+        <audio controls>
+                <source src="../../_static/audio/lstm/lstm_prediction_22.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM++</p>
+        <audio controls>
+                <source src="../../_static/audio/bi_lstm/bi_lstm_prediction_22.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">CNN</p>
+        <audio controls>
+                <source src="../../_static/audio/cnn/cnn_prediction_22.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">GA</p>
+        <audio controls>
+                <source src="../../_static/audio/ga/ga_predicition_22.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">NSGA III</p>
+        <audio controls>
+                <source src="../../_static/audio/nsga/nsga_prediction_22.wav" type="audio/wav">
+        </audio>
+</div>
+
+<div style="float:left; width:100%; height:50px;">
+        <hr>
+</div>
+
+<div style="float:left; width:100%">
+        <p style="margin-bottom:0px;">Target 24</p>
+        <audio controls>
+                <source src="../../_static/audio/targets/output_23.wav" type="audio/wav">
+        You're browser does not support the audio element
+        </audio>
+</div>
+<div style="float:left; width:50%">
+        <p style="margin-bottom:0px;">MLP</p>
+        <audio controls>
+                <source src="../../_static/audio/mlp/mlp_prediction_23.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM</p>
+        <audio controls>
+                <source src="../../_static/audio/lstm/lstm_prediction_23.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM++</p>
+        <audio controls>
+                <source src="../../_static/audio/bi_lstm/bi_lstm_prediction_23.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">CNN</p>
+        <audio controls>
+                <source src="../../_static/audio/cnn/cnn_prediction_23.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">GA</p>
+        <audio controls>
+                <source src="../../_static/audio/ga/ga_predicition_23.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">NSGA III</p>
+        <audio controls>
+                <source src="../../_static/audio/nsga/nsga_prediction_23.wav" type="audio/wav">
+        </audio>
+</div>
+
+<div style="float:left; width:100%; height:50px;">
+        <hr>
+</div>
+
+<div style="float:left; width:100%">
+        <p style="margin-bottom:0px;">Target 25</p>
+        <audio controls>
+                <source src="../../_static/audio/targets/output_24.wav" type="audio/wav">
+        You're browser does not support the audio element
+        </audio>
+</div>
+<div style="float:left; width:50%">
+        <p style="margin-bottom:0px;">MLP</p>
+        <audio controls>
+                <source src="../../_static/audio/mlp/mlp_prediction_24.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM</p>
+        <audio controls>
+                <source src="../../_static/audio/lstm/lstm_prediction_24.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">LSTM++</p>
+        <audio controls>
+                <source src="../../_static/audio/bi_lstm/bi_lstm_prediction_24.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">CNN</p>
+        <audio controls>
+                <source src="../../_static/audio/cnn/cnn_prediction_24.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">GA</p>
+        <audio controls>
+                <source src="../../_static/audio/ga/ga_predicition_24.wav" type="audio/wav">
+        </audio>
+</div>
+<div style="float:left;width:50%">
+        <p style="margin-bottom:0px;">NSGA III</p>
+        <audio controls>
+                <source src="../../_static/audio/nsga/nsga_prediction_24.wav" type="audio/wav">
+        </audio>
+</div>
+
+<div style="float:left; width:100%; height:50px;">
+        <hr>
+</div></div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../contributing.html" class="btn btn-neutral float-right" title="Contribution Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="fm_sound_match_evaluation.html" class="btn btn-neutral float-left" title="Evaluation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, University of Victoria
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
