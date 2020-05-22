@@ -17,8 +17,8 @@ class FFT(FeaturesBase):
             Defaults to None, so FFT will be the size of input.
         output (str, optional): output type, must be one of ['complex', 'magnitude',
             'power', 'magnitude_phase', 'power_phase'] Defaults to 'complex'.
-        scale_axis (int, tuple, None): When applying scaling, which dimensions should
-            scaling be applied along? Defaults to None, which will flatten results and
+        scale_axis (int, tuple, None): When applying scaling, determines which dimensions
+            scaling be applied along. Defaults to None, which will flatten results and
             calculate scaling variables on that.
         kwargs: Keyword arguments, see :class:`spiegelib.features.features_base.FeaturesBase`.
     """

@@ -171,7 +171,7 @@
             
   <div class="section" id="module-spiegelib.features.stft">
 <span id="stft-class"></span><span id="stft"></span><h1>STFT Class<a class="headerlink" href="#module-spiegelib.features.stft" title="Permalink to this headline">¶</a></h1>
-<p>STFT Audio Feature Extractor</p>
+<p>Short Time Fourier Transform (STFT)</p>
 <dl class="class">
 <dt id="spiegelib.features.STFT">
 <em class="property">class </em><code class="sig-prename descclassname">spiegelib.features.</code><code class="sig-name descname">STFT</code><span class="sig-paren">(</span><em class="sig-param">fft_size=1024</em>, <em class="sig-param">hop_size=512</em>, <em class="sig-param">output='complex'</em>, <em class="sig-param">scale_axis=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.STFT" title="Permalink to this definition">¶</a></dt>
@@ -179,28 +179,30 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>fft_size</strong> (<em>int</em><em>, </em><em>optional</em>) – number of FFT bins, defaults to 1024 (overrides frame_size)</p></li>
-<li><p><strong>kwargs</strong> – keyword arguments for base class, see <code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.features.features_base.FeaturesBase</span></code>.</p></li>
+<li><p><strong>fft_size</strong> (<em>int</em><em>, </em><em>optional</em>) – size of FFT, defaults to 1024</p></li>
+<li><p><strong>hop_size</strong> (<em>int</em><em>, </em><em>optional</em>) – size of hop shift in samples, defuault to 512</p></li>
+<li><p><strong>output</strong> (<em>str</em><em>, </em><em>optional</em>) – output type, must be one of [‘complex’, ‘magnitude’,
+‘power’, ‘magnitude_phase’, ‘power_phase’] Defaults to ‘complex’.</p></li>
+<li><p><strong>scale_axis</strong> (<em>int</em><em>, </em><em>tuple</em><em>, </em><em>None</em>) – When applying scaling, determines which dimensions
+scaling be applied along. Defaults to None, which will flatten results and
+calculate scaling variables on that.</p></li>
+<li><p><strong>kwargs</strong> – Keyword arguments, see <code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.features.features_base.FeaturesBase</span></code>.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="method">
 <dt id="spiegelib.features.STFT.get_features">
 <code class="sig-name descname">get_features</code><span class="sig-paren">(</span><em class="sig-param">audio</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.STFT.get_features" title="Permalink to this definition">¶</a></dt>
-<dd><p>Run audio feature extraction on audio provided as parameter.
-Normalization should be applied based on the normalize parameter.</p>
+<dd><p>Run STFT on audio buffer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>audio</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.core.audio_buffer.AudioBuffer</span></code>) – Audio to process features on</p></li>
-<li><p><strong>normalize</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether or not the features are normalized, defaults to False</p></li>
-</ul>
+<dd class="field-odd"><p><strong>audio</strong> (<a class="reference internal" href="../core/audio_buffer.html#audio-buffer"><span class="std std-ref">AudioBuffer</span></a>) – input audio</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>results from audio feature extraction</p>
+<dd class="field-even"><p>Results of STFT. Format depends on output type set during                construction.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>np.array</p>
+<dd class="field-odd"><p>np.ndarray</p>
 </dd>
 </dl>
 </dd></dl>
