@@ -95,7 +95,10 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Contribution Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#general">General</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tests">Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a></li>
 </ul>
 </li>
 </ul>
@@ -169,28 +172,100 @@
 <p>Contributions to <em>SpiegeLib</em> are welcome and encouraged. See the following
 instructions to get setup for development.</p>
 </div>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Python Version</span>
+<span class="n">python</span> <span class="o">&gt;=</span> <span class="mf">3.6</span>
+
+<span class="c1"># Python Packages</span>
+<span class="n">numpy</span> <span class="o">&gt;=</span> <span class="mf">1.18</span><span class="o">.</span><span class="mi">0</span>
+<span class="n">matplotlib</span> <span class="o">&gt;=</span> <span class="mf">3.2</span><span class="o">.</span><span class="mi">0</span>
+<span class="n">librosa</span> <span class="o">&gt;=</span> <span class="mf">0.7</span><span class="o">.</span><span class="mi">2</span>
+<span class="n">tensorflow</span> <span class="o">&gt;=</span> <span class="mf">2.1</span><span class="o">.</span><span class="mi">0</span>
+<span class="n">deap</span> <span class="o">&gt;=</span> <span class="mf">1.3</span><span class="o">.</span><span class="mi">1</span>
+<span class="n">tqdm</span> <span class="o">&gt;=</span> <span class="mf">4.43</span><span class="o">.</span><span class="mi">0</span>
+<span class="n">librenderman</span>
+
+<span class="c1"># Dev Requirements</span>
+<span class="n">sphinx</span>
+<span class="n">sphinx_rtd_theme</span>
+<span class="n">ipython</span>
+<span class="n">pytest</span>
+<span class="n">pytest</span><span class="o">-</span><span class="n">datadir</span>
+<span class="n">pytest</span><span class="o">-</span><span class="n">mpl</span>
+<span class="n">tox</span>
+<span class="n">twine</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>It is recommended to develop inside of an <a class="reference external" href="https://www.continuum.io/">anaconda</a>
-virtual environment. These instructions are for setting up for development within a
-<code class="docutils literal notranslate"><span class="pre">conda</span></code> env, see <a class="reference external" href="https://www.anaconda.com/distribution/#download-section">installation instructions</a> for anaconda,
-download and install the python 3 version.</p>
 <ol class="arabic">
-<li><p>Clone the repo:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/spiegelib/spiegelib
+<li><p>Anaconda development environment</p>
+<p>We recommend developing from an Anaconda environment. Create a new conda environment:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda create --name spiegelib_dev python=3.7 numpy matplotlib
+...
+$ conda activate spiegelib_dev
 </pre></div>
 </div>
 </li>
-<li><p>We recommend developing from an Anaconda environment. Instructions on setting up
-a new environment can be found <a class="reference internal" href="getting_started/installation.html#anaconda-env"><span class="std std-ref">here</span></a>.</p></li>
-</ol>
-<ol class="arabic" start="4">
-<li><p>Add <em>spiegel</em> in development mode to <code class="docutils literal notranslate"><span class="pre">conda</span></code> environment:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install -e .
+<li><p>Fork the <a class="reference external" href="https://github.com/spiegelib/spiegelib">spiegelib repo</a> and clone your forked repository</p></li>
+<li><p>Install SpiegeLib in development mode with additional dev requirements to <code class="docutils literal notranslate"><span class="pre">conda</span></code> environment:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd spiegelib
+$ pip install -e .[dev]
+
+If you&#39;re using zsh on Mac then you may need to use this command:
+
+$ pip install -e &quot;.[dev]&quot;
 </pre></div>
 </div>
 </li>
+<li><p>Install <a class="reference external" href="https://github.com/fedden/RenderMan">RenderMan</a> in conda environment. See instructions <a class="reference internal" href="getting_started/installation.html#librenderman-conda-install"><span class="std std-ref">here</span></a></p></li>
+<li><p>Create a new branch and develop! Submit a pull request when you are ready to add changes.</p></li>
 </ol>
+</div>
+<div class="section" id="tests">
+<h2>Tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h2>
+<p>Unit tests are written using <a class="reference external" href="https://docs.pytest.org/en/latest/">pytest</a> and
+can be run with the following command when in the project root:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python -m pytest
+</pre></div>
+</div>
+<p>Testing coverage is available with <a class="reference external" href="https://pytest-cov.readthedocs.io/en/latest/index.html">pytest-cov</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># To run with coverage reporting
+$ python -m pytest --cov=./src
+
+# And coverage report with missing lines
+$ python -m pytest --cov=./src --cov-report=term-missing
+</pre></div>
+</div>
+</div>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<p>This documentation is all written in restructured text (RST) with <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/configuration.html">sphinx-doc</a>.
+Documentation is all written in the gh-pages branch in docs directory:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">spiegelib</span><span class="o">/</span><span class="n">docs</span><span class="o">/</span><span class="n">source</span>
+</pre></div>
+</div>
+<p>To build documentation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># First make sure you are in the root docs directory
+$ cd docs
+
+# Then run
+$ make html
+
+# To copy the built documentation to the project root
+$ ./copy.sh
+
+# Documentation can be viewed locally
+$ open ../index.html
+</pre></div>
+</div>
+<p>When developing, please add class documentation using <a class="reference external" href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html">Google docstrings</a>.</p>
+<p>To update and write documentation make sure the gh-pages branch is up-to-date with your
+development branch as documentation from comments in python files in the source code
+is used to automatically generate reference documentation. Make changes and additions
+to the documentation source rst files. Then build using the process listed above.</p>
 </div>
 </div>
 
