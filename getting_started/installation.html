@@ -180,13 +180,16 @@ install the required dependencies for <em>SpiegeLib</em>.</p>
 that cannot be installed using pip is the
 <a class="reference external" href="https://github.com/fedden/RenderMan">RenderMan</a> library, which must be installed
 manually in order to enable programmatic interaction with VST synthesizers.
-Instructions for installing RenderMan in a virtual environment are provided
-(<a class="reference internal" href="#librenderman-conda-install"><span class="std std-ref">Installing RenderMan in an Anaconda environment</span></a>).
-At this time, RenderMan is only available on Mac OSX and Linux operating systems.</p>
+Instructions for installing RenderMan in a virtual environment are provided below
+(<a class="reference internal" href="#librenderman-conda-install"><span class="std std-ref">Installing RenderMan in an Anaconda environment</span></a>).</p>
+<p>At this time RenderMan is only available on Mac OSX and Linux operating systems.
+However, there was recently a pull request made to RenderMan with an update to support
+Windows, we have not tested this and cannot verify this code at all, but Windows users
+might be interested in checking that out: <a class="reference external" href="https://github.com/DBraun/RenderMan/tree/windows">https://github.com/DBraun/RenderMan/tree/windows</a></p>
 <p>We recommend installing <em>SpiegeLib</em> inside a virtual environment as the library
 is still under active development. We recommend <a class="reference external" href="https://www.anaconda.com/">Anaconda</a>.
 Instructions for creating a new Anconda environment and installing <em>SpiegeLib</em> inside
-of that are provided.</p>
+of that are provided here.</p>
 <div class="section" id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
 <p><em>SpiegeLib</em> requires the following:</p>
@@ -266,7 +269,7 @@ Index (PyPI). This will also install all dependencies, except for RenderMan.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python3 -m pip install spiegelib
 </pre></div>
 </div>
-<p>If you want to install in a anaconda environment. Make sure you have created a python3
+<p>If you want to install in an anaconda environment. Make sure you have created a python3
 anaconda environment and have activated that environment (See <a class="reference internal" href="#anaconda-env"><span class="std std-ref">Anaconda Environment</span></a>)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(spiegelib_env)$ python -m pip install spiegelib
 </pre></div>
@@ -287,7 +290,14 @@ a <a class="reference external" href="https://juce.com/">JUCE</a> application.</
 </pre></div>
 </div>
 </li>
-<li><p>Clone the librenderman repo:</p>
+<li><p>Clone the librenderman repo</p>
+<p>We’ve made a small modification to the original RenderMan code to fix an issue with
+how midi is being sent to synthesizer plugins. Until that change is integrated
+with the original library we recommend using this forked version of the repository:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone -b update_midi_buffer https://github.com/jorshi/RenderMan.git
+</pre></div>
+</div>
+<p>The original repository can be cloned using this command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/fedden/RenderMan.git
 </pre></div>
 </div>

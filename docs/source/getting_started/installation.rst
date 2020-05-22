@@ -12,14 +12,18 @@ Currently, the only dependency
 that cannot be installed using pip is the
 `RenderMan <https://github.com/fedden/RenderMan>`_ library, which must be installed
 manually in order to enable programmatic interaction with VST synthesizers.
-Instructions for installing RenderMan in a virtual environment are provided
+Instructions for installing RenderMan in a virtual environment are provided below
 (:ref:`Installing RenderMan in an Anaconda environment <librenderman_conda_install>`).
-At this time, RenderMan is only available on Mac OSX and Linux operating systems.
+
+At this time RenderMan is only available on Mac OSX and Linux operating systems.
+However, there was recently a pull request made to RenderMan with an update to support
+Windows, we have not tested this and cannot verify this code at all, but Windows users
+might be interested in checking that out: https://github.com/DBraun/RenderMan/tree/windows
 
 We recommend installing *SpiegeLib* inside a virtual environment as the library
 is still under active development. We recommend `Anaconda <https://www.anaconda.com/>`_.
 Instructions for creating a new Anconda environment and installing *SpiegeLib* inside
-of that are provided.
+of that are provided here.
 
 Requirements
 ------------
@@ -101,7 +105,7 @@ Index (PyPI). This will also install all dependencies, except for RenderMan.
 
 	$ python3 -m pip install spiegelib
 
-If you want to install in a anaconda environment. Make sure you have created a python3
+If you want to install in an anaconda environment. Make sure you have created a python3
 anaconda environment and have activated that environment (See :ref:`Anaconda Environment<anaconda_env>`)
 
 .. code-block::
@@ -127,9 +131,18 @@ a `JUCE <https://juce.com/>`_ application.
 
 	(spiegelib_env)$ conda install py-boost
 
-3) Clone the librenderman repo::
+3) Clone the librenderman repo
 
-	$ git clone https://github.com/fedden/RenderMan.git
+   We've made a small modification to the original RenderMan code to fix an issue with
+   how midi is being sent to synthesizer plugins. Until that change is integrated
+   with the original library we recommend using this forked version of the repository::
+
+		$ git clone -b update_midi_buffer https://github.com/jorshi/RenderMan.git
+
+   The original repository can be cloned using this command::
+
+		$ git clone https://github.com/fedden/RenderMan.git
+
 
 4) Open the RenderMan python3 jucer file in ProJucer::
 
