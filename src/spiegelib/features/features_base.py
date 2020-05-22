@@ -74,10 +74,17 @@ class FeaturesBase(ABC):
     def __call__(self, audio, scale=None):
         """
         Run this feature extraction pipeline.
+<<<<<<< HEAD
 
         Applies functions in this order: input modifiers > feature extraction >
         prescale modifiers > data scaling > output modifiers
 
+=======
+
+        Applies functions in this order: input modifiers > feature extraction >
+        prescale modifiers > data scaling > output modifiers
+
+>>>>>>> master
         Args:
             audio (:ref:`AudioBuffer <audio_buffer>`): Audio to extract features from
             scale (bool, optional): If set, will override scale attribute set
@@ -117,10 +124,17 @@ class FeaturesBase(ABC):
         Must be implemented. Run audio feature extraction on audio provided as parameter.
         Must check the `time_major` attribute and return data in the correct
         orientation.
+<<<<<<< HEAD
 
         Args:
             audio (:ref:`AudioBuffer <audio_buffer>`): Audio to extract features from
 
+=======
+
+        Args:
+            audio (:ref:`AudioBuffer <audio_buffer>`): Audio to extract features from
+
+>>>>>>> master
         Returns:
             np.ndarray: Results of audio feature extraction
         """
@@ -130,12 +144,21 @@ class FeaturesBase(ABC):
     def add_modifier(self, modifier, type):
         """
         Add a data modifier to the feature extraction pipeline.
+<<<<<<< HEAD
 
         Input modifiers are applied to raw `AudioBuffers <audio_buffer>` prior
         to feature extraction. Prescale modifiers are applied to results of audio
         feature extraction and before data scaling (if applicable). Output modifiers
         are applied after data scaling.
 
+=======
+
+        Input modifiers are applied to raw `AudioBuffers <audio_buffer>` prior
+        to feature extraction. Prescale modifiers are applied to results of audio
+        feature extraction and before data scaling (if applicable). Output modifiers
+        are applied after data scaling.
+
+>>>>>>> master
         Args:
             modifier (lambda): data modifier function. Should accept an np.array,
                 apply some modification to that, and return a np.array
@@ -150,8 +173,13 @@ class FeaturesBase(ABC):
         elif type == 'output':
             self.output_modifiers.append(modifier)
         else:
+<<<<<<< HEAD
             raise ValueError('Type must be one of ("input", "prenormalize", or '
                              '"output"), received %s' % type)
+=======
+            raise ValueError('type must be one of ("input", "prescale", or '
+                             '"output"), received: %s' % type)
+>>>>>>> master
 
 
     def fit_scaler(self, data, transform=True):
@@ -199,9 +227,23 @@ class FeaturesBase(ABC):
                 to apply scaling. (note, using other objects outside of :ref:`DataScalerBase <data_scaler_base>` type
                 has not been tested!)
         """
+<<<<<<< HEAD
+
+        self.scaler = scaler
+=======
+>>>>>>> master
 
         self.scaler = scaler
 
+<<<<<<< HEAD
+    def scale(self, data):
+        """
+        Scale features using pre-trained scaler
+
+        Args:
+            data (np.ndarray): data to be scaled
+
+=======
 
     def scale(self, data):
         """
@@ -210,6 +252,7 @@ class FeaturesBase(ABC):
         Args:
             data (np.ndarray): data to be scaled
 
+>>>>>>> master
         Returns:
             np.ndarray: scaled data
         """
