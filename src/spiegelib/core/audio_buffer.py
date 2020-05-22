@@ -87,7 +87,7 @@ class AudioBuffer():
         if isinstance(input, np.ndarray):
             audio = input
         elif isinstance(input, list):
-            audio = np.array(input)
+            audio = np.array(input, np.float32)
         elif input:
             path = input
 
@@ -219,7 +219,7 @@ class AudioBuffer():
         if not os.path.exists(dir):
             os.makedirs(dir)
 
-        audio = np.copy(self.audio)
+        audio = np.array(self.audio, copy=True, dtype=np.float32)
         if normalize:
             audio = AudioBuffer.peak_normalize(audio)
 
