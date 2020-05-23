@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-MFCC Audio Feature Extractor
+Mel-Frequency Cepstral Coefficients (MFCCs)
 """
 
 import numpy as np
@@ -10,33 +10,37 @@ from spiegelib.features.features_base import FeaturesBase
 
 class MFCC(FeaturesBase):
     """
-    :param num_mfccs: number of mffcs to return per frame, defaults to 20
-    :type num_mfccs: int, optional
-    :param kwargs: keyword arguments for base class, see :class:`spiegelib.features.features_base.FeaturesBase`.
+    Args:
+        num_mfccs (int, optional): Number of MFCCs to return, defaults to 20
+        fft_size (int, optional): Size of FFT to use when calculating MFCCs, defaults to 2048
+        hop_size (int, optiona): hop length in samples, defaults to 512
+        scale_axis (int, tuple, None): When applying scaling, determines which dimensions
+            scaling be applied along. Defaults to 0, which scales each MFCC and time series
+            component independently.
+        kwargs: Keyword arguments, see :class:`spiegelib.features.features_base.FeaturesBase`.
     """
 
-    def __init__(self, num_mfccs=20, frame_size=2048, hop_size=512, scale_axis=0, **kwargs):
+    def __init__(self, num_mfccs=20, fft_size=2048, hop_size=512, scale_axis=0, **kwargs):
         """
         Contructor
         """
 
         self.num_mfccs = num_mfccs
-        self.frame_size = frame_size
+        self.fft_size = fft_size
         self.hop_size = hop_size
         super().__init__(scale_axis=scale_axis, **kwargs)
 
 
-    def get_features(self, audio, normalize=False):
+    def get_features(self, audio):
         """
-        Run audio feature extraction on audio provided as parameter.
-        Normalization should be applied based on the normalize parameter.
+        Run MFCC extraciton on audio buffer.
 
-        :param audio: Audio to process features on
-        :type audio: :class:`spiegelib.core.audio_buffer.AudioBuffer`
-        :param normalize: Whether or not the features are normalized, defaults to False
-        :type normalize: bool, optional
-        :returns: results from audio feature extraction
-        :rtype: np.array
+        Args:
+            audio (:ref:`AudioBuffer <audio_buffer>`): input audio
+
+        Returns:
+            np.ndarray: Results of MFCC extraction. Format depends on output type set during\
+                construction.
         """
 
         if not isinstance(audio, AudioBuffer):
@@ -51,7 +55,7 @@ class MFCC(FeaturesBase):
         features = librosa.feature.mfcc(
             y=audio.get_audio(),
             sr=self.sample_rate,
-            n_fft=self.frame_size,
+            n_fft=self.fft_size,
             hop_length=self.hop_size,
             n_mfcc=self.num_mfccs
         )

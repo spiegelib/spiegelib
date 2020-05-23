@@ -171,33 +171,46 @@
             
   <div class="section" id="module-spiegelib.features.spectral_summarized">
 <span id="spectralsummarized-class"></span><span id="spectral-summarized"></span><h1>SpectralSummarized Class<a class="headerlink" href="#module-spiegelib.features.spectral_summarized" title="Permalink to this headline">¶</a></h1>
-<p>Spectral features summarized over time using mean and variance</p>
+<p>Spectral features summarized over time using mean and variance. Returns a 22-dimension
+feature vector for each audio sample.</p>
+<dl class="simple">
+<dt>Features:</dt><dd><ul class="simple">
+<li><p>Spectral Centroid</p></li>
+<li><p>Spectral Bandwidth</p></li>
+<li><p>Spectral Contrast (7 frequency bands)</p></li>
+<li><p>Spectral Flatness</p></li>
+<li><p>Spectral Rolloff</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="class">
 <dt id="spiegelib.features.SpectralSummarized">
 <em class="property">class </em><code class="sig-prename descclassname">spiegelib.features.</code><code class="sig-name descname">SpectralSummarized</code><span class="sig-paren">(</span><em class="sig-param">frame_size=2048</em>, <em class="sig-param">hop_size=512</em>, <em class="sig-param">scale_axis=0</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.SpectralSummarized" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.features.features_base.FeaturesBase</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>kwargs</strong> – See <code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.features.features_base.FeaturesBase</span></code></p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frame_size</strong> (<em>int</em><em>, </em><em>optional</em>) – size of FFT, defaults to 2048</p></li>
+<li><p><strong>hop_size</strong> (<em>int</em><em>, </em><em>optional</em>) – size of hop shift in samples, defuault to 512</p></li>
+<li><p><strong>scale_axis</strong> (<em>int</em><em>, </em><em>tuple</em><em>, </em><em>None</em>) – When applying scaling, determines which dimensions
+scaling be applied along. Defaults to 0, which scales each feature independently.</p></li>
+<li><p><strong>kwargs</strong> – Keyword arguments, see <code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.features.features_base.FeaturesBase</span></code>.</p></li>
+</ul>
 </dd>
 </dl>
 <dl class="method">
 <dt id="spiegelib.features.SpectralSummarized.get_features">
-<code class="sig-name descname">get_features</code><span class="sig-paren">(</span><em class="sig-param">audio</em>, <em class="sig-param">normalize=False</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.SpectralSummarized.get_features" title="Permalink to this definition">¶</a></dt>
-<dd><p>Run audio feature extraction on audio provided as parameter.
-Normalization should be applied based on the normalize parameter.</p>
+<code class="sig-name descname">get_features</code><span class="sig-paren">(</span><em class="sig-param">audio</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.SpectralSummarized.get_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract spectral features and return results.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>audio</strong> (<em>np.array</em>) – Audio to process features on</p></li>
-<li><p><strong>normalize</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether or not the features are normalized, defaults to False</p></li>
-</ul>
+<dd class="field-odd"><p><strong>audio</strong> (<a class="reference internal" href="../core/audio_buffer.html#audio-buffer"><span class="std std-ref">AudioBuffer</span></a>) – input audio</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>results from audio feature extraction</p>
+<dd class="field-even"><p>Results of spectral features extraction. Format depends on            output type set during construction.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>np.array</p>
+<dd class="field-odd"><p>np.ndarray</p>
 </dd>
 </dl>
 </dd></dl>
