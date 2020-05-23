@@ -3,10 +3,10 @@
 Contains utility functions and classes used in library.
 """
 
-
 import re
-import numpy as np
 import json
+
+import numpy as np
 
 
 #: Selection of spectrum outputs

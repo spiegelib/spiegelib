@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-STFT Audio Feature Extractor
+Short Time Fourier Transform (STFT)
 """
 
 import numpy as np
@@ -11,9 +11,15 @@ import spiegelib.core.utils as utils
 
 class STFT(FeaturesBase):
     """
-    :param fft_size: number of FFT bins, defaults to 1024 (overrides frame_size)
-    :type fft_size: int, optional
-    :param kwargs: keyword arguments for base class, see :class:`spiegelib.features.features_base.FeaturesBase`.
+    Args:
+        fft_size (int, optional): size of FFT, defaults to 1024
+        hop_size (int, optional): size of hop shift in samples, defuault to 512
+        output (str, optional): output type, must be one of ['complex', 'magnitude',
+            'power', 'magnitude_phase', 'power_phase'] Defaults to 'complex'.
+        scale_axis (int, tuple, None): When applying scaling, determines which dimensions
+            scaling be applied along. Defaults to None, which will flatten results and
+            calculate scaling variables on that.
+        kwargs: Keyword arguments, see :class:`spiegelib.features.features_base.FeaturesBase`.
     """
 
     def __init__(self, fft_size=1024, hop_size=512, output='complex', scale_axis=None, **kwargs):
@@ -35,15 +41,14 @@ class STFT(FeaturesBase):
 
     def get_features(self, audio):
         """
-        Run audio feature extraction on audio provided as parameter.
-        Normalization should be applied based on the normalize parameter.
+        Run STFT on audio buffer.
 
-        :param audio: Audio to process features on
-        :type audio: :class:`spiegelib.core.audio_buffer.AudioBuffer`
-        :param normalize: Whether or not the features are normalized, defaults to False
-        :type normalize: bool, optional
-        :returns: results from audio feature extraction
-        :rtype: np.array
+        Args:
+            audio (:ref:`AudioBuffer <audio_buffer>`): input audio
+
+        Returns:
+            np.ndarray: Results of STFT. Format depends on output type set during\
+                construction.
         """
 
         if not isinstance(audio, AudioBuffer):
