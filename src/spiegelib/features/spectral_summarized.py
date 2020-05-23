@@ -1,6 +1,14 @@
 #!/usr/bin/env python
 """
-Spectral features summarized over time using mean and variance
+Spectral features summarized over time using mean and variance. Returns a 22-dimension
+feature vector for each audio sample.
+
+Features:
+    - Spectral Centroid
+    - Spectral Bandwidth
+    - Spectral Contrast (7 frequency bands)
+    - Spectral Flatness
+    - Spectral Rolloff
 """
 
 import numpy as np
@@ -10,7 +18,12 @@ from spiegelib.features.features_base import FeaturesBase
 
 class SpectralSummarized(FeaturesBase):
     """
-    :param kwargs: See :class:`spiegelib.features.features_base.FeaturesBase`
+    Args:
+        frame_size (int, optional): size of FFT, defaults to 2048
+        hop_size (int, optional): size of hop shift in samples, defuault to 512
+        scale_axis (int, tuple, None): When applying scaling, determines which dimensions
+            scaling be applied along. Defaults to 0, which scales each feature independently.
+        kwargs: Keyword arguments, see :class:`spiegelib.features.features_base.FeaturesBase`.
     """
 
     def __init__(self, frame_size=2048, hop_size=512, scale_axis=0, **kwargs):
@@ -23,17 +36,16 @@ class SpectralSummarized(FeaturesBase):
         super().__init__(scale_axis=scale_axis, **kwargs)
 
 
-    def get_features(self, audio, normalize=False):
+    def get_features(self, audio):
         """
-        Run audio feature extraction on audio provided as parameter.
-        Normalization should be applied based on the normalize parameter.
+        Extract spectral features and return results.
 
-        :param audio: Audio to process features on
-        :type audio: np.array
-        :param normalize: Whether or not the features are normalized, defaults to False
-        :type normalize: bool, optional
-        :returns: results from audio feature extraction
-        :rtype: np.array
+        Args:
+            audio (:ref:`AudioBuffer <audio_buffer>`): input audio
+
+        Returns:
+            np.ndarray: Results of spectral features extraction. Format depends on\
+            output type set during construction.
         """
 
         if not isinstance(audio, AudioBuffer):
