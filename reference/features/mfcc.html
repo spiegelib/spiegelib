@@ -174,13 +174,13 @@
 <p>Mel-Frequency Cepstral Coefficients (MFCCs)</p>
 <dl class="class">
 <dt id="spiegelib.features.MFCC">
-<em class="property">class </em><code class="sig-prename descclassname">spiegelib.features.</code><code class="sig-name descname">MFCC</code><span class="sig-paren">(</span><em class="sig-param">num_mfccs=20</em>, <em class="sig-param">fft_size=2048</em>, <em class="sig-param">hop_size=512</em>, <em class="sig-param">scale_axis=0</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.MFCC" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.features.</code><code class="sig-name descname">MFCC</code><span class="sig-paren">(</span><em class="sig-param">num_mfccs=20</em>, <em class="sig-param">frame_size=2048</em>, <em class="sig-param">hop_size=512</em>, <em class="sig-param">scale_axis=0</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.MFCC" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.features.features_base.FeaturesBase</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>num_mfccs</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of MFCCs to return, defaults to 20</p></li>
-<li><p><strong>fft_size</strong> (<em>int</em><em>, </em><em>optional</em>) – Size of FFT to use when calculating MFCCs, defaults to 2048</p></li>
+<li><p><strong>frame_size</strong> (<em>int</em><em>, </em><em>optional</em>) – Size of FFT to use when calculating MFCCs, defaults to 2048</p></li>
 <li><p><strong>hop_size</strong> (<em>int</em><em>, </em><em>optiona</em>) – hop length in samples, defaults to 512</p></li>
 <li><p><strong>scale_axis</strong> (<em>int</em><em>, </em><em>tuple</em><em>, </em><em>None</em>) – When applying scaling, determines which dimensions
 scaling be applied along. Defaults to 0, which scales each MFCC and time series
