@@ -176,7 +176,8 @@ class EvaluationBase(ABC):
             clipper_upper (number, optional): Set an upper range for input values.
                 This can be used to force any values above a certain range into the
                 right most hitogram bin.
-            kwargs: Keyword arguments to be passed into `hist <https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.hist.html>`_
+            kwargs: Keyword arguments to be passed into
+                `hist <https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.hist.html>`_
         """
 
         values = []
@@ -190,17 +191,17 @@ class EvaluationBase(ABC):
             values = np.clip(values, np.min(values), clip_upper)
 
         plt.hist(np.array(values), bins,
-                 alpha=0.9, edgecolor='black')
+                 alpha=0.9, edgecolor='black', **kwargs)
 
 
     def verify_input_list(self, input_list):
         """
         Base method for verifying input list. Override to implement verification.
-        For example, override and call :func:`~spiegelib.evaluation.EvaluationBase.verify_audio_input_list`
+        For example, override and call
+        :func:`~spiegelib.evaluation.EvaluationBase.verify_audio_input_list`
         on input_list to verify that :ref:`AudioBuffer <audio_buffer>` objects are being
         passed in.
         """
-        pass
 
 
     @staticmethod
@@ -283,6 +284,7 @@ class EvaluationBase(ABC):
 
         summaries = {}
         scores = self.get_scores()
+        num_targets = len(scores)
         i = 0
 
         # Organize scores into arrays organized by the source and the metric
@@ -293,7 +295,7 @@ class EvaluationBase(ABC):
 
                 for metric in scores[target][source]:
                     if not metric in summaries[source]:
-                        summaries[source][metric] = np.zeros(self.num_targets)
+                        summaries[source][metric] = np.zeros(num_targets)
 
                     summaries[source][metric][i] = scores[target][source][metric]
 
