@@ -12,7 +12,7 @@ class MFCC(FeaturesBase):
     """
     Args:
         num_mfccs (int, optional): Number of MFCCs to return, defaults to 20
-        fft_size (int, optional): Size of FFT to use when calculating MFCCs, defaults to 2048
+        frame_size (int, optional): Size of FFT to use when calculating MFCCs, defaults to 2048
         hop_size (int, optiona): hop length in samples, defaults to 512
         scale_axis (int, tuple, None): When applying scaling, determines which dimensions
             scaling be applied along. Defaults to 0, which scales each MFCC and time series
@@ -20,13 +20,13 @@ class MFCC(FeaturesBase):
         kwargs: Keyword arguments, see :class:`spiegelib.features.features_base.FeaturesBase`.
     """
 
-    def __init__(self, num_mfccs=20, fft_size=2048, hop_size=512, scale_axis=0, **kwargs):
+    def __init__(self, num_mfccs=20, frame_size=2048, hop_size=512, scale_axis=0, **kwargs):
         """
         Contructor
         """
 
         self.num_mfccs = num_mfccs
-        self.fft_size = fft_size
+        self.frame_size = frame_size
         self.hop_size = hop_size
         super().__init__(scale_axis=scale_axis, **kwargs)
 
@@ -55,7 +55,7 @@ class MFCC(FeaturesBase):
         features = librosa.feature.mfcc(
             y=audio.get_audio(),
             sr=self.sample_rate,
-            n_fft=self.fft_size,
+            n_fft=self.frame_size,
             hop_length=self.hop_size,
             n_mfcc=self.num_mfccs
         )
