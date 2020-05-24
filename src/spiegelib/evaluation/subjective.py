@@ -102,7 +102,7 @@ class Subjective(EvaluationBase):
             if self.targets[i].file_name and self.targets[i].file_name not in self.audio_files:
                 path = self.targets[i].file_name
             else:
-                path = 'target%s' % i
+                path = 'target%s.wav' % i
 
             self.test_data['targets'].append(path)
             self.audio_files[path] = self.targets[i]
@@ -110,16 +110,18 @@ class Subjective(EvaluationBase):
         for i in range(len(self.estimations)):
             source_estimations = []
             for j in range(len(self.estimations[i])):
-                path = 'source%s_estimation%s' % (i, j)
-                if (self.estimations[i][j].file_name
-                        and self.estimations[i][j].file_name
-                        not in self.audio_files):
+                # Default audio path name
+                use_filename = (self.estimations[i][j].file_name
+                                and self.estimations[i][j].file_name
+                                not in self.audio_files)
+
+                if use_filename:
                     path = self.estimations[i][j].file_name
                 else:
-                    path = 'source%s_estimation%s' % (i, j)
+                    path = 'source%s_estimation%s.wav' % (i, j)
 
-                source_estimations.append(path)
                 self.audio_files[path] = self.estimations[i][j]
+                source_estimations.append(path)
 
             self.test_data['estimations']['source_%s' % i] = source_estimations
 
@@ -154,7 +156,6 @@ class Subjective(EvaluationBase):
 
         self.test_config['Testsets'] = test_set
         self.test_config = "var TestConfig = %s;" % json.dumps(self.test_config)
-        self.test_config = bytes(self.test_config, 'utf-8')
 
 
     def __call__(self, environ, start_response):
@@ -350,7 +351,7 @@ class Subjective(EvaluationBase):
             },
             '/config/config_mushra.js': {
                 'type': 'text/javascript',
-                'data': lambda: self.test_config
+                'data': lambda: bytes(self.test_config, 'utf-8')
             },
             '/img/ajax-loader.gif': {
                 'type': 'image/gif',
