@@ -1,6 +1,9 @@
 #!/use/bin/env python
 """
-Basic subjective audio evaluation class
+A class for creating quick web-based listening tests for running trial subjective
+evaluations of audio results. Can be used to create a localhost web application
+that will serve a browser-based MUSHRA listening test using the
+`BeaqleJS <https://github.com/HSU-ANT/beaqlejs>`_ framework.
 """
 
 import os
