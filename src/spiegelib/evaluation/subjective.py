@@ -1,9 +1,44 @@
 #!/use/bin/env python
 """
 A class for creating quick web-based listening tests for running trial subjective
-evaluations of audio results. Can be used to create a localhost web application
+evaluations. Can be used to create a localhost web application
 that will serve a browser-based MUSHRA listening test using the
 `BeaqleJS <https://github.com/HSU-ANT/beaqlejs>`_ framework.
+
+Example:
+
+    In this example we use folders of audio files to create a subjective listening test.
+    Audio files have been generated from a synthesizer sound matching experiment
+    with a genetic algorithm (GA) and a multi-layer perceptron (MLP).
+
+    The folder ``folder_of_target_audio_files`` contains the set of target files,
+    and the folders ``folder_of_ga_predictions`` and ``folder_of_mlp_predictions`` contain
+    the audio results from sound matching for the GA and MLP.
+
+    The target audio files must be labelled so they will be ordered correctly
+    with natural sorting. For example: ``target_0.wav``, ``target_1.wav``, ..., etc.
+    The prediction audio files must be labelled in a similar ordering so that
+    they will be ordered to match the corresponding target file.
+
+    .. code-block::
+
+        import spiegelib as spgl
+
+        targets = spgl.AudioBufer('./folder_of_target_audio_files')
+        ga_predictions = spgl.AudioBuffer('./folder_of_ga_predictions')
+        mlp_predictions = spgl.AudioBuffer('./folder_of_mlp_predictions')
+        estimations = [ga_predictions, mlp_predictions]
+
+        # Instantiate evaluation with audio buffers and run evaluation
+        evaluation = spgl.evaluation.Subjective(targets, estimations)
+        evaluation.evaluate()
+
+    When the evaluate method is run, a localhost server will be started that will
+    serve the listening test at ``localhost:8000``. When the test
+    is submitted, the results will be saved as JSON files in the output directory
+    set during object construction. These files will be named
+    ``subjective_results.json`` and ``subjective_stats.json``.
+    The save location defaults to the current working directory.
 """
 
 import os
@@ -70,7 +105,10 @@ class Subjective(EvaluationBase):
     def evaluate(self):
         """
         Begin subjective test server. Starts up a web app that hosts the subjective
-        evaluation test and serves it to localhost:8000 by default.
+        evaluation test and serves it to localhost:8000 by default. Once the test has
+        been completed and submitted from the browser, test results will be saved as
+        JSON files (subjective_results.json & subjective_stats.json) to the output directory
+        defined during construction (defaults to the current working directory).
         """
 
         with make_server(self.address, self.port, self) as httpd:
