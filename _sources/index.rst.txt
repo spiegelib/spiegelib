@@ -7,6 +7,18 @@ SpiegeLib
 =========
 Synthesizer Programming with Intelligent Exploration, Generation, and Evaluation Library
 
+.. image:: https://badge.fury.io/py/spiegelib.svg
+   :target: https://badge.fury.io/py/spiegelib
+
+.. image:: https://img.shields.io/badge/License-MIT-yellow.svg
+
+----
+
+An object oriented Python library for research and development related to Automatic
+Synthesizer Programming. SpiegeLib contains a set of classes and base classes for
+developing and evaluting algorithms for generating parameters and patch settings
+for synthesizers.
+
 *SpiegeLib* is named after composer Laurie Spiegel, an early pioneer in electronic music.
 She is known for her work with synthesizers and for automating various aspects of
 the music composition process. Her philosophy for using technology and automation in music
