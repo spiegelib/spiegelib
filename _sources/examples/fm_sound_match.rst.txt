@@ -25,7 +25,7 @@ If you want to jump ahead and hear the results, check out the :ref:`audio result
 All code is available as Python notebooks on the project `github page <https://github.com/spiegelib/vst-fm-sound-match>`__.
 The trained models from this experiment are also
 available in the git repo. All datasets generated and used in
-this experiment are also available online.
+this experiment are also available online: https://doi.org/10.5281/zenodo.3722784.
 
 Experiment Sections
 ^^^^^^^^^^^^^^^^^^^

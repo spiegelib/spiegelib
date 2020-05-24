@@ -177,12 +177,12 @@ that will serve a browser-based MUSHRA listening test using the
 Audio files have been generated from a synthesizer sound matching experiment
 with a genetic algorithm (GA) and a multi-layer perceptron (MLP).</p>
 <p>The folder <code class="docutils literal notranslate"><span class="pre">folder_of_target_audio_files</span></code> contains the set of target files,
-and the folders <code class="docutils literal notranslate"><span class="pre">folder_of_ga_predictions</span></code> and <code class="docutils literal notranslate"><span class="pre">folder_of_mlp_predictions</span></code> contains
+and the folders <code class="docutils literal notranslate"><span class="pre">folder_of_ga_predictions</span></code> and <code class="docutils literal notranslate"><span class="pre">folder_of_mlp_predictions</span></code> contain
 the audio results from sound matching for the GA and MLP.</p>
-<p>The target audio files must be labelled in way so that the will be read in the correct
-order with natural sorting. For example: <code class="docutils literal notranslate"><span class="pre">target_0.wav</span></code>, <code class="docutils literal notranslate"><span class="pre">target_1.wav</span></code>, …, etc.
+<p>The target audio files must be labelled so they will be ordered correctly
+with natural sorting. For example: <code class="docutils literal notranslate"><span class="pre">target_0.wav</span></code>, <code class="docutils literal notranslate"><span class="pre">target_1.wav</span></code>, …, etc.
 The prediction audio files must be labelled in a similar ordering so that
-they will be loaded in the correct order so they are matched with correct target file.</p>
+they will be ordered to match the corresponding target file.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spiegelib</span> <span class="k">as</span> <span class="nn">spgl</span>
 
 <span class="n">targets</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">AudioBufer</span><span class="p">(</span><span class="s1">&#39;./folder_of_target_audio_files&#39;</span><span class="p">)</span>
@@ -196,10 +196,10 @@ they will be loaded in the correct order so they are matched with correct target
 </pre></div>
 </div>
 <p>When the evaluate method is run, a localhost server will be started that will
-be able to be visited in a browser at <code class="docutils literal notranslate"><span class="pre">localhost:8000</span></code>. When the listen test
-is complete and submitted, the results and statistics on the results will be saved
-as JSON files in the output directory set during object construction.
-These files will be named <code class="docutils literal notranslate"><span class="pre">subjective_results.json</span></code> and <code class="docutils literal notranslate"><span class="pre">subjective_stats.json</span></code>.
+serve the listening test at <code class="docutils literal notranslate"><span class="pre">localhost:8000</span></code>. When the test
+is submitted, the results will be saved as JSON files in the output directory
+set during object construction. These files will be named
+<code class="docutils literal notranslate"><span class="pre">subjective_results.json</span></code> and <code class="docutils literal notranslate"><span class="pre">subjective_stats.json</span></code>.
 The save location defaults to the current working directory.</p>
 <dl class="class">
 <dt id="spiegelib.evaluation.Subjective">
