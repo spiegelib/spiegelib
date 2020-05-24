@@ -17,7 +17,7 @@ SpiegeLib is named after composer Laurie Spiegel, an early pioneer in electronic
 
 Detailed installation instructions, API reference, and examples are available [here](https://spiegelib.github.io/spiegelib/).
 
-An in-depth example using *SpiegeLib* for synthesizer sound matching of *Dexed*, an emulation of the Yamaha DX7, is available [here](https://spiegelib.github.io/spiegelib/examples/fm_sound_match.html)
+An example using *SpiegeLib* for synthesizer sound matching of *Dexed*, an emulation of the Yamaha DX7, is available [here](https://spiegelib.github.io/spiegelib/examples/fm_sound_match.html)
 
 ## Features
 
@@ -30,7 +30,7 @@ An in-depth example using *SpiegeLib* for synthesizer sound matching of *Dexed*,
 
 ###### Programmatic Control of Synthesizers
 
-Program and render audio from VST synthesizers or write your own custom synthesizer classes. **SynthVST** class provides control of VST synthesizers using the [RenderMan](https://github.com/fedden/RenderMan) library.
+Program and render audio from VST synthesizers or write your own custom synthesizer classes. ``SynthVST`` class provides control of VST synthesizers using the [RenderMan](https://github.com/fedden/RenderMan) library.
 
 ###### Deep Learning
 
@@ -41,6 +41,8 @@ Deep learning algorithms implemented using [Keras & TensorFlow](https://www.tens
 - Bi-directional Long Short Term Memory with Highway Layers (LSTM++)
 - Convolutional Neural Network (CNN)
 
+The ``DatasetGenerator`` class can be used to create datasets of synthesizer patches for training and validating deep learning models.
+
 ###### Evolutionary Algorithms
 
 Evolutionary algorithms, including genetic algorithms, supported using the [DEAP framework](https://github.com/DEAP/deap). *SpiegeLib* includes the following algorithms which have been used in previous automatic synthesizer programming research:
@@ -50,7 +52,26 @@ Evolutionary algorithms, including genetic algorithms, supported using the [DEAP
 
 ###### Evaluation
 
-Tools for running both objective and subjective evaluation of experimental results are provided. Results can be evaluated objectively using the **MFCCEval** class which calcuates error and distance metrics on a set of audio file targets and estimations.
+Tools for running both objective and subjective evaluation of experimental results are provided. Results can be evaluated objectively using the ``MFCCEval`` class which calcuates error and distance metrics on a set of audio file targets and estimations.
 
-Basic subjective evaluation of results is provided in the **Subjective** class which creates a basic MUSHRA style listening test using [BeaqleJS](https://github.com/HSU-ANT/beaqlejs) and serves it to localhost so it can be taken in a browser.
+Basic subjective evaluation of results is provided in the ``Subjective`` class which creates a basic MUSHRA style listening test using [BeaqleJS](https://github.com/HSU-ANT/beaqlejs) and serves it to localhost so it can be taken in a browser.
 
+## Installation
+
+Detailed instructions on installing *SpeigeLib* in a conda environment are available [here](https://spiegelib.github.io/spiegelib/getting_started/installation.html)
+
+*SpiegeLib* is available via pip:
+`pip install spiegelib`
+
+**Note: Requires Python > 3.6**
+
+All requirements except for [RenderMan](https://github.com/fedden/RenderMan) will be installed via pip. RenderMan must be installed manually. We have instructions for installing RenderMan in a conda environment [here](https://spiegelib.github.io/spiegelib/getting_started/installation.html#installing-renderman-in-an-anaconda-environment).
+
+**Currently RenderMan is only available for MacOSX and Linux operating systems.** However, there was a recent pull request made to RenderMan to add support for Windows - it has not been merged yet and we have not tested it, but you Windows users might be interested in checking that out, [here](https://github.com/DBraun/RenderMan/tree/windows).
+
+## Issues and Contributions
+
+Please report and issues or desires for enhancements on the GitHub issues page. Contributions are also welcome and encouraged. Check out the [contributions guide] for more information on getting setup for development.
+
+###### Planned Future Additions
+- [] More robust CNNs from 
