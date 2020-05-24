@@ -98,30 +98,23 @@ class Subjective(EvaluationBase):
         self.test_data['targets'] = []
         self.test_data['estimations'] = {}
 
-        for i in range(len(self.targets)):
-            if self.targets[i].file_name and self.targets[i].file_name not in self.audio_files:
-                path = self.targets[i].file_name
-            else:
-                path = 'target%s.wav' % i
+        for i, target in enumerate(self.targets):
+            path = target.file_name
+            if not path or path in self.audio_files:
+                path = 'target_%s.wav' % i
 
             self.test_data['targets'].append(path)
-            self.audio_files[path] = self.targets[i]
+            self.audio_files[path] = target
 
-        for i in range(len(self.estimations)):
+        for i, source in enumerate(self.estimations):
             source_estimations = []
-            for j in range(len(self.estimations[i])):
-                # Default audio path name
-                use_filename = (self.estimations[i][j].file_name
-                                and self.estimations[i][j].file_name
-                                not in self.audio_files)
+            for j, estimation in enumerate(source):
+                path = estimation.file_name
+                if not path or path in self.audio_files:
+                    path = 'source_%s_estimation_%s.wav' % (i, j)
 
-                if use_filename:
-                    path = self.estimations[i][j].file_name
-                else:
-                    path = 'source%s_estimation%s.wav' % (i, j)
-
-                self.audio_files[path] = self.estimations[i][j]
                 source_estimations.append(path)
+                self.audio_files[path] = estimation
 
             self.test_data['estimations']['source_%s' % i] = source_estimations
 
