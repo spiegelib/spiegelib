@@ -91,6 +91,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Evaluation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="evaluation/evaluation_base.html">     EvaluationBase</a></li>
 <li class="toctree-l2"><a class="reference internal" href="evaluation/mfcc_eval.html">     MFCCEval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="evaluation/subjective.html">Subjective</a></li>
 </ul>
 </li>
 </ul>
@@ -165,10 +166,22 @@
             
   <div class="section" id="evaluation-classes">
 <h1>Evaluation Classes<a class="headerlink" href="#evaluation-classes" title="Permalink to this headline">¶</a></h1>
+<p>The following classes can be used to evaluate the results of experiments both
+objectively and subjectively.</p>
+<p><a class="reference internal" href="evaluation/evaluation_base.html#evaluation-base"><span class="std std-ref">EvaluationBase</span></a> provides a common base class for evaluation
+methods that compare a set of audio files or other objects to references or targets.
+This abstract class also has a set of static methods for computing error and distance
+metrics between np.ndarrays and also for calculating statistics on results of
+evaluations.</p>
+<p>Objective evaluation of audio files can be carried out using the <a class="reference internal" href="evaluation/mfcc_eval.html#mfcc-eval"><span class="std std-ref">MFCCEval</span></a>
+class.</p>
+<p>Simple browser based listening tests can be setup and hosted locally using the
+<a class="reference internal" href="evaluation/subjective.html#subjective-evaluation"><span class="std std-ref">Subjective</span></a> class.</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="evaluation/evaluation_base.html">     EvaluationBase</a></li>
 <li class="toctree-l1"><a class="reference internal" href="evaluation/mfcc_eval.html">     MFCCEval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation/subjective.html">Subjective</a></li>
 </ul>
 </div>
 </div>

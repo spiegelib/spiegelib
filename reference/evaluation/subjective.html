@@ -1,0 +1,293 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Subjective Class &mdash; SpiegeLib 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Examples" href="../../examples/examples_index.html" />
+    <link rel="prev" title="MFCCEval Class" href="mfcc_eval.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> SpiegeLib
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/getting_started.html">Getting Started</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../core.html">Core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../synth.html">Synth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../features.html">Audio Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../estimators.html">Estimators</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../evaluation.html">Evaluation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="evaluation_base.html">     EvaluationBase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mfcc_eval.html">     MFCCEval</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Subjective</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/examples_index.html">Examples</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contribution Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">SpiegeLib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../evaluation.html">Evaluation Classes</a> &raquo;</li>
+        
+      <li>Subjective Class</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/evaluation/subjective.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-spiegelib.evaluation.subjective">
+<span id="subjective-class"></span><span id="subjective-evaluation"></span><h1>Subjective Class<a class="headerlink" href="#module-spiegelib.evaluation.subjective" title="Permalink to this headline">¶</a></h1>
+<p>A class for creating quick web-based listening tests for running trial subjective
+evaluations. Can be used to create a localhost web application
+that will serve a browser-based MUSHRA listening test using the
+<a class="reference external" href="https://github.com/HSU-ANT/beaqlejs">BeaqleJS</a> framework.</p>
+<p class="rubric">Example</p>
+<p>In this example we use folders of audio files to create a subjective listening test.
+Audio files have been generated from a synthesizer sound matching experiment
+with a genetic algorithm (GA) and a multi-layer perceptron (MLP).</p>
+<p>The folder <code class="docutils literal notranslate"><span class="pre">folder_of_target_audio_files</span></code> contains the set of target files,
+and the folders <code class="docutils literal notranslate"><span class="pre">folder_of_ga_predictions</span></code> and <code class="docutils literal notranslate"><span class="pre">folder_of_mlp_predictions</span></code> contains
+the audio results from sound matching for the GA and MLP.</p>
+<p>The target audio files must be labelled in way so that the will be read in the correct
+order with natural sorting. For example: <code class="docutils literal notranslate"><span class="pre">target_0.wav</span></code>, <code class="docutils literal notranslate"><span class="pre">target_1.wav</span></code>, …, etc.
+The prediction audio files must be labelled in a similar ordering so that
+they will be loaded in the correct order so they are matched with correct target file.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spiegelib</span> <span class="k">as</span> <span class="nn">spgl</span>
+
+<span class="n">targets</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">AudioBufer</span><span class="p">(</span><span class="s1">&#39;./folder_of_target_audio_files&#39;</span><span class="p">)</span>
+<span class="n">ga_predictions</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">AudioBuffer</span><span class="p">(</span><span class="s1">&#39;./folder_of_ga_predictions&#39;</span><span class="p">)</span>
+<span class="n">mlp_predictions</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">AudioBuffer</span><span class="p">(</span><span class="s1">&#39;./folder_of_mlp_predictions&#39;</span><span class="p">)</span>
+<span class="n">estimations</span> <span class="o">=</span> <span class="p">[</span><span class="n">ga_predictions</span><span class="p">,</span> <span class="n">mlp_predictions</span><span class="p">]</span>
+
+<span class="c1"># Instantiate evaluation with audio buffers and run evaluation</span>
+<span class="n">evaluation</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">evaluation</span><span class="o">.</span><span class="n">Subjective</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="n">estimations</span><span class="p">)</span>
+<span class="n">evaluation</span><span class="o">.</span><span class="n">evaluate</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>When the evaluate method is run, a localhost server will be started that will
+be able to be visited in a browser at <code class="docutils literal notranslate"><span class="pre">localhost:8000</span></code>. When the listen test
+is complete and submitted, the results and statistics on the results will be saved
+as JSON files in the output directory set during object construction.
+These files will be named <code class="docutils literal notranslate"><span class="pre">subjective_results.json</span></code> and <code class="docutils literal notranslate"><span class="pre">subjective_stats.json</span></code>.
+The save location defaults to the current working directory.</p>
+<dl class="class">
+<dt id="spiegelib.evaluation.Subjective">
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.evaluation.</code><code class="sig-name descname">Subjective</code><span class="sig-paren">(</span><em class="sig-param">targets</em>, <em class="sig-param">estimations</em>, <em class="sig-param">output_dir='./'</em>, <em class="sig-param">max_tests=-1</em>, <em class="sig-param">show_results=True</em>, <em class="sig-param">show_ids=False</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.Subjective" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.evaluation.evaluation_base.EvaluationBase</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>targets</strong> (<em>list</em>) – a list of <a class="reference internal" href="../core/audio_buffer.html#audio-buffer"><span class="std std-ref">AudioBuffers</span></a> to use as references
+in a MUSHRA style listening test</p></li>
+<li><p><strong>estimations</strong> (<em>list</em>) – list of lists of <a class="reference internal" href="../core/audio_buffer.html#audio-buffer"><span class="std std-ref">AudioBuffers</span></a> to use
+as stimuli in a MUSHA style listening test. Each list of AudioBuffer objects
+should represent an audio source (such as audio from a particular estimator
+in a sound match experiment), and each AudioBuffer in the inner lists should
+be ordered to match the target sound to use as a referenece.</p></li>
+<li><p><strong>output_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – directory to save test results. Defualts to current
+working directory.</p></li>
+<li><p><strong>max_tests</strong> (<em>int</em><em>, </em><em>optional</em>) – If set, will limit the number of test pages that are
+presented per subjective test. Defaults to showing a page for each target.</p></li>
+<li><p><strong>show_results</strong> (<em>bool</em><em>, </em><em>optional</em>) – Will show the test results on the end page of
+the test if set to True. Defaults to True.</p></li>
+<li><p><strong>show_ids</strong> (<em>bool</em><em>, </em><em>optional</em>) – Display Reference and source numbers for each track
+on each page. Use this if you want to know what the source of each track is,
+not meant for a true listening test.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="spiegelib.evaluation.Subjective.evaluate">
+<code class="sig-name descname">evaluate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.Subjective.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Begin subjective test server. Starts up a web app that hosts the subjective
+evaluation test and serves it to localhost:8000 by default. Once the test has
+been completed and submitted from the browser, test results will be saved as
+JSON files (subjective_results.json &amp; subjective_stats.json) to the output directory
+defined during construction (defaults to the current working directory).</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../examples/examples_index.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="mfcc_eval.html" class="btn btn-neutral float-left" title="MFCCEval Class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, University of Victoria
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

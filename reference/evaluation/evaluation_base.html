@@ -91,6 +91,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../evaluation.html">Evaluation</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">     EvaluationBase</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mfcc_eval.html">     MFCCEval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subjective.html">Subjective</a></li>
 </ul>
 </li>
 </ul>
@@ -296,7 +297,8 @@ provide a string describing a binning strategy, such as ‘auto’,
 <li><p><strong>clipper_upper</strong> (<em>number</em><em>, </em><em>optional</em>) – Set an upper range for input values.
 This can be used to force any values above a certain range into the
 right most hitogram bin.</p></li>
-<li><p><strong>kwargs</strong> – Keyword arguments to be passed into <a class="reference external" href="https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.hist.html">hist</a></p></li>
+<li><p><strong>kwargs</strong> – Keyword arguments to be passed into
+<a class="reference external" href="https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.hist.html">hist</a></p></li>
 </ul>
 </dd>
 </dl>
@@ -306,7 +308,8 @@ right most hitogram bin.</p></li>
 <dt id="spiegelib.evaluation.EvaluationBase.verify_input_list">
 <code class="sig-name descname">verify_input_list</code><span class="sig-paren">(</span><em class="sig-param">input_list</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.verify_input_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base method for verifying input list. Override to implement verification.
-For example, override and call <a class="reference internal" href="#spiegelib.evaluation.EvaluationBase.verify_audio_input_list" title="spiegelib.evaluation.EvaluationBase.verify_audio_input_list"><code class="xref py py-func docutils literal notranslate"><span class="pre">verify_audio_input_list()</span></code></a>
+For example, override and call
+<a class="reference internal" href="#spiegelib.evaluation.EvaluationBase.verify_audio_input_list" title="spiegelib.evaluation.EvaluationBase.verify_audio_input_list"><code class="xref py py-func docutils literal notranslate"><span class="pre">verify_audio_input_list()</span></code></a>
 on input_list to verify that <a class="reference internal" href="../core/audio_buffer.html#audio-buffer"><span class="std std-ref">AudioBuffer</span></a> objects are being
 passed in.</p>
 </dd></dl>
