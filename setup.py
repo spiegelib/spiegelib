@@ -25,6 +25,9 @@ setup(
     licence=__license__,
     packages=find_packages('src'),
     package_dir={'': 'src'},
+    package_data={
+        '': ['beaqlejs/*', 'beaqlejs/img/*'],
+    },
     python_requires='>=3.6',
     install_requires=[
         'numpy',
@@ -33,6 +36,7 @@ setup(
         'matplotlib',
         'tensorflow',
         'deap',
+        "importlib_resources ; python_version<'3.7'",
     ],
     extras_require={
         'dev': [
