@@ -28,11 +28,11 @@ An example using *SpiegeLib* for synthesizer sound matching of *Dexed*, an emula
 - Evolutionary algorithms 
 - Objective & subjective evaluation tools
 
-###### Programmatic Control of Synthesizers
+##### Programmatic Control of Synthesizers
 
 Program and render audio from VST synthesizers or write your own custom synthesizer classes. ``SynthVST`` class provides control of VST synthesizers using the [RenderMan](https://github.com/fedden/RenderMan) library.
 
-###### Deep Learning
+##### Deep Learning
 
 Deep learning algorithms implemented using [Keras & TensorFlow](https://www.tensorflow.org/). *SpiegeLib* includes the following models which have been used in preivous work in the field of automatic synthesizer programming:
 
@@ -43,14 +43,14 @@ Deep learning algorithms implemented using [Keras & TensorFlow](https://www.tens
 
 The ``DatasetGenerator`` class can be used to create datasets of synthesizer patches for training and validating deep learning models.
 
-###### Evolutionary Algorithms
+##### Evolutionary Algorithms
 
 Evolutionary algorithms, including genetic algorithms, supported using the [DEAP framework](https://github.com/DEAP/deap). *SpiegeLib* includes the following algorithms which have been used in previous automatic synthesizer programming research:
 
 - A basic single objective genetic algorithm (GA)
 - A multi-objective non-dominated sorting genetic algorithm (NSGA III)
 
-###### Evaluation
+##### Evaluation
 
 Tools for running both objective and subjective evaluation of experimental results are provided. Results can be evaluated objectively using the ``MFCCEval`` class which calcuates error and distance metrics on a set of audio file targets and estimations.
 
@@ -71,7 +71,12 @@ All requirements except for [RenderMan](https://github.com/fedden/RenderMan) wil
 
 ## Issues and Contributions
 
-Please report and issues or desires for enhancements on the GitHub issues page. Contributions are also welcome and encouraged. Check out the [contributions guide] for more information on getting setup for development.
+Please report and issues or desires for enhancements on the GitHub issues page. Contributions are also welcome and encouraged. Check out the [contributions guide](https://spiegelib.github.io/spiegelib/contributing.html) for more information on getting setup for development.
 
-###### Planned Future Additions
-- [] More robust CNNs from 
+##### Planned Future Additions
+
+*Parameter Estimation / Generation Models*
+- [ ] More robust CNNs, see [Barkan et al.](https://ieeexplore.ieee.org/abstract/document/8854832?casa_token=7_TqusED43UAAAAA:UFEPg_f7LxWyRa-oTezaA2YW8tgxQpZ9WtBArJdPRcelynwFsO4wkWTAtRs5zoZL5lLjBWIumTY)
+- [ ] Generative model, see [Esling et al.](https://www.mdpi.com/2076-3417/10/1/302)
+- [ ] Particle Swarm Optimization, see [Heise et al.](http://www.aes.org/e-lib/online/browse.cfm?elib=15053)
+- [ ] Hill Climber optimizer (for benchmarking), see [Yee-King et al.](https://ieeexplore.ieee.org/abstract/document/8323327?casa_token=795OBbWb74QAAAAA:iXxMiGgAJ32MMWYpRlqPy0xvAxwztedvv3sZpaJZ9t-O9-nNJmtTteiEjhtB2h0CQ6S8mHhFbII)
