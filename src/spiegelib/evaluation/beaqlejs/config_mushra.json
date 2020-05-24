@@ -1,0 +1,20 @@
+{
+  "TestName": "Basic Subjective Listening Test",
+  "RateScalePng": "img/scale_abs.png",
+  "RateScaleBgPng": "img/scale_abs_background.png",
+  "RateMinValue": 0,
+  "RateMaxValue": 100,
+  "RateDefaultValue":0,
+  "ShowFileIDs": false,
+  "ShowResults": false,
+  "LoopByDefault": true,
+  "EnableABLoop": true,
+  "EnableOnlineSubmission": true,
+  "BeaqleServiceURL": "/finished_test",
+  "SupervisorContact": "",
+  "RandomizeTestOrder": true,
+  "MaxTestsPerRun": 3,
+  "RequireMaxRating": false,
+  "AudioRoot": "",
+  "Testsets": []
+}
