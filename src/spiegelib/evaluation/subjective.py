@@ -12,13 +12,13 @@ Example:
     with a genetic algorithm (GA) and a multi-layer perceptron (MLP).
 
     The folder ``folder_of_target_audio_files`` contains the set of target files,
-    and the folders ``folder_of_ga_predictions`` and ``folder_of_mlp_predictions`` contains
+    and the folders ``folder_of_ga_predictions`` and ``folder_of_mlp_predictions`` contain
     the audio results from sound matching for the GA and MLP.
 
-    The target audio files must be labelled in way so that the will be read in the correct
-    order with natural sorting. For example: ``target_0.wav``, ``target_1.wav``, ..., etc.
+    The target audio files must be labelled so they will be ordered correctly
+    with natural sorting. For example: ``target_0.wav``, ``target_1.wav``, ..., etc.
     The prediction audio files must be labelled in a similar ordering so that
-    they will be loaded in the correct order so they are matched with correct target file.
+    they will be ordered to match the corresponding target file.
 
     .. code-block::
 
@@ -34,10 +34,10 @@ Example:
         evaluation.evaluate()
 
     When the evaluate method is run, a localhost server will be started that will
-    be able to be visited in a browser at ``localhost:8000``. When the listen test
-    is complete and submitted, the results and statistics on the results will be saved
-    as JSON files in the output directory set during object construction.
-    These files will be named ``subjective_results.json`` and ``subjective_stats.json``.
+    serve the listening test at ``localhost:8000``. When the test
+    is submitted, the results will be saved as JSON files in the output directory
+    set during object construction. These files will be named
+    ``subjective_results.json`` and ``subjective_stats.json``.
     The save location defaults to the current working directory.
 """
 
