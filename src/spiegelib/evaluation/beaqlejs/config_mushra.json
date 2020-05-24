@@ -12,7 +12,7 @@
   "EnableOnlineSubmission": true,
   "BeaqleServiceURL": "/finished_test",
   "SupervisorContact": "",
-  "RandomizeTestOrder": false,
+  "RandomizeTestOrder": true,
   "MaxTestsPerRun": 3,
   "RequireMaxRating": false,
   "AudioRoot": "",

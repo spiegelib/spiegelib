@@ -21,17 +21,30 @@ from . import beaqlejs
 
 
 # pylint: disable=too-many-instance-attributes
-# Need more instance attributes here
 class Subjective(EvaluationBase):
     """
-    A WSGI Application for basic subjective evaluation similarity tests between
-    targets and estimations (or any other sound file for that matter)
-
-    :param targets: A list of target AudioBuffers
-    :type targets:
+    Args:
+        targets (list): a list of :ref:`AudioBuffers <audio_buffer>` to use as references
+            in a MUSHRA style listening test
+        estimations (list): list of lists of :ref:`AudioBuffers <audio_buffer>` to use
+            as stimuli in a MUSHA style listening test. Each list of AudioBuffer objects
+            should represent an audio source (such as audio from a particular estimator
+            in a sound match experiment), and each AudioBuffer in the inner lists should
+            be ordered to match the target sound to use as a referenece.
+        output_dir (str, optional): directory to save test results. Defualts to current
+            working directory.
+        max_tests (int, optional): If set, will limit the number of test pages that are
+            presented per subjective test. Defaults to showing a page for each target.
+        show_results (bool, optional): Will show the test results on the end page of
+            the test if set to True. Defaults to True.
+        show_ids (bool, optional): Display Reference and source numbers for each track
+            on each page. Use this if you want to know what the source of each track is,
+            not meant for a true listening test.
     """
 
-    def __init__(self, targets, estimations, max_tests=5, output_dir='./'):
+    # pylint: disable=too-many-arguments
+    def __init__(self, targets, estimations, output_dir='./',
+                 max_tests=-1, show_results=True, show_ids=False):
         """
         Constructor
         """
@@ -42,6 +55,8 @@ class Subjective(EvaluationBase):
         self.port = 8000
         self.address = "localhost"
         self.max_tests = max_tests
+        self.show_results = show_results
+        self.show_ids = show_ids
         self.output_dir = os.getcwd() if output_dir == './' else output_dir
 
         self.setup_statics()
@@ -51,21 +66,23 @@ class Subjective(EvaluationBase):
 
     def evaluate(self):
         """
-        Run the web server that hosts that evaluation
+        Begin subjective test server. Starts up a web app that hosts the subjective
+        evaluation test and serves it to localhost:8000 by default.
         """
 
         with make_server(self.address, self.port, self) as httpd:
-            print("serving at %s:%s" % (self.address, self.port))
+            print("Serving listening test at %s:%s" % (self.address, self.port))
             httpd.serve_forever()
 
 
     def evaluate_target(self, target, predictions):
-        pass
-
+        """
+        Not used in the subjective evaluation
+        """
 
     def verify_input_list(self, input_list):
         """
-        Override verify input list for checking audio lists
+        Checks input targets and estimation objects
         """
         EvaluationBase.verify_audio_input_list(input_list)
 
@@ -74,8 +91,6 @@ class Subjective(EvaluationBase):
         """
         Setup the test dictionary and also save all audio files into an audio
         file dictionary keyed on their path that will be requested.
-
-        :meta private:
         """
 
         self.audio_files = {}
@@ -117,6 +132,8 @@ class Subjective(EvaluationBase):
         template = pkg_resources.read_text(beaqlejs, 'config_mushra.json')
         self.test_config = json.loads(template)
         self.test_config['MaxTestsPerRun'] = self.max_tests
+        self.test_config['ShowResults'] = self.show_results
+        self.test_config['ShowFileIDs'] = self.show_ids
 
         test_set = []
         for i in range(len(self.test_data['targets'])):
@@ -160,8 +177,6 @@ class Subjective(EvaluationBase):
     def get(self, environ, start_response):
         """
         Process a GET request
-
-        :meta private:
         """
 
         path = environ['PATH_INFO']
@@ -185,8 +200,6 @@ class Subjective(EvaluationBase):
     def post(self, environ, start_response):
         """
         Process a POST request
-
-        :meta private:
         """
 
         # the environment variable CONTENT_LENGTH may be empty or missing
@@ -206,8 +219,6 @@ class Subjective(EvaluationBase):
     def get_headers(response_body, mime_type):
         """
         Return headers for HTML
-
-        :meta private:
         """
 
         response_headers = [
@@ -222,8 +233,6 @@ class Subjective(EvaluationBase):
     def get_wav(self, key):
         """
         Return a WAV file from dictionary of audio files for test
-
-        :meta private:
         """
 
         audio = self.audio_files[key]
@@ -311,7 +320,7 @@ class Subjective(EvaluationBase):
         Creates a dictionary of static files and lambda functions that return
         binary data when that static file is required
 
-        :meta private:
+
         """
 
         self.statics = {
@@ -388,5 +397,4 @@ class Subjective(EvaluationBase):
                     'ui-bg_highlight-soft_75_cccccc_1x100.png'
                 )
             },
-
         }
