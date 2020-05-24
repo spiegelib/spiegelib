@@ -80,3 +80,11 @@ Please report and issues or desires for enhancements on the GitHub issues page. 
 - [ ] Generative model, see [Esling et al.](https://www.mdpi.com/2076-3417/10/1/302)
 - [ ] Particle Swarm Optimization, see [Heise et al.](http://www.aes.org/e-lib/online/browse.cfm?elib=15053)
 - [ ] Hill Climber optimizer (for benchmarking), see [Yee-King et al.](https://ieeexplore.ieee.org/abstract/document/8323327?casa_token=795OBbWb74QAAAAA:iXxMiGgAJ32MMWYpRlqPy0xvAxwztedvv3sZpaJZ9t-O9-nNJmtTteiEjhtB2h0CQ6S8mHhFbII)
+
+## Acknowledgements
+
+Thank you to Matthew Yee-King, Leon Fedden, and Mark d'Inverno for their work on [*Automatic Programming of VST Sound Synthesizers Using Deep Networks and Other Techniques*](https://ieeexplore.ieee.org/abstract/document/8323327?casa_token=795OBbWb74QAAAAA:iXxMiGgAJ32MMWYpRlqPy0xvAxwztedvv3sZpaJZ9t-O9-nNJmtTteiEjhtB2h0CQ6S8mHhFbII) and the research code they released with that project. That work served as inspiration and motivation for *SpiegeLib*.
+
+## Contributors
+
+ - Jordie Shier https://github.com/jorshi
