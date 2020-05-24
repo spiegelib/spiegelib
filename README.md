@@ -7,7 +7,7 @@ Synthesizer Programming with Intelligent Exploration, Generation, and Evaluation
 
 ---
 
-An object oriented Python library for research and development related to Automatic Sound Synthesizer Programming. *SpiegeLib* contains a set of classes and base classes for developing and evaluting algorithms for generating parameters and patch settings for synthesizers.
+An object oriented Python library for research and development related to Automatic Synthesizer Programming. *SpiegeLib* contains a set of classes and base classes for developing and evaluating algorithms for generating parameters and patch settings for synthesizers.
 
 SpiegeLib is named after composer Laurie Spiegel, an early pioneer in electronic music. She is known for her work with synthesizers and for automating various aspects of the music composition process. Her philosophy for using technology and automation in music serves as motivation for this project:
 
