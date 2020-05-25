@@ -12,10 +12,11 @@ class DataScalerBase(ABC):
         """
         Fit parameters for data scaling. Abstract, must be implemented.
 
-        :param data: data to use for fitting scaling parameters
-        :type data: np.ndarray
-        :param axis: axis or axes to use for calculating scaling parameters on.
-        :type axis: int, tuple
+        Args:
+            data (np.ndarray): data to calculate mean and standard deviation on
+                for future scaling
+            axis (int, tuple, optional): axis or axes to use for calculating scaling
+                parameteres. Defaults to None which will flatten the array first.
         """
         raise NotImplementedError
 
@@ -23,12 +24,13 @@ class DataScalerBase(ABC):
     @abstractmethod
     def transform(self, data):
         """
-        Perform scaling on data
+        Scale data
 
-        :param data: data to scale
-        :type data: np.array
-        :returns: sacled data
-        :rtype: np.ndarray
+        Args:
+            data (np.ndarray): data to scale
+
+        Returns:
+            np.ndarray: scaled data
         """
         raise NotImplementedError
 
@@ -37,10 +39,13 @@ class DataScalerBase(ABC):
         """
         Fit scaling parameters and then scale data
 
-        :param data: data to fit scaling parameters to and then transform
-        :type data: np.array
-        :returns: scaled data
-        :rtype: np.ndarray
+        Args:
+            data (np.ndarray): data to scale
+            axis (int, tuple, optional): axis or axes to use for calculating scaling
+                parameteres. Defaults to None which will flatten the array first.
+
+        Returns:
+            np.ndarray: scaled data
         """
 
         self.fit(data, axis)
