@@ -85,8 +85,8 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../core.html">Core</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../synth.html">Synth</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../features.html">Audio Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../synth.html">Synthesizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../features.html">Audio Feature Extraction</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../estimators.html">Estimators</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="estimator_base.html">     EstimatorBase</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../estimators.html#deep-learning">Deep Learning</a></li>
@@ -176,16 +176,20 @@
 implementation by Tatar et al. <a class="footnote-reference brackets" href="#id2" id="id1">1</a></p>
 <dl class="class">
 <dt id="spiegelib.estimator.NSGA3">
-<em class="property">class </em><code class="sig-prename descclassname">spiegelib.estimator.</code><code class="sig-name descname">NSGA3</code><span class="sig-paren">(</span><em class="sig-param">synth</em>, <em class="sig-param">features_list</em>, <em class="sig-param">seed=None</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.NSGA3" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.estimator.</code><code class="sig-name descname">NSGA3</code><span class="sig-paren">(</span><em class="sig-param">synth</em>, <em class="sig-param">features</em>, <em class="sig-param">seed=None</em>, <em class="sig-param">pop_size=100</em>, <em class="sig-param">ngen=25</em>, <em class="sig-param">cxpb=0.5</em>, <em class="sig-param">mutpb=0.5</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.NSGA3" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="estimator_base.html#spiegelib.estimator.estimator_base.EstimatorBase" title="spiegelib.estimator.estimator_base.EstimatorBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.estimator.estimator_base.EstimatorBase</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>synth</strong> (<em>Object</em>) – Instance of <a class="reference internal" href="../synth/synth_base.html#spiegelib.synth.SynthBase" title="spiegelib.synth.SynthBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.synth.SynthBase</span></code></a></p></li>
-<li><p><strong>features</strong> (<em>list</em>) – A list of <a class="reference internal" href="../features/features_base.html#spiegelib.features.FeaturesBase" title="spiegelib.features.FeaturesBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.features.FeaturesBase</span></code></a> objects.
+<li><p><strong>synth</strong> (<em>Object</em>) – Instance of <a class="reference internal" href="../synth/synth_base.html#spiegelib.synth.SynthBase" title="spiegelib.synth.SynthBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">SynthBase</span></code></a></p></li>
+<li><p><strong>features</strong> (<em>list</em>) – A list of <a class="reference internal" href="../features/features_base.html#spiegelib.features.FeaturesBase" title="spiegelib.features.FeaturesBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">FeaturesBase</span></code></a> objects.
 Each feature extraction object defines an objective and is used
 in the evaluation function to determine <em>fitness</em> of an individual.</p></li>
 <li><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – Seed for random. Defaults to current system time.</p></li>
+<li><p><strong>pop_size</strong> (<em>int</em><em>, </em><em>optional</em>) – Size of population at each generation</p></li>
+<li><p><strong>ngen</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of generations to run</p></li>
+<li><p><strong>cxpb</strong> (<em>float</em><em>, </em><em>optional</em>) – Crossover probability, must be between 0 and 1.</p></li>
+<li><p><strong>mutpb</strong> (<em>float</em><em>, </em><em>optional</em>) – Mutation probability, must be between 0 and 1.</p></li>
 </ul>
 </dd>
 </dl>
