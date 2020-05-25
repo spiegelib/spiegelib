@@ -45,8 +45,8 @@ SpiegeLib Reference
    :maxdepth: 2
 
    Core <reference/core>
-   Synth <reference/synth>
-   Audio Features <reference/features>
+   Synthesizers <reference/synth>
+   Audio Feature Extraction <reference/features>
    Estimators <reference/estimators>
    Evaluation <reference/evaluation>
 

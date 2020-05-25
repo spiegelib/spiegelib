@@ -85,8 +85,8 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="core.html">Core</a></li>
-<li class="toctree-l1"><a class="reference internal" href="synth.html">Synth</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Audio Features</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="synth.html">Synthesizers</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Audio Feature Extraction</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="features/features_base.html">     FeaturesBase</a></li>
 <li class="toctree-l2"><a class="reference internal" href="features/fft.html">Fast Fourier Transform (FFT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="features/stft.html">Short Time Fourier Transform (STFT)</a></li>
@@ -198,11 +198,11 @@ inherit from <a class="reference internal" href="features/features_base.html#fea
 algorithms. All classes that inherit from <a class="reference internal" href="features/features_base.html#features-base"><span class="std std-ref">FeaturesBase</span></a> have
 a <code class="docutils literal notranslate"><span class="pre">scaler</span></code> attribute which holds a data scaler object and can be used to normalize
 or standardize feature extraction results. These scalers are inspired by the scalers
-implemented in <cite>sklearn &lt;https://scikit-learn.org/stable/modules/classes.html#module-sklearn.preprocessing&gt;</cite>,
-but can handle datasets with more dimensions. They are simplified and are designed
-to be fit in one pass and to handle dense matrixes.</p>
-<p>Scalers must be ‘trained’ (fit) before they can be used to scale new results. See the example
-in <a class="reference internal" href="features/standard_scaler.html#standard-scaler"><span class="std std-ref">StandardScaler</span></a> for an example on how to perform this.</p>
+implemented in <a class="reference external" href="https://scikit-learn.org/stable/modules/classes.html#module-sklearn.preprocessing">sklearn</a>,
+but can handle datasets with more dimensions. They are also simplified and designed to
+fit into feature extraction pipelines.</p>
+<p>Some examples demonstrating how scalers are integrated with feature extraction are
+provided in the <a class="reference internal" href="features/standard_scaler.html#standard-scaler"><span class="std std-ref">StandardScaler</span></a></p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="features/data_scaler_base.html">DataScalerBase</a></li>

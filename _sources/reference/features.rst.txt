@@ -31,12 +31,12 @@ Data scaling is an important step in pre-processing data prior to machine learni
 algorithms. All classes that inherit from :ref:`FeaturesBase <features_base>` have
 a ``scaler`` attribute which holds a data scaler object and can be used to normalize
 or standardize feature extraction results. These scalers are inspired by the scalers
-implemented in `sklearn <https://scikit-learn.org/stable/modules/classes.html#module-sklearn.preprocessing>`,
-but can handle datasets with more dimensions. They are simplified and are designed
-to be fit in one pass and to handle dense matrixes.
+implemented in `sklearn <https://scikit-learn.org/stable/modules/classes.html#module-sklearn.preprocessing>`_,
+but can handle datasets with more dimensions. They are also simplified and designed to
+fit into feature extraction pipelines.
 
-Scalers must be 'trained' (fit) before they can be used to scale new results. See the example
-in :ref:`StandardScaler <standard_scaler>` for an example on how to perform this.
+Some examples demonstrating how scalers are integrated with feature extraction are
+provided in the :ref:`StandardScaler <standard_scaler>`
 
 .. toctree::
    :maxdepth: 2

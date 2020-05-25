@@ -85,8 +85,8 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../core.html">Core</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../synth.html">Synth</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../features.html">Audio Features</a><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../synth.html">Synthesizers</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../features.html">Audio Feature Extraction</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="features_base.html">     FeaturesBase</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fft.html">Fast Fourier Transform (FFT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stft.html">Short Time Fourier Transform (STFT)</a></li>
@@ -177,6 +177,86 @@
 <span id="standardscaler-base"></span><span id="standard-scaler"></span><h1>StandardScaler Base<a class="headerlink" href="#module-spiegelib.features.standard_scaler" title="Permalink to this headline">¶</a></h1>
 <p>Data scaler class that implments standarization. This transforms data
 to have a mean of zero and variance of 1.</p>
+<p>Scaler must be ‘trained’ (fit) before it can be used to scale new results.</p>
+<p class="rubric">Examples</p>
+<ol class="arabic">
+<li><p>Feature extraction objects by default load with a StandardScaler and
+are designed to work with the DatasetGenetor</p>
+<blockquote>
+<div><div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spiegelib</span> <span class="k">as</span> <span class="nn">spgl</span>
+
+<span class="n">synth</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">synth</span><span class="o">.</span><span class="n">SynthVST</span><span class="p">(</span><span class="s2">&quot;/Library/Audio/Plug-Ins/VST/Dexed.vst&quot;</span><span class="p">)</span>
+<span class="n">spectral_features</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">SpectralSummarized</span><span class="p">()</span>
+<span class="n">generator</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">DatasetGenerator</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">spectral_features</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">generator</span><span class="o">.</span><span class="n">save_scaler</span><span class="p">(</span><span class="s1">&#39;./data_scaler.pkl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The scaler is saved in the spectral_features object and is used to scale
+future data. The scaler is also saved and can be reloaeded for future
+feature extraction. See <a class="reference internal" href="features_base.html#spiegelib.features.FeaturesBase.load_scaler" title="spiegelib.features.FeaturesBase.load_scaler"><code class="xref py py-meth docutils literal notranslate"><span class="pre">load_scaler()</span></code></a></p>
+</div></blockquote>
+</li>
+<li><p>Using StandardScaler independently</p>
+<blockquote>
+<div><div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spiegelib</span> <span class="k">as</span> <span class="nn">spgl</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Generate a dataset without scaling</span>
+<span class="n">synth</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">synth</span><span class="o">.</span><span class="n">SynthVST</span><span class="p">(</span><span class="s2">&quot;/Library/Audio/Plug-Ins/VST/Dexed.vst&quot;</span><span class="p">,</span>
+                            <span class="n">render_length_secs</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+
+<span class="n">mfcc</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">MFCC</span><span class="p">(</span><span class="n">num_mfccs</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+<span class="n">generator</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">DatasetGenerator</span><span class="p">(</span><span class="n">synth</span><span class="p">,</span> <span class="n">mfcc</span><span class="p">)</span>
+<span class="n">generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">file_prefix</span><span class="o">=</span><span class="s2">&quot;train_&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># DatasetGenerator will automatically save the extracted features as a npy</span>
+<span class="c1"># file in the current working directory</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./train_features.npy&#39;</span><span class="p">)</span>
+
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">scaler</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+<span class="n">scaled_data</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+
+
+<span class="c1"># Now we can add the scaler to the MFCC feature extractor and use it to</span>
+<span class="c1"># scale any future feature extractions</span>
+<span class="n">mfcc</span><span class="o">.</span><span class="n">set_scaler</span><span class="p">(</span><span class="n">scaler</span><span class="p">)</span>
+<span class="n">random_audio</span> <span class="o">=</span> <span class="n">synth</span><span class="o">.</span><span class="n">get_random_example</span><span class="p">()</span>
+<span class="n">scaled_mfccs</span> <span class="o">=</span> <span class="n">mfcc</span><span class="p">(</span><span class="n">random_audio</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Scaling along certain dimensions</p>
+<blockquote>
+<div><p>The dimension that scaling is applied to depends on the fit axis. Our MFCC dataset
+generated in the previous example has the shape (1000, 13, 88) where each axis
+corresponds to (batches, mfccs, time slices).</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Same dataset as before and new scaler object</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./train_features.npy&#39;</span><span class="p">)</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">spgl</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">StandardScaler</span><span class="p">()</span>
+
+<span class="c1"># This flattens the entire dataset and calculates</span>
+<span class="c1"># the mean and variance on the flattened array</span>
+<span class="n">scaler</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+
+<span class="c1"># Since the batch is on the first axis, this will calculate</span>
+<span class="c1"># the mean and variance independently for each MFCC and time slice</span>
+<span class="n">scaler</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># This will scale each MFCC band independently</span>
+<span class="n">scaler</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>To control the scale axis when using the DatasetGenerator from the first
+example, a custom axis can be set for a feature extraction object in the
+constructor. See the scale_axis argument in
+the <a class="reference internal" href="features_base.html#spiegelib.features.FeaturesBase" title="spiegelib.features.FeaturesBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">FeaturesBase</span></code></a> constructor.</p>
+</div></blockquote>
+</li>
+</ol>
 <dl class="class">
 <dt id="spiegelib.features.StandardScaler">
 <em class="property">class </em><code class="sig-prename descclassname">spiegelib.features.</code><code class="sig-name descname">StandardScaler</code><a class="headerlink" href="#spiegelib.features.StandardScaler" title="Permalink to this definition">¶</a></dt>
@@ -188,8 +268,10 @@ to have a mean of zero and variance of 1.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<em>np.ndarray</em>) – data to use to calculate mean and std on</p></li>
-<li><p><strong>axis</strong> (<em>int</em><em>, </em><em>tuple</em>) – axis or axes to use for calculating scaling parameters on.</p></li>
+<li><p><strong>data</strong> (<em>np.ndarray</em>) – data to calculate mean and standard deviation on
+for future scaling</p></li>
+<li><p><strong>axis</strong> (<em>int</em><em>, </em><em>tuple</em><em>, </em><em>optional</em>) – axis or axes to use for calculating scaling
+parameteres. Defaults to None which will flatten the array first.</p></li>
 </ul>
 </dd>
 </dl>
@@ -198,13 +280,13 @@ to have a mean of zero and variance of 1.</p>
 <dl class="method">
 <dt id="spiegelib.features.StandardScaler.transform">
 <code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.StandardScaler.transform" title="Permalink to this definition">¶</a></dt>
-<dd><p>Perform normalization on data</p>
+<dd><p>Scale data</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>np.array</em>) – data to normalize</p>
+<dd class="field-odd"><p><strong>data</strong> (<em>np.ndarray</em>) – data to scale</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Normalized data</p>
+<dd class="field-even"><p>scaled data</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>np.ndarray</p>

@@ -85,8 +85,8 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../core.html">Core</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../synth.html">Synth</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../features.html">Audio Features</a><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../synth.html">Synthesizers</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../features.html">Audio Feature Extraction</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="features_base.html">     FeaturesBase</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fft.html">Fast Fourier Transform (FFT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stft.html">Short Time Fourier Transform (STFT)</a></li>
@@ -187,8 +187,10 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<em>np.ndarray</em>) – data to use for fitting scaling parameters</p></li>
-<li><p><strong>axis</strong> (<em>int</em><em>, </em><em>tuple</em>) – axis or axes to use for calculating scaling parameters on.</p></li>
+<li><p><strong>data</strong> (<em>np.ndarray</em>) – data to calculate mean and standard deviation on
+for future scaling</p></li>
+<li><p><strong>axis</strong> (<em>int</em><em>, </em><em>tuple</em><em>, </em><em>optional</em>) – axis or axes to use for calculating scaling
+parameteres. Defaults to None which will flatten the array first.</p></li>
 </ul>
 </dd>
 </dl>
@@ -197,13 +199,13 @@
 <dl class="method">
 <dt id="spiegelib.features.DataScalerBase.transform">
 <em class="property">abstract </em><code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.DataScalerBase.transform" title="Permalink to this definition">¶</a></dt>
-<dd><p>Perform scaling on data</p>
+<dd><p>Scale data</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>np.array</em>) – data to scale</p>
+<dd class="field-odd"><p><strong>data</strong> (<em>np.ndarray</em>) – data to scale</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>sacled data</p>
+<dd class="field-even"><p>scaled data</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>np.ndarray</p>
@@ -217,7 +219,11 @@
 <dd><p>Fit scaling parameters and then scale data</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>np.array</em>) – data to fit scaling parameters to and then transform</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>np.ndarray</em>) – data to scale</p></li>
+<li><p><strong>axis</strong> (<em>int</em><em>, </em><em>tuple</em><em>, </em><em>optional</em>) – axis or axes to use for calculating scaling
+parameteres. Defaults to None which will flatten the array first.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>scaled data</p>
