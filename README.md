@@ -7,7 +7,7 @@ Synthesizer Programming with Intelligent Exploration, Generation, and Evaluation
 
 ---
 
-An object oriented Python library for research and development related to Automatic Sound Synthesizer Programming. *SpiegeLib* contains a set of classes and base classes for developing and evaluting algorithms for generating parameters and patch settings for synthesizers.
+An object oriented Python library for research and development related to Automatic Synthesizer Programming. *SpiegeLib* contains a set of classes and base classes for developing and evaluating algorithms for generating parameters and patch settings for synthesizers.
 
 SpiegeLib is named after composer Laurie Spiegel, an early pioneer in electronic music. She is known for her work with synthesizers and for automating various aspects of the music composition process. Her philosophy for using technology and automation in music serves as motivation for this project:
 
@@ -83,7 +83,7 @@ Please report and issues or desires for enhancements on the GitHub issues page. 
 
 ## Acknowledgements
 
-Thank you to Matthew Yee-King, Leon Fedden, and Mark d'Inverno for their work on [*Automatic Programming of VST Sound Synthesizers Using Deep Networks and Other Techniques*](https://ieeexplore.ieee.org/abstract/document/8323327?casa_token=795OBbWb74QAAAAA:iXxMiGgAJ32MMWYpRlqPy0xvAxwztedvv3sZpaJZ9t-O9-nNJmtTteiEjhtB2h0CQ6S8mHhFbII) and the research code they released with that project. That work served as inspiration and motivation for *SpiegeLib*.
+Thank you to Matthew Yee-King, Leon Fedden, and Mark d'Inverno for their work on [*Automatic Programming of VST Sound Synthesizers Using Deep Networks and Other Techniques*](https://ieeexplore.ieee.org/abstract/document/8323327?casa_token=795OBbWb74QAAAAA:iXxMiGgAJ32MMWYpRlqPy0xvAxwztedvv3sZpaJZ9t-O9-nNJmtTteiEjhtB2h0CQ6S8mHhFbII) and the research code they released with that project. Their work served as inspiration for *SpiegeLib* and was an invaluable resource in beginning to put together this library.
 
 ## Contributors
 

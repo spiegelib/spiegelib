@@ -22,14 +22,19 @@ from spiegelib.features.features_base import FeaturesBase
 class NSGA3(EstimatorBase):
     """
         Args:
-            synth (Object): Instance of :class:`spiegelib.synth.SynthBase`
-            features (list): A list of :class:`spiegelib.features.FeaturesBase` objects.
+            synth (Object): Instance of :class:`~spiegelib.synth.SynthBase`
+            features (list): A list of :class:`~spiegelib.features.FeaturesBase` objects.
                 Each feature extraction object defines an objective and is used
                 in the evaluation function to determine *fitness* of an individual.
             seed (int, optional): Seed for random. Defaults to current system time.
+            pop_size (int, optional): Size of population at each generation
+            ngen (int, optional): Number of generations to run
+            cxpb (float, optional): Crossover probability, must be between 0 and 1.
+            mutpb (float, optional): Mutation probability, must be between 0 and 1.
     """
 
-    def __init__(self, synth, features_list, seed=None):
+    def __init__(self, synth, features, seed=None, pop_size=100, ngen=25,
+                 cxpb=0.5, mutpb=0.5):
         """
         Constructor
         """
@@ -41,11 +46,16 @@ class NSGA3(EstimatorBase):
         self.synth = synth
         self.num_params = len(synth.get_patch())
 
-        if not isinstance(features_list, list):
+        if not isinstance(features, list):
             raise TypeError("features_list must be a list")
 
-        self.features_list = features_list
+        self.features_list = features
         self.target = None
+
+        self.pop_size = pop_size
+        self.ngen = ngen
+        self.cxpb = cxpb
+        self.mutpb = mutpb
 
         self.logbook = tools.Logbook()
 
@@ -135,7 +145,7 @@ class NSGA3(EstimatorBase):
         for extractor in self.features_list:
             self.target.append(extractor(input))
 
-        pop = self.toolbox.population(n=300)
+        pop = self.toolbox.population(n=self.pop_size)
         invalid_ind = [ind for ind in pop if not ind.fitness.valid]
         fitnesses = self.toolbox.map(self.toolbox.evaluate, invalid_ind)
         for ind, fit in zip(invalid_ind, fitnesses):
@@ -153,9 +163,9 @@ class NSGA3(EstimatorBase):
         self.logbook.record(gen=0, evals=len(invalid_ind), **record)
 
         # Begin the generational process
-        pbar = tqdm(range(1, 100), desc="Generation 1")
+        pbar = tqdm(range(1, self.ngen), desc="Generation 1")
         for gen in pbar:
-            offspring = algorithms.varAnd(pop, self.toolbox, 0.5, 0.5)
+            offspring = algorithms.varAnd(pop, self.toolbox, self.cxpb, self.mutpb)
 
             # Evaluate the individuals with an invalid fitness
             invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
@@ -164,7 +174,7 @@ class NSGA3(EstimatorBase):
                 ind.fitness.values = fit
 
             # Select the next generation population from parents and offspring
-            pop = self.toolbox.select(pop + offspring, 300)
+            pop = self.toolbox.select(pop + offspring, self.pop_size)
 
             # Compile statistics about the new population
             record = stats.compile(pop)
