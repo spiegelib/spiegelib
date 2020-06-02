@@ -51,7 +51,7 @@ These instructions show how to install *SpiegeLib* in an anaconda environment fo
 development.
 
 Install `anaconda <https://www.anaconda.com/>`_ if you don't have it already. Make sure
-to install the Python 3 version as *speigel* only runs on Python 3.6 and higher.
+to install the Python 3 version as *SpeigeLib* only runs on Python 3.6 and higher.
 
 1) First, create a new conda environment for *SpiegeLib*::
 
@@ -72,7 +72,7 @@ to install the Python 3 version as *speigel* only runs on Python 3.6 and higher.
 	#
 	#     $ conda deactivate
 
-  | At the time of writing, TensorFlow was only supported in python versions 3.5-3.7,
+  | At the time of writing, Py-Boost is only supported in python 3.7 or lower,
 	  so we'll specify python 3.7 for this conda environment. Numpy and matplotlib
 	  dependencies were also installed here. The other dependencies will be installed
 	  by pip.

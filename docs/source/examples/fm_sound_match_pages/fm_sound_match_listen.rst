@@ -3,6 +3,8 @@
 Sound Matching Audio Clips
 --------------------------
 
+**Watch your volume! Some of the sounds are a bit piercing.**
+
 .. raw:: html
 
 	<div style="float:left; width:100%">
