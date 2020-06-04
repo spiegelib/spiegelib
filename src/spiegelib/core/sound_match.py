@@ -37,10 +37,6 @@ Sound matching with a genetic algorithm
 
 """
 
-import os
-
-import librosa
-
 from spiegelib import AudioBuffer
 from spiegelib.synth.synth_base import SynthBase
 from spiegelib.features.features_base import FeaturesBase
