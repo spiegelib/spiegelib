@@ -41,20 +41,20 @@ class SynthBase(ABC):
 
     def __init__(self, sample_rate=44100, buffer_size=512, midi_note=48,
                  midi_velocity=127, note_length_secs=1.0, render_length_secs=2.0,
-                 overridden_params=[], clamp_params=True):
+                 overridden_params=None, clamp_params=True):
         """
         Constructor
         """
         super().__init__()
 
-        self.sample_rate        = sample_rate
-        self.buffer_size        = buffer_size
-        self.midi_note          = midi_note
-        self.midi_velocity      = midi_velocity
-        self.note_length_secs   = note_length_secs
+        self.sample_rate = sample_rate
+        self.buffer_size = buffer_size
+        self.midi_note = midi_note
+        self.midi_velocity = midi_velocity
+        self.note_length_secs = note_length_secs
         self.render_length_secs = render_length_secs
-        self.overridden_params  = overridden_params
-        self.clamp_params       = clamp_params
+        self.overridden_params = overridden_params or []
+        self.clamp_params = clamp_params
 
         # Whether or not patch has been rendered by engine
         self.rendered_patch = False
@@ -83,10 +83,10 @@ class SynthBase(ABC):
         :type parameters: list
         """
 
-        if not len(parameters):
+        if len(parameters) == 0:
             return
 
-        param_indices = [p for p in self.get_parameters()]
+        param_indices = self.get_parameters().keys()
         overridden_indices = [p[0] for p in self.overridden_params]
         non_overridden_indices = list(set(param_indices) - set(overridden_indices))
         new_patch = []
@@ -103,8 +103,7 @@ class SynthBase(ABC):
             # Received same number of parameters as total parameter count,
             # map the non-overridden parameters from that list
             elif len(parameters) == len(param_indices):
-                    new_patch = [(i, float(parameters[i]))
-                                 for i in non_overridden_indices]
+                new_patch = [(i, float(parameters[i])) for i in non_overridden_indices]
             else:
                 raise Exception((
                     'Unclear on how to map parameters, received %s parameters '
