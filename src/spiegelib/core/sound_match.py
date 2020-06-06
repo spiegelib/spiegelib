@@ -37,6 +37,9 @@ Sound matching with a genetic algorithm
 
 """
 
+import joblib
+from copy import copy
+
 from spiegelib import AudioBuffer
 from spiegelib.synth.synth_base import SynthBase
 from spiegelib.features.features_base import FeaturesBase
@@ -82,7 +85,7 @@ class SoundMatch():
         self.patch = None
 
 
-    def get_patch(self):
+    def get_patch(self, skip_overridden=True):
         """
         Returns:
             dict: The resuling patch after estimation
@@ -93,6 +96,7 @@ class SoundMatch():
         if not self.patch:
             raise Exception('Please run match first')
 
+        self.patch = self.synth.get_patch(skip_overridden)
         return self.patch
 
 
@@ -107,20 +111,38 @@ class SoundMatch():
             :ref:`AudioBuffer <audio_buffer>`: audio output from synthesizer after sound matching
         """
 
-        # Attempt to run feature extraction if features have been provided
-        if self.features:
-            input = self.features(target)
-        else:
-            input = target
-
         # Estimate parameters
-        params = self.estimator.predict(input)
+        params = self.match_parameters(target)
 
         # Load patch into synth and return audio
         self.synth.set_patch(params)
         self.synth.render_patch()
         self.patch = self.synth.get_patch()
         return self.synth.get_audio()
+
+
+    def match_parameters(self, target):
+        """
+        Run estimation of parameters and use audio feature extraction if it
+        has been set.
+
+        Args:
+            target (:ref:`AudioBuffer <audio_buffer>`): input audio to use as target
+
+        Returns:
+            list: estimated parameter values outputed from estimator
+        """
+
+        # Attempt to run feature extraction if features have been provided
+        if self.features:
+            input_data = self.features(target)
+        else:
+            input_data = target
+
+        # Estimate parameters
+        params = self.estimator.predict(input_data)
+
+        return params
 
 
     def match_from_file(self, path):

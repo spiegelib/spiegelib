@@ -6,6 +6,7 @@
 import os
 import sys
 import argparse
+import importlib.util
 import spiegelib as spgl
 
 
@@ -19,7 +20,14 @@ def main(arguments):
 
     args = parser.parse_args(arguments)
 
-    server = spgl.SoundMatchServer(args.estimator)
+    loader = os.path.join(args.estimator, 'loader.py')
+    spec = importlib.util.spec_from_file_location("loader", loader)
+    loader = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(loader)
+
+    loader_root = os.path.abspath(args.estimator)
+    sound_matcher = loader.load(loader_root)
+    server = spgl.SoundMatchServer(sound_matcher)
     server.start()
 
 
