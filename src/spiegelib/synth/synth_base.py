@@ -261,13 +261,13 @@ class SynthBase(ABC):
         :type path: str
         """
 
-        patch, overridden = SynthBase.load_state_json(path)
+        patch, overridden = SynthBase.load_synth_config(path)
         self.set_overridden_parameters(overridden)
         self.set_patch(patch)
 
 
     @staticmethod
-    def load_state_json(path):
+    def load_synth_config(path):
         """
         Loads and extracts patch setting and overridden parameters from a saved
         synth JSON file

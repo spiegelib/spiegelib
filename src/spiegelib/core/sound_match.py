@@ -8,9 +8,8 @@ Optionally, feature extraction can be performed on the target audio file prior
 to being fed into the estimator using an implementation
 of :ref:`FeaturesBase <features_base>`.
 
-Alternatively, instead of a Synthesizer object, a synth config file can be used
-and SoundMatch can be used to return parameters only without requiring the loading
-of a synthesizer.
+Alternatively, instead of a Synthesizer object, a synth config file can be used.
+Sound matching can then be used to return parameters only without requiring a synthesizer.
 
 Example
 ^^^^^^^
@@ -50,9 +49,8 @@ from spiegelib.estimator.estimator_base import EstimatorBase
 class SoundMatch():
     """
     Args:
-        synth (Object or String): If an object must inherit from
-            :class:`~spiegelib.synth.SynthBase` and is the synthesizer that
-            will be used for sound matching. If it is a string, it must be the path
+        synth (Object or String): If an object, must inherit from
+            :class:`~spiegelib.synth.SynthBase`. If it is a string, it must be the path
             of a synth config JSON file which contains parameter information and the
             list of overridden parameters for a synthesizer.
         estimator (Object): must inherit from :class:`spiegelib.estimator.EstimatorBase`
@@ -169,15 +167,20 @@ class SoundMatch():
             param_indices = [p[0] for p in self.parameters]
             params = SynthBase.expand_sub_patch(params, param_indices, self.overridden)
             params = sorted(params + self.overridden, key=lambda p: p[0])
-            assert len(params) == len(self.parameters), "Incorrect number of parameters returned"
+            self.patch = params
+            if len(params) != len(self.parameters):
+                raise ValueError("Incorrect number of parameters returned. Number of "
+                                 "overridden parameters from synth config file + parameters "
+                                 "returned from the estimator must equal the full patch for synth")
 
         elif expand and self.synth is not None:
             self.synth.set_patch(params)
-            self.synth.get_patch()
+            params = self.synth.get_patch(skip_overridden=False)
+            self.patch = params
 
         elif expand and (self.parameters is None or self.overridden is None):
-            print("Unable to expand parameters, in order to use this feature please "
-                  "load a synthesizer or a synth config JSON file during consruction")
+            raise ValueError("Unable to expand parameters, in order to use this feature please "
+                             "load a synthesizer or a synth config JSON file during consruction")
 
         return params
 
@@ -208,6 +211,6 @@ class SoundMatch():
             config_location (str): synth config JSON file
         """
 
-        patch, overridden = SynthBase.load_state_json(config_location)
+        patch, overridden = SynthBase.load_synth_config(config_location)
         self.parameters = sorted(patch + overridden, key=lambda a: a[0])
         self.overridden = overridden
