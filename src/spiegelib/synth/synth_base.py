@@ -2,7 +2,7 @@
 """
 Synth Abstract Base Class
 """
-from __future__ import print_function
+
 import os
 import numbers
 import json
@@ -88,34 +88,21 @@ class SynthBase(ABC):
 
         param_indices = self.get_parameters().keys()
         overridden_indices = [p[0] for p in self.overridden_params]
-        non_overridden_indices = list(set(param_indices) - set(overridden_indices))
         new_patch = []
 
         # If this is just a list of numbers, then try to associate with parameter settings
         if isinstance(parameters[0], numbers.Number):
-
-            # Received same number of parameters as non-overridden parameters,
-            # map directly to non-overridden parameters
-            if len(parameters) == len(non_overridden_indices):
-                new_patch = [(non_overridden_indices[i], float(parameters[i]))
-                             for i in range(len(parameters))]
-
-            # Received same number of parameters as total parameter count,
-            # map the non-overridden parameters from that list
-            elif len(parameters) == len(param_indices):
-                new_patch = [(i, float(parameters[i])) for i in non_overridden_indices]
-            else:
-                raise Exception((
-                    'Unclear on how to map parameters, received %s parameters '
-                    'and there are %s non-overridden parameters and %s total parameters.'
-                ) % (len(parameters), len(non_overridden_indices), len(overridden_indices)))
+            new_patch = SynthBase.expand_sub_patch(parameters,
+                                                   param_indices,
+                                                   self.overridden_params)
 
         # If this is a list of tuples then add those directly
         elif len(parameters[0]) == 2:
             new_patch = parameters
 
         else:
-            raise Exception('Invalid parameter list provided. Must be a list of numbers or a list of tuples.')
+            raise Exception("Invalid parameter list provided. Must be a list of "
+                            "numbers or a list of tuples.")
 
         # Update patch member variable with new patch, skipping any overridden params
         for param in new_patch:
@@ -136,7 +123,6 @@ class SynthBase(ABC):
         """
         Must be overridden. Load current patch into synth engine
         """
-        pass
 
 
     @abstractmethod
@@ -144,7 +130,6 @@ class SynthBase(ABC):
         """
         Must be overridden. Should render audio for the currently loaded patch
         """
-        pass
 
 
     @abstractmethod
@@ -156,7 +141,7 @@ class SynthBase(ABC):
         :return: An audio buffer of float audio samples with a value between -1 & 1
         :rtype: :class:`spiegelib.core.audio_buffer.AudioBuffer`
         """
-        pass
+
 
     @abstractmethod
     def randomize_patch(self):
@@ -165,7 +150,6 @@ class SynthBase(ABC):
         of randomizing parameters of the synthesizer. Overridden methods should be
         uneffected by this randomization
         """
-        pass
 
 
     def get_random_example(self):
@@ -208,7 +192,7 @@ class SynthBase(ABC):
         patch = []
         overridden_params = [p[0] for p in self.overridden_params]
         for item in self.patch:
-            if not (item[0] in overridden_params):
+            if not item[0] in overridden_params:
                 patch.append(item)
 
         return patch
@@ -243,7 +227,7 @@ class SynthBase(ABC):
         """
 
         assert self.parameters, "Parameters must be set before saving parameter state"
-        assert self.patch,      "Patch must be set before saving parameter state"
+        assert self.patch, "Patch must be set before saving parameter state"
 
         # Make sure directory exists and create if it doesn't
         fullpath = os.path.abspath(path)
@@ -264,8 +248,8 @@ class SynthBase(ABC):
                 "overridden": parameter[0] in overridden_params
             }
 
-        with open(fullpath, 'w') as fp:
-            json.dump(param_dict, fp, indent=True, sort_keys=True)
+        with open(fullpath, 'w') as file_handle:
+            json.dump(param_dict, file_handle, indent=True, sort_keys=True)
 
 
     def load_state(self, path):
@@ -277,12 +261,30 @@ class SynthBase(ABC):
         :type path: str
         """
 
+        patch, overridden = SynthBase.load_state_json(path)
+        self.set_overridden_parameters(overridden)
+        self.set_patch(patch)
+
+
+    @staticmethod
+    def load_state_json(path):
+        """
+        Loads and extracts patch setting and overridden parameters from a saved
+        synth JSON file
+
+        Args:
+            path (str): location to load JSON file from
+
+        Returns:
+            list, list: patch list and overridden parameter list
+        """
+
         fullpath = os.path.abspath(path)
         assert os.path.exists(fullpath), "Path does not exists: %s" % fullpath
 
         param_dict = {}
-        with open(fullpath, 'r') as fp:
-            param_dict = json.load(fp)
+        with open(fullpath, 'r') as file_handle:
+            param_dict = json.load(file_handle)
 
         patch = []
         overridden = []
@@ -298,5 +300,47 @@ class SynthBase(ABC):
                     param_dict[key]['value']
                 ))
 
-        self.set_overridden_parameters(overridden)
-        self.set_patch(patch)
+        return patch, overridden
+
+
+    @staticmethod
+    def expand_sub_patch(patch, param_indices, overridden):
+        """
+        Convert an ordered list of parameter values into a list of tuples containing
+        the parameter indices linked to the parameter values. Does so by comparing
+        the overridden parameters to the full list of paramater indices and using
+        the differences to label the patch values.
+
+        Args:
+            patch (list): An ordered list of parameter values
+            param_indices (list): A full list of all parameter indices
+            overridden (list of tuples): A list of tuples which contain the parameter
+                indices and values of the overridden parameters
+
+        Returns:
+            list: a list of tuples representing a full patch setting
+        """
+
+        overridden_indices = [p[0] for p in overridden]
+        non_overridden_indices = list(set(param_indices) - set(overridden_indices))
+        new_patch = []
+
+        # Received same number of parameters as non-overridden parameters,
+        # map directly to non-overridden parameters
+        if len(patch) == len(non_overridden_indices):
+            new_patch = [(non_overridden_indices[i], float(patch[i]))
+                         for i in range(len(patch))]
+
+        # Received same number of parameters as total parameter count,
+        # map the non-overridden parameters from that list
+        elif len(patch) == len(param_indices):
+            new_patch = [(i, float(patch[i])) for i in non_overridden_indices]
+
+        else:
+            raise ValueError((
+                'Unclear on how to map parameters, received %s parameters '
+                'and there are %s non-overridden parameters and %s total parameters.'
+            ) % (len(patch), len(non_overridden_indices),
+                 len(overridden_indices + non_overridden_indices)))
+
+        return new_patch

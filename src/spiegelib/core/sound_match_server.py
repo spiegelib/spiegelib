@@ -1,5 +1,8 @@
 #!/use/bin/env python
 """
+This class runs a simple WSGI server that receives GET requests containing a file path
+to an audio file to use as a sound target for synthesizer sound matching. It returns
+the parameter settings as JSON.
 """
 
 import os
@@ -11,12 +14,12 @@ from urllib.parse import parse_qs
 import spiegelib as spgl
 
 
-# pylint: disable=too-many-instance-attributes
 class SoundMatchServer():
     """
+    Args:
+        sound_matcher (:class:`~spiegelib.core.SoundMatch`): SountMatch object to use
     """
 
-    # pylint: disable=too-many-arguments
     def __init__(self, sound_matcher):
         """
         Constructor
@@ -46,9 +49,6 @@ class SoundMatchServer():
         if method == 'GET':
             return self.get(environ, start_response)
 
-        if method == 'POST':
-            return self.post(environ, start_response)
-
         status = '500 Internal Server Error'
         start_response(status, [])
         return []
@@ -71,19 +71,6 @@ class SoundMatchServer():
                 '404 Not Found',
                 SoundMatchServer.get_headers(response_body, 'text/html')
             )
-
-        return [response_body]
-
-
-    def post(self, environ, start_response):
-        """
-        Process a POST request
-        """
-
-        # the environment variable CONTENT_LENGTH may be empty or missing
-        path = environ['PATH_INFO']
-        response_body = b''
-        start_response('404 Not Found', SoundMatchServer.get_headers(response_body, 'text/html'))
 
         return [response_body]
 
@@ -115,36 +102,50 @@ class SoundMatchServer():
         response_body = b''
 
         if target is None:
+            response_body = b'Query string was incorrect. Missing target parameter.'
             start_response(
                 '404 Not Found',
                 SoundMatchServer.get_headers(response_body, 'text/html')
             )
             return response_body
 
+        # Load audio file to use as sound target
         target = os.path.abspath(target[0])
         audio = spgl.AudioBuffer()
 
         try:
             audio.load(target)
         except FileNotFoundError:
-            start_response(
-                '404 Not Found',
-                SoundMatchServer.get_headers(response_body, 'text/html')
-            )
-            return response_body
-
-        params = []
-        try:
-            _ = self.sound_matcher.match(audio)
-            params = copy(self.sound_matcher.get_patch(skip_overridden=False))
-            self.sound_matcher.patch = None
-        except Exception as e:
+            response_body = b'Unable to load audio target file'
             start_response(
                 '500 Internal Server Error',
                 SoundMatchServer.get_headers(response_body, 'text/html')
             )
             return response_body
 
+
+        # Attempt to get parameter settings, either just as parameters
+        # from a parameter match -- or if a synthesizer is cofigured for
+        # this sound match then run the full sound match and get the patch
+        params = []
+        try:
+            if self.sound_matcher.synth is None:
+                params = self.sound_matcher.match_parameters(audio, expand=True)
+            else:
+                _ = self.sound_matcher.match(audio)
+                params = copy(self.sound_matcher.get_patch(skip_overridden=False))
+                self.sound_matcher.patch = None
+
+        except Exception as error:
+            response_body = 'Sound matching failed. %s' % str(error)
+            response_body = bytes(response_body, 'utf-8')
+            start_response(
+                '500 Internal Server Error',
+                SoundMatchServer.get_headers(response_body, 'text/html')
+            )
+            return response_body
+
+        # Successfully got a sound matched patch setting. Return as JSON
         params = {'patch': params}
         params = json.dumps(params)
         response_body = bytes(params, 'utf-8')
