@@ -20,7 +20,7 @@ def main(arguments):
         description=__doc__,
         formatter_class=argparse.RawDescriptionHelpFormatter)
 
-    parser.add_argument('soundmatch', help="Sound match bundle directory", type=str)
+    parser.add_argument('soundmatch_bundle', help="Sound match bundle directory", type=str)
     parser.add_argument('-a', '--address', help="Server address. Defaults to localhost",
                         default="localhost", type=str)
     parser.add_argument('-p', '--port', help="Server port. Defaults to 8000",
@@ -29,14 +29,14 @@ def main(arguments):
     args = parser.parse_args(arguments)
 
     # Load the sound match object loader from given directory
-    loader = os.path.join(args.soundmatch, 'loader.py')
+    loader = os.path.join(args.soundmatch_bundle, 'loader.py')
     spec = importlib.util.spec_from_file_location("loader", loader)
     loader = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(loader)
 
     # Use the given directory as the root for the sound match loader
     # and load the sound matcher object. Then start the sound match server.
-    loader_root = os.path.abspath(args.soundmatch)
+    loader_root = os.path.abspath(args.soundmatch_bundle)
     sound_matcher = loader.load(loader_root)
     server = spgl.SoundMatchServer(sound_matcher, address=args.address, port=args.port)
     server.start()
