@@ -1,6 +1,6 @@
 #!/use/bin/env python
 """
-This class runs a simple WSGI server that receives GET requests containing a file path
+This class runs a simple WSGI server that receives GET requests containing a path
 to an audio file to use as a sound target for synthesizer sound matching. It returns
 the parameter settings as JSON.
 """
