@@ -1,11 +1,16 @@
 #!/usr/bin/env python
 """
 This class performs synthesizer sound matching by estimating parameters for synthesizer
-in order to match a target input sound. It accepts an implementation of :ref:`SynthBase <synth_base>`
-to estimate parameters for and an implementation of :ref:`EstimatorBase <estimator_base>`, which
-performs the parameter estimation. Optionally, feature extraction can be performed on
-the target audio file prior to being fed into the estimator using an implementation
+in order to match a target input sound. It accepts an implementation of
+:ref:`SynthBase <synth_base>` to estimate parameters for and an implementation of
+:ref:`EstimatorBase <estimator_base>`, which performs the parameter estimation.
+Optionally, feature extraction can be performed on the target audio file prior
+to being fed into the estimator using an implementation
 of :ref:`FeaturesBase <features_base>`.
+
+Alternatively, instead of a Synthesizer object, a synth config file can be used
+and SoundMatch can be used to return parameters only without requiring the loading
+of a synthesizer.
 
 Example
 ^^^^^^^
@@ -37,9 +42,6 @@ Sound matching with a genetic algorithm
 
 """
 
-import joblib
-from copy import copy
-
 from spiegelib import AudioBuffer
 from spiegelib.synth.synth_base import SynthBase
 from spiegelib.features.features_base import FeaturesBase
@@ -48,7 +50,11 @@ from spiegelib.estimator.estimator_base import EstimatorBase
 class SoundMatch():
     """
     Args:
-        synth (Object): must inherit from :class:`spiegelib.synth.SynthBase`
+        synth (Object or String): If an object must inherit from
+            :class:`~spiegelib.synth.SynthBase` and is the synthesizer that
+            will be used for sound matching. If it is a string, it must be the path
+            of a synth config JSON file which contains parameter information and the
+            list of overridden parameters for a synthesizer.
         estimator (Object): must inherit from :class:`spiegelib.estimator.EstimatorBase`
         features (Object, optional): must inherit from :class:`spiegelib.features.FeatureBase`
 
@@ -62,9 +68,17 @@ class SoundMatch():
         Constructor
         """
 
+        self.parameters = None
+        self.overridden = None
+
         # Check for valid synth
         if isinstance(synth, SynthBase):
             self.synth = synth
+
+        elif isinstance(synth, str):
+            self.synth = None
+            self.setup_synth_params(synth)
+
         else:
             raise TypeError('synth must inherit from SynthBase, received %s' % type(synth))
 
@@ -72,7 +86,8 @@ class SoundMatch():
         if isinstance(estimator, EstimatorBase):
             self.estimator = estimator
         else:
-            raise TypeError('estimator must inherit from EstimatorBase, received type %s' % type(estimator))
+            raise TypeError("estimator must inherit from EstimatorBase, "
+                            "received type %s" % type(estimator))
 
         # Check for valid feature extraction object
         self.features = None
@@ -80,23 +95,24 @@ class SoundMatch():
             if isinstance(features, FeaturesBase):
                 self.features = features
             else:
-                raise TypeError('features must inherit from Featurebase, received %s' % type(features))
+                raise TypeError("features must inherit from Featurebase, "
+                                "received %s" % type(features))
 
         self.patch = None
 
 
-    def get_patch(self, skip_overridden=True):
+    def get_patch(self):
         """
         Returns:
-            dict: The resuling patch after estimation
+            list: The resuling patch after estimation
 
         Raises:
             Exception: If sound matching has not been run first
         """
+
         if not self.patch:
             raise Exception('Please run match first')
 
-        self.patch = self.synth.get_patch(skip_overridden)
         return self.patch
 
 
@@ -111,23 +127,30 @@ class SoundMatch():
             :ref:`AudioBuffer <audio_buffer>`: audio output from synthesizer after sound matching
         """
 
+        if self.synth is None:
+            raise ValueError("No Synth object. Perhaps you want to run a parameter "
+                             "only match? Use match_parameter method instead")
+
         # Estimate parameters
         params = self.match_parameters(target)
 
         # Load patch into synth and return audio
         self.synth.set_patch(params)
         self.synth.render_patch()
-        self.patch = self.synth.get_patch()
+        self.patch = self.synth.get_patch(skip_overridden=True)
         return self.synth.get_audio()
 
 
-    def match_parameters(self, target):
+    def match_parameters(self, target, expand=False):
         """
         Run estimation of parameters and use audio feature extraction if it
         has been set.
 
         Args:
             target (:ref:`AudioBuffer <audio_buffer>`): input audio to use as target
+            expand (bool, optional): If set to True, will take the parameter values
+                returned from sound matching algorithm and expand with overridden
+                parameters.
 
         Returns:
             list: estimated parameter values outputed from estimator
@@ -141,6 +164,20 @@ class SoundMatch():
 
         # Estimate parameters
         params = self.estimator.predict(input_data)
+
+        if expand and self.parameters is not None and self.overridden is not None:
+            param_indices = [p[0] for p in self.parameters]
+            params = SynthBase.expand_sub_patch(params, param_indices, self.overridden)
+            params = sorted(params + self.overridden, key=lambda p: p[0])
+            assert len(params) == len(self.parameters), "Incorrect number of parameters returned"
+
+        elif expand and self.synth is not None:
+            self.synth.set_patch(params)
+            self.synth.get_patch()
+
+        elif expand and (self.parameters is None or self.overridden is None):
+            print("Unable to expand parameters, in order to use this feature please "
+                  "load a synthesizer or a synth config JSON file during consruction")
 
         return params
 
@@ -158,3 +195,19 @@ class SoundMatch():
 
         target = AudioBuffer(path, self.features.sample_rate)
         return self.match(target)
+
+
+    def setup_synth_params(self, config_location):
+        """
+        Setup synth param settings from a synth config file. Once this is setup,
+        full synthesizer parameter settings can be generated without having to
+        use a synth object. Beneficial for running sound matching without linking
+        to the VST.
+
+        Args:
+            config_location (str): synth config JSON file
+        """
+
+        patch, overridden = SynthBase.load_state_json(config_location)
+        self.parameters = sorted(patch + overridden, key=lambda a: a[0])
+        self.overridden = overridden
