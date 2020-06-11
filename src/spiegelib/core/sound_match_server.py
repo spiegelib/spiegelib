@@ -18,15 +18,17 @@ class SoundMatchServer():
     """
     Args:
         sound_matcher (:class:`~spiegelib.core.SoundMatch`): SountMatch object to use
+        address (str, optional): address to run server at. Defaults to localhost
+        port (int, optional): port to run server at. Defaults to 8000
     """
 
-    def __init__(self, sound_matcher):
+    def __init__(self, sound_matcher, address="localhost", port=8000):
         """
         Constructor
         """
 
-        self.port = 8000
-        self.address = "localhost"
+        self.port = port
+        self.address = address
         self.sound_matcher = sound_matcher
 
 
@@ -126,14 +128,14 @@ class SoundMatchServer():
 
         # Attempt to get parameter settings, either just as parameters
         # from a parameter match -- or if a synthesizer is cofigured for
-        # this sound match then run the full sound match and get the patch
+        # this sound matcher then run the full sound match and get the patch
         params = []
         try:
             if self.sound_matcher.synth is None:
                 params = self.sound_matcher.match_parameters(audio, expand=True)
             else:
                 _ = self.sound_matcher.match(audio)
-                params = copy(self.sound_matcher.get_patch(skip_overridden=False))
+                params = copy(self.sound_matcher.get_patch())
                 self.sound_matcher.patch = None
 
         except Exception as error:

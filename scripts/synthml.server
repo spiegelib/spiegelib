@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
-"""A simple python script template.
+"""
+Script to start up a SoundMatch server
 """
 
 import os
@@ -9,25 +10,35 @@ import argparse
 import importlib.util
 import spiegelib as spgl
 
-
 def main(arguments):
+    """
+    Script entry
+    """
+
 
     parser = argparse.ArgumentParser(
         description=__doc__,
         formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('-e', '--estimator', help="Estimator pickle file",
-                        default=None, type=str)
+
+    parser.add_argument('soundmatch', help="Sound match bundle directory", type=str)
+    parser.add_argument('-a', '--address', help="Server address. Defaults to localhost",
+                        default="localhost", type=str)
+    parser.add_argument('-p', '--port', help="Server port. Defaults to 8000",
+                        default=8000, type=int)
 
     args = parser.parse_args(arguments)
 
-    loader = os.path.join(args.estimator, 'loader.py')
+    # Load the sound match object loader from given directory
+    loader = os.path.join(args.soundmatch, 'loader.py')
     spec = importlib.util.spec_from_file_location("loader", loader)
     loader = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(loader)
 
-    loader_root = os.path.abspath(args.estimator)
+    # Use the given directory as the root for the sound match loader
+    # and load the sound matcher object. Then start the sound match server.
+    loader_root = os.path.abspath(args.soundmatch)
     sound_matcher = loader.load(loader_root)
-    server = spgl.SoundMatchServer(sound_matcher)
+    server = spgl.SoundMatchServer(sound_matcher, address=args.address, port=args.port)
     server.start()
 
 
