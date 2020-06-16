@@ -28,7 +28,7 @@ setup(
     package_data={
         '': ['beaqlejs/*', 'beaqlejs/img/*'],
     },
-    scripts=['scripts/synthml.server'],
+    scripts=['scripts/synthml.server', 'scripts/synthml.socket'],
     python_requires='>=3.6',
     install_requires=[
         'numpy',
