@@ -102,7 +102,7 @@ class SoundMatch():
     def get_patch(self):
         """
         Returns:
-            list: The resuling patch after estimation
+            list: The resulting patch after estimation
 
         Raises:
             Exception: If sound matching has not been run first
@@ -155,7 +155,7 @@ class SoundMatch():
         """
 
         # Attempt to run feature extraction if features have been provided
-        if self.features:
+        if self.features is not None:
             input_data = self.features(target)
         else:
             input_data = target
