@@ -14,7 +14,7 @@ from urllib.parse import parse_qs
 import spiegelib as spgl
 
 
-class SoundMatchServer():
+class SoundMatchHTTPServer():
     """
     Args:
         sound_matcher (:class:`~spiegelib.core.SoundMatch`): SountMatch object to use
@@ -71,7 +71,7 @@ class SoundMatchServer():
             response_body = b''
             start_response(
                 '404 Not Found',
-                SoundMatchServer.get_headers(response_body, 'text/html')
+                SoundMatchHTTPServer.get_headers(response_body, 'text/html')
             )
 
         return [response_body]
@@ -107,7 +107,7 @@ class SoundMatchServer():
             response_body = b'Query string was incorrect. Missing target parameter.'
             start_response(
                 '404 Not Found',
-                SoundMatchServer.get_headers(response_body, 'text/html')
+                SoundMatchHTTPServer.get_headers(response_body, 'text/html')
             )
             return response_body
 
@@ -121,7 +121,7 @@ class SoundMatchServer():
             response_body = b'Unable to load audio target file'
             start_response(
                 '500 Internal Server Error',
-                SoundMatchServer.get_headers(response_body, 'text/html')
+                SoundMatchHTTPServer.get_headers(response_body, 'text/html')
             )
             return response_body
 
@@ -143,7 +143,7 @@ class SoundMatchServer():
             response_body = bytes(response_body, 'utf-8')
             start_response(
                 '500 Internal Server Error',
-                SoundMatchServer.get_headers(response_body, 'text/html')
+                SoundMatchHTTPServer.get_headers(response_body, 'text/html')
             )
             return response_body
 
@@ -151,5 +151,6 @@ class SoundMatchServer():
         params = {'patch': params}
         params = json.dumps(params)
         response_body = bytes(params, 'utf-8')
-        start_response('200 Okay', SoundMatchServer.get_headers(response_body, 'application/json'))
+        start_response('200 Okay', SoundMatchHTTPServer.get_headers(response_body,
+                                                                    'application/json'))
         return response_body
