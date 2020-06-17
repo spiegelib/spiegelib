@@ -42,7 +42,7 @@ class UDPSocketHandler(socketserver.DatagramRequestHandler):
 
     def try_sound_match(self, params):
         """
-        Trys to run a sound match given a query string
+        Trys to run a sound match given a list of OSC parameters
 
         Args:
             params (list): List of OSC params
