@@ -28,7 +28,11 @@ setup(
     package_data={
         '': ['beaqlejs/*', 'beaqlejs/img/*'],
     },
-    scripts=['scripts/synthml.server', 'scripts/synthml.socket'],
+    scripts=[
+        'scripts/soundmatch.httpserver',
+        'scripts/soundmatch.oscserver',
+        'scripts/synthml.server'
+    ],
     python_requires='>=3.6',
     install_requires=[
         'numpy',

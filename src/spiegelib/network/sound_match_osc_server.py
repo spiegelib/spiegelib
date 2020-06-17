@@ -1,29 +1,22 @@
 #!/use/bin/env python
 """
-This class runs a simple WSGI server that receives GET requests containing a path
+This class runs a UDP server that receives OSC messages containing a path
 to an audio file to use as a sound target for synthesizer sound matching. It returns
-the parameter settings as JSON.
+the parameter settings as JSON inside an OSC message.
 """
 
 import os
 import json
 import socketserver
 from copy import copy
-from wsgiref.simple_server import make_server
-from urllib.parse import parse_qs
 
 import spiegelib as spgl
 from spiegelib.network.osc import OscMessage, OscMessageBuilder
 
 
-
 class UDPSocketHandler(socketserver.DatagramRequestHandler):
     """
-    The RequestHandler class for our server.
-
-    It is instantiated once per connection to the server, and must
-    override the handle() method to implement communication to the
-    client.
+    The RequestHandler class for the OSC server.
     """
 
     def handle(self):
@@ -35,6 +28,7 @@ class UDPSocketHandler(socketserver.DatagramRequestHandler):
         print(osc_data.address, osc_data.params)
 
         response_builder = OscMessageBuilder("/error")
+        response_builder.add_arg("unknown address")
         response = response_builder.build()
 
         if osc_data.address == "/sound_match":
@@ -44,6 +38,7 @@ class UDPSocketHandler(socketserver.DatagramRequestHandler):
         socket = self.request[1]
         return_address = (self.client_address[0], self.server.send_port)
         socket.sendto(response.dgram, return_address)
+
 
     def try_sound_match(self, params):
         """
@@ -102,12 +97,13 @@ class UDPSocketHandler(socketserver.DatagramRequestHandler):
 
 
 
-class SoundMatchSocket():
+class SoundMatchOSCServer():
     """
     Args:
         sound_matcher (:class:`~spiegelib.core.SoundMatch`): SountMatch object to use
-        address (str, optional): address to run server at. Defaults to localhost
-        port (int, optional): port to run server at. Defaults to 9999
+        host (str, optional): address to run server at. Defaults to 127.0.0.1
+        receive (int, optonal): port to receive OSC messages on. Defaults to 9001.
+        send (int, optional): port to send OSC messages on. Defaults to 9002.
     """
 
     def __init__(self, sound_matcher, host="127.0.0.1", receive=9001, send=9002):
@@ -123,7 +119,7 @@ class SoundMatchSocket():
 
     def start(self):
         """
-        Begin server
+        Start OSC server
         """
 
         server = socketserver.UDPServer((self.host, self.receive_port), UDPSocketHandler)
