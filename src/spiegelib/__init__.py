@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+"""
+SpiegeLib imports
+"""
 
 from spiegelib.core.audio_buffer import AudioBuffer
 from spiegelib.core.dataset_generator import DatasetGenerator

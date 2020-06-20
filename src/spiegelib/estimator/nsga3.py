@@ -163,7 +163,7 @@ class NSGA3(EstimatorBase):
         self.logbook.record(gen=0, evals=len(invalid_ind), **record)
 
         # Begin the generational process
-        pbar = tqdm(range(1, self.ngen), desc="Generation 1")
+        pbar = tqdm(range(1, self.ngen + 1), desc="Generation 1")
         for gen in pbar:
             offspring = algorithms.varAnd(pop, self.toolbox, self.cxpb, self.mutpb)
 
