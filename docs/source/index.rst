@@ -49,6 +49,7 @@ SpiegeLib Reference
    Audio Feature Extraction <reference/features>
    Estimators <reference/estimators>
    Evaluation <reference/evaluation>
+   Network <reference/network>
 
 Examples
 --------

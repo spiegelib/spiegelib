@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-This class performs synthesizer sound matching by estimating parameters for synthesizer
+This class performs synthesizer sound matching by estimating parameters for a synthesizer
 in order to match a target input sound. It accepts an implementation of
 :ref:`SynthBase <synth_base>` to estimate parameters for and an implementation of
 :ref:`EstimatorBase <estimator_base>`, which performs the parameter estimation.
@@ -8,7 +8,8 @@ Optionally, feature extraction can be performed on the target audio file prior
 to being fed into the estimator using an implementation
 of :ref:`FeaturesBase <features_base>`.
 
-Alternatively, instead of a Synthesizer object, a synth config file can be used.
+Alternatively, instead of a :ref:`SynthBase <synth_base>` object, a synth config
+file (JSON synth state, see :py:meth:`~spiegelib.synth.SynthBase.save_state`) can be used.
 Sound matching can then be used to return parameters only without requiring a synthesizer.
 
 Example
@@ -53,6 +54,7 @@ class SoundMatch():
             :class:`~spiegelib.synth.SynthBase`. If it is a string, it must be the path
             of a synth config JSON file which contains parameter information and the
             list of overridden parameters for a synthesizer.
+            see :py:meth:`~spiegelib.synth.SynthBase.save_state`
         estimator (Object): must inherit from :class:`spiegelib.estimator.EstimatorBase`
         features (Object, optional): must inherit from :class:`spiegelib.features.FeatureBase`
 

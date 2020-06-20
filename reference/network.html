@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Evaluation Classes &mdash; SpiegeLib 0.0.1 documentation</title>
+  <title>Network Classes &mdash; SpiegeLib 0.0.1 documentation</title>
   
 
   
@@ -35,8 +35,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="EvaluationBase Class" href="evaluation/evaluation_base.html" />
-    <link rel="prev" title="NSGA3 Class" href="estimators/nsga3.html" /> 
+    <link rel="next" title="SoundMatchOSCServer" href="network/sound_match_osc_server.html" />
+    <link rel="prev" title="Subjective Class" href="evaluation/subjective.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -88,13 +88,12 @@
 <li class="toctree-l1"><a class="reference internal" href="synth.html">Synthesizers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="features.html">Audio Feature Extraction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="estimators.html">Estimators</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Evaluation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="evaluation/evaluation_base.html">     EvaluationBase</a></li>
-<li class="toctree-l2"><a class="reference internal" href="evaluation/mfcc_eval.html">     MFCCEval</a></li>
-<li class="toctree-l2"><a class="reference internal" href="evaluation/subjective.html">Subjective</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Evaluation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Network</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="network/sound_match_osc_server.html">     SoundMatchOSCServer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="network/sound_match_http_server.html">     SoundMatchHTTPServer</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="network.html">Network</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../examples/examples_index.html">Examples</a></li>
@@ -146,13 +145,13 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Evaluation Classes</li>
+      <li>Network Classes</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/reference/evaluation.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/reference/network.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -165,24 +164,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="evaluation-classes">
-<h1>Evaluation Classes<a class="headerlink" href="#evaluation-classes" title="Permalink to this headline">¶</a></h1>
-<p>The following classes can be used to evaluate the results of experiments both
-objectively and subjectively.</p>
-<p><a class="reference internal" href="evaluation/evaluation_base.html#evaluation-base"><span class="std std-ref">EvaluationBase</span></a> provides a common base class for evaluation
-methods that compare a set of audio files or other objects to references or targets.
-This abstract class also has a set of static methods for computing error and distance
-metrics between np.ndarrays and also for calculating statistics on results of
-evaluations.</p>
-<p>Objective evaluation of audio files can be carried out using the <a class="reference internal" href="evaluation/mfcc_eval.html#mfcc-eval"><span class="std std-ref">MFCCEval</span></a>
-class.</p>
-<p>Simple browser based listening tests can be setup and hosted locally using the
-<a class="reference internal" href="evaluation/subjective.html#subjective-evaluation"><span class="std std-ref">Subjective</span></a> class.</p>
+  <div class="section" id="network-classes">
+<h1>Network Classes<a class="headerlink" href="#network-classes" title="Permalink to this headline">¶</a></h1>
+<p>The following classes provided localhost servers for running synthesizer sound
+matching from outside of the Python environment.</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="evaluation/evaluation_base.html">     EvaluationBase</a></li>
-<li class="toctree-l1"><a class="reference internal" href="evaluation/mfcc_eval.html">     MFCCEval</a></li>
-<li class="toctree-l1"><a class="reference internal" href="evaluation/subjective.html">Subjective</a></li>
+<li class="toctree-l1"><a class="reference internal" href="network/sound_match_osc_server.html">     SoundMatchOSCServer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="network/sound_match_http_server.html">     SoundMatchHTTPServer</a></li>
 </ul>
 </div>
 </div>
@@ -195,10 +184,10 @@ class.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="evaluation/evaluation_base.html" class="btn btn-neutral float-right" title="EvaluationBase Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="network/sound_match_osc_server.html" class="btn btn-neutral float-right" title="SoundMatchOSCServer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="estimators/nsga3.html" class="btn btn-neutral float-left" title="NSGA3 Class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="evaluation/subjective.html" class="btn btn-neutral float-left" title="Subjective Class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -88,6 +88,7 @@
 <li class="toctree-l1"><a class="reference internal" href="reference/features.html">Audio Feature Extraction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference/estimators.html">Estimators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference/evaluation.html">Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/network.html">Network</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="examples/examples_index.html">Examples</a></li>
@@ -282,6 +283,12 @@
       </ul></li>
       <li><a href="reference/evaluation/evaluation_base.html#spiegelib.evaluation.EvaluationBase">EvaluationBase (class in spiegelib.evaluation)</a>
 </li>
+      <li><a href="reference/synth/synth_base.html#spiegelib.synth.SynthBase.expand_sub_patch">expand_sub_patch() (spiegelib.synth.SynthBase static method)</a>
+
+      <ul>
+        <li><a href="reference/synth/synth_vst.html#spiegelib.synth.SynthVST.expand_sub_patch">(spiegelib.synth.SynthVST static method)</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -322,6 +329,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/core/dataset_generator.html#spiegelib.DatasetGenerator.generate">generate() (spiegelib.DatasetGenerator method)</a>
 </li>
+      <li><a href="reference/network/sound_match_http_server.html#spiegelib.network.SoundMatchHTTPServer.get">get() (spiegelib.network.SoundMatchHTTPServer method)</a>
+</li>
       <li><a href="reference/core/audio_buffer.html#spiegelib.AudioBuffer.get_audio">get_audio() (spiegelib.AudioBuffer method)</a>
 
       <ul>
@@ -346,6 +355,8 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/network/sound_match_http_server.html#spiegelib.network.SoundMatchHTTPServer.get_headers">get_headers() (spiegelib.network.SoundMatchHTTPServer static method)</a>
+</li>
       <li><a href="reference/synth/synth_base.html#spiegelib.synth.SynthBase.get_parameters">get_parameters() (spiegelib.synth.SynthBase method)</a>
 
       <ul>
@@ -418,14 +429,20 @@
       </ul></li>
       <li><a href="reference/synth/synth_vst.html#spiegelib.synth.SynthVST.load_plugin">load_plugin() (spiegelib.synth.SynthVST method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/features/features_base.html#spiegelib.features.FeaturesBase.load_scaler">load_scaler() (spiegelib.features.FeaturesBase method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/synth/synth_base.html#spiegelib.synth.SynthBase.load_state">load_state() (spiegelib.synth.SynthBase method)</a>
 
       <ul>
         <li><a href="reference/synth/synth_vst.html#spiegelib.synth.SynthVST.load_state">(spiegelib.synth.SynthVST method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/synth/synth_base.html#spiegelib.synth.SynthBase.load_synth_config">load_synth_config() (spiegelib.synth.SynthBase static method)</a>
+
+      <ul>
+        <li><a href="reference/synth/synth_vst.html#spiegelib.synth.SynthVST.load_synth_config">(spiegelib.synth.SynthVST static method)</a>
 </li>
       </ul></li>
       <li><a href="reference/estimators/tf_estimator_base.html#spiegelib.estimator.TFEstimatorBase.load_weights">load_weights() (spiegelib.estimator.TFEstimatorBase method)</a>
@@ -445,6 +462,8 @@
       <li><a href="reference/core/sound_match.html#spiegelib.SoundMatch.match">match() (spiegelib.SoundMatch method)</a>
 </li>
       <li><a href="reference/core/sound_match.html#spiegelib.SoundMatch.match_from_file">match_from_file() (spiegelib.SoundMatch method)</a>
+</li>
+      <li><a href="reference/core/sound_match.html#spiegelib.SoundMatch.match_parameters">match_parameters() (spiegelib.SoundMatch method)</a>
 </li>
       <li><a href="reference/evaluation/evaluation_base.html#spiegelib.evaluation.EvaluationBase.mean_abs_error">mean_abs_error() (spiegelib.evaluation.EvaluationBase static method)</a>
 </li>
@@ -580,7 +599,13 @@
       </ul></li>
       <li><a href="reference/features/features_base.html#spiegelib.features.FeaturesBase.set_scaler">set_scaler() (spiegelib.features.FeaturesBase method)</a>
 </li>
+      <li><a href="reference/core/sound_match.html#spiegelib.SoundMatch.setup_synth_params">setup_synth_params() (spiegelib.SoundMatch method)</a>
+</li>
       <li><a href="reference/core/sound_match.html#spiegelib.SoundMatch">SoundMatch (class in spiegelib)</a>
+</li>
+      <li><a href="reference/network/sound_match_http_server.html#spiegelib.network.SoundMatchHTTPServer">SoundMatchHTTPServer (class in spiegelib.network)</a>
+</li>
+      <li><a href="reference/network/sound_match_osc_server.html#spiegelib.network.SoundMatchOSCServer">SoundMatchOSCServer (class in spiegelib.network)</a>
 </li>
       <li><a href="reference/features/spectral_summarized.html#spiegelib.features.SpectralSummarized">SpectralSummarized (class in spiegelib.features)</a>
 </li>
@@ -598,10 +623,10 @@
 </li>
       <li><a href="reference/estimators/conv6.html#module-spiegelib.estimator.conv6">spiegelib.estimator.conv6 (module)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/estimators/estimator_base.html#module-spiegelib.estimator.estimator_base">spiegelib.estimator.estimator_base (module)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/estimators/highway_layer.html#module-spiegelib.estimator.highway_layer">spiegelib.estimator.highway_layer (module)</a>
 </li>
       <li><a href="reference/estimators/hwy_blstm.html#module-spiegelib.estimator.hwy_blstm">spiegelib.estimator.hwy_blstm (module)</a>
@@ -636,12 +661,22 @@
 </li>
       <li><a href="reference/features/stft.html#module-spiegelib.features.stft">spiegelib.features.stft (module)</a>
 </li>
+      <li><a href="reference/network/sound_match_http_server.html#module-spiegelib.network.sound_match_http_server">spiegelib.network.sound_match_http_server (module)</a>
+</li>
+      <li><a href="reference/network/sound_match_osc_server.html#module-spiegelib.network.sound_match_osc_server">spiegelib.network.sound_match_osc_server (module)</a>
+</li>
       <li><a href="reference/synth/synth_base.html#module-spiegelib.synth.synth_base">spiegelib.synth.synth_base (module)</a>
 </li>
       <li><a href="reference/synth/synth_vst.html#module-spiegelib.synth.synth_vst">spiegelib.synth.synth_vst (module)</a>
 </li>
       <li><a href="reference/features/standard_scaler.html#spiegelib.features.StandardScaler">StandardScaler (class in spiegelib.features)</a>
 </li>
+      <li><a href="reference/network/sound_match_http_server.html#spiegelib.network.SoundMatchHTTPServer.start">start() (spiegelib.network.SoundMatchHTTPServer method)</a>
+
+      <ul>
+        <li><a href="reference/network/sound_match_osc_server.html#spiegelib.network.SoundMatchOSCServer.start">(spiegelib.network.SoundMatchOSCServer method)</a>
+</li>
+      </ul></li>
       <li><a href="reference/features/stft.html#spiegelib.features.STFT">STFT (class in spiegelib.features)</a>
 </li>
       <li><a href="reference/evaluation/subjective.html#spiegelib.evaluation.Subjective">Subjective (class in spiegelib.evaluation)</a>
@@ -668,6 +703,8 @@
         <li><a href="reference/features/standard_scaler.html#spiegelib.features.StandardScaler.transform">(spiegelib.features.StandardScaler method)</a>
 </li>
       </ul></li>
+      <li><a href="reference/network/sound_match_http_server.html#spiegelib.network.SoundMatchHTTPServer.try_sound_match">try_sound_match() (spiegelib.network.SoundMatchHTTPServer method)</a>
+</li>
   </ul></td>
 </tr></table>
 

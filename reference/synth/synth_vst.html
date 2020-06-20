@@ -93,6 +93,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../features.html">Audio Feature Extraction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../estimators.html">Estimators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../evaluation.html">Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network.html">Network</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../examples/examples_index.html">Examples</a></li>
@@ -239,6 +240,31 @@ and render_length_secs to render audio. Plugin must be loaded first.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="spiegelib.synth.SynthVST.expand_sub_patch">
+<em class="property">static </em><code class="sig-name descname">expand_sub_patch</code><span class="sig-paren">(</span><em class="sig-param">patch</em>, <em class="sig-param">param_indices</em>, <em class="sig-param">overridden</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.expand_sub_patch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert an ordered list of parameter values into a list of tuples containing
+the parameter indices linked to the parameter values. Does so by comparing
+the overridden parameters to the full list of paramater indices and using
+the differences to label the patch values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>patch</strong> (<em>list</em>) – An ordered list of parameter values</p></li>
+<li><p><strong>param_indices</strong> (<em>list</em>) – A full list of all parameter indices</p></li>
+<li><p><strong>overridden</strong> (<em>list of tuples</em>) – A list of tuples which contain the parameter
+indices and values of the overridden parameters</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a list of tuples representing a full patch setting</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="spiegelib.synth.SynthVST.get_parameters">
 <code class="sig-name descname">get_parameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.get_parameters" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns parameters for the synth</p>
@@ -287,6 +313,24 @@ parameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Location to load JSON file from</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.synth.SynthVST.load_synth_config">
+<em class="property">static </em><code class="sig-name descname">load_synth_config</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.load_synth_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads and extracts patch setting and overridden parameters from a saved
+synth JSON file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – location to load JSON file from</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>patch list and overridden parameter list</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list, list</p>
 </dd>
 </dl>
 </dd></dl>

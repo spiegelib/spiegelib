@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Conv6 Class &mdash; SpiegeLib 0.0.1 documentation</title>
+  <title>SoundMatchOSCServer &mdash; SpiegeLib 0.0.1 documentation</title>
   
 
   
@@ -35,8 +35,8 @@
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="HwyBLSTM Class" href="hwy_blstm.html" />
-    <link rel="prev" title="TFEstimatorBase" href="tf_estimator_base.html" /> 
+    <link rel="next" title="SoundMatchHTTPServer" href="sound_match_http_server.html" />
+    <link rel="prev" title="Network Classes" href="../network.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -87,23 +87,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../core.html">Core</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../synth.html">Synthesizers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../features.html">Audio Feature Extraction</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../estimators.html">Estimators</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="estimator_base.html">     EstimatorBase</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../estimators.html#deep-learning">Deep Learning</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="tf_estimator_base.html">TFEstimatorBase</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Conv6</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hwy_blstm.html">HwyBLSTM (LSTM++)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lstm.html">LSTM</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mlp.html">MLP</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tf_epoch_logger.html">TFEpochLogger</a></li>
-<li class="toctree-l3"><a class="reference internal" href="highway_layer.html">HighwayLayer</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../estimators.html#evolutionary">Evolutionary</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../estimators.html">Estimators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../evaluation.html">Evaluation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../network.html">Network</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../network.html">Network</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">     SoundMatchOSCServer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sound_match_http_server.html">     SoundMatchHTTPServer</a></li>
+</ul>
+</li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../examples/examples_index.html">Examples</a></li>
@@ -155,15 +145,15 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="../estimators.html">Estimator Classes</a> &raquo;</li>
+          <li><a href="../network.html">Network Classes</a> &raquo;</li>
         
-      <li>Conv6 Class</li>
+      <li>SoundMatchOSCServer</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/reference/estimators/conv6.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/reference/network/sound_match_osc_server.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -176,40 +166,32 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-spiegelib.estimator.conv6">
-<span id="conv6-class"></span><span id="conv6"></span><h1>Conv6 Class<a class="headerlink" href="#module-spiegelib.estimator.conv6" title="Permalink to this headline">¶</a></h1>
-<p>Convolutional Neural Network based on the 6-layer deep model proposed by
-Barkan et al. <a class="footnote-reference brackets" href="#id2" id="id1">1</a></p>
+  <div class="section" id="module-spiegelib.network.sound_match_osc_server">
+<span id="soundmatchoscserver"></span><span id="sound-match-osc-server"></span><h1>SoundMatchOSCServer<a class="headerlink" href="#module-spiegelib.network.sound_match_osc_server" title="Permalink to this headline">¶</a></h1>
+<p>This class runs a UDP server that receives OSC messages containing a path
+to an audio file to use as a sound target for synthesizer sound matching. It returns
+the parameter settings as JSON inside an OSC message.</p>
 <dl class="class">
-<dt id="spiegelib.estimator.Conv6">
-<em class="property">class </em><code class="sig-prename descclassname">spiegelib.estimator.</code><code class="sig-name descname">Conv6</code><span class="sig-paren">(</span><em class="sig-param">input_shape</em>, <em class="sig-param">num_outputs</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.Conv6" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.estimator.tf_estimator_base.TFEstimatorBase</span></code></p>
-<dl class="field-list simple">
+<dt id="spiegelib.network.SoundMatchOSCServer">
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.network.</code><code class="sig-name descname">SoundMatchOSCServer</code><span class="sig-paren">(</span><em class="sig-param">sound_matcher</em>, <em class="sig-param">host='127.0.0.1'</em>, <em class="sig-param">receive=9001</em>, <em class="sig-param">send=9002</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.network.SoundMatchOSCServer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>input_shape</strong> (<em>tuple</em>) – Shape of matrix that will be passed to model input</p></li>
-<li><p><strong>num_outputs</strong> – Number of outputs the model has</p></li>
-<li><p><strong>kwargs</strong> – optional keyword arguments to pass to
-<a class="reference internal" href="tf_estimator_base.html#spiegelib.estimator.TFEstimatorBase" title="spiegelib.estimator.TFEstimatorBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.estimator.TFEstimatorBase</span></code></a></p></li>
+<li><p><strong>sound_matcher</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">SoundMatch</span></code>) – SoundMatch object to use</p></li>
+<li><p><strong>host</strong> (<em>str</em><em>, </em><em>optional</em>) – address to run server at. Defaults to 127.0.0.1</p></li>
+<li><p><strong>receive</strong> (<em>int</em><em>, </em><em>optonal</em>) – port to receive OSC messages on. Defaults to 9001.</p></li>
+<li><p><strong>send</strong> (<em>int</em><em>, </em><em>optional</em>) – port to send OSC messages on. Defaults to 9002.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="method">
-<dt id="spiegelib.estimator.Conv6.build_model">
-<code class="sig-name descname">build_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.Conv6.build_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Construct 6-layer CNN Model</p>
+<dt id="spiegelib.network.SoundMatchOSCServer.start">
+<code class="sig-name descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.network.SoundMatchOSCServer.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start OSC server</p>
 </dd></dl>
 
 </dd></dl>
 
-<dl class="footnote brackets">
-<dt class="label" id="id2"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
-<dd><p>Barkan, Oren, et al.
-“InverSynth: Deep Estimation of Synthesizer Parameter Configurations From
-Audio Signals.” IEEE/ACM Transactions on Audio, Speech, and Language
-Processing 27.12 (2019): 2385-2396.</p>
-</dd>
-</dl>
 </div>
 
 
@@ -220,10 +202,10 @@ Processing 27.12 (2019): 2385-2396.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="hwy_blstm.html" class="btn btn-neutral float-right" title="HwyBLSTM Class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="sound_match_http_server.html" class="btn btn-neutral float-right" title="SoundMatchHTTPServer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="tf_estimator_base.html" class="btn btn-neutral float-left" title="TFEstimatorBase" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../network.html" class="btn btn-neutral float-left" title="Network Classes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

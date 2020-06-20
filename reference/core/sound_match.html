@@ -95,6 +95,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../features.html">Audio Feature Extraction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../estimators.html">Estimators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../evaluation.html">Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network.html">Network</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../examples/examples_index.html">Examples</a></li>
@@ -169,12 +170,16 @@
             
   <div class="section" id="module-spiegelib.core.sound_match">
 <span id="soundmatch-class"></span><span id="sound-match"></span><h1>SoundMatch Class<a class="headerlink" href="#module-spiegelib.core.sound_match" title="Permalink to this headline">¶</a></h1>
-<p>This class performs synthesizer sound matching by estimating parameters for synthesizer
-in order to match a target input sound. It accepts an implementation of <a class="reference internal" href="../synth/synth_base.html#synth-base"><span class="std std-ref">SynthBase</span></a>
-to estimate parameters for and an implementation of <a class="reference internal" href="../estimators/estimator_base.html#estimator-base"><span class="std std-ref">EstimatorBase</span></a>, which
-performs the parameter estimation. Optionally, feature extraction can be performed on
-the target audio file prior to being fed into the estimator using an implementation
+<p>This class performs synthesizer sound matching by estimating parameters for a synthesizer
+in order to match a target input sound. It accepts an implementation of
+<a class="reference internal" href="../synth/synth_base.html#synth-base"><span class="std std-ref">SynthBase</span></a> to estimate parameters for and an implementation of
+<a class="reference internal" href="../estimators/estimator_base.html#estimator-base"><span class="std std-ref">EstimatorBase</span></a>, which performs the parameter estimation.
+Optionally, feature extraction can be performed on the target audio file prior
+to being fed into the estimator using an implementation
 of <a class="reference internal" href="../features/features_base.html#features-base"><span class="std std-ref">FeaturesBase</span></a>.</p>
+<p>Alternatively, instead of a <a class="reference internal" href="../synth/synth_base.html#synth-base"><span class="std std-ref">SynthBase</span></a> object, a synth config
+file (JSON synth state, see <a class="reference internal" href="../synth/synth_base.html#spiegelib.synth.SynthBase.save_state" title="spiegelib.synth.SynthBase.save_state"><code class="xref py py-meth docutils literal notranslate"><span class="pre">save_state()</span></code></a>) can be used.
+Sound matching can then be used to return parameters only without requiring a synthesizer.</p>
 <p class="rubric">Example</p>
 <p>Sound matching with a genetic algorithm</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -220,7 +225,11 @@ of <a class="reference internal" href="../features/features_base.html#features-b
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>synth</strong> (<em>Object</em>) – must inherit from <a class="reference internal" href="../synth/synth_base.html#spiegelib.synth.SynthBase" title="spiegelib.synth.SynthBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.synth.SynthBase</span></code></a></p></li>
+<li><p><strong>synth</strong> (<em>Object</em><em> or </em><em>String</em>) – If an object, must inherit from
+<a class="reference internal" href="../synth/synth_base.html#spiegelib.synth.SynthBase" title="spiegelib.synth.SynthBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">SynthBase</span></code></a>. If it is a string, it must be the path
+of a synth config JSON file which contains parameter information and the
+list of overridden parameters for a synthesizer.
+see <a class="reference internal" href="../synth/synth_base.html#spiegelib.synth.SynthBase.save_state" title="spiegelib.synth.SynthBase.save_state"><code class="xref py py-meth docutils literal notranslate"><span class="pre">save_state()</span></code></a></p></li>
 <li><p><strong>estimator</strong> (<em>Object</em>) – must inherit from <code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.estimator.EstimatorBase</span></code></p></li>
 <li><p><strong>features</strong> (<em>Object</em><em>, </em><em>optional</em>) – must inherit from <code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.features.FeatureBase</span></code></p></li>
 </ul>
@@ -235,10 +244,10 @@ of <a class="reference internal" href="../features/features_base.html#features-b
 <code class="sig-name descname">get_patch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.SoundMatch.get_patch" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>The resuling patch after estimation</p>
+<dd class="field-odd"><p>The resulting patch after estimation</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>dict</p>
+<dd class="field-even"><p>list</p>
 </dd>
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><p><strong>Exception</strong> – If sound matching has not been run first</p>
@@ -264,6 +273,29 @@ of <a class="reference internal" href="../features/features_base.html#features-b
 </dd></dl>
 
 <dl class="method">
+<dt id="spiegelib.SoundMatch.match_parameters">
+<code class="sig-name descname">match_parameters</code><span class="sig-paren">(</span><em class="sig-param">target</em>, <em class="sig-param">expand=False</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.SoundMatch.match_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run estimation of parameters and use audio feature extraction if it
+has been set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target</strong> (<a class="reference internal" href="audio_buffer.html#audio-buffer"><span class="std std-ref">AudioBuffer</span></a>) – input audio to use as target</p></li>
+<li><p><strong>expand</strong> (<em>bool</em><em>, </em><em>optional</em>) – If set to True, will take the parameter values
+returned from sound matching algorithm and expand with overridden
+parameters.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>estimated parameter values outputed from estimator</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="spiegelib.SoundMatch.match_from_file">
 <code class="sig-name descname">match_from_file</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.SoundMatch.match_from_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load audio file from disk and perform sound matching on it</p>
@@ -276,6 +308,20 @@ of <a class="reference internal" href="../features/features_base.html#features-b
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="audio_buffer.html#audio-buffer"><span class="std std-ref">AudioBuffer</span></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="spiegelib.SoundMatch.setup_synth_params">
+<code class="sig-name descname">setup_synth_params</code><span class="sig-paren">(</span><em class="sig-param">config_location</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.SoundMatch.setup_synth_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setup synth param settings from a synth config file. Once this is setup,
+full synthesizer parameter settings can be generated without having to
+use a synth object. Beneficial for running sound matching without linking
+to the VST.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config_location</strong> (<em>str</em>) – synth config JSON file</p>
 </dd>
 </dl>
 </dd></dl>
