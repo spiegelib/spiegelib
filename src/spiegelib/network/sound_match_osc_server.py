@@ -100,7 +100,7 @@ class UDPSocketHandler(socketserver.DatagramRequestHandler):
 class SoundMatchOSCServer():
     """
     Args:
-        sound_matcher (:class:`~spiegelib.core.SoundMatch`): SountMatch object to use
+        sound_matcher (:class:`~spiegelib.core.SoundMatch`): SoundMatch object to use
         host (str, optional): address to run server at. Defaults to 127.0.0.1
         receive (int, optonal): port to receive OSC messages on. Defaults to 9001.
         send (int, optional): port to send OSC messages on. Defaults to 9002.
