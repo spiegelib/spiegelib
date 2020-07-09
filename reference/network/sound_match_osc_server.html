@@ -1,18 +1,15 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>SoundMatchOSCServer &mdash; SpiegeLib 0.0.1 documentation</title>
+  <title>SoundMatchOSCServer &mdash; SpiegeLib 0.0.4 documentation</title>
   
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
 
   
   
@@ -20,9 +17,7 @@
   
 
   
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -34,6 +29,10 @@
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="SoundMatchHTTPServer" href="sound_match_http_server.html" />
@@ -51,7 +50,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> SpiegeLib
+            <a href="../../index.html" class="icon icon-home"> SpiegeLib
           
 
           
@@ -74,7 +73,6 @@
           
         </div>
 
-        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -107,7 +105,6 @@
             
           
         </div>
-        
       </div>
     </nav>
 
@@ -146,7 +143,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
         
           <li><a href="../network.html">Network Classes</a> &raquo;</li>
         
@@ -174,9 +171,9 @@
 <p>This class runs a UDP server that receives OSC messages containing a path
 to an audio file to use as a sound target for synthesizer sound matching. It returns
 the parameter settings as JSON inside an OSC message.</p>
-<dl class="py class">
+<dl class="class">
 <dt id="spiegelib.network.SoundMatchOSCServer">
-<em class="property">class </em><code class="sig-prename descclassname">spiegelib.network.</code><code class="sig-name descname">SoundMatchOSCServer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sound_matcher</span></em>, <em class="sig-param"><span class="n">host</span><span class="o">=</span><span class="default_value">'127.0.0.1'</span></em>, <em class="sig-param"><span class="n">receive</span><span class="o">=</span><span class="default_value">9001</span></em>, <em class="sig-param"><span class="n">send</span><span class="o">=</span><span class="default_value">9002</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.network.SoundMatchOSCServer" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.network.</code><code class="sig-name descname">SoundMatchOSCServer</code><span class="sig-paren">(</span><em class="sig-param">sound_matcher</em>, <em class="sig-param">host='127.0.0.1'</em>, <em class="sig-param">receive=9001</em>, <em class="sig-param">send=9002</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.network.SoundMatchOSCServer" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -187,7 +184,7 @@ the parameter settings as JSON inside an OSC message.</p>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.network.SoundMatchOSCServer.start">
 <code class="sig-name descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.network.SoundMatchOSCServer.start" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start OSC server</p>
@@ -217,19 +214,11 @@ the parameter settings as JSON inside an OSC message.</p>
 
   <div role="contentinfo">
     <p>
-        
         &copy; Copyright 2019, University of Victoria
 
     </p>
   </div>
-    
-    
-    
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -240,6 +229,7 @@ the parameter settings as JSON inside an OSC message.</p>
 
   </div>
   
+
 
   <script type="text/javascript">
       jQuery(function () {

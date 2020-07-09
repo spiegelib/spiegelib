@@ -1,18 +1,15 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>SoundMatch Class &mdash; SpiegeLib 0.0.1 documentation</title>
+  <title>SoundMatch Class &mdash; SpiegeLib 0.0.4 documentation</title>
   
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
 
   
   
@@ -20,9 +17,7 @@
   
 
   
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -34,6 +29,10 @@
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Utility Functions" href="utils.html" />
@@ -51,7 +50,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> SpiegeLib
+            <a href="../../index.html" class="icon icon-home"> SpiegeLib
           
 
           
@@ -74,7 +73,6 @@
           
         </div>
 
-        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -109,7 +107,6 @@
             
           
         </div>
-        
       </div>
     </nav>
 
@@ -148,7 +145,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
         
           <li><a href="../core.html">SpiegeLib Core Classes</a> &raquo;</li>
         
@@ -222,9 +219,9 @@ Sound matching can then be used to return parameters only without requiring a sy
 <span class="n">result_patch</span> <span class="o">=</span> <span class="n">ga_matcher</span><span class="o">.</span><span class="n">get_patch</span><span class="p">()</span>
 </pre></div>
 </td></tr></table></div>
-<dl class="py class">
+<dl class="class">
 <dt id="spiegelib.SoundMatch">
-<em class="property">class </em><code class="sig-prename descclassname">spiegelib.</code><code class="sig-name descname">SoundMatch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">synth</span></em>, <em class="sig-param"><span class="n">estimator</span></em>, <em class="sig-param"><span class="n">features</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.SoundMatch" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.</code><code class="sig-name descname">SoundMatch</code><span class="sig-paren">(</span><em class="sig-param">synth</em>, <em class="sig-param">estimator</em>, <em class="sig-param">features=None</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.SoundMatch" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -242,7 +239,7 @@ see <a class="reference internal" href="../synth/synth_base.html#spiegelib.synth
     the correct base class.</p>
 </dd>
 </dl>
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.SoundMatch.get_patch">
 <code class="sig-name descname">get_patch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.SoundMatch.get_patch" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
@@ -258,9 +255,9 @@ see <a class="reference internal" href="../synth/synth_base.html#spiegelib.synth
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.SoundMatch.match">
-<code class="sig-name descname">match</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">target</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.SoundMatch.match" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">match</code><span class="sig-paren">(</span><em class="sig-param">target</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.SoundMatch.match" title="Permalink to this definition">¶</a></dt>
 <dd><p>Attempt to estimate parameters for target audio</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -275,9 +272,9 @@ see <a class="reference internal" href="../synth/synth_base.html#spiegelib.synth
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.SoundMatch.match_parameters">
-<code class="sig-name descname">match_parameters</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">target</span></em>, <em class="sig-param"><span class="n">expand</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.SoundMatch.match_parameters" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">match_parameters</code><span class="sig-paren">(</span><em class="sig-param">target</em>, <em class="sig-param">expand=False</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.SoundMatch.match_parameters" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run estimation of parameters and use audio feature extraction if it
 has been set.</p>
 <dl class="field-list simple">
@@ -298,9 +295,9 @@ parameters.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.SoundMatch.match_from_file">
-<code class="sig-name descname">match_from_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.SoundMatch.match_from_file" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">match_from_file</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.SoundMatch.match_from_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load audio file from disk and perform sound matching on it</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -315,9 +312,9 @@ parameters.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.SoundMatch.setup_synth_params">
-<code class="sig-name descname">setup_synth_params</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config_location</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.SoundMatch.setup_synth_params" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setup_synth_params</code><span class="sig-paren">(</span><em class="sig-param">config_location</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.SoundMatch.setup_synth_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Setup synth param settings from a synth config file. Once this is setup,
 full synthesizer parameter settings can be generated without having to
 use a synth object. Beneficial for running sound matching without linking
@@ -353,19 +350,11 @@ to the VST.</p>
 
   <div role="contentinfo">
     <p>
-        
         &copy; Copyright 2019, University of Victoria
 
     </p>
   </div>
-    
-    
-    
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -376,6 +365,7 @@ to the VST.</p>
 
   </div>
   
+
 
   <script type="text/javascript">
       jQuery(function () {

@@ -1,18 +1,15 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MFCC Class &mdash; SpiegeLib 0.0.1 documentation</title>
+  <title>MFCC Class &mdash; SpiegeLib 0.0.4 documentation</title>
   
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
 
   
   
@@ -20,9 +17,7 @@
   
 
   
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -34,6 +29,10 @@
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="SpectralSummarized Class" href="spectral_summarized.html" />
@@ -51,7 +50,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> SpiegeLib
+            <a href="../../index.html" class="icon icon-home"> SpiegeLib
           
 
           
@@ -74,7 +73,6 @@
           
         </div>
 
-        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -111,7 +109,6 @@
             
           
         </div>
-        
       </div>
     </nav>
 
@@ -150,7 +147,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
         
           <li><a href="../features.html">Audio Feature Extraction</a> &raquo;</li>
         
@@ -176,9 +173,9 @@
   <div class="section" id="module-spiegelib.features.mfcc">
 <span id="mfcc-class"></span><span id="mfcc"></span><h1>MFCC Class<a class="headerlink" href="#module-spiegelib.features.mfcc" title="Permalink to this headline">¶</a></h1>
 <p>Mel-Frequency Cepstral Coefficients (MFCCs)</p>
-<dl class="py class">
+<dl class="class">
 <dt id="spiegelib.features.MFCC">
-<em class="property">class </em><code class="sig-prename descclassname">spiegelib.features.</code><code class="sig-name descname">MFCC</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">num_mfccs</span><span class="o">=</span><span class="default_value">20</span></em>, <em class="sig-param"><span class="n">frame_size</span><span class="o">=</span><span class="default_value">2048</span></em>, <em class="sig-param"><span class="n">hop_size</span><span class="o">=</span><span class="default_value">512</span></em>, <em class="sig-param"><span class="n">scale_axis</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.MFCC" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.features.</code><code class="sig-name descname">MFCC</code><span class="sig-paren">(</span><em class="sig-param">num_mfccs=20</em>, <em class="sig-param">frame_size=2048</em>, <em class="sig-param">hop_size=512</em>, <em class="sig-param">scale_axis=0</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.MFCC" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.features.features_base.FeaturesBase</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -193,9 +190,9 @@ component independently.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.features.MFCC.get_features">
-<code class="sig-name descname">get_features</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">audio</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.MFCC.get_features" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_features</code><span class="sig-paren">(</span><em class="sig-param">audio</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.MFCC.get_features" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run MFCC extraciton on audio buffer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -234,19 +231,11 @@ component independently.</p></li>
 
   <div role="contentinfo">
     <p>
-        
         &copy; Copyright 2019, University of Victoria
 
     </p>
   </div>
-    
-    
-    
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -257,6 +246,7 @@ component independently.</p></li>
 
   </div>
   
+
 
   <script type="text/javascript">
       jQuery(function () {

@@ -1,18 +1,15 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>SynthVST Class &mdash; SpiegeLib 0.0.1 documentation</title>
+  <title>SynthVST Class &mdash; SpiegeLib 0.0.4 documentation</title>
   
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
 
   
   
@@ -20,9 +17,7 @@
   
 
   
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -34,6 +29,10 @@
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="SynthBase Class" href="synth_base.html" />
@@ -51,7 +50,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> SpiegeLib
+            <a href="../../index.html" class="icon icon-home"> SpiegeLib
           
 
           
@@ -74,7 +73,6 @@
           
         </div>
 
-        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -107,7 +105,6 @@
             
           
         </div>
-        
       </div>
     </nav>
 
@@ -146,7 +143,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
         
           <li><a href="../synth.html">Synth Classes</a> &raquo;</li>
         
@@ -175,9 +172,9 @@
 <p>This class relies on the librenderman package developed by Leon Feddon for interacting
 with VSTs. A VST can be loaded, parameters displayed and modified, random patches generated,
 and audio rendered for further processing.</p>
-<dl class="py class">
+<dl class="class">
 <dt id="spiegelib.synth.SynthVST">
-<em class="property">class </em><code class="sig-prename descclassname">spiegelib.synth.</code><code class="sig-name descname">SynthVST</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">plugin_path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.synth.</code><code class="sig-name descname">SynthVST</code><span class="sig-paren">(</span><em class="sig-param">plugin_path=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.synth.synth_base.SynthBase</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -187,9 +184,9 @@ and audio rendered for further processing.</p>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.synth.SynthVST.load_plugin">
-<code class="sig-name descname">load_plugin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">plugin_path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.load_plugin" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">load_plugin</code><span class="sig-paren">(</span><em class="sig-param">plugin_path</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.load_plugin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads a synth VST plugin</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -198,15 +195,15 @@ and audio rendered for further processing.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.synth.SynthVST.load_patch">
 <code class="sig-name descname">load_patch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.load_patch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update patch parameter. Overridden parameters will not be effected.</p>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.synth.SynthVST.is_valid_parameter_setting">
-<code class="sig-name descname">is_valid_parameter_setting</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">parameter</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.is_valid_parameter_setting" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">is_valid_parameter_setting</code><span class="sig-paren">(</span><em class="sig-param">parameter</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.is_valid_parameter_setting" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks to see if a parameter is valid for the currently loaded synth.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -215,14 +212,14 @@ and audio rendered for further processing.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.synth.SynthVST.render_patch">
 <code class="sig-name descname">render_patch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.render_patch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Render the current patch. Uses the values of midi_note, midi_velocity, note_length_secs,
 and render_length_secs to render audio. Plugin must be loaded first.</p>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.synth.SynthVST.get_audio">
 <code class="sig-name descname">get_audio</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.get_audio" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return monophonic audio from rendered patch</p>
@@ -236,15 +233,15 @@ and render_length_secs to render audio. Plugin must be loaded first.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.synth.SynthVST.randomize_patch">
 <code class="sig-name descname">randomize_patch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.randomize_patch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Randomize the current patch. Overridden parameteres will be unaffected.</p>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.synth.SynthVST.expand_sub_patch">
-<em class="property">static </em><code class="sig-name descname">expand_sub_patch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">patch</span></em>, <em class="sig-param"><span class="n">param_indices</span></em>, <em class="sig-param"><span class="n">overridden</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.expand_sub_patch" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">expand_sub_patch</code><span class="sig-paren">(</span><em class="sig-param">patch</em>, <em class="sig-param">param_indices</em>, <em class="sig-param">overridden</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.expand_sub_patch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert an ordered list of parameter values into a list of tuples containing
 the parameter indices linked to the parameter values. Does so by comparing
 the overridden parameters to the full list of paramater indices and using
@@ -267,7 +264,7 @@ indices and values of the overridden parameters</p></li>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.synth.SynthVST.get_parameters">
 <code class="sig-name descname">get_parameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.get_parameters" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns parameters for the synth</p>
@@ -282,9 +279,9 @@ and the parameter name short description as the value</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.synth.SynthVST.get_patch">
-<code class="sig-name descname">get_patch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">skip_overridden</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.get_patch" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_patch</code><span class="sig-paren">(</span><em class="sig-param">skip_overridden=True</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.get_patch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get current patch</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -294,7 +291,7 @@ from results, defaults to True</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.synth.SynthVST.get_random_example">
 <code class="sig-name descname">get_random_example</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.get_random_example" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns audio from a new random patch</p>
@@ -308,9 +305,9 @@ from results, defaults to True</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.synth.SynthVST.load_state">
-<code class="sig-name descname">load_state</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.load_state" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">load_state</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.load_state" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load parameter state from JSON file. Will set a new patch and overridden
 parameters.</p>
 <dl class="field-list simple">
@@ -320,9 +317,9 @@ parameters.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.synth.SynthVST.load_synth_config">
-<em class="property">static </em><code class="sig-name descname">load_synth_config</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.load_synth_config" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">load_synth_config</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.load_synth_config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads and extracts patch setting and overridden parameters from a saved
 synth JSON file</p>
 <dl class="field-list simple">
@@ -338,9 +335,9 @@ synth JSON file</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.synth.SynthVST.save_state">
-<code class="sig-name descname">save_state</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.save_state" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">save_state</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.save_state" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save parameters and current state to a JSON file. Includes whether or not
 a parameter has been overridden so this can be used to save synth configuration</p>
 <dl class="field-list simple">
@@ -350,9 +347,9 @@ a parameter has been overridden so this can be used to save synth configuration<
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.synth.SynthVST.set_overridden_parameters">
-<code class="sig-name descname">set_overridden_parameters</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">parameters</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.set_overridden_parameters" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_overridden_parameters</code><span class="sig-paren">(</span><em class="sig-param">parameters</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.set_overridden_parameters" title="Permalink to this definition">¶</a></dt>
 <dd><p>Override parameters with specific values</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -362,9 +359,9 @@ value that will be patched and then the parameter frozen.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.synth.SynthVST.set_patch">
-<code class="sig-name descname">set_patch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">parameters</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.set_patch" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_patch</code><span class="sig-paren">(</span><em class="sig-param">parameters</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.synth.SynthVST.set_patch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set a new patch with updated parameter values with a list of flaots or a
 list of tuples referring to parameter indices and values.</p>
 <dl class="field-list simple">
@@ -403,19 +400,11 @@ number and the float is the parameter value.</p>
 
   <div role="contentinfo">
     <p>
-        
         &copy; Copyright 2019, University of Victoria
 
     </p>
   </div>
-    
-    
-    
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -426,6 +415,7 @@ number and the float is the parameter value.</p>
 
   </div>
   
+
 
   <script type="text/javascript">
       jQuery(function () {

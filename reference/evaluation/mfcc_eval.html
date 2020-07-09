@@ -1,18 +1,15 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MFCCEval Class &mdash; SpiegeLib 0.0.1 documentation</title>
+  <title>MFCCEval Class &mdash; SpiegeLib 0.0.4 documentation</title>
   
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
 
   
   
@@ -20,9 +17,7 @@
   
 
   
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -34,6 +29,10 @@
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Subjective Class" href="subjective.html" />
@@ -51,7 +50,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> SpiegeLib
+            <a href="../../index.html" class="icon icon-home"> SpiegeLib
           
 
           
@@ -74,7 +73,6 @@
           
         </div>
 
-        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -108,7 +106,6 @@
             
           
         </div>
-        
       </div>
     </nav>
 
@@ -147,7 +144,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
         
           <li><a href="../evaluation.html">Evaluation Classes</a> &raquo;</li>
         
@@ -198,9 +195,9 @@ running objective evaluation using inheriting classes, such as this one.</p>
 <span class="n">evaluation</span><span class="o">.</span><span class="n">plot_hist</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;mean_abs_error&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<dl class="py class">
+<dl class="class">
 <dt id="spiegelib.evaluation.MFCCEval">
-<em class="property">class </em><code class="sig-prename descclassname">spiegelib.evaluation.</code><code class="sig-name descname">MFCCEval</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">targets</span></em>, <em class="sig-param"><span class="n">estimations</span></em>, <em class="sig-param"><span class="n">sample_rate</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.MFCCEval" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.evaluation.</code><code class="sig-name descname">MFCCEval</code><span class="sig-paren">(</span><em class="sig-param">targets</em>, <em class="sig-param">estimations</em>, <em class="sig-param">sample_rate=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.MFCCEval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.evaluation.evaluation_base.EvaluationBase</span></code></p>
 <p>Pass in a list of target <a class="reference internal" href="../core/audio_buffer.html#spiegelib.AudioBuffer" title="spiegelib.AudioBuffer"><code class="xref py py-class docutils literal notranslate"><span class="pre">AudioBuffer</span></code></a> objects and lists of
 estimated <a class="reference internal" href="../core/audio_buffer.html#spiegelib.AudioBuffer" title="spiegelib.AudioBuffer"><code class="xref py py-class docutils literal notranslate"><span class="pre">AudioBuffer</span></code></a> objects for each target.</p>
@@ -231,9 +228,9 @@ to the audio rate of the first target.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.evaluation.MFCCEval.evaluate_target">
-<code class="sig-name descname">evaluate_target</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">target</span></em>, <em class="sig-param"><span class="n">predictions</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.MFCCEval.evaluate_target" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">evaluate_target</code><span class="sig-paren">(</span><em class="sig-param">target</em>, <em class="sig-param">predictions</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.MFCCEval.evaluate_target" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called automatically by <a class="reference internal" href="evaluation_base.html#spiegelib.evaluation.EvaluationBase.evaluate" title="spiegelib.evaluation.EvaluationBase.evaluate"><code class="xref py py-func docutils literal notranslate"><span class="pre">spiegelib.evaluation.EvaluationBase.evaluate()</span></code></a></p>
 <p>Evaluates difference between a target <a class="reference internal" href="../core/audio_buffer.html#audio-buffer"><span class="std std-ref">AudioBuffer</span></a> and
 a list of estimation <a class="reference internal" href="../core/audio_buffer.html#audio-buffer"><span class="std std-ref">AudioBuffers</span></a>. Calculates mean absolute
@@ -256,9 +253,9 @@ against the target audio file.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.evaluation.MFCCEval.verify_input_list">
-<code class="sig-name descname">verify_input_list</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_list</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.MFCCEval.verify_input_list" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">verify_input_list</code><span class="sig-paren">(</span><em class="sig-param">input_list</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.MFCCEval.verify_input_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overriding verification method to check for AudioBuffers. Called automatically
 during construction.</p>
 </dd></dl>
@@ -287,19 +284,11 @@ during construction.</p>
 
   <div role="contentinfo">
     <p>
-        
         &copy; Copyright 2019, University of Victoria
 
     </p>
   </div>
-    
-    
-    
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -310,6 +299,7 @@ during construction.</p>
 
   </div>
   
+
 
   <script type="text/javascript">
       jQuery(function () {

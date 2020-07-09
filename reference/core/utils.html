@@ -1,18 +1,15 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Utility Functions &mdash; SpiegeLib 0.0.1 documentation</title>
+  <title>Utility Functions &mdash; SpiegeLib 0.0.4 documentation</title>
   
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
 
   
   
@@ -20,9 +17,7 @@
   
 
   
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -34,6 +29,10 @@
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Synth Classes" href="../synth.html" />
@@ -51,7 +50,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> SpiegeLib
+            <a href="../../index.html" class="icon icon-home"> SpiegeLib
           
 
           
@@ -74,7 +73,6 @@
           
         </div>
 
-        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -109,7 +107,6 @@
             
           
         </div>
-        
       </div>
     </nav>
 
@@ -148,7 +145,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
         
           <li><a href="../core.html">SpiegeLib Core Classes</a> &raquo;</li>
         
@@ -174,13 +171,13 @@
   <div class="section" id="module-spiegelib.core.utils">
 <span id="utility-functions"></span><span id="core-utils"></span><h1>Utility Functions<a class="headerlink" href="#module-spiegelib.core.utils" title="Permalink to this headline">¶</a></h1>
 <p>Contains utility functions and classes used in library.</p>
-<dl class="py data">
+<dl class="data">
 <dt id="spiegelib.core.utils.spectrum_types">
 <code class="sig-prename descclassname">spiegelib.core.utils.</code><code class="sig-name descname">spectrum_types</code><em class="property"> = ['complex', 'magnitude', 'power', 'magnitude_phase', 'power_phase']</em><a class="headerlink" href="#spiegelib.core.utils.spectrum_types" title="Permalink to this definition">¶</a></dt>
 <dd><p>Selection of spectrum outputs</p>
 </dd></dl>
 
-<dl class="py function">
+<dl class="function">
 <dt id="spiegelib.core.utils.convert_spectrum">
 <code class="sig-prename descclassname">spiegelib.core.utils.</code><code class="sig-name descname">convert_spectrum</code><span class="sig-paren">(</span><em class="sig-param">spectrum</em>, <em class="sig-param">type</em>, <em class="sig-param">dtype=&lt;class 'numpy.float32'&gt;</em>, <em class="sig-param">complex_dtype=&lt;class 'numpy.complex64'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.core.utils.convert_spectrum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert a raw spectrum to magnitue, power, magnitude with phase, or power
@@ -206,9 +203,9 @@ the magnitude or power in the first element and the phase in the second.</p>
 </dl>
 </dd></dl>
 
-<dl class="py function">
+<dl class="function">
 <dt id="spiegelib.core.utils.atoi">
-<code class="sig-prename descclassname">spiegelib.core.utils.</code><code class="sig-name descname">atoi</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.core.utils.atoi" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">spiegelib.core.utils.</code><code class="sig-name descname">atoi</code><span class="sig-paren">(</span><em class="sig-param">text</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.core.utils.atoi" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert string to integer if it is an integer, otherwise keep it a str</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -220,9 +217,9 @@ the magnitude or power in the first element and the phase in the second.</p>
 </dl>
 </dd></dl>
 
-<dl class="py function">
+<dl class="function">
 <dt id="spiegelib.core.utils.natural_keys">
-<code class="sig-prename descclassname">spiegelib.core.utils.</code><code class="sig-name descname">natural_keys</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.core.utils.natural_keys" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">spiegelib.core.utils.</code><code class="sig-name descname">natural_keys</code><span class="sig-paren">(</span><em class="sig-param">text</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.core.utils.natural_keys" title="Permalink to this definition">¶</a></dt>
 <dd><p>Keys for sorting text in natural ordering. For text containing numbers,
 makes sure numbers are sorted in a natural way.</p>
 <dl class="simple">
@@ -243,9 +240,9 @@ makes sure numbers are sorted in a natural way.</p>
 </dl>
 </dd></dl>
 
-<dl class="py class">
+<dl class="class">
 <dt id="spiegelib.core.utils.NumpyNumberEncoder">
-<em class="property">class </em><code class="sig-prename descclassname">spiegelib.core.utils.</code><code class="sig-name descname">NumpyNumberEncoder</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">skipkeys</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">ensure_ascii</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">check_circular</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">allow_nan</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">sort_keys</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">indent</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">separators</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">default</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.core.utils.NumpyNumberEncoder" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.core.utils.</code><code class="sig-name descname">NumpyNumberEncoder</code><span class="sig-paren">(</span><em class="sig-param">*</em>, <em class="sig-param">skipkeys=False</em>, <em class="sig-param">ensure_ascii=True</em>, <em class="sig-param">check_circular=True</em>, <em class="sig-param">allow_nan=True</em>, <em class="sig-param">sort_keys=False</em>, <em class="sig-param">indent=None</em>, <em class="sig-param">separators=None</em>, <em class="sig-param">default=None</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.core.utils.NumpyNumberEncoder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Encodes Numpy number values into values that can be saved as JSON files.</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
@@ -276,19 +273,11 @@ makes sure numbers are sorted in a natural way.</p>
 
   <div role="contentinfo">
     <p>
-        
         &copy; Copyright 2019, University of Victoria
 
     </p>
   </div>
-    
-    
-    
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -299,6 +288,7 @@ makes sure numbers are sorted in a natural way.</p>
 
   </div>
   
+
 
   <script type="text/javascript">
       jQuery(function () {

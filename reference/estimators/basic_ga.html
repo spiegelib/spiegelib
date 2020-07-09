@@ -1,18 +1,15 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>BasicGA Class &mdash; SpiegeLib 0.0.1 documentation</title>
+  <title>BasicGA Class &mdash; SpiegeLib 0.0.4 documentation</title>
   
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
 
   
   
@@ -20,9 +17,7 @@
   
 
   
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -34,6 +29,10 @@
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="NSGA3 Class" href="nsga3.html" />
@@ -51,7 +50,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> SpiegeLib
+            <a href="../../index.html" class="icon icon-home"> SpiegeLib
           
 
           
@@ -74,7 +73,6 @@
           
         </div>
 
-        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -112,7 +110,6 @@
             
           
         </div>
-        
       </div>
     </nav>
 
@@ -151,7 +148,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
         
           <li><a href="../estimators.html">Estimator Classes</a> &raquo;</li>
         
@@ -177,9 +174,9 @@
   <div class="section" id="module-spiegelib.estimator.basic_ga">
 <span id="basicga-class"></span><span id="basic-ga"></span><h1>BasicGA Class<a class="headerlink" href="#module-spiegelib.estimator.basic_ga" title="Permalink to this headline">¶</a></h1>
 <p>Basic single objective genetic algorithm</p>
-<dl class="py class">
+<dl class="class">
 <dt id="spiegelib.estimator.BasicGA">
-<em class="property">class </em><code class="sig-prename descclassname">spiegelib.estimator.</code><code class="sig-name descname">BasicGA</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">synth</span></em>, <em class="sig-param"><span class="n">features</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">pop_size</span><span class="o">=</span><span class="default_value">100</span></em>, <em class="sig-param"><span class="n">ngen</span><span class="o">=</span><span class="default_value">25</span></em>, <em class="sig-param"><span class="n">cxpb</span><span class="o">=</span><span class="default_value">0.5</span></em>, <em class="sig-param"><span class="n">mutpb</span><span class="o">=</span><span class="default_value">0.3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.BasicGA" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.estimator.</code><code class="sig-name descname">BasicGA</code><span class="sig-paren">(</span><em class="sig-param">synth</em>, <em class="sig-param">features</em>, <em class="sig-param">seed=None</em>, <em class="sig-param">pop_size=100</em>, <em class="sig-param">ngen=25</em>, <em class="sig-param">cxpb=0.5</em>, <em class="sig-param">mutpb=0.3</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.BasicGA" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="estimator_base.html#spiegelib.estimator.estimator_base.EstimatorBase" title="spiegelib.estimator.estimator_base.EstimatorBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">spiegelib.estimator.estimator_base.EstimatorBase</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -195,9 +192,9 @@ This is used in the evaluation function to determine <em>fitness</em> of an indi
 </ul>
 </dd>
 </dl>
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.estimator.BasicGA.fitness">
-<code class="sig-name descname">fitness</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">individual</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.BasicGA.fitness" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">fitness</code><span class="sig-paren">(</span><em class="sig-param">individual</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.BasicGA.fitness" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is automatically called during prediction. Evaluation that calculates
 the fitness of an individual. The individual is
 a new estimated synthesizer parameter setting, and fitness is calculated
@@ -217,9 +214,9 @@ The type of feature extraction is set in the constructor.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
+<dl class="method">
 <dt id="spiegelib.estimator.BasicGA.predict">
-<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.BasicGA.predict" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">input</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.estimator.BasicGA.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run GA prection on input audio target</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -252,19 +249,11 @@ The type of feature extraction is set in the constructor.</p>
 
   <div role="contentinfo">
     <p>
-        
         &copy; Copyright 2019, University of Victoria
 
     </p>
   </div>
-    
-    
-    
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -275,6 +264,7 @@ The type of feature extraction is set in the constructor.</p>
 
   </div>
   
+
 
   <script type="text/javascript">
       jQuery(function () {
