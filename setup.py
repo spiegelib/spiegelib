@@ -3,7 +3,7 @@
 from setuptools import setup
 from setuptools import find_packages
 
-__version__ = '0.0.3'
+__version__ = '0.0.4'
 __author__ = "Jordie Shier"
 __contact__ = "jordieshier@gmail.com"
 __url__ = "https://github.com/spiegelib/spiegelib"
@@ -42,6 +42,8 @@ setup(
         'tensorflow',
         'deap',
         "importlib_resources ; python_version<'3.7'",
+        'numba==0.48',
+        'scipy==1.4.1'
     ],
     extras_require={
         'dev': [
