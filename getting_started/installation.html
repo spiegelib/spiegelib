@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -29,10 +34,6 @@
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="SpiegeLib Core Classes" href="../reference/core.html" />
@@ -50,7 +51,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> SpiegeLib
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> SpiegeLib
           
 
           
@@ -73,6 +74,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -110,6 +112,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -148,7 +151,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="getting_started.html">Getting Started</a> &raquo;</li>
         
@@ -201,6 +204,8 @@ of that are provided here.</p>
 <span class="n">tensorflow</span> <span class="o">&gt;=</span> <span class="mf">2.1</span><span class="o">.</span><span class="mi">0</span>
 <span class="n">deap</span> <span class="o">&gt;=</span> <span class="mf">1.3</span><span class="o">.</span><span class="mi">1</span>
 <span class="n">tqdm</span> <span class="o">&gt;=</span> <span class="mf">4.43</span><span class="o">.</span><span class="mi">0</span>
+<span class="n">numba</span> <span class="o">==</span> <span class="mf">0.48</span>
+<span class="n">scipy</span> <span class="o">==</span> <span class="mf">1.4</span><span class="o">.</span><span class="mi">1</span>
 <span class="n">librenderman</span>
 </pre></div>
 </div>
@@ -312,7 +317,7 @@ $ open RenderMan-py36.jucer
 <li><p>Update Xcode exporter</p>
 <blockquote>
 <div><p>For the Xcode (MacOSX) exporter modify the <em>Extra Linker Flags</em>: remove <code class="docutils literal notranslate"><span class="pre">-lpython3.6m</span></code>
-Change <code class="docutils literal notranslate"><span class="pre">-lboost-python</span></code> to <code class="docutils literal notranslate"><span class="pre">-lboost-python37</span></code> and add <code class="docutils literal notranslate"><span class="pre">-undefined</span> <span class="pre">dynamic_lookup</span></code></p>
+Change <code class="docutils literal notranslate"><span class="pre">-lboost_python</span></code> to <code class="docutils literal notranslate"><span class="pre">-lboost_python37</span></code> and add <code class="docutils literal notranslate"><span class="pre">-undefined</span> <span class="pre">dynamic_lookup</span></code></p>
 <img alt="../_images/linker_flags.png" src="../_images/linker_flags.png" />
 </div></blockquote>
 </li>
@@ -339,6 +344,12 @@ determined when you installed anaconda. The default location on MacOSX is <code 
 <div class="line">Using the default anaconda path:</div>
 </div>
 <img alt="../_images/extra_lib_path.png" src="../_images/extra_lib_path.png" />
+</div></blockquote>
+</li>
+<li><p>VST Search Path</p>
+<blockquote>
+<div><p>If the VST (Legacy) SDK Folder under the main Xcode exporter tab isn’t filled, you will need to
+update that. Add the VST3_SDK folder here which is located in the RenderMan root directory.</p>
 </div></blockquote>
 </li>
 <li><p>Open Xcode and build</p>
@@ -395,11 +406,19 @@ JUCE v&lt;Juce version&gt;
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, University of Victoria
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -410,7 +429,6 @@ JUCE v&lt;Juce version&gt;
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

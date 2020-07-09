@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -29,10 +34,6 @@
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Examples" href="../../examples/examples_index.html" />
@@ -50,7 +51,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> SpiegeLib
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> SpiegeLib
           
 
           
@@ -73,6 +74,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -105,6 +107,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -143,7 +146,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../network.html">Network Classes</a> &raquo;</li>
         
@@ -171,9 +174,9 @@
 <p>This class runs a simple WSGI server that receives GET requests containing a path
 to an audio file to use as a sound target for synthesizer sound matching. It returns
 the parameter settings as JSON.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="spiegelib.network.SoundMatchHTTPServer">
-<em class="property">class </em><code class="sig-prename descclassname">spiegelib.network.</code><code class="sig-name descname">SoundMatchHTTPServer</code><span class="sig-paren">(</span><em class="sig-param">sound_matcher</em>, <em class="sig-param">address='localhost'</em>, <em class="sig-param">port=8000</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.network.SoundMatchHTTPServer" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.network.</code><code class="sig-name descname">SoundMatchHTTPServer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sound_matcher</span></em>, <em class="sig-param"><span class="n">address</span><span class="o">=</span><span class="default_value">'localhost'</span></em>, <em class="sig-param"><span class="n">port</span><span class="o">=</span><span class="default_value">8000</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.network.SoundMatchHTTPServer" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -183,27 +186,27 @@ the parameter settings as JSON.</p>
 </ul>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.network.SoundMatchHTTPServer.start">
 <code class="sig-name descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.network.SoundMatchHTTPServer.start" title="Permalink to this definition">¶</a></dt>
 <dd><p>Begin server</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.network.SoundMatchHTTPServer.get">
-<code class="sig-name descname">get</code><span class="sig-paren">(</span><em class="sig-param">environ</em>, <em class="sig-param">start_response</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.network.SoundMatchHTTPServer.get" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environ</span></em>, <em class="sig-param"><span class="n">start_response</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.network.SoundMatchHTTPServer.get" title="Permalink to this definition">¶</a></dt>
 <dd><p>Process a GET request</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.network.SoundMatchHTTPServer.get_headers">
-<em class="property">static </em><code class="sig-name descname">get_headers</code><span class="sig-paren">(</span><em class="sig-param">response_body</em>, <em class="sig-param">mime_type</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.network.SoundMatchHTTPServer.get_headers" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">get_headers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">response_body</span></em>, <em class="sig-param"><span class="n">mime_type</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.network.SoundMatchHTTPServer.get_headers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return headers for HTML</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.network.SoundMatchHTTPServer.try_sound_match">
-<code class="sig-name descname">try_sound_match</code><span class="sig-paren">(</span><em class="sig-param">query</em>, <em class="sig-param">start_response</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.network.SoundMatchHTTPServer.try_sound_match" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">try_sound_match</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">query</span></em>, <em class="sig-param"><span class="n">start_response</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.network.SoundMatchHTTPServer.try_sound_match" title="Permalink to this definition">¶</a></dt>
 <dd><p>Trys to run a sound match given a query string</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -237,11 +240,19 @@ audio file</p>
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, University of Victoria
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -252,7 +263,6 @@ audio file</p>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

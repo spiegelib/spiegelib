@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -29,10 +34,6 @@
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="FFT Class" href="fft.html" />
@@ -50,7 +51,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> SpiegeLib
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> SpiegeLib
           
 
           
@@ -73,6 +74,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -109,6 +111,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -147,7 +150,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../features.html">Audio Feature Extraction</a> &raquo;</li>
         
@@ -187,9 +190,9 @@ must return a <cite>np.ndarray</cite> containing results.</p>
 <span class="n">spectrum</span> <span class="o">=</span> <span class="n">fft</span><span class="p">(</span><span class="n">audio</span><span class="p">)</span>
 </pre></div>
 </div>
-<dl class="class">
+<dl class="py class">
 <dt id="spiegelib.features.FeaturesBase">
-<em class="property">class </em><code class="sig-prename descclassname">spiegelib.features.</code><code class="sig-name descname">FeaturesBase</code><span class="sig-paren">(</span><em class="sig-param">sample_rate=44100</em>, <em class="sig-param">time_major=False</em>, <em class="sig-param">scale=False</em>, <em class="sig-param">scale_axis=(0</em>, <em class="sig-param">)</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.FeaturesBase" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.features.</code><code class="sig-name descname">FeaturesBase</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sample_rate</span><span class="o">=</span><span class="default_value">44100</span></em>, <em class="sig-param"><span class="n">time_major</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">scale</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">scale_axis</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.FeaturesBase" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -211,9 +214,9 @@ on each feature independently.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.features.FeaturesBase.__call__">
-<code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param">audio</em>, <em class="sig-param">scale=None</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.FeaturesBase.__call__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">audio</span></em>, <em class="sig-param"><span class="n">scale</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.FeaturesBase.__call__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run this feature extraction pipeline.</p>
 <p>Applies functions in this order: input modifiers &gt; feature extraction &gt;
 prescale modifiers &gt; data scaling &gt; output modifiers</p>
@@ -234,9 +237,9 @@ during construction.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.features.FeaturesBase.get_features">
-<em class="property">abstract </em><code class="sig-name descname">get_features</code><span class="sig-paren">(</span><em class="sig-param">audio</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.FeaturesBase.get_features" title="Permalink to this definition">¶</a></dt>
+<em class="property">abstract </em><code class="sig-name descname">get_features</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">audio</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.FeaturesBase.get_features" title="Permalink to this definition">¶</a></dt>
 <dd><p>Must be implemented. Run audio feature extraction on audio provided as parameter.
 Must check the <cite>time_major</cite> attribute and return data in the correct
 orientation.</p>
@@ -253,9 +256,9 @@ orientation.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.features.FeaturesBase.add_modifier">
-<code class="sig-name descname">add_modifier</code><span class="sig-paren">(</span><em class="sig-param">modifier</em>, <em class="sig-param">type</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.FeaturesBase.add_modifier" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_modifier</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">modifier</span></em>, <em class="sig-param"><span class="n">type</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.FeaturesBase.add_modifier" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a data modifier to the feature extraction pipeline.</p>
 <p>Input modifiers are applied to raw <cite>AudioBuffers &lt;audio_buffer&gt;</cite> prior
 to feature extraction. Prescale modifiers are applied to results of audio
@@ -273,9 +276,9 @@ apply some modification to that, and return a np.array</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.features.FeaturesBase.fit_scaler">
-<code class="sig-name descname">fit_scaler</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">transform=True</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.FeaturesBase.fit_scaler" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">fit_scaler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">transform</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.FeaturesBase.fit_scaler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit scaler to dataset for future transforms.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -294,7 +297,7 @@ to the data</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.features.FeaturesBase.has_scaler">
 <code class="sig-name descname">has_scaler</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.FeaturesBase.has_scaler" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
@@ -307,9 +310,9 @@ to the data</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.features.FeaturesBase.set_scaler">
-<code class="sig-name descname">set_scaler</code><span class="sig-paren">(</span><em class="sig-param">scaler</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.FeaturesBase.set_scaler" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_scaler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">scaler</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.FeaturesBase.set_scaler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set a scaler for a dimension, this will be used to normalize that dimension</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -323,9 +326,9 @@ has not been tested!)</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.features.FeaturesBase.scale">
-<code class="sig-name descname">scale</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.FeaturesBase.scale" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">scale</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.FeaturesBase.scale" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scale features using pre-trained scaler</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -340,9 +343,9 @@ has not been tested!)</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.features.FeaturesBase.load_scaler">
-<code class="sig-name descname">load_scaler</code><span class="sig-paren">(</span><em class="sig-param">location</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.FeaturesBase.load_scaler" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">load_scaler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">location</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.FeaturesBase.load_scaler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load trained scaler from a pickled file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -351,9 +354,9 @@ has not been tested!)</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.features.FeaturesBase.save_scaler">
-<code class="sig-name descname">save_scaler</code><span class="sig-paren">(</span><em class="sig-param">location</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.FeaturesBase.save_scaler" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">save_scaler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">location</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.features.FeaturesBase.save_scaler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save the trained scaler for these features as a pickle for later use</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -386,11 +389,19 @@ has not been tested!)</p>
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, University of Victoria
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -401,7 +412,6 @@ has not been tested!)</p>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

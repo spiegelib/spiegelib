@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -29,10 +34,6 @@
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="MFCCEval Class" href="mfcc_eval.html" />
@@ -50,7 +51,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> SpiegeLib
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> SpiegeLib
           
 
           
@@ -73,6 +74,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -106,6 +108,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -144,7 +147,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../evaluation.html">Evaluation Classes</a> &raquo;</li>
         
@@ -170,9 +173,9 @@
   <div class="section" id="module-spiegelib.evaluation.evaluation_base">
 <span id="evaluationbase-class"></span><span id="evaluation-base"></span><h1>EvaluationBase Class<a class="headerlink" href="#module-spiegelib.evaluation.evaluation_base" title="Permalink to this headline">¶</a></h1>
 <p>Abstract Base Class for objective evaluations</p>
-<dl class="class">
+<dl class="py class">
 <dt id="spiegelib.evaluation.EvaluationBase">
-<em class="property">class </em><code class="sig-prename descclassname">spiegelib.evaluation.</code><code class="sig-name descname">EvaluationBase</code><span class="sig-paren">(</span><em class="sig-param">targets</em>, <em class="sig-param">estimations</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">spiegelib.evaluation.</code><code class="sig-name descname">EvaluationBase</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">targets</span></em>, <em class="sig-param"><span class="n">estimations</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
 <p>Example Input:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">targets</span> <span class="o">=</span> <span class="p">[</span><span class="n">target_1</span><span class="p">,</span> <span class="n">target_2</span><span class="p">]</span>
@@ -198,9 +201,9 @@ have the results from each method in the same position in each list.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.evaluation.EvaluationBase.evaluate_target">
-<em class="property">abstract </em><code class="sig-name descname">evaluate_target</code><span class="sig-paren">(</span><em class="sig-param">target</em>, <em class="sig-param">predictions</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.evaluate_target" title="Permalink to this definition">¶</a></dt>
+<em class="property">abstract </em><code class="sig-name descname">evaluate_target</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">target</span></em>, <em class="sig-param"><span class="n">predictions</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.evaluate_target" title="Permalink to this definition">¶</a></dt>
 <dd><p>Abstract method. Must be implemented and evaluate a single target and predictions
 made for that target. Called automatically by <a class="reference internal" href="#spiegelib.evaluation.EvaluationBase.evaluate" title="spiegelib.evaluation.EvaluationBase.evaluate"><code class="xref py py-func docutils literal notranslate"><span class="pre">evaluate()</span></code></a></p>
 <dl class="field-list simple">
@@ -220,7 +223,7 @@ against the target audio file.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.evaluation.EvaluationBase.evaluate">
 <code class="sig-name descname">evaluate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.evaluate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run evaluation. Calls evaluate_target on all targets and creates a dictionary
@@ -230,7 +233,7 @@ the prediction list that it was constructed with - uses the key ‘source_#’.
 Where # is the position index.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.evaluation.EvaluationBase.get_scores">
 <code class="sig-name descname">get_scores</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.get_scores" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
@@ -243,7 +246,7 @@ Where # is the position index.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.evaluation.EvaluationBase.get_stats">
 <code class="sig-name descname">get_stats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.get_stats" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
@@ -256,9 +259,9 @@ Where # is the position index.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.evaluation.EvaluationBase.save_scores_json">
-<code class="sig-name descname">save_scores_json</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.save_scores_json" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">save_scores_json</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.save_scores_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save scores to a JSON file</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -267,9 +270,9 @@ Where # is the position index.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.evaluation.EvaluationBase.save_stats_json">
-<code class="sig-name descname">save_stats_json</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.save_stats_json" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">save_stats_json</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.save_stats_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save score statistics as a JSON file</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -278,9 +281,9 @@ Where # is the position index.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.evaluation.EvaluationBase.plot_hist">
-<code class="sig-name descname">plot_hist</code><span class="sig-paren">(</span><em class="sig-param">sources</em>, <em class="sig-param">metric</em>, <em class="sig-param">bins=None</em>, <em class="sig-param">clip_upper=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.plot_hist" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">plot_hist</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sources</span></em>, <em class="sig-param"><span class="n">metric</span></em>, <em class="sig-param"><span class="n">bins</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">clip_upper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.plot_hist" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot a histogram of results of evaluation. Uses Matplotlib.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -305,9 +308,9 @@ right most hitogram bin.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.evaluation.EvaluationBase.verify_input_list">
-<code class="sig-name descname">verify_input_list</code><span class="sig-paren">(</span><em class="sig-param">input_list</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.verify_input_list" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">verify_input_list</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_list</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.verify_input_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base method for verifying input list. Override to implement verification.
 For example, override and call
 <a class="reference internal" href="#spiegelib.evaluation.EvaluationBase.verify_audio_input_list" title="spiegelib.evaluation.EvaluationBase.verify_audio_input_list"><code class="xref py py-func docutils literal notranslate"><span class="pre">verify_audio_input_list()</span></code></a>
@@ -315,15 +318,15 @@ on input_list to verify that <a class="reference internal" href="../core/audio_b
 passed in.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.evaluation.EvaluationBase.verify_audio_input_list">
-<em class="property">static </em><code class="sig-name descname">verify_audio_input_list</code><span class="sig-paren">(</span><em class="sig-param">input_list</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.verify_audio_input_list" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">verify_audio_input_list</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_list</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.verify_audio_input_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Static method for verifying input lists with audio buffers</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.evaluation.EvaluationBase.euclidian_distance">
-<em class="property">static </em><code class="sig-name descname">euclidian_distance</code><span class="sig-paren">(</span><em class="sig-param">A</em>, <em class="sig-param">B</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.euclidian_distance" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">euclidian_distance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">A</span></em>, <em class="sig-param"><span class="n">B</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.euclidian_distance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the euclidian distance between two arrays.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -341,9 +344,9 @@ passed in.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.evaluation.EvaluationBase.manhattan_distance">
-<em class="property">static </em><code class="sig-name descname">manhattan_distance</code><span class="sig-paren">(</span><em class="sig-param">A</em>, <em class="sig-param">B</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.manhattan_distance" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">manhattan_distance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">A</span></em>, <em class="sig-param"><span class="n">B</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.manhattan_distance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the manhattan distance between two arrays.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -361,9 +364,9 @@ passed in.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.evaluation.EvaluationBase.mean_abs_error">
-<em class="property">static </em><code class="sig-name descname">mean_abs_error</code><span class="sig-paren">(</span><em class="sig-param">A</em>, <em class="sig-param">B</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.mean_abs_error" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">mean_abs_error</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">A</span></em>, <em class="sig-param"><span class="n">B</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.mean_abs_error" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates mean absolute error between two arrays. Mean(ABS(A-B)).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -381,9 +384,9 @@ passed in.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="spiegelib.evaluation.EvaluationBase.mean_squared_error">
-<em class="property">static </em><code class="sig-name descname">mean_squared_error</code><span class="sig-paren">(</span><em class="sig-param">A</em>, <em class="sig-param">B</em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.mean_squared_error" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">mean_squared_error</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">A</span></em>, <em class="sig-param"><span class="n">B</span></em><span class="sig-paren">)</span><a class="headerlink" href="#spiegelib.evaluation.EvaluationBase.mean_squared_error" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates mean squared error between two arrays. Mean(Square(A-B)).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -425,11 +428,19 @@ passed in.</p>
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, University of Victoria
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -440,7 +451,6 @@ passed in.</p>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

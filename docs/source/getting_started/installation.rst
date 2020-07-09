@@ -37,6 +37,8 @@ Requirements
 	tensorflow >= 2.1.0
 	deap >= 1.3.1
 	tqdm >= 4.43.0
+	numba == 0.48
+	scipy == 1.4.1
 	librenderman
 
 All of these dependencies, except for librenderman (RenderMan), will be installed automatically.
@@ -152,7 +154,7 @@ a `JUCE <https://juce.com/>`_ application.
 5) Update Xcode exporter
 
 	For the Xcode (MacOSX) exporter modify the *Extra Linker Flags*: remove ``-lpython3.6m``
-	Change ``-lboost-python`` to ``-lboost-python37`` and add ``-undefined dynamic_lookup``
+	Change ``-lboost_python`` to ``-lboost_python37`` and add ``-undefined dynamic_lookup``
 
 	.. image:: ../images/linker_flags.png
 
@@ -179,7 +181,12 @@ a `JUCE <https://juce.com/>`_ application.
 
 	.. image:: ../images/extra_lib_path.png
 
-7) Open Xcode and build
+7) VST Search Path
+
+	If the VST (Legacy) SDK Folder under the main Xcode exporter tab isn't filled, you will need to
+	update that. Add the VST3_SDK folder here which is located in the RenderMan root directory.
+
+8) Open Xcode and build
 
 	Open Xcode from the Projucer by clicking on the Xcode icon
 
@@ -193,13 +200,13 @@ a `JUCE <https://juce.com/>`_ application.
 
 	|
 
-8) Rename the built library and move to conda env::
+9) Rename the built library and move to conda env::
 
 	$ cd <path-to-RenderMan>/Builds/MacOSX/build/Debug
 	$ mv librenderman.so.dylib librenderman.so
 	$ mv librenderman.so <path-to-anaconda3>/envs/spiegelib_env/lib/python3.7/site-packages/
 
-9) Test librenderman. Make sure the correct conda environment is activated::
+10) Test librenderman. Make sure the correct conda environment is activated::
 
 	(spiegelib_env)$ python
 	>>> import librenderman as rm
