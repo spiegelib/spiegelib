@@ -11,3 +11,4 @@ from .fft import FFT
 from .mfcc import MFCC
 from .spectral_summarized import SpectralSummarized
 from .stft import STFT
+from .mel_spectrogram import MelSpectrogram
