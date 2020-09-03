@@ -143,6 +143,24 @@ class AudioBuffer():
         self.file_name = path
 
 
+    def peak(self, db=False):
+        """
+        Return the absolute peak in amplitude or dB
+
+        Args:
+            db (bool, optional): whether to return in dB, defaults to False
+
+        Returns:
+            float: peak value
+        """
+
+        peak_amp = np.max(np.abs(self.audio))
+        if db:
+            return 20*np.log10(peak_amp)
+
+        return peak_amp
+
+
     def plot_spectrogram(self, **kwargs):
         """
         Plot spectrogram of this audio buffer. Uses librosas `specshow <https://librosa.github.io/librosa/generated/librosa.display.specshow.html>`_
