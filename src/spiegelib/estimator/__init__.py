@@ -13,6 +13,7 @@ from .nsga3 import NSGA3
 
 # Deep learning models
 from .conv6 import Conv6
+from .convSpectrogram import ConvSpectrogram
 from .hwy_blstm import HwyBLSTM
 from .lstm import LSTM
 from .mlp import MLP

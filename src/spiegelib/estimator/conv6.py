@@ -9,6 +9,7 @@ from tensorflow.keras import layers
 
 from spiegelib.estimator.tf_estimator_base import TFEstimatorBase
 
+
 class Conv6(TFEstimatorBase):
     """
     :param input_shape: Shape of matrix that will be passed to model input
@@ -26,25 +27,24 @@ class Conv6(TFEstimatorBase):
 
         super().__init__(input_shape, num_outputs, **kwargs)
 
-
     def build_model(self):
         """
         Construct 6-layer CNN Model
         """
 
         self.model = tf.keras.Sequential()
-        self.model.add(layers.Conv2D(32, (3, 3), strides=(2,2), dilation_rate=(1,1),
+        self.model.add(layers.Conv2D(32, (3, 3), strides=(2, 2), dilation_rate=(1, 1),
                                      input_shape=self.input_shape,
                                      activation='relu'))
-        self.model.add(layers.Conv2D(71, (3, 3), strides=(2,2), dilation_rate=(1,1),
+        self.model.add(layers.Conv2D(71, (3, 3), strides=(2, 2), dilation_rate=(1, 1),
                                      activation='relu'))
-        self.model.add(layers.Conv2D(128, (3, 4), strides=(2,3), dilation_rate=(1,1),
+        self.model.add(layers.Conv2D(128, (3, 4), strides=(2, 3), dilation_rate=(1, 1),
                                      activation='relu'))
-        self.model.add(layers.Conv2D(128, (3, 3), strides=(2,2), dilation_rate=(1,1),
+        self.model.add(layers.Conv2D(128, (3, 3), strides=(2, 2), dilation_rate=(1, 1),
                                      activation='relu'))
-        self.model.add(layers.Conv2D(128, (3, 3), strides=(2,2), dilation_rate=(1,1),
+        self.model.add(layers.Conv2D(128, (3, 3), strides=(2, 2), dilation_rate=(1, 1),
                                      activation='relu'))
-        self.model.add(layers.Conv2D(128, (3, 3), strides=(1,2), dilation_rate=(1,1),
+        self.model.add(layers.Conv2D(128, (3, 3), strides=(1, 2), dilation_rate=(1, 1),
                                      activation='relu'))
         self.model.add(layers.Dropout(0.20))
         self.model.add(layers.Flatten())
