@@ -171,7 +171,7 @@ class SynthBase(ABC):
 
     def get_random_example(self):
         """
-        Returns audio from a new random patch
+        Returns audio from a new random patch.
 
         :return: An audio buffer
         :rtype: np.array

@@ -66,7 +66,7 @@ class MelSpectrogram(FeaturesBase):
         )
 
         if self.output == 'db':
-            features = librosa.power_to_db(features)
+            features = librosa.power_to_db(features, ref=np.max)
 
         if self.time_major:
             features = np.swapaxes(features, 0, 1)
