@@ -5,6 +5,7 @@ Init file for features
 """
 from .data_scaler_base import DataScalerBase
 from .standard_scaler import StandardScaler
+from .minmax_scaler import MinMaxScaler
 
 from .features_base import FeaturesBase
 from .fft import FFT
