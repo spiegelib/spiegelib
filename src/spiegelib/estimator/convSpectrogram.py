@@ -33,36 +33,37 @@ class ConvSpectrogram(TFEstimatorBase):
 
         model = tf.keras.Sequential()
 
-        model.add(layers.Conv2D(64, 5, 2, padding='same', input_shape=self.input_shape))
-        assert (model.output_shape == (None, 64, 64, 64))
+        model.add(layers.Conv2D(32, 3, 2, padding='same', input_shape=self.input_shape))
+        assert (model.output_shape == (None, 64, 64, 32))
         model.add(layers.LeakyReLU())
-        model.add(layers.Dropout(0.3))
 
-        model.add(layers.Conv2D(128, 5, 2, padding='same'))
-        assert (model.output_shape == (None, 32, 32, 128))
+        model.add(layers.Conv2D(64, 3, 2, padding='same'))
+        assert (model.output_shape == (None, 32, 32, 64))
         model.add(layers.LeakyReLU())
-        model.add(layers.Dropout(0.3))
 
-        model.add(layers.Conv2D(256, 5, 2, padding='same'))
-        assert (model.output_shape == (None, 16, 16, 256))
+        model.add(layers.Conv2D(128, 3, 2, padding='same'))
+        assert (model.output_shape == (None, 16, 16, 128))
         model.add(layers.LeakyReLU())
-        model.add(layers.Dropout(0.3))
 
-        model.add(layers.Conv2D(512, 5, 2, padding='same'))
-        assert (model.output_shape == (None, 8, 8, 512))
+        model.add(layers.Conv2D(128, 3, 2, padding='same'))
+        assert (model.output_shape == (None, 8, 8, 128))
         model.add(layers.LeakyReLU())
-        model.add(layers.Dropout(0.3))
 
-        model.add(layers.Conv2D(1024, 5, 2, padding='same'))
-        assert (model.output_shape == (None, 4, 4, 1024))
+        model.add(layers.Conv2D(128, 3, 1, padding='same'))
+        assert (model.output_shape == (None, 8, 8, 128))
         model.add(layers.LeakyReLU())
-        model.add(layers.Dropout(0.3))
+        model.add(layers.Dropout(0.4))
 
         model.add(layers.Flatten())
-        model.add(layers.Dense(self.num_outputs))
+        model.add(layers.Dense(512, activation='relu'))
+        model.add(layers.Dropout(0.2))
+        model.add(layers.Dense(512, activation='relu'))
+        model.add(layers.Dropout(0.2))
+        model.add(layers.Dense(self.num_outputs, activation='sigmoid'))
 
         self.model = model
         self.model.compile(
             optimizer=tf.optimizers.Adam(),
-            loss=tf.keras.losses.MSE,
+            loss=TFEstimatorBase.rms_error,
+            metrics=['accuracy']
         )

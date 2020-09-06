@@ -33,22 +33,16 @@ class Conv6(TFEstimatorBase):
         """
 
         self.model = tf.keras.Sequential()
-        self.model.add(layers.Conv2D(32, (3, 3), strides=(2, 2), dilation_rate=(1, 1),
-                                     input_shape=self.input_shape,
-                                     activation='relu'))
-        self.model.add(layers.Conv2D(71, (3, 3), strides=(2, 2), dilation_rate=(1, 1),
-                                     activation='relu'))
-        self.model.add(layers.Conv2D(128, (3, 4), strides=(2, 3), dilation_rate=(1, 1),
-                                     activation='relu'))
-        self.model.add(layers.Conv2D(128, (3, 3), strides=(2, 2), dilation_rate=(1, 1),
-                                     activation='relu'))
-        self.model.add(layers.Conv2D(128, (3, 3), strides=(2, 2), dilation_rate=(1, 1),
-                                     activation='relu'))
-        self.model.add(layers.Conv2D(128, (3, 3), strides=(1, 2), dilation_rate=(1, 1),
-                                     activation='relu'))
-        self.model.add(layers.Dropout(0.20))
+        self.model.add(layers.Conv2D(32, (3, 3), strides=(2, 2), input_shape=self.input_shape, activation='relu', padding='same'))
+        self.model.add(layers.Conv2D(71, (3, 3), strides=(2, 2), activation='relu', padding='same'))
+        self.model.add(layers.Conv2D(128, (3, 4), strides=(2, 3), activation='relu', padding='same'))
+        self.model.add(layers.Conv2D(128, (3, 3), strides=(2, 2), activation='relu', padding='same'))
+        self.model.add(layers.Conv2D(128, (3, 3), strides=(2, 2), activation='relu', padding='same'))
+        self.model.add(layers.Conv2D(128, (3, 3), strides=(1, 2), activation='relu', padding='same'))
+        self.model.add(layers.Dropout(0.30))
         self.model.add(layers.Flatten())
-        self.model.add(layers.Dense(self.num_outputs))
+        self.model.add(layers.Dense(512, activation='relu'))
+        self.model.add(layers.Dense(self.num_outputs, activation='sigmoid'))
 
         self.model.compile(
             optimizer=tf.optimizers.Adam(),
