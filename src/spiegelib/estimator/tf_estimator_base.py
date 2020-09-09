@@ -69,7 +69,7 @@ class TFEstimatorBase(EstimatorBase):
     """
 
     def __init__(self, input_shape=None, num_outputs=None,
-                 weights_path = "", callbacks=[]):
+                 weights_path = "", callbacks=None):
         """
         Constructor
         """
@@ -88,11 +88,13 @@ class TFEstimatorBase(EstimatorBase):
         self.test_data = None
 
         # Loggers
-        if isinstance(callbacks, list):
+        if callbacks is None:
+            self.callbacks = None
+        elif isinstance(callbacks, list):
             self.callbacks = callbacks
         else:
             raise Exception('loggers argument must be of type list, '
-                            'received %s' % type(loggers))
+                            'received %s' % type(callbacks))
 
         # Attempt to load model weights if provided
         if weights_path:
@@ -184,12 +186,12 @@ class TFEstimatorBase(EstimatorBase):
                             % type(callbacks))
 
         # Add callbacks
-        if self.callbacks:
+        if self.callbacks is not None:
             for callback in self.callbacks:
                 callbacks.append(callback)
 
         # Train model
-        self.model.fit(
+        return self.model.fit(
             self.train_data,
             epochs = epochs,
             validation_data = self.test_data,
