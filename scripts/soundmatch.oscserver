@@ -1,0 +1,48 @@
+#!/usr/bin/env python
+
+"""
+Script to start up a SoundMatch server running over UDP using OSC messages
+"""
+
+import os
+import sys
+import argparse
+import importlib.util
+from spiegelib.network import SoundMatchOSCServer
+
+def main(arguments):
+    """
+    Script entry
+    """
+
+
+    parser = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter)
+
+    parser.add_argument('soundmatch_bundle', help="Sound match bundle directory", type=str)
+    parser.add_argument('-a', '--address', help="Host IP address", default="127.0.0.1", type=str)
+    parser.add_argument('-r', '--receiveport', help="Port to receive OSC messages on",
+                        default=9001, type=int)
+    parser.add_argument('-s', '--sendport', help="Port to send OSC messages on",
+                        default=9002, type=int)
+
+    args = parser.parse_args(arguments)
+
+    # Load the sound match object loader from given directory
+    loader = os.path.join(args.soundmatch_bundle, 'loader.py')
+    spec = importlib.util.spec_from_file_location("loader", loader)
+    loader = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(loader)
+
+    # Use the given directory as the root for the sound match loader
+    # and load the sound matcher object. Then start the sound match server.
+    loader_root = os.path.abspath(args.soundmatch_bundle)
+    sound_matcher = loader.load(loader_root)
+    server = SoundMatchOSCServer(sound_matcher, host=args.address,
+                                 receive=args.receiveport, send=args.sendport)
+    server.start()
+
+
+if __name__ == '__main__':
+    sys.exit(main(sys.argv[1:]))
