@@ -26,7 +26,7 @@ setup(
     packages=find_packages('src'),
     package_dir={'': 'src'},
     package_data={
-        '': ['beaqlejs/*', 'beaqlejs/img/*'],
+        '': ['beaqlejs/*', 'beaqlejs/img/*', 'vggish_data/*'],
     },
     python_requires='>=3.6',
     install_requires=[
