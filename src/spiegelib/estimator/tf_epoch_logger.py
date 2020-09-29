@@ -86,4 +86,6 @@ class TFEpochLogger(Callback):
             axs[1].set(xlabel='Epochs', ylabel='Loss')
             axs[1].legend()
 
-            plt.show()
+            return fig, axs
+
+        return None

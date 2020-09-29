@@ -10,7 +10,7 @@ from tensorflow.keras import layers
 from spiegelib.estimator.tf_estimator_base import TFEstimatorBase
 
 
-class Conv6(TFEstimatorBase):
+class Conv5(TFEstimatorBase):
     """
     :param input_shape: Shape of matrix that will be passed to model input
     :type input_shape: tuple
@@ -40,7 +40,7 @@ class Conv6(TFEstimatorBase):
         if self.batch_norm:
             self.model.add(layers.BatchNormalization())
 
-        self.model.add(layers.Conv2D(71, (3, 3), strides=(2, 2), activation='relu', padding='same'))
+        self.model.add(layers.Conv2D(98, (3, 3), strides=(2, 2), activation='relu', padding='same'))
         if self.batch_norm:
             self.model.add(layers.BatchNormalization())
 
@@ -48,15 +48,11 @@ class Conv6(TFEstimatorBase):
         if self.batch_norm:
             self.model.add(layers.BatchNormalization())
 
-        self.model.add(layers.Conv2D(128, (3, 3), strides=(2, 2), activation='relu', padding='same'))
+        self.model.add(layers.Conv2D(128, (3, 5), strides=(2, 4), activation='relu', padding='same'))
         if self.batch_norm:
             self.model.add(layers.BatchNormalization())
 
         self.model.add(layers.Conv2D(128, (3, 3), strides=(2, 2), activation='relu', padding='same'))
-        if self.batch_norm:
-            self.model.add(layers.BatchNormalization())
-
-        self.model.add(layers.Conv2D(128, (3, 3), strides=(1, 2), activation='relu', padding='same'))
         if self.batch_norm:
             self.model.add(layers.BatchNormalization())
 

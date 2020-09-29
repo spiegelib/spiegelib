@@ -10,7 +10,7 @@ from tensorflow.keras import layers
 from spiegelib.estimator.tf_estimator_base import TFEstimatorBase
 
 
-class Conv6(TFEstimatorBase):
+class Conv6Small(TFEstimatorBase):
     """
     :param input_shape: Shape of matrix that will be passed to model input
     :type input_shape: tuple
@@ -20,13 +20,15 @@ class Conv6(TFEstimatorBase):
         :class:`spiegelib.estimator.TFEstimatorBase`
     """
 
-    def __init__(self, input_shape, num_outputs, dropout=None, batch_norm=False, **kwargs):
+    def __init__(self, input_shape, num_outputs, dropout=None, batch_norm=False, fc_layers=1, fc_layer_size=128, **kwargs):
         """
         Constructor
         """
 
         self.dropout = dropout
         self.batch_norm = batch_norm
+        self.fc_layers = fc_layers
+        self.fc_layer_size = fc_layer_size
         super().__init__(input_shape, num_outputs, **kwargs)
 
 
@@ -40,11 +42,15 @@ class Conv6(TFEstimatorBase):
         if self.batch_norm:
             self.model.add(layers.BatchNormalization())
 
-        self.model.add(layers.Conv2D(71, (3, 3), strides=(2, 2), activation='relu', padding='same'))
+        self.model.add(layers.Conv2D(32, (3, 3), strides=(2, 2), activation='relu', padding='same'))
         if self.batch_norm:
             self.model.add(layers.BatchNormalization())
 
-        self.model.add(layers.Conv2D(128, (3, 4), strides=(2, 3), activation='relu', padding='same'))
+        self.model.add(layers.Conv2D(64, (3, 3), strides=(2, 2), activation='relu', padding='same'))
+        if self.batch_norm:
+            self.model.add(layers.BatchNormalization())
+
+        self.model.add(layers.Conv2D(64, (3, 3), strides=(2, 2), activation='relu', padding='same'))
         if self.batch_norm:
             self.model.add(layers.BatchNormalization())
 
@@ -53,19 +59,19 @@ class Conv6(TFEstimatorBase):
             self.model.add(layers.BatchNormalization())
 
         self.model.add(layers.Conv2D(128, (3, 3), strides=(2, 2), activation='relu', padding='same'))
-        if self.batch_norm:
-            self.model.add(layers.BatchNormalization())
-
-        self.model.add(layers.Conv2D(128, (3, 3), strides=(1, 2), activation='relu', padding='same'))
         if self.batch_norm:
             self.model.add(layers.BatchNormalization())
 
         if self.dropout is not None:
             self.model.add(layers.Dropout(self.dropout))
+
         self.model.add(layers.Flatten())
-        self.model.add(layers.Dense(512, activation='sigmoid'))
-        if self.dropout is not None:
-            self.model.add(layers.Dropout(self.dropout))
+
+        for i in range(self.fc_layers):
+            self.model.add(layers.Dense(self.fc_layer_size, activation='sigmoid'))
+            if self.dropout is not None:
+                self.model.add(layers.Dropout(self.dropout))
+
         self.model.add(layers.Dense(self.num_outputs))
 
         self.model.compile(
