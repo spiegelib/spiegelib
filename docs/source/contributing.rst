@@ -65,8 +65,12 @@ download and install the python 3 version.
 
 	f) Update Xcode exporter
 
-		For the Xcode (MacOSX) exporter modify the *Extra Linker Flags*: remove ``-lpython3.6m``
-		Change ``-lboost-python`` to ``-lboost-python37`` and add ``-undefined dynamic_lookup``
+		For the Xcode (MacOSX) exporter check the *Extra
+		Linker Flags*. If it contains ``-lboost-python27``,
+		you have opened the wrong `.jucer` file. If it
+		contain ``-lboost-python37``, overwrite the *Extra
+		Linker Flags* with the following: ``-shared
+		-lboost_python -undefined dynamic_lookup``.
 
 		.. image:: images/linker_flags.png
 
