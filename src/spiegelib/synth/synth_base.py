@@ -219,8 +219,6 @@ class SynthBase(ABC):
         self.set_patch(overridden_params)
         self.overridden_params = overridden_params
 
-
-
     def save_state(self, path):
         """
         Save parameters and current state to a JSON file. Includes whether or not
