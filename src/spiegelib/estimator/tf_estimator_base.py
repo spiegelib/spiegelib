@@ -47,13 +47,16 @@ deep learning models like this, see the :ref:`FM Sound Match Example <fm_sound_m
 
 import os
 from abc import abstractmethod
-import datetime
+from typing import Union
+
 import numpy as np
 import tensorflow as tf
+from tensorflow.keras.losses import Loss
+from tensorflow.keras.optimizers import Adam, Optimizer
 
 from spiegelib.estimator.estimator_base import EstimatorBase
-from spiegelib.estimator.tf_epoch_logger import TFEpochLogger
 from spiegelib.estimator.highway_layer import HighwayLayer
+
 
 class TFEstimatorBase(EstimatorBase):
     """
@@ -65,11 +68,19 @@ class TFEstimatorBase(EstimatorBase):
         callbacks (list, optional): A list of callbacks to be passed into model fit method
 
     Attributes:
-        model (``tf.keras.Model``): Attribute for the model, see `TensorFlow docs <https://www.tensorflow.org/api_docs/python/tf/keras/Model>`__
+        model (``tf.keras.Model``): Attribute for the model, see
+        `TensorFlow docs <https://www.tensorflow.org/api_docs/python/tf/keras/Model>`__
     """
 
-    def __init__(self, input_shape=None, num_outputs=None,
-                 weights_path = "", callbacks=[]):
+    def __init__(
+        self,
+        input_shape=None,
+        num_outputs=None,
+        weights_path="",
+        callbacks=[],
+        optimizer: Optimizer = None,
+        loss: Union[str, Loss] = "mean_squared_error",
+    ):
         """
         Constructor
         """
@@ -81,6 +92,8 @@ class TFEstimatorBase(EstimatorBase):
 
         # Construct the model
         self.model = None
+        self.optimizer = Adam() if optimizer is None else optimizer
+        self.loss = loss
         self.build_model()
 
         # Datasets
@@ -91,13 +104,13 @@ class TFEstimatorBase(EstimatorBase):
         if isinstance(callbacks, list):
             self.callbacks = callbacks
         else:
-            raise Exception('loggers argument must be of type list, '
-                            'received %s' % type(loggers))
+            raise Exception(
+                "loggers argument must be of type list, " "received %s" % type(loggers)
+            )
 
         # Attempt to load model weights if provided
         if weights_path:
             self.load_weights(weights_path)
-
 
     @abstractmethod
     def build_model(self):
@@ -106,9 +119,7 @@ class TFEstimatorBase(EstimatorBase):
         """
         pass
 
-
-    def add_training_data(self, input, output, batch_size=64,
-                          shuffle_size=None):
+    def add_training_data(self, input, output, batch_size=64, shuffle_size=None):
         """
         Create a `tf.data.Dataset <https://www.tensorflow.org/api_docs/python/tf/data/Dataset>`_
         from training data, and shuffles / batches data for training. Stores
@@ -124,12 +135,16 @@ class TFEstimatorBase(EstimatorBase):
         """
 
         if not input.shape[1:] == self.input_shape:
-            raise Exception('Expected training data to have shape %s, got %s' \
-                            % (input.shape[1:], self.input_shape))
+            raise Exception(
+                "Expected training data to have shape %s, got %s"
+                % (input.shape[1:], self.input_shape)
+            )
 
         if not output.shape[-1] == self.num_outputs:
-            raise Exception('Expected training validation data to have shape '
-                            '%s, got %s' % (output.shape[-1], self.num_outputs))
+            raise Exception(
+                "Expected training validation data to have shape "
+                "%s, got %s" % (output.shape[-1], self.num_outputs)
+            )
 
         self.train_data = tf.data.Dataset.from_tensor_slices((input, output))
 
@@ -138,7 +153,6 @@ class TFEstimatorBase(EstimatorBase):
 
         if batch_size:
             self.train_data = self.train_data.batch(batch_size)
-
 
     def add_testing_data(self, input, output, batch_size=64):
         """
@@ -153,18 +167,21 @@ class TFEstimatorBase(EstimatorBase):
         """
 
         if not input.shape[1:] == self.input_shape:
-            raise Exception('Expected training data to have shape %s, got %s' \
-                            % (input.shape[1:], self.input_shape))
+            raise Exception(
+                "Expected training data to have shape %s, got %s"
+                % (input.shape[1:], self.input_shape)
+            )
 
         if not output.shape[-1] == self.num_outputs:
-            raise Exception('Expected training validation data to have shape %s, '
-                             'got %s' % (output.shape[-1], self.num_outputs))
+            raise Exception(
+                "Expected training validation data to have shape %s, "
+                "got %s" % (output.shape[-1], self.num_outputs)
+            )
 
         self.test_data = tf.data.Dataset.from_tensor_slices((input, output))
 
         if batch_size:
             self.test_data = self.test_data.batch(batch_size)
-
 
     def fit(self, epochs=1, callbacks=[], **kwargs):
         """
@@ -180,8 +197,7 @@ class TFEstimatorBase(EstimatorBase):
 
         # Check for callbacks in k
         if not isinstance(callbacks, list):
-            raise Exception('Callbacks must be a list, received %s' \
-                            % type(callbacks))
+            raise Exception("Callbacks must be a list, received %s" % type(callbacks))
 
         # Add callbacks
         if self.callbacks:
@@ -189,13 +205,15 @@ class TFEstimatorBase(EstimatorBase):
                 callbacks.append(callback)
 
         # Train model
-        self.model.fit(
+        history = self.model.fit(
             self.train_data,
-            epochs = epochs,
-            validation_data = self.test_data,
+            epochs=epochs,
+            validation_data=self.test_data,
             callbacks=callbacks,
             **kwargs
         )
+
+        return history
 
     def predict(self, input):
         """
@@ -211,12 +229,13 @@ class TFEstimatorBase(EstimatorBase):
             is_single_input = True
             input = np.array([input])
         else:
-            raise Exception('Input data has incorrect shape, expected %s, '
-                             'got %s' % (self.input_shape, input.shape))
+            raise Exception(
+                "Input data has incorrect shape, expected %s, "
+                "got %s" % (self.input_shape, input.shape)
+            )
 
         prediction = self.model.predict(input)
         return prediction[0] if is_single_input else prediction
-
 
     def load_weights(self, filepath, **kwargs):
         """
@@ -229,7 +248,6 @@ class TFEstimatorBase(EstimatorBase):
         """
 
         self.model.load_weights(filepath, **kwargs)
-
 
     def save_weights(self, filepath, **kwargs):
         """
@@ -250,7 +268,6 @@ class TFEstimatorBase(EstimatorBase):
 
         self.model.save_weights(path, **kwargs)
 
-
     def save_model(self, filepath, **kwargs):
         """
         Save entire model
@@ -268,7 +285,6 @@ class TFEstimatorBase(EstimatorBase):
 
         self.model.save(path, **kwargs)
 
-
     @staticmethod
     def load(filepath, **kwargs):
         """
@@ -282,19 +298,21 @@ class TFEstimatorBase(EstimatorBase):
         """
 
         # Add spiegelib custom objects
-        custom_objects = {'rms_error': TFEstimatorBase.rms_error,
-                          'HighwayLayer': HighwayLayer}
+        custom_objects = {
+            "rms_error": TFEstimatorBase.rms_error,
+            "HighwayLayer": HighwayLayer,
+        }
 
-        if 'custom_objects' in kwargs:
-            custom_objects.update(kwargs['custom_objects'])
-            del kwargs['custom_objects']
-
+        if "custom_objects" in kwargs:
+            custom_objects.update(kwargs["custom_objects"])
+            del kwargs["custom_objects"]
 
         model = GenericTFModel()
-        model.model = tf.keras.models.load_model(filepath, custom_objects=custom_objects)
+        model.model = tf.keras.models.load_model(
+            filepath, custom_objects=custom_objects
+        )
         model.input_shape = model.model.get_layer(index=0).input_shape[1:]
         return model
-
 
     @staticmethod
     def rms_error(y_true, y_pred):

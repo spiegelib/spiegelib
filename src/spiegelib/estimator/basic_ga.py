@@ -30,8 +30,9 @@ class BasicGA(EstimatorBase):
         mutpb (float, optional): Mutation probability, must be between 0 and 1.
     """
 
-    def __init__(self, synth, features, seed=None, pop_size=100, ngen=25,
-                 cxpb=0.5, mutpb=0.3):
+    def __init__(
+        self, synth, features, seed=None, pop_size=100, ngen=25, cxpb=0.5, mutpb=0.3
+    ):
         """
         Constructor
         """
@@ -59,7 +60,6 @@ class BasicGA(EstimatorBase):
         random.seed(seed)
         self._setup()
 
-
     def _setup(self):
         """
         Setup genetic algorithm
@@ -76,17 +76,22 @@ class BasicGA(EstimatorBase):
         self.toolbox.register("attr_float", random.random)
 
         # Structure initializers
-        self.toolbox.register("individual", tools.initRepeat, creator.BasicGAIndividual,
-                              self.toolbox.attr_float, self.num_params)
+        self.toolbox.register(
+            "individual",
+            tools.initRepeat,
+            creator.BasicGAIndividual,
+            self.toolbox.attr_float,
+            self.num_params,
+        )
 
-        self.toolbox.register("population", tools.initRepeat, list,
-                              self.toolbox.individual)
+        self.toolbox.register(
+            "population", tools.initRepeat, list, self.toolbox.individual
+        )
 
         self.toolbox.register("evaluate", self.fitness)
         self.toolbox.register("mate", tools.cxTwoPoint)
         self.toolbox.register("mutate", tools.mutFlipBit, indpb=0.05)
         self.toolbox.register("select", tools.selTournament, tournsize=3)
-
 
     def fitness(self, individual):
         """
@@ -110,8 +115,7 @@ class BasicGA(EstimatorBase):
         out = self.synth.get_audio()
         out_features = self.features(out)
         error = EvaluationBase.mean_abs_error(self.target, out_features)
-        return error,
-
+        return (error,)
 
     def predict(self, input):
         """
@@ -120,7 +124,6 @@ class BasicGA(EstimatorBase):
         Args:
             input (:ref:`AudioBuffer <audio_buffer>`): AudioBuffer to use as target
         """
-
 
         self.target = self.features(input)
 
@@ -132,9 +135,15 @@ class BasicGA(EstimatorBase):
         stats.register("min", np.min)
         stats.register("max", np.max)
 
-        pop, self.logbook = algorithms.eaSimple(pop, self.toolbox, cxpb=self.cxpb,
-                                                mutpb=self.mutpb, ngen=self.ngen,
-                                                stats=stats, halloffame=hof,
-                                                verbose=True)
+        pop, self.logbook = algorithms.eaSimple(
+            pop,
+            self.toolbox,
+            cxpb=self.cxpb,
+            mutpb=self.mutpb,
+            ngen=self.ngen,
+            stats=stats,
+            halloffame=hof,
+            verbose=True,
+        )
 
         return hof[0]

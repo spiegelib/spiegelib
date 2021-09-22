@@ -5,14 +5,13 @@ Abstract Base Class for Synthesizer Parameter Estimators
 
 from abc import ABC, abstractmethod
 
-class EstimatorBase(ABC):
 
+class EstimatorBase(ABC):
     def __init__(self):
         """
         Constructor
         """
         pass
-
 
     @abstractmethod
     def predict(self):

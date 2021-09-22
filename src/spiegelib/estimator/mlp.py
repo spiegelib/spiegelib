@@ -10,6 +10,7 @@ from tensorflow.keras import layers
 
 from spiegelib.estimator.tf_estimator_base import TFEstimatorBase
 
+
 class MLP(TFEstimatorBase):
     """
     :param input_shape: Shape of matrix that will be passed to model input
@@ -26,20 +27,19 @@ class MLP(TFEstimatorBase):
 
         super().__init__(input_shape, num_outputs, **kwargs)
 
-
     def build_model(self):
         """
         Construct MLP Model
         """
 
         self.model = tf.keras.Sequential()
-        self.model.add(layers.Dense(50, input_shape=self.input_shape, activation='relu'))
-        self.model.add(layers.Dense(40, activation='relu'))
-        self.model.add(layers.Dense(30, activation='relu'))
+        self.model.add(
+            layers.Dense(50, input_shape=self.input_shape, activation="relu")
+        )
+        self.model.add(layers.Dense(40, activation="relu"))
+        self.model.add(layers.Dense(30, activation="relu"))
         self.model.add(layers.Dense(self.num_outputs))
 
         self.model.compile(
-            optimizer=tf.optimizers.Adam(),
-            loss=TFEstimatorBase.rms_error,
-            metrics=['accuracy']
+            optimizer=self.optimizer, loss=self.loss, metrics=["accuracy"]
         )

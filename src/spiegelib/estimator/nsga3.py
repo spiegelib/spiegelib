@@ -21,20 +21,21 @@ from spiegelib.features.features_base import FeaturesBase
 
 class NSGA3(EstimatorBase):
     """
-        Args:
-            synth (Object): Instance of :class:`~spiegelib.synth.SynthBase`
-            features (list): A list of :class:`~spiegelib.features.FeaturesBase` objects.
-                Each feature extraction object defines an objective and is used
-                in the evaluation function to determine *fitness* of an individual.
-            seed (int, optional): Seed for random. Defaults to current system time.
-            pop_size (int, optional): Size of population at each generation
-            ngen (int, optional): Number of generations to run
-            cxpb (float, optional): Crossover probability, must be between 0 and 1.
-            mutpb (float, optional): Mutation probability, must be between 0 and 1.
+    Args:
+        synth (Object): Instance of :class:`~spiegelib.synth.SynthBase`
+        features (list): A list of :class:`~spiegelib.features.FeaturesBase` objects.
+            Each feature extraction object defines an objective and is used
+            in the evaluation function to determine *fitness* of an individual.
+        seed (int, optional): Seed for random. Defaults to current system time.
+        pop_size (int, optional): Size of population at each generation
+        ngen (int, optional): Number of generations to run
+        cxpb (float, optional): Crossover probability, must be between 0 and 1.
+        mutpb (float, optional): Mutation probability, must be between 0 and 1.
     """
 
-    def __init__(self, synth, features, seed=None, pop_size=100, ngen=25,
-                 cxpb=0.5, mutpb=0.5):
+    def __init__(
+        self, synth, features, seed=None, pop_size=100, ngen=25, cxpb=0.5, mutpb=0.5
+    ):
         """
         Constructor
         """
@@ -62,7 +63,6 @@ class NSGA3(EstimatorBase):
         random.seed(seed)
         self._setup()
 
-
     def _setup(self):
         """
         Setup genetic algorithm
@@ -71,8 +71,9 @@ class NSGA3(EstimatorBase):
         self.num_objectives = len(self.features_list)
 
         # Create individual types
-        creator.create("FitnessMin", base.Fitness,
-                       weights=(-1.0,) * self.num_objectives)
+        creator.create(
+            "FitnessMin", base.Fitness, weights=(-1.0,) * self.num_objectives
+        )
         creator.create("Individual", list, fitness=creator.FitnessMin)
 
         # Setup toolbox
@@ -87,20 +88,27 @@ class NSGA3(EstimatorBase):
             tools.initRepeat,
             creator.Individual,
             self.toolbox.attr_float,
-            self.num_params
+            self.num_params,
         )
-        self.toolbox.register("population", tools.initRepeat,
-                              list, self.toolbox.individual)
+        self.toolbox.register(
+            "population", tools.initRepeat, list, self.toolbox.individual
+        )
 
         ref_points = tools.uniform_reference_points(self.num_objectives, 12)
 
         self.toolbox.register("evaluate", self.fitness)
-        self.toolbox.register("mate", tools.cxSimulatedBinaryBounded, low=0.0,
-                              up=1.0, eta=30.0)
-        self.toolbox.register("mutate", tools.mutPolynomialBounded, low=0.0,
-                              up=1.0, eta=20.0, indpb=1.0/self.num_params)
+        self.toolbox.register(
+            "mate", tools.cxSimulatedBinaryBounded, low=0.0, up=1.0, eta=30.0
+        )
+        self.toolbox.register(
+            "mutate",
+            tools.mutPolynomialBounded,
+            low=0.0,
+            up=1.0,
+            eta=20.0,
+            indpb=1.0 / self.num_params,
+        )
         self.toolbox.register("select", tools.selNSGA3, ref_points=ref_points)
-
 
     def fitness(self, individual):
         """
@@ -126,12 +134,12 @@ class NSGA3(EstimatorBase):
         index = 0
         for extractor in self.features_list:
             out_features = extractor(out)
-            errors.append(EvaluationBase.mean_abs_error(self.target[index],
-                                                        out_features))
+            errors.append(
+                EvaluationBase.mean_abs_error(self.target[index], out_features)
+            )
             index += 1
 
         return errors
-
 
     def predict(self, input):
         """

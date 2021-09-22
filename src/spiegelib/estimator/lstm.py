@@ -10,6 +10,7 @@ from tensorflow.keras import layers
 
 from spiegelib.estimator.tf_estimator_base import TFEstimatorBase
 
+
 class LSTM(TFEstimatorBase):
     """
     :param input_shape: Shape of matrix that will be passed to model input
@@ -27,7 +28,6 @@ class LSTM(TFEstimatorBase):
 
         super().__init__(input_shape, num_outputs, **kwargs)
 
-
     def build_model(self, highway_layers=100):
         """
         Construct LSTM Model
@@ -38,20 +38,23 @@ class LSTM(TFEstimatorBase):
         """
 
         self.model = tf.keras.Sequential()
-        self.model.add(layers.LSTM(highway_layers, input_shape=self.input_shape,
-                       return_sequences=True))
+        self.model.add(
+            layers.LSTM(
+                highway_layers, input_shape=self.input_shape, return_sequences=True
+            )
+        )
         self.model.add(layers.LSTM(highway_layers, return_sequences=True))
         self.model.add(layers.LSTM(highway_layers))
         self.model.add(layers.Dropout(0.2))
-        self.model.add(layers.Dense(
-            self.num_outputs,
-            use_bias=True,
-            kernel_initializer=tf.random_normal_initializer(stddev=0.01),
-            bias_initializer=tf.random_normal_initializer(stddev=0.01),
-        ))
+        self.model.add(
+            layers.Dense(
+                self.num_outputs,
+                use_bias=True,
+                kernel_initializer=tf.random_normal_initializer(stddev=0.01),
+                bias_initializer=tf.random_normal_initializer(stddev=0.01),
+            )
+        )
 
         self.model.compile(
-            optimizer=tf.optimizers.Adam(),
-            loss=TFEstimatorBase.rms_error,
-            metrics=['accuracy']
+            optimizer=self.optimizer, loss=self.loss, metrics=["accuracy"]
         )

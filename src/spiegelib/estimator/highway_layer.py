@@ -24,7 +24,7 @@ class HighwayLayer(layers.Layer):
 
     def __init__(
         self,
-        activation='relu',
+        activation="relu",
         transform_gate_bias=-1,
         transform_dropout=None,
         activity_regularizer=None,
@@ -39,7 +39,6 @@ class HighwayLayer(layers.Layer):
         self.activity_regularizer = activity_regularizer
         super(HighwayLayer, self).__init__(**kwargs)
 
-
     def build(self, input_shape):
 
         # Create a trainable weight variable for this layer.
@@ -49,16 +48,12 @@ class HighwayLayer(layers.Layer):
 
         # Transform Gate
         self.dense_1 = layers.Dense(
-            name='Dense_1',
-            units=dim,
-            bias_initializer=transform_gate_bias_initializer
+            name="Dense_1", units=dim, bias_initializer=transform_gate_bias_initializer
         )
 
         # Regular Dense Layer
         self.dense_2 = layers.Dense(
-            name='Dense_2',
-            units=dim,
-            activity_regularizer=self.activity_regularizer
+            name="Dense_2", units=dim, activity_regularizer=self.activity_regularizer
         )
 
         super(HighwayLayer, self).build(input_shape)
@@ -73,7 +68,9 @@ class HighwayLayer(layers.Layer):
             transform_gate = layers.Dropout(self.transform_dropout)(transform_gate)
 
         # Carry gate operation - determine how much to feedforward
-        carry_gate = layers.Lambda(lambda x: 1.0 - x, output_shape=(dim,))(transform_gate)
+        carry_gate = layers.Lambda(lambda x: 1.0 - x, output_shape=(dim,))(
+            transform_gate
+        )
 
         transformed_data = self.dense_2(x)
         transformed_data = layers.Activation(self.activation)(transformed_data)
@@ -88,6 +85,6 @@ class HighwayLayer(layers.Layer):
 
     def get_config(self):
         config = super().get_config()
-        config['activation'] = self.activation
-        config['transform_gate_bias'] = self.transform_gate_bias
+        config["activation"] = self.activation
+        config["transform_gate_bias"] = self.transform_gate_bias
         return config
