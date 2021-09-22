@@ -22,10 +22,14 @@ Example of FFT, which inherits from FeaturesBase::
 from abc import ABC, abstractmethod
 import functools
 import os.path
+from pathlib import Path
 import numpy as np
+import random
 import joblib
-from tqdm import trange
+from tqdm import tqdm
+from typing import Union
 
+from spiegelib.core.audio_buffer import AudioBuffer
 from spiegelib.features import StandardScaler
 
 
@@ -48,7 +52,9 @@ class FeaturesBase(ABC):
             on each feature independently.
     """
 
-    def __init__(self, sample_rate=44100, time_major=False, scale=False, scale_axis=(0,)):
+    def __init__(
+        self, sample_rate=44100, time_major=False, scale=False, scale_axis=(0,)
+    ):
         """
         Constructor
         """
@@ -69,7 +75,6 @@ class FeaturesBase(ABC):
 
         # Update this in inheriting classes if you need
         self.dtype = np.float32
-
 
     def __call__(self, audio, scale=None):
         """
@@ -101,7 +106,11 @@ class FeaturesBase(ABC):
         # Normalize features
         should_scale = scale if scale is not None else self.should_scale
         if should_scale:
-            assert self.has_scaler(), "Scaler must be set first."
+            assert self.has_scaler(), (
+                "Scaler must be set first. Fit the scaler to "
+                "your dataset / audio files using `fit_scaler_"
+                "with_data` first"
+            )
             features = self.scale(features)
 
         # Apply any output data modification
@@ -109,7 +118,6 @@ class FeaturesBase(ABC):
             features = modifier(features)
 
         return features
-
 
     @abstractmethod
     def get_features(self, audio):
@@ -125,7 +133,6 @@ class FeaturesBase(ABC):
             np.ndarray: Results of audio feature extraction
         """
         pass
-
 
     def add_modifier(self, modifier, type):
         """
@@ -143,16 +150,17 @@ class FeaturesBase(ABC):
                 ('input', 'prescale', or 'output')
         """
 
-        if type == 'input':
+        if type == "input":
             self.input_modifiers.append(modifier)
-        elif type == 'prescale':
+        elif type == "prescale":
             self.prescale_modifiers.append(modifier)
-        elif type == 'output':
+        elif type == "output":
             self.output_modifiers.append(modifier)
         else:
-            raise ValueError('type must be one of ("input", "prescale", or '
-                             '"output"), received: %s' % type)
-
+            raise ValueError(
+                'type must be one of ("input", "prescale", or '
+                '"output"), received: %s' % type
+            )
 
     def fit_scaler(self, data, transform=True):
         """
@@ -178,6 +186,22 @@ class FeaturesBase(ABC):
         else:
             return None
 
+    def fit_scaler_with_data(self, directory: Union[str, Path], n: 1000, seed=None):
+        audio_files = sorted(list(directory.glob("*.wav")))
+
+        # Randomly sample the example audio files to fit the scaler
+        rng = random.Random(seed)
+        num_samples = min(len(audio_files), n)
+        print(f"Fitting scaler with {num_samples} audio examples")
+
+        selections = rng.sample(range(len(audio_files)), k=num_samples)
+        feature_set = []
+        for i in tqdm(selections):
+            audio = AudioBuffer(audio_files[i])
+            feature_set.append(self(audio, scale=False))
+
+        feature_set = np.array(feature_set)
+        self.fit_scaler(feature_set, transform=False)
 
     def has_scaler(self):
         """
@@ -185,7 +209,6 @@ class FeaturesBase(ABC):
             bool: whether or not the scaler has been set
         """
         return self.scaler != None
-
 
     def set_scaler(self, scaler):
         """
@@ -202,7 +225,6 @@ class FeaturesBase(ABC):
 
         self.scaler = scaler
 
-
     def scale(self, data):
         """
         Scale features using pre-trained scaler
@@ -217,7 +239,6 @@ class FeaturesBase(ABC):
         assert self.has_scaler(), "Scaler must be set first"
         return self.scaler.transform(data)
 
-
     def load_scaler(self, location):
         """
         Load trained scaler from a pickled file.
@@ -227,7 +248,6 @@ class FeaturesBase(ABC):
         """
 
         self.scaler = joblib.load(location)
-
 
     def save_scaler(self, location):
         """

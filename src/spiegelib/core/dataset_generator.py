@@ -234,7 +234,11 @@ def load_non_overridden_parameters(directory: Path, audio_file: Path) -> Dict:
 
 
 def generate_and_save_dataset(
-    audio_files: List[Path], features: FeaturesBase, output_folder: Path, name: str
+    audio_files: List[Path],
+    features: FeaturesBase,
+    output_folder: Path,
+    name: str,
+    scale: bool,
 ) -> None:
 
     # Get output dimensions of the features and parameters
@@ -269,7 +273,7 @@ def generate_and_save_dataset(
 
         # Load in audio and extract features
         audio = AudioBuffer(audio_file)
-        extracted = features(audio)
+        extracted = features(audio, scale=scale)
         if extracted.shape != expected_dims:
             raise AssertionError(
                 "Expect all audios in provided folder to be the same length "
@@ -290,6 +294,8 @@ def dataset_from_audio(
     seed=None,
     test_ratio=0.0,
     validation_ratio=0.0,
+    max_files=None,
+    scale: bool = False,
 ):
 
     # Input search directory
@@ -299,7 +305,9 @@ def dataset_from_audio(
     output_folder = Path(output_folder)
     output_folder.mkdir(parents=True, exist_ok=True)
 
-    audio_files = sorted(list(directory.glob("*.wav")))[:10000]
+    audio_files = sorted(list(directory.glob("*.wav")))
+    if max_files is not None:
+        audio_files = audio_files[:max_files]
 
     # Shuffle the input audio files if desired
     if shuffle:
@@ -332,14 +340,16 @@ def dataset_from_audio(
         )
         print(f"Generating {num_train} train examples")
         train_files = audio_files[:num_train]
-        generate_and_save_dataset(train_files, features, output_folder, f"{name}_train")
+        generate_and_save_dataset(
+            train_files, features, output_folder, f"{name}_train", scale
+        )
 
         if num_validation:
             print(f"Generating {num_validation} validation examples")
             validation_files = audio_files[num_train : num_train + num_validation]
             assert len(validation_files) == num_validation
             generate_and_save_dataset(
-                validation_files, features, output_folder, f"{name}_validation"
+                validation_files, features, output_folder, f"{name}_validation", scale
             )
 
         if num_test:
@@ -348,8 +358,8 @@ def dataset_from_audio(
             test_files = audio_files[num_train + num_validation :]
             assert len(test_files) == num_test
             generate_and_save_dataset(
-                test_files, features, output_folder, f"{name}_test"
+                test_files, features, output_folder, f"{name}_test", scale
             )
 
     else:
-        generate_and_save_dataset(audio_files, features, output_folder, name)
+        generate_and_save_dataset(audio_files, features, output_folder, name, scale)
