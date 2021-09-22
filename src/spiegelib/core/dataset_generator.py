@@ -354,7 +354,6 @@ def dataset_from_audio(
 
         if num_test:
             print(f"Generating {num_test} test examples")
-            name = f"{name}_test"
             test_files = audio_files[num_train + num_validation :]
             assert len(test_files) == num_test
             generate_and_save_dataset(
