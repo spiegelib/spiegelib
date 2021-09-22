@@ -2,10 +2,10 @@
 """
 Synth Abstract Base Class
 """
-
 import os
 import numbers
 import json
+import random
 from abc import ABC, abstractmethod
 
 
@@ -68,6 +68,8 @@ class SynthBase(ABC):
         # Parameter range defaults to [0.0, 1.0]
         self.param_range = (0.0, 1.0)
 
+        # Random number generator for random patches
+        self.rng = random.Random(None)
 
     def set_patch(self, parameters):
         """
@@ -142,17 +144,20 @@ class SynthBase(ABC):
         :rtype: :class:`spiegelib.core.audio_buffer.AudioBuffer`
         """
 
-
-    @abstractmethod
-    def randomize_patch(self):
+    def randomize_patch(self, seed=None):
         """
         This method must be overridden and should have the effect
         of randomizing parameters of the synthesizer. Overridden methods should be
-        uneffected by this randomization
+        unaffected by this randomization
         """
+        num_params = len(self.parameters) - len(self.overridden_params)
 
+        # Seed the RNG and create a random patch
+        self.rng.seed(seed)
+        patch = [self.rng.random() for _ in range(num_params)]
+        self.set_patch(patch)
 
-    def get_random_example(self):
+    def get_random_example(self, seed=None):
         """
         Returns audio from a new random patch
 
@@ -160,10 +165,9 @@ class SynthBase(ABC):
         :rtype: np.array
         """
 
-        self.randomize_patch()
+        self.randomize_patch(seed=seed)
         self.render_patch()
         return self.get_audio()
-
 
     def get_parameters(self):
         """
@@ -310,6 +314,8 @@ class SynthBase(ABC):
         the parameter indices linked to the parameter values. Does so by comparing
         the overridden parameters to the full list of paramater indices and using
         the differences to label the patch values.
+        TODO: This is a bit too fancy, probably want to split this out into a couple
+            different methods.
 
         Args:
             patch (list): An ordered list of parameter values

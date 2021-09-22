@@ -7,9 +7,6 @@ This class relies on the librenderman package developed by Leon Feddon for inter
 with VSTs. A VST can be loaded, parameters displayed and modified, random patches generated,
 and audio rendered for further processing.
 """
-
-from __future__ import print_function
-import numpy as np
 import librenderman as rm
 
 from spiegelib import AudioBuffer
@@ -49,11 +46,6 @@ class SynthVST(SynthBase):
                 self.generator = rm.PatchGenerator(self.engine)
                 self.patch = self.engine.get_patch()
                 self.parameters = parse_parameters(self.engine.get_plugin_parameters_description())
-
-                for i in range(len(self.overridden_params)):
-                    index, value = self.overridden_params[i]
-                    self.engine.override_plugin_parameter(int(index), value)
-
             else:
                 raise Exception('Could not load VST at path: %s' % plugin_path)
 
@@ -87,9 +79,8 @@ class SynthVST(SynthBase):
         :type parameter: tuple
         """
         return (
-            parameter[0] in self.parameters
-            and parameter[1] >= 0.0
-            and parameter[1] <= 1.0
+                parameter[0] in self.parameters
+                and 0.0 <= parameter[1] <= 1.0
         )
 
 
@@ -128,17 +119,17 @@ class SynthVST(SynthBase):
             raise Exception('Patch must be rendered before audio can be retrieved')
 
 
-    def randomize_patch(self):
-        """
-        Randomize the current patch. Overridden parameteres will be unaffected.
-        """
-
-        if self.loaded_plugin:
-            random_patch = self.generator.get_random_patch()
-            self.set_patch(random_patch)
-
-        else:
-            print("Please load plugin first.")
+    # def randomize_patch(self):
+    #     """
+    #     Randomize the current patch. Overridden parameteres will be unaffected.
+    #     """
+    #
+    #     if self.loaded_plugin:
+    #         random_patch = self.generator.get_random_patch()
+    #         self.set_patch(random_patch)
+    #
+    #     else:
+    #         print("Please load plugin first.")
 
 
 
