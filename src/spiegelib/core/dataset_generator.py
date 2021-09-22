@@ -41,13 +41,14 @@ can be used on future data.
 
 import os
 from pathlib import Path
+import random
 
 import json
 import numpy as np
 from numpy.lib.format import open_memmap
 import scipy.io.wavfile
 from tqdm import trange, tqdm
-from typing import Dict, List
+from typing import Dict, List, Union
 
 from spiegelib.core.audio_buffer import AudioBuffer
 from spiegelib.features.features_base import FeaturesBase
@@ -212,10 +213,10 @@ class DatasetGenerator:
 def get_parameter_json_for_audio(directory: Path, audio_file: Path) -> Dict:
     # Try to find the associated parameter
     param_file = directory.joinpath(f"{audio_file.stem}.json")
-    assert (
-        param_file.exists()
-    ), "Expected a parameter JSON file to match each " \
-       "audio file in the provided directory"
+    assert param_file.exists(), (
+        "Expected a parameter JSON file to match each "
+        "audio file in the provided directory"
+    )
     return json.load(param_file.open("r"))
 
 
@@ -232,33 +233,123 @@ def load_non_overridden_parameters(directory: Path, audio_file: Path) -> Dict:
     return get_non_overridden_parameter_values(params)
 
 
-def dataset_from_audio(directory, features, output_stem: str):
-
-    directory = Path(directory)
-    audio_files = list(directory.glob("*.wav"))[:100]
+def generate_and_save_dataset(
+    audio_files: List[Path], features: FeaturesBase, output_folder: Path, name: str
+) -> None:
 
     # Get output dimensions of the features and parameters
     expected_dims = features(AudioBuffer(audio_files[0])).shape
-    num_params = len(load_non_overridden_parameters(directory, audio_files[0]))
+    num_params = len(
+        load_non_overridden_parameters(audio_files[0].parent, audio_files[0])
+    )
 
     # Create a memmaped npy file for the output features and parameters
     x = open_memmap(
-        f"{output_stem}.npy",
+        output_folder.joinpath(f"{name}_features.npy"),
         mode="w+",
         dtype=np.float32,
         shape=(len(audio_files), *expected_dims),
     )
+    y = open_memmap(
+        output_folder.joinpath(f"{name}_parameters.npy"),
+        mode="w+",
+        dtype=np.float32,
+        shape=(len(audio_files), num_params),
+    )
 
     for i, audio_file in enumerate(tqdm(audio_files)):
-
         # Get parameters for this audio file
-        parameters = get_parameter_json_for_audio(directory, audio_file)
+        parameters = load_non_overridden_parameters(audio_file.parent, audio_file)
+        if len(parameters) != num_params:
+            raise AssertionError(
+                "Expected all presets in provided folder to have the same "
+                "number of non overridden parameters"
+            )
+        y[i] = parameters
 
         # Load in audio and extract features
         audio = AudioBuffer(audio_file)
         extracted = features(audio)
-        assert (
-            extracted.shape == expected_dims
-        ), "Expect all audios in provided folder to be the same length and " \
-           "produce features with the same dimensions"
+        if extracted.shape != expected_dims:
+            raise AssertionError(
+                "Expect all audios in provided folder to be the same length "
+                "and produce features with the same dimensions"
+            )
         x[i] = extracted
+
+    x.flush()
+    y.flush()
+
+
+def dataset_from_audio(
+    directory: Union[str, Path],
+    features: FeaturesBase,
+    name: str,
+    output_folder: Path = Path.cwd(),
+    shuffle=False,
+    seed=None,
+    test_ratio=0.0,
+    validation_ratio=0.0,
+):
+
+    # Input search directory
+    directory = Path(directory)
+
+    # Folder to output files to
+    output_folder = Path(output_folder)
+    output_folder.mkdir(parents=True, exist_ok=True)
+
+    audio_files = sorted(list(directory.glob("*.wav")))[:10000]
+
+    # Shuffle the input audio files if desired
+    if shuffle:
+        rng = random.Random(None)
+        rng.seed(seed)
+        rng.shuffle(audio_files)
+
+    print(f"Loading {len(audio_files)} audio files from {directory}")
+
+    # Calculate the number of items to be placed in each split
+    if test_ratio > 0.0:
+        assert test_ratio + validation_ratio < 1.0
+        num_test = int(len(audio_files) * test_ratio)
+    else:
+        num_test = 0
+
+    if validation_ratio > 0.0:
+        assert test_ratio + validation_ratio < 1.0
+        num_validation = int(len(audio_files) * validation_ratio)
+    else:
+        num_validation = 0
+
+    # Create split datasets if necessary, otherwise
+    num_test_validation = num_test + num_validation
+    if num_test_validation > 0:
+        num_train = len(audio_files) - (num_test + num_validation)
+        print(
+            f"Dataset splits - train: {num_train}, "
+            f"validation: {num_validation}, test: {num_test}"
+        )
+        print(f"Generating {num_train} train examples")
+        train_files = audio_files[:num_train]
+        generate_and_save_dataset(train_files, features, output_folder, f"{name}_train")
+
+        if num_validation:
+            print(f"Generating {num_validation} validation examples")
+            validation_files = audio_files[num_train : num_train + num_validation]
+            assert len(validation_files) == num_validation
+            generate_and_save_dataset(
+                validation_files, features, output_folder, f"{name}_validation"
+            )
+
+        if num_test:
+            print(f"Generating {num_test} test examples")
+            name = f"{name}_test"
+            test_files = audio_files[num_train + num_validation :]
+            assert len(test_files) == num_test
+            generate_and_save_dataset(
+                test_files, features, output_folder, f"{name}_test"
+            )
+
+    else:
+        generate_and_save_dataset(audio_files, features, output_folder, name)
