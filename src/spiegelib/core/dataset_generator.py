@@ -40,16 +40,21 @@ can be used on future data.
 """
 
 import os
+from pathlib import Path
 
+import json
 import numpy as np
+from numpy.lib.format import open_memmap
 import scipy.io.wavfile
-from tqdm import trange
+from tqdm import trange, tqdm
+from typing import Dict, List
 
+from spiegelib.core.audio_buffer import AudioBuffer
 from spiegelib.features.features_base import FeaturesBase
 from spiegelib.synth.synth_base import SynthBase
 
 
-class DatasetGenerator():
+class DatasetGenerator:
     """
 
     Args:
@@ -71,7 +76,9 @@ class DatasetGenerator():
             created within the output folder if saving audio. Defaults to audio
     """
 
-    def __init__(self, synth, features, output_folder=os.getcwd(), save_audio=False, scale=False):
+    def __init__(
+        self, synth, features, output_folder=os.getcwd(), save_audio=False, scale=False
+    ):
         """
         Contructor
         """
@@ -80,17 +87,19 @@ class DatasetGenerator():
         if isinstance(synth, SynthBase):
             self.synth = synth
         else:
-            raise TypeError('synth must inherit from SynthBase')
+            raise TypeError("synth must inherit from SynthBase")
 
         # Check for valid features
         if isinstance(features, FeaturesBase):
             self.features = features
         else:
-            raise TypeError('features must inherit from FeaturesBase')
+            raise TypeError("features must inherit from FeaturesBase")
 
         # Check for valid output folder
         self.output_folder = os.path.abspath(output_folder)
-        if not (os.path.exists(self.output_folder) and os.path.isdir(self.output_folder)):
+        if not (
+            os.path.exists(self.output_folder) and os.path.isdir(self.output_folder)
+        ):
             os.mkdir(self.output_folder)
 
         self.save_audio = save_audio
@@ -104,7 +113,6 @@ class DatasetGenerator():
 
         # Should the feature set data be scaled?
         self.should_scale = scale
-
 
     def generate(self, size, file_prefix="", fit_scaler_only=False):
         """
@@ -148,7 +156,11 @@ class DatasetGenerator():
             # Save rendered audio if required
             if self.save_audio:
                 self._create_audio_folder()
-                audio.save(os.path.join(self.audio_folder_path, "%soutput_%s.wav" % (file_prefix, i)))
+                audio.save(
+                    os.path.join(
+                        self.audio_folder_path, "%soutput_%s.wav" % (file_prefix, i)
+                    )
+                )
 
         # If only fitting scaler, do that and return. Don't save any data
         if fit_scaler_only:
@@ -161,9 +173,18 @@ class DatasetGenerator():
             feature_set = self.features.fit_scaler(feature_set)
 
         # Save dataset
-        np.save(os.path.join(self.output_folder, "%s%s" % (file_prefix, self.features_filename)), feature_set)
-        np.save(os.path.join(self.output_folder, "%s%s" % (file_prefix, self.patches_filename)), patch_set)
-
+        np.save(
+            os.path.join(
+                self.output_folder, "%s%s" % (file_prefix, self.features_filename)
+            ),
+            feature_set,
+        )
+        np.save(
+            os.path.join(
+                self.output_folder, "%s%s" % (file_prefix, self.patches_filename)
+            ),
+            patch_set,
+        )
 
     def save_scaler(self, file_name):
         """
@@ -174,11 +195,70 @@ class DatasetGenerator():
         """
         self.features.save_scaler(os.path.join(self.output_folder, file_name))
 
-
     def _create_audio_folder(self):
         """
         Check for and create the audio output folder if necassary
         """
-        self.audio_folder_path = os.path.abspath(os.path.join(self.output_folder, self.audio_folder_name))
-        if not (os.path.exists(self.audio_folder_path) and os.path.isdir(self.audio_folder_path)):
+        self.audio_folder_path = os.path.abspath(
+            os.path.join(self.output_folder, self.audio_folder_name)
+        )
+        if not (
+            os.path.exists(self.audio_folder_path)
+            and os.path.isdir(self.audio_folder_path)
+        ):
             os.mkdir(self.audio_folder_path)
+
+
+def get_parameter_json_for_audio(directory: Path, audio_file: Path) -> Dict:
+    # Try to find the associated parameter
+    param_file = directory.joinpath(f"{audio_file.stem}.json")
+    assert (
+        param_file.exists()
+    ), "Expected a parameter JSON file to match each " \
+       "audio file in the provided directory"
+    return json.load(param_file.open("r"))
+
+
+def get_non_overridden_parameter_values(params: Dict) -> List:
+    """List of parameters - sorted by param id"""
+    parameters = sorted(params.values(), key=lambda x: int(x["id"]))
+    non_overridden = [p["value"] for p in parameters if not p["overridden"]]
+    return non_overridden
+
+
+def load_non_overridden_parameters(directory: Path, audio_file: Path) -> Dict:
+    # Get a list of ordered parameters values from param json that are not overridden
+    params = get_parameter_json_for_audio(directory, audio_file)
+    return get_non_overridden_parameter_values(params)
+
+
+def dataset_from_audio(directory, features, output_stem: str):
+
+    directory = Path(directory)
+    audio_files = list(directory.glob("*.wav"))[:100]
+
+    # Get output dimensions of the features and parameters
+    expected_dims = features(AudioBuffer(audio_files[0])).shape
+    num_params = len(load_non_overridden_parameters(directory, audio_files[0]))
+
+    # Create a memmaped npy file for the output features and parameters
+    x = open_memmap(
+        f"{output_stem}.npy",
+        mode="w+",
+        dtype=np.float32,
+        shape=(len(audio_files), *expected_dims),
+    )
+
+    for i, audio_file in enumerate(tqdm(audio_files)):
+
+        # Get parameters for this audio file
+        parameters = get_parameter_json_for_audio(directory, audio_file)
+
+        # Load in audio and extract features
+        audio = AudioBuffer(audio_file)
+        extracted = features(audio)
+        assert (
+            extracted.shape == expected_dims
+        ), "Expect all audios in provided folder to be the same length and " \
+           "produce features with the same dimensions"
+        x[i] = extracted

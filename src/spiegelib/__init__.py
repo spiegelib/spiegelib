@@ -5,7 +5,7 @@ SpiegeLib imports
 """
 
 from spiegelib.core.audio_buffer import AudioBuffer
-from spiegelib.core.dataset_generator import DatasetGenerator
+from spiegelib.core.dataset_generator import DatasetGenerator, dataset_from_audio
 from spiegelib.core.sound_match import SoundMatch
 
 import spiegelib.evaluation
