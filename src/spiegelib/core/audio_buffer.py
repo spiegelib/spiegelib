@@ -105,6 +105,8 @@ class AudioBuffer():
         elif audio_set and not sample_rate:
             raise Exception('Sample rate is required when initializing with audio data')
 
+    def __repr__(self):
+        return f"{self.__class__} {self.get_audio().shape}:\n{repr(self.get_audio())}"
 
     def get_audio(self):
         """
