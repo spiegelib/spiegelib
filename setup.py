@@ -49,7 +49,8 @@ setup(
         'dev': [
             'sphinx',
             'sphinx_rtd_theme',
-            'ipython',
+            'jupyter',
+            'jupytext',
             'pytest',
             'pytest-datadir',
             'pytest-mpl',

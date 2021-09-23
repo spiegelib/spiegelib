@@ -21,14 +21,15 @@ class LSTM(TFEstimatorBase):
         :class:`spiegelib.estimator.TFEstimatorBase`
     """
 
-    def __init__(self, input_shape, num_outputs, **kwargs):
+    def __init__(self, input_shape, num_outputs, highway_layers=100, **kwargs):
         """
         Constructor
         """
 
+        self.highway_layers = highway_layers
         super().__init__(input_shape, num_outputs, **kwargs)
 
-    def build_model(self, highway_layers=100):
+    def build_model(self):
         """
         Construct LSTM Model
 
@@ -40,11 +41,11 @@ class LSTM(TFEstimatorBase):
         self.model = tf.keras.Sequential()
         self.model.add(
             layers.LSTM(
-                highway_layers, input_shape=self.input_shape, return_sequences=True
+                self.highway_layers, input_shape=self.input_shape, return_sequences=True
             )
         )
-        self.model.add(layers.LSTM(highway_layers, return_sequences=True))
-        self.model.add(layers.LSTM(highway_layers))
+        self.model.add(layers.LSTM(self.highway_layers, return_sequences=True))
+        self.model.add(layers.LSTM(self.highway_layers))
         self.model.add(layers.Dropout(0.2))
         self.model.add(
             layers.Dense(
