@@ -21,12 +21,15 @@ class LSTM(TFEstimatorBase):
         :class:`spiegelib.estimator.TFEstimatorBase`
     """
 
-    def __init__(self, input_shape, num_outputs, highway_layers=100, **kwargs):
+    def __init__(
+        self, input_shape, num_outputs, highway_layers=100, dropout=0.2, **kwargs
+    ):
         """
         Constructor
         """
 
         self.highway_layers = highway_layers
+        self.dropout = dropout
         super().__init__(input_shape, num_outputs, **kwargs)
 
     def build_model(self):
@@ -46,7 +49,8 @@ class LSTM(TFEstimatorBase):
         )
         self.model.add(layers.LSTM(self.highway_layers, return_sequences=True))
         self.model.add(layers.LSTM(self.highway_layers))
-        self.model.add(layers.Dropout(0.2))
+        if self.dropout is not None:
+            self.model.add(layers.Dropout(self.dropout))
         self.model.add(
             layers.Dense(
                 self.num_outputs,

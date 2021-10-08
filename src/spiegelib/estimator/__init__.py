@@ -12,7 +12,7 @@ from .basic_ga import BasicGA
 from .nsga3 import NSGA3
 
 # Deep learning models
-from .conv6 import Conv6
+from .cnn_models import Conv6, Conv6Small, Conv5, Conv5Small
 from .hwy_blstm import HwyBLSTM
 from .lstm import LSTM
 from .mlp import MLP

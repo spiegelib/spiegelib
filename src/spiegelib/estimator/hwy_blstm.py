@@ -23,7 +23,14 @@ class HwyBLSTM(TFEstimatorBase):
     """
 
     def __init__(
-        self, input_shape, num_outputs, lstm_size=128, highway_layers=6, **kwargs
+        self,
+        input_shape,
+        num_outputs,
+        lstm_size=128,
+        highway_layers=6,
+        dropout=0.2,
+        dense_size=64,
+        **kwargs
     ):
         """
         Constructor
@@ -31,6 +38,8 @@ class HwyBLSTM(TFEstimatorBase):
 
         self.lstm_size = lstm_size
         self.highway_layers = highway_layers
+        self.dropout = dropout
+        self.dense_size = dense_size
         super().__init__(input_shape, num_outputs, **kwargs)
 
     def build_model(self):
@@ -46,28 +55,30 @@ class HwyBLSTM(TFEstimatorBase):
                 merge_mode="concat",
             )
         )
-        self.model.add(layers.Dropout(0.2))
+
+        if self.dropout is not None:
+            self.model.add(layers.Dropout(self.dropout))
+
         self.model.add(
             layers.Dense(
-                64, activation="elu", activity_regularizer=tf.keras.regularizers.l2()
+                self.dense_size,
+                activation="elu",
+                activity_regularizer=tf.keras.regularizers.l2(),
             )
         )
 
-        self.hwy = None
-
         # Add highway layers
         for i in range(self.highway_layers):
-            self.hwy = HighwayLayer(
+            hwy = HighwayLayer(
                 activation="elu",
                 transform_dropout=0.2,
                 activity_regularizer=tf.keras.regularizers.l2(),
             )
-            self.model.add(self.hwy)
+            self.model.add(hwy)
 
         self.model.add(
             layers.Dense(
                 self.num_outputs,
-                activation="elu",
                 use_bias=True,
                 kernel_initializer=tf.random_normal_initializer(stddev=0.01),
                 bias_initializer=tf.random_normal_initializer(stddev=0.01),

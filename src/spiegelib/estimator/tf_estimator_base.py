@@ -47,7 +47,7 @@ deep learning models like this, see the :ref:`FM Sound Match Example <fm_sound_m
 
 import os
 from abc import abstractmethod
-from typing import Union
+from typing import List, Union
 
 import numpy as np
 import tensorflow as tf
@@ -77,7 +77,8 @@ class TFEstimatorBase(EstimatorBase):
         input_shape=None,
         num_outputs=None,
         weights_path="",
-        callbacks=[],
+        callbacks: List = None,
+        metrics: List = None,
         optimizer: Optimizer = None,
         loss: Union[str, Loss] = "mean_squared_error",
     ):
@@ -90,23 +91,34 @@ class TFEstimatorBase(EstimatorBase):
         self.input_shape = input_shape
         self.num_outputs = num_outputs
 
-        # Construct the model
-        self.model = None
-        self.optimizer = Adam() if optimizer is None else optimizer
-        self.loss = loss
-        self.build_model()
-
         # Datasets
         self.train_data = None
         self.test_data = None
 
         # Loggers
-        if isinstance(callbacks, list):
+        if callbacks is None:
+            self.callbacks = []
+        elif isinstance(callbacks, list):
             self.callbacks = callbacks
         else:
             raise Exception(
-                "loggers argument must be of type list, " "received %s" % type(loggers)
+                "loggers argument must be of type list, "
+                "received %s" % type(callbacks)
             )
+
+        if metrics is None:
+            self.metrics = []
+        elif isinstance(metrics, list):
+            print("here")
+            self.metrics = metrics
+        else:
+            raise AssertionError("metrics must be a list")
+
+        # Construct the model
+        self.model = None
+        self.optimizer = Adam() if optimizer is None else optimizer
+        self.loss = loss
+        self.build_model()
 
         # Attempt to load model weights if provided
         if weights_path:
