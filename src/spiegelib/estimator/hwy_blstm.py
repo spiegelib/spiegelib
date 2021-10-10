@@ -86,5 +86,5 @@ class HwyBLSTM(TFEstimatorBase):
         )
 
         self.model.compile(
-            optimizer=self.optimizer, loss=self.loss, metrics=["accuracy"]
+            optimizer=self.optimizer, loss=self.loss, metrics=self.metrics
         )

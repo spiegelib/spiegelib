@@ -85,4 +85,18 @@ class TFEpochLogger(Callback):
             axs[1].set(xlabel="Epochs", ylabel="Loss")
             axs[1].legend()
 
+        elif train_loss:
+            fig, axs = plt.subplots(1)
+            fig.suptitle("Model Loss")
+
+            axs.plot(epochs, plot_data["loss"], label="Train Loss")
+            if val_loss:
+                axs.plot(epochs, plot_data["val_loss"], label="Validation Loss")
+
+            axs.set(xlabel="Epochs", ylabel="Loss")
+            axs.legend()
+
+        else:
+            raise AssertionError("Need at least taining loss to create a plot")
+
         return fig, axs
