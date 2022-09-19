@@ -125,7 +125,6 @@ class AudioBuffer():
         """
         return self.sample_rate
 
-
     def load(self, path, sample_rate=44100, **kwargs):
         """
         Read audio from a file into a numpy array at specific audio rate. Stores
