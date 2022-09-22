@@ -83,13 +83,13 @@ class MFCC(FeaturesBase):
             n_fft=self.frame_size,
             hop_length=self.hop_size,
             n_mfcc=self.num_mfccs,
-            power=self.power
+            power=self.power,
             center=self.center,
             pad_mode=self.pad_mode,
             htk=self.htk,
             n_mels=self.n_mels,
             kwargs= {
-                "norm"=self.norm
+                "norm" : self.norm
                 }
         )
 
