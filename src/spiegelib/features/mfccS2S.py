@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Mel-Frequency Cepstral Coefficients (MFCCs)
+Mel-Frequency Cepstral Coefficients (MFCCs) with the parameters specified in Sound2Synth Architecture
 """
 
 from symbol import power
@@ -9,7 +9,7 @@ import librosa
 from spiegelib import AudioBuffer
 from spiegelib.features.features_base import FeaturesBase
 
-class MFCC(FeaturesBase):
+class MFCCS2S(FeaturesBase):
     """
     Args:
         num_mfccs (int, optional): Number of MFCCs to return, defaults to 20
@@ -21,20 +21,19 @@ class MFCC(FeaturesBase):
         power (float, optional): Exponent for the magnitude Mel spectrogram (1, 2, etc)
         center (boolean, optional): Use padding on signal to center the frame
         pad_mode (str, optional): Padding mode to use at the edges of the signal
-        norm (str, optional): normalization mode for trianglular mel weigths
         n_mels (int, optional): Number of mel bands to generate
         htk (boolean, optional): Use HTK formula if true else Slaney
         kwargs: Keyword arguments, see :class:`spiegelib.features.features_base.FeaturesBase`.
     """
 
-    def __init__(self, num_mfccs=13, 
+    def __init__(self, 
+                 num_mfccs=13, 
                  frame_size=2048, 
                  hop_size=512, 
                  scale_axis=0,
                  power=2.0,
                  center=True,
                  pad_mode="reflect",
-                 norm="slaney",
                 #  one_sided=True,
                  n_mels=128,
                  htk=True,
@@ -49,7 +48,6 @@ class MFCC(FeaturesBase):
         self.power = power
         self.center = center
         self.pad_mode = pad_mode
-        self.norm = norm
         # self.one_sided = one_sided
         self.n_mels = n_mels
         self.htk = htk
@@ -77,6 +75,8 @@ class MFCC(FeaturesBase):
                 'extraction rate, %s != %s' % (audio.get_sample_rate(), self.sample_rate)
             )
 
+
+        # Librosa MFCC calls the mel filters with norm="Slaney", thus we do not need to provide this
         features = librosa.feature.mfcc(
             y=audio.get_audio(),
             sr=self.sample_rate,
@@ -88,9 +88,6 @@ class MFCC(FeaturesBase):
             pad_mode=self.pad_mode,
             htk=self.htk,
             n_mels=self.n_mels,
-            kwargs= {
-                "norm" : self.norm
-                }
         )
 
         if self.time_major:
