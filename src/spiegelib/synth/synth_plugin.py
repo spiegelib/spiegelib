@@ -46,6 +46,10 @@ class SynthPlugin(SynthBase):
         # Make sure the synth was loaded with the expected name
         assert self.synth.get_name() == "synth"
 
+        # Load the synth plugin into the dawdreamer processing graph
+        graph = [(self.synth, [])]
+        self.engine.load_graph(graph)
+
         self.loaded_plugin = True
         self.patch = [
             (i, self.synth.get_parameter(i))
@@ -84,8 +88,6 @@ class SynthPlugin(SynthBase):
                 parameter[0] in self.parameters
                 and 0.0 <= parameter[1] <= 1.0
         )
-
-
 
     def render_patch(self):
         """
