@@ -39,33 +39,24 @@ class SynthPlugin(SynthBase):
         :param plugin_path: path to vst plugin binary
         :type plugin_path: str
         """
-        try:
-            self.engine = daw.RenderEngine(self.sample_rate, self.buffer_size)
-            self.synth = self.engine.make_plugin_processor("synth", plugin_path)
 
-            # Make sure the synth was loaded with a valid name
-            if self.synth.get_name() == "synth":
-                self.loaded_plugin = True
-                # TODO do we need this generator??
-                #self.generator = rm.PatchGenerator(self.engine)
+        self.engine = daw.RenderEngine(self.sample_rate, self.buffer_size)
+        self.synth = self.engine.make_plugin_processor("synth", plugin_path)
 
-                self.patch = [
-                    (i, self.synth.get_parameter(i))
-                    for i in range(self.synth.get_plugin_parameter_size())
-                ]
-                self.parameters = parse_parameters(self.synth.get_parameters_description())
-                print(self.parameters)
+        # Make sure the synth was loaded with the expected name
+        assert self.synth.get_name() == "synth"
 
-                # for i in range(len(self.overridden_params)):
-                #     index, value = self.overridden_params[i]
-                #     self.engine.override_plugin_parameter(int(index), value)
+        self.loaded_plugin = True
+        self.patch = [
+            (i, self.synth.get_parameter(i))
+            for i in range(self.synth.get_plugin_parameter_size())
+        ]
+        self.parameters = parse_parameters(self.synth.get_parameters_description())
 
-            else:
-                raise Exception('Could not load VST at path: %s' % plugin_path)
-
-        except Exception as error:
-            print(error)
-
+        # TODO: Overridden parameters
+        # for i in range(len(self.overridden_params)):
+        #     index, value = self.overridden_params[i]
+        #     self.engine.override_plugin_parameter(int(index), value)
 
     def load_patch(self):
         """
@@ -83,7 +74,6 @@ class SynthPlugin(SynthBase):
 
         # Patch VST with parameters
         self.engine.set_patch(self.patch)
-
 
     def is_valid_parameter_setting(self, parameter):
         """
