@@ -7,6 +7,7 @@ This class relies on the dawdreamer package. See https://github.com/DBraun/DawDr
 """
 
 from __future__ import print_function
+import random
 import numpy as np
 import dawdreamer as daw
 
@@ -23,6 +24,7 @@ class SynthPlugin(SynthBase):
 
     def __init__(self, plugin_path=None, **kwargs):
         super().__init__(**kwargs)
+        self.synth = None
 
         if plugin_path:
             self.load_plugin(plugin_path)
@@ -30,7 +32,6 @@ class SynthPlugin(SynthBase):
         else:
             self.engine = None
             self.loaded_plugin = False
-
 
     def load_plugin(self, plugin_path):
         """
@@ -95,17 +96,14 @@ class SynthPlugin(SynthBase):
         and render_length_secs to render audio. Plugin must be loaded first.
         """
         if self.loaded_plugin:
-            self.engine.render_patch(
-                self.midi_note,
-                self.midi_velocity,
-                self.note_length_secs,
-                self.render_length_secs
-            )
+            self.synth.clear_midi()
+            self.synth.add_midi_note(self.midi_note, self.midi_velocity, 0.0, self.note_length_secs)
+            print(self.render_length_secs)
+            self.engine.render(self.render_length_secs)
             self.rendered_patch = True
 
         else:
             print("Please load plugin first.")
-
 
     def get_audio(self):
         """
@@ -116,20 +114,18 @@ class SynthPlugin(SynthBase):
         """
 
         if self.rendered_patch:
-            audio = AudioBuffer(self.engine.get_audio_frames(), self.sample_rate)
+            audio = AudioBuffer(self.engine.get_audio(), self.sample_rate)
             return audio
 
         else:
             raise Exception('Patch must be rendered before audio can be retrieved')
 
-
     def randomize_patch(self):
         """
         Randomize the current patch. Overridden parameteres will be unaffected.
         """
-
         if self.loaded_plugin:
-            random_patch = self.generator.get_random_patch()
+            random_patch = [(p[0], random.random()) for p in self.get_patch()]
             self.set_patch(random_patch)
 
         else:
