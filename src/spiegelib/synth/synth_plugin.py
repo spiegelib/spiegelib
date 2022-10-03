@@ -150,14 +150,14 @@ class SynthPlugin(SynthBase):
 
 ################################################################################
 
-
 def parse_parameters(params):
     """
-    Parse parameter string return by librenderman into a dictionary keyed on parameter
-    index with values being the name / short descriptions for the parameter at that index.
+    Parse parameter dictionary from DawDreamer plugin processor into a dictionary with
+    format {parameter_index: parameter_name}
 
-    :param param_str: A parameter decription string returned by librenderman
-    :type param_str: str
+    :param params: A dictionary returned by DawDreamer that contains detailed information about
+        parameters in a plugin.
+    :type params: dict
     :returns: A dictionary with parameter index as keys and parameter name / description for values
     :rtype: dict
     """
