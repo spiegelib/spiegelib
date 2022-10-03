@@ -6,6 +6,7 @@ Init for synth components
 """
 
 from .synth_base import SynthBase
+from .synth_plugin import SynthPlugin
 
 try:
     import librenderman

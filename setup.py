@@ -43,7 +43,8 @@ setup(
         'deap',
         "importlib_resources ; python_version<'3.7'",
         'numba==0.48',
-        'scipy==1.4.1'
+        'scipy==1.4.1',
+        'dawdreamer',
     ],
     extras_require={
         'dev': [
