@@ -63,7 +63,7 @@ class SynthPlugin(SynthBase):
         Update patch parameter. Overridden parameters will not be effected.
         """
 
-        # Check for parameters to include in patch update
+        # Check for parameters to include in patch update and set value
         for param in self.patch:
             if not self.is_valid_parameter_setting(param):
                 raise Exception(
@@ -71,9 +71,7 @@ class SynthPlugin(SynthBase):
                     'parameter number and be in range 0-1. '
                     'Received %s' % param
                 )
-
-        # Patch VST with parameters
-        self.engine.set_patch(self.patch)
+            self.synth.set_parameter(param[0], param[1])
 
     def is_valid_parameter_setting(self, parameter):
         """
@@ -83,9 +81,8 @@ class SynthPlugin(SynthBase):
         :type parameter: tuple
         """
         return (
-            parameter[0] in self.parameters
-            and parameter[1] >= 0.0
-            and parameter[1] <= 1.0
+                parameter[0] in self.parameters
+                and 0.0 <= parameter[1] <= 1.0
         )
 
 
