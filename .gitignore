@@ -14,3 +14,6 @@ data/
 .tox
 .cache
 .coverage
+
+# PyCharm
+.idea/
