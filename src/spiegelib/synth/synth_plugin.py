@@ -98,7 +98,6 @@ class SynthPlugin(SynthBase):
         if self.loaded_plugin:
             self.synth.clear_midi()
             self.synth.add_midi_note(self.midi_note, self.midi_velocity, 0.0, self.note_length_secs)
-            print(self.render_length_secs)
             self.engine.render(self.render_length_secs)
             self.rendered_patch = True
 
@@ -114,7 +113,8 @@ class SynthPlugin(SynthBase):
         """
 
         if self.rendered_patch:
-            audio = AudioBuffer(self.engine.get_audio(), self.sample_rate)
+            # TODO: Need to handle both stereo and mono audio
+            audio = AudioBuffer(self.engine.get_audio()[0], self.sample_rate)
             return audio
 
         else:
@@ -122,8 +122,9 @@ class SynthPlugin(SynthBase):
 
     def randomize_patch(self):
         """
-        Randomize the current patch. Overridden parameteres will be unaffected.
+        Randomize the current patch. Overridden parameters will be unaffected.
         """
+        # TODO: Need to handle the overridden patches!
         if self.loaded_plugin:
             random_patch = [(p[0], random.random()) for p in self.get_patch()]
             self.set_patch(random_patch)
